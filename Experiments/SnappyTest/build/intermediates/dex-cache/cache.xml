@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_c9b10d5a73fd9b56a0f0a32ae3bcc39710ed9a28.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_aa953b25739fec4631918bb99c1e54eb3d20c38b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.2.1_176cdbc24eeb6f19e435a0efc06cfb3b45944329.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.2.1_4009a36260875d912112b3cff49a439372af197a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-24.2.1_1c23c19e9ba1259340164ce64fc0566d08329580.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_17691d17bff583218325e6757a165607dfa17291.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\libs\objenesis-1.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bfcb0539a071a4c5a30690388903ac48c0667f2a">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\objenesis-1.2_594411ff937e29da1d2c5afae0605719437060f3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_5d00005941f6ec74f14ec8bf143dcb9c430a7c52.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\libs\minlog-1.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="52c07f9018229378d8a8bb2b728deb3a95b44172">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\minlog-1.2_037097a18b6b071e5b00f13666a74f3d928451ce.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.2.1_60e48503acd6ad769e3dba58bd23d2f696171fba.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\libs\snappydb-0.5.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="414b14b5ce5d2dfded9de1ed81723436534e584f">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\snappydb-0.5.2_4545b5e2611760f0a0e13710a2c8db88cc1268a4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-24.2.1_52bd2dd9e280142def10f0f536fc1a666f59028d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_13879a79628cfe0eb0da20d0704a7a65e262b806.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\libs\opencsv-3.8.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="248d4d05fe253a02a05601978f7de1305b8a961e">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\opencsv-3.8_6ff26967b0c6f786cd6f42094da04ffa6c35e3f6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\libs\reflectasm-1.07.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="072e24d73db26ea8d82015404fee85569d5cff03">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\reflectasm-1.07_636b7d62d18c452dd5e04d3e4028d0c8c6242e2a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_cb35c1b67436d6bc814748c495a657b09c156fac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\libs\kryo-4.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b6ff23dd652a9c235f5f74c9990aa79f062b81f9">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\kryo-4.0.0_8cead1786b9f7752861effaa76c1dcbdccc40d4e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.2.1_d287c297722ffd19314b9ee47e7d4875073d99ce.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-24.2.1_7180ef2f540e430472c76eed896d936ad1d603d9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-24.2.1_08731dda076596557ae4ba3a487a21f9ac0f0fe7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="C:\Users\Grace\Documents\SnappyTest\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-24.2.1_4dd3e61f92ad77bdec466e4791b36c2719708cf3.jar" />
+    </item>
+
+</items>
