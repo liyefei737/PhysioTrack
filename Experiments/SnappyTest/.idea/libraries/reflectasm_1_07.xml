@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="reflectasm-1.07">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/reflectasm-1.07.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
