@@ -1,0 +1,6 @@
+www.atmacausa.com/phpmyadmi
+root
+Ma80Ny08@sql
+
+
+var/www/atmacausa.com/public_html
