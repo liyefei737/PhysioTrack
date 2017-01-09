@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".BackgroundDataSim"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false"></service>
     </application>
 
 </manifest>

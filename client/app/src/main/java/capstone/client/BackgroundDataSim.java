@@ -3,10 +3,21 @@ package capstone.client;
 import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.couchbase.lite.CouchbaseLiteException;
+import com.couchbase.lite.Database;
+import com.couchbase.lite.DatabaseOptions;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.DocumentChange;
+import com.couchbase.lite.Manager;
+import com.couchbase.lite.android.AndroidContext;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,21 +28,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import com.couchbase.lite.AsyncTask;
-import com.couchbase.lite.CouchbaseLiteException;
-import com.couchbase.lite.Database;
-import com.couchbase.lite.DatabaseOptions;
-import com.couchbase.lite.DocumentChange;
-import com.couchbase.lite.Manager;
-import com.couchbase.lite.android.AndroidContext;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by Grace on 2017-01-08.
@@ -39,11 +37,17 @@ import org.json.JSONObject;
 
 public class BackgroundDataSim extends Service {
 
+    private volatile HandlerThread mHandlerThread;
+    private Handler mServiceHandler;
+
     static final String DB_UPDATE = "DB_UPDATE";
     static private BackgroundDataSim _backgroundDataSim;
     private Database database;
     private Manager manager;
     private LocalBroadcastManager broadcaster;
+
+    public static final int CONNECTION_TIMEOUT = 10000;
+    public static final int READ_TIMEOUT = 15000;
 
     public BackgroundDataSim() {
     }
@@ -60,13 +64,13 @@ public class BackgroundDataSim extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        openDatabase("development");
         _backgroundDataSim = this;
         broadcaster = LocalBroadcastManager.getInstance(this);
-
-
-
-        //sit and spin on remote db.
+        // An Android handler thread internally operates on a looper.
+        mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
+        mHandlerThread.start();
+        // An Android service handler is a handler running on a specific background thread.
+        mServiceHandler = new Handler(mHandlerThread.getLooper());
     }
 
     @Override
@@ -76,8 +80,14 @@ public class BackgroundDataSim extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //return super.onStartCommand(intent, flags, startId);
-        return Service.START_NOT_STICKY;
+        mServiceHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                dataSim();
+            }
+        });
+        // Keep service around "sticky"
+        return START_STICKY;
     }
 
     public void notifyUI(Map<String, Object> document) {
@@ -87,8 +97,36 @@ public class BackgroundDataSim extends Service {
         }
         broadcaster.sendBroadcast(intent);
     }
+    private void dataSim()
+    {
+        database = openDatabase("development");
+        String phpRequestScriptURL = "http://atmacausa.com/ReadRequest.php";
+        JSONObject r;
+        String responseStr;
 
-    private void openDatabase(String dbName) {
+        for (int i = 1; i<4735;i++) {
+            responseStr = doRemoteQuery(phpRequestScriptURL, i);
+            try {
+                r = new JSONObject(responseStr);
+                Document doc = database.getDocument(r.getString("DateTime"));
+                Map<String, Object> properties = doc.getUserProperties();
+                properties.put("accX", r.getString("AccX"));
+                properties.put("accY", r.getString("AccY"));
+                properties.put("accZ", r.getString("AccZ"));
+                properties.put("skinTemp", r.getString("Skin_Temp"));
+                properties.put("coreTemp", r.getString("Core_Temp"));
+                properties.put("heartRate", r.getString("ECG heart rate"));
+                properties.put("breathRate", r.getString("Belt Breathing rate"));
+                properties.put("bodyPosition", r.getString("BodyPosition"));
+                properties.put("motion", r.getString("Motion"));
+                doc.putProperties(properties);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Database openDatabase(String dbName) {
         DatabaseOptions options = new DatabaseOptions();
         options.setCreate(true);
         try {
@@ -111,9 +149,79 @@ public class BackgroundDataSim extends Service {
                 }
             }
         });
+        return database;
     }
 
+    private String doRemoteQuery(String phpRequestURL, int id){
+        URL url=null;
+        HttpURLConnection conn = null;
+        try {
+            url = new URL(phpRequestURL);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            // Setup HttpURLConnection class to send and receive data from php and mysql
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(READ_TIMEOUT);
+            conn.setConnectTimeout(CONNECTION_TIMEOUT);
+            conn.setRequestMethod("POST");
 
+            // setDoInput and setDoOutput to true as we send and receive data
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Uri.Builder builder = new Uri.Builder().appendQueryParameter("searchQuery", String.valueOf(id));
+            String query = builder.build().getEncodedQuery();
+            Log.i("info", query);
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer.write(query);
+            writer.flush();
+            writer.close();
+            os.close();
+            conn.connect();
+
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        try {
+
+            int response_code = conn.getResponseCode();
+
+            // Check if successful connection made
+            if (response_code == HttpURLConnection.HTTP_OK) {
+
+                // Read data sent from server
+                InputStream input = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                StringBuilder result = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                return (result.toString());
+
+            } else {
+                return ("Connection error");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return e.toString();
+        } finally {
+
+            conn.disconnect();
+        }
+    }
 }
 
 
