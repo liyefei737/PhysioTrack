@@ -9,14 +9,21 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.DatabaseOptions;
-import com.couchbase.lite.Document;
 import com.couchbase.lite.DocumentChange;
 import com.couchbase.lite.Manager;
 import com.couchbase.lite.android.AndroidContext;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -45,6 +52,8 @@ public class BackgroundDataSim extends Service {
     private Database database;
     private Manager manager;
     private LocalBroadcastManager broadcaster;
+    //Volley is a easy to use http lib
+    private RequestQueue rQueue;
 
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
@@ -65,6 +74,7 @@ public class BackgroundDataSim extends Service {
     public void onCreate() {
         super.onCreate();
         _backgroundDataSim = this;
+        rQueue = Volley.newRequestQueue(this);
         broadcaster = LocalBroadcastManager.getInstance(this);
         // An Android handler thread internally operates on a looper.
         mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
@@ -99,27 +109,48 @@ public class BackgroundDataSim extends Service {
     }
     private void dataSim()
     {
-        database = openDatabase("development");
+        database = openDatabase("client");
         String phpRequestScriptURL = "http://atmacausa.com/ReadRequest.php";
-        JSONObject r;
+        JSONArray r;
         String responseStr;
 
         for (int i = 1; i<4735;i++) {
             responseStr = doRemoteQuery(phpRequestScriptURL, i);
+            Log.i(this.getClass().toString(), responseStr);
             try {
-                r = new JSONObject(responseStr);
-                Document doc = database.getDocument(r.getString("DateTime"));
-                Map<String, Object> properties = doc.getUserProperties();
-                properties.put("accX", r.getString("AccX"));
-                properties.put("accY", r.getString("AccY"));
-                properties.put("accZ", r.getString("AccZ"));
-                properties.put("skinTemp", r.getString("Skin_Temp"));
-                properties.put("coreTemp", r.getString("Core_Temp"));
-                properties.put("heartRate", r.getString("ECG heart rate"));
-                properties.put("breathRate", r.getString("Belt Breathing rate"));
-                properties.put("bodyPosition", r.getString("BodyPosition"));
-                properties.put("motion", r.getString("Motion"));
-                doc.putProperties(properties);
+                r = new JSONArray(responseStr);
+
+                //for now hard-coded medic ip and port
+                String MedicURL ="http://100.64.207.208:8080";
+                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r.getJSONObject(0),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    VolleyLog.v("Response:%n %s", response.toString(4));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error: ", error.getStackTrace());
+                    }
+                });
+                rQueue.add(jsonRequest);
+//                Document doc = database.getDocument(r.getString("DateTime"));
+//                Map<String, Object> properties = doc.getUserProperties();
+//                properties.put("accX", r.getString("AccX"));
+//                properties.put("accY", r.getString("AccY"));
+//                properties.put("accZ", r.getString("AccZ"));
+//                properties.put("skinTemp", r.getString("Skin_Temp"));
+//                properties.put("coreTemp", r.getString("Core_Temp"));
+//                properties.put("heartRate", r.getString("ECG heart rate"));
+//                properties.put("breathRate", r.getString("Belt Breathing rate"));
+//                properties.put("bodyPosition", r.getString("BodyPosition"));
+//                properties.put("motion", r.getString("Motion"));
+//                doc.putProperties(properties);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -152,6 +183,9 @@ public class BackgroundDataSim extends Service {
         return database;
     }
 
+    private void sendToMedic(){
+
+    }
     private String doRemoteQuery(String phpRequestURL, int id){
         URL url=null;
         HttpURLConnection conn = null;

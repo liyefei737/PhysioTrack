@@ -27,7 +27,7 @@ public class BackgroundService extends Service {
 
     static final String DB_UPDATE = "DB_UPDATE";
     static private BackgroundService _backgroundService;
-    private Database database;
+    static private Database database;
     private Server server;
     private Manager manager;
     private LocalBroadcastManager broadcaster;
@@ -35,7 +35,8 @@ public class BackgroundService extends Service {
     public BackgroundService() {
     }
 
-    static public BackgroundService get_backgroundService(){return _backgroundService;}
+    static public BackgroundService getBackgroundService(){return _backgroundService;}
+    static public Database getDatabase(){return database;}
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -45,7 +46,7 @@ public class BackgroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        openDatabase("development");
+        openDatabase("debug");
         server = new Server(8080);
         server.setDatabaseInstance(database);
         try {

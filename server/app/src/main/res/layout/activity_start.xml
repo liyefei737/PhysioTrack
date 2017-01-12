@@ -9,6 +9,12 @@
     <!--<EditText-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent" />-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_db_data"
+        android:text="Show Database Data"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -22,6 +28,11 @@
             android:textColorHighlight="@android:color/primary_text_dark"
             android:layout_centerVertical="true"
             android:textSize="16dp"/>
+        <!--<ListView-->
+            <!--android:id="@+id/list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="#ffffff"/>-->
     </ScrollView>
 
 </LinearLayout>

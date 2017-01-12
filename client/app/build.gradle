@@ -16,6 +16,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
     packagingOptions {
         exclude 'META-INF/ASL2.0'
@@ -34,7 +38,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.0'
     testCompile 'junit:junit:4.12'
-
+    debugCompile 'im.dino:dbinspector:3.4.0@aar'
+    compile 'com.android.volley:volley:1.0.0'
     compile 'com.couchbase.lite:couchbase-lite-android:+'
 }
 

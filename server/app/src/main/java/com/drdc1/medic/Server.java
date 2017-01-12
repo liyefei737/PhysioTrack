@@ -53,8 +53,8 @@ public class Server extends NanoHTTPD {
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties = newRevision.getUserProperties();
                     try {
-                        properties.put("fistName", body.getString("fistName"));
-                        properties.put("lastName", body.getString("lastName"));
+                        properties.put("ECG1 (raw)", body.getString("ECG1 (raw)"));
+                        properties.put("ECG2 (raw)", body.getString("ECG2 (raw)"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
