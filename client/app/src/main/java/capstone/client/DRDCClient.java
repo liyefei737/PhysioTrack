@@ -20,7 +20,6 @@ public class DRDCClient extends Application {
     private float weight;
     private float height;
 
-    public String getUniqueIdentifier()
 
     public String getServiceNumber() {
         return serviceNumber;
