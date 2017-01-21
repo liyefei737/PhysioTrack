@@ -13,18 +13,21 @@ public class DRDCClient extends Application {
     //global vars for app
     //access in any activity by String s = ((MyApplication) this.getApplication()).getSomeVariable(); or
     //    ((MyApplication) this.getApplication()).setSomeVariable("foo");
-    private String soldierID;
+
+    private String serviceNumber;
     private String name;
     private Date dob;
     private float weight;
     private float height;
 
-    public String getSoldierID() {
-        return soldierID;
+    public String getUniqueIdentifier()
+
+    public String getServiceNumber() {
+        return serviceNumber;
     }
 
-    public void setSoldierID(String id) {
-        this.soldierID = id;
+    public void setServiceNumber(String id) {
+        this.serviceNumber = id;
     }
 
     public String getName() {
