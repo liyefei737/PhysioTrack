@@ -15,12 +15,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
-import com.couchbase.lite.DatabaseOptions;
-import com.couchbase.lite.DocumentChange;
-import com.couchbase.lite.Manager;
-import com.couchbase.lite.android.AndroidContext;
+import com.couchbase.lite.Document;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,11 +31,20 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 
 /**
- * Created by Grace on 2017-01-08.
+This class does:
+ 1. Generate Data every x seconds
+ 2. Insert data into the database
+ *
+ * Comment:I would propose to put algorithms on background service
+ * on PDA side there are two ways a algorithm can get a hold of the data it needs:
+ * 1. process data as data are being generated. For this option you can add the algorithm in this file
+ * 2. query the data base every x seconds to compute the the result from e.g. the last 10 entries or the last 10 seconds....
+ * for option two you can write the algorithms in "BackgroundAlgo" file which is a separate background thread
  */
 
 public class BackgroundDataSim extends Service {
@@ -48,12 +53,11 @@ public class BackgroundDataSim extends Service {
     private Handler mServiceHandler;
 
     static final String DB_UPDATE = "DB_UPDATE";
-    static private BackgroundDataSim _backgroundDataSim;
-    private Database database;
-    private Manager manager;
-    private LocalBroadcastManager broadcaster;
+    static private BackgroundDataSim _backgroundDataSim = null;
+    private DBManager databseManager = null;
+    private LocalBroadcastManager broadcaster = null;
     //Volley is a easy to use http lib
-    private RequestQueue rQueue;
+    private RequestQueue rQueue = null;
 
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
@@ -61,6 +65,7 @@ public class BackgroundDataSim extends Service {
     public BackgroundDataSim() {
     }
 
+    //singleton to
     static public BackgroundDataSim get_backgroundDataSim() {
         return _backgroundDataSim;
     }
@@ -109,20 +114,27 @@ public class BackgroundDataSim extends Service {
     }
     private void dataSim()
     {
-        database = openDatabase("client");
+        databseManager = new DBManager(this);
+        String currentUserID = databseManager.getCurrentUserID();
+        if (currentUserID == null){
+            //does not do simulation, no user info entered
+            return;
+        }
+
+        Database userDB = databseManager.getDatabase(currentUserID);
         String phpRequestScriptURL = "http://atmacausa.com/ReadRequest.php";
-        JSONArray r;
+        JSONObject r;
         String responseStr;
 
         for (int i = 1; i<4735;i++) {
             responseStr = doRemoteQuery(phpRequestScriptURL, i);
             Log.i(this.getClass().toString(), responseStr);
             try {
-                r = new JSONArray(responseStr);
+                r = new JSONArray(responseStr).getJSONObject(0);
 
                 //for now hard-coded medic ip and port
                 String MedicURL ="http://100.64.207.208:8080";
-                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r.getJSONObject(0),
+                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -139,49 +151,28 @@ public class BackgroundDataSim extends Service {
                     }
                 });
                 rQueue.add(jsonRequest);
-//                Document doc = database.getDocument(r.getString("DateTime"));
-//                Map<String, Object> properties = doc.getUserProperties();
-//                properties.put("accX", r.getString("AccX"));
-//                properties.put("accY", r.getString("AccY"));
-//                properties.put("accZ", r.getString("AccZ"));
-//                properties.put("skinTemp", r.getString("Skin_Temp"));
-//                properties.put("coreTemp", r.getString("Core_Temp"));
-//                properties.put("heartRate", r.getString("ECG heart rate"));
-//                properties.put("breathRate", r.getString("Belt Breathing rate"));
-//                properties.put("bodyPosition", r.getString("BodyPosition"));
-//                properties.put("motion", r.getString("Motion"));
-//                doc.putProperties(properties);
+                //Document doc = database.getDocument(r.getString("DateTime"));
+                Map<String, Object> properties = new HashMap<String, Object>();
+                properties.put("timeCreated", r.getString("DateTime"));
+                properties.put("accX", r.getString("AccX"));
+                properties.put("accY", r.getString("AccY"));
+                properties.put("accZ", r.getString("AccZ"));
+                properties.put("skinTemp", r.getString("Skin_Temp"));
+                properties.put("coreTemp", r.getString("Core_Temp"));
+                //properties.put("heartRate", r.getString("ECG heart rate"));
+                //properties.put("breathRate", r.getString("Belt Breathing rate"));
+                //properties.put("bodyPosition", r.getString("BodyPosition"));
+                //properties.put("motion", r.getString("Motion"));
+                Log.i("saving data", properties.toString());
+
+                Document doc = userDB.createDocument();
+                doc.putProperties(properties);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private Database openDatabase(String dbName) {
-        DatabaseOptions options = new DatabaseOptions();
-        options.setCreate(true);
-        try {
-            manager = new Manager(new AndroidContext(getApplicationContext()), Manager.DEFAULT_OPTIONS);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            database = manager.openDatabase(dbName, options);
-        } catch (CouchbaseLiteException e) {
-            e.printStackTrace();
-        }
-        //triger event when there is a change to db e.g. to update a UI
-        database.addChangeListener(new Database.ChangeListener() {
-            @Override
-            public void changed(Database.ChangeEvent event) {
-                for (DocumentChange dc : event.getChanges()) {
-                    Log.i(this.getClass().getSimpleName(), "Document changed: " + dc.getDocumentId());
-                    notifyUI(database.getDocument(dc.getDocumentId()).getProperties());
-                }
-            }
-        });
-        return database;
-    }
 
     private void sendToMedic(){
 
