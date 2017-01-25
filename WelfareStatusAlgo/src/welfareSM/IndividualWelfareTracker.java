@@ -58,6 +58,7 @@ public class IndividualWelfareTracker {
 	
 	public WelfareStatus calculateWelfareStatus(JSONArray lastXsecondsData){
 		HashMap<String, Object> algoValues = processJSONDataArray(lastXsecondsData);
+		if (algoValues == null) return GREY;
 		
 		getHeartStatus((int)algoValues.get(HR));
 		getBreathStatus((int)algoValues.get(BR));
@@ -86,31 +87,58 @@ public class IndividualWelfareTracker {
 	
 	private HashMap<String, Object> processJSONDataArray(JSONArray lastXsecondsData){
 		//TODO: look at actual time length of data, 15 sec intervals for hr and br
-		int len = lastXsecondsData.length();
-		HashMap<String, Object> algoValues = new HashMap<String, Object>();
 		
+		int len = lastXsecondsData.length();
+		if (len == 0) return null;
+		
+		HashMap<String, Object> algoValues = new HashMap<String, Object>();
+		JSONObject lastEntry = new JSONObject();
 		try {
-			JSONObject lastEntry = lastXsecondsData.getJSONObject(len - 1);
-			algoValues.put(HR, lastEntry.getInt("heartRate"));
-			algoValues.put(BR,lastEntry.getInt("breathRate"));
-		} catch (JSONException e){
-			//do something
+			lastEntry = lastXsecondsData.getJSONObject(len - 1);
+		}
+		catch (JSONException e){
+			algoValues.put(HR, GREY);
+			algoValues.put(BR, GREY);
 		}
 		
-		JSONObject curr;
+		try{algoValues.put(HR, lastEntry.getInt("heartRate"));}
+		catch (JSONException e) {algoValues.put(HR, GREY);}
+		
+		try {algoValues.put(BR,lastEntry.getInt("breathRate"));}
+		catch (JSONException e){algoValues.put(BR, GREY);}
+		
+		JSONObject curr = new JSONObject(0);
 		float skinSum = 0, coreSum = 0;
+		int numValidSkinValues = 0, numValidCoreValues = 0;
+		
 		for (int i = 0; i < len; i++ )
 		{
-			try {
-				curr = lastXsecondsData.getJSONObject(i);
+			try {curr = lastXsecondsData.getJSONObject(i);}
+			catch (JSONException e){;}
+			try{
 				skinSum += curr.getInt("skinTemp");
+				numValidSkinValues++;
+			}
+			catch (JSONException e){
+				//don't count value
+			}
+			try {
 				coreSum += curr.getInt("coreTemp");
+				numValidCoreValues++;
 			} catch( JSONException e){
-				//do something
+				//don't count value
 			}
 		}
-		algoValues.put(CT, coreSum/len);
-		algoValues.put(ST, skinSum/len);
+		if (coreSum == 0 || numValidCoreValues == 0)
+			algoValues.put(CT, GREY);
+		else
+			algoValues.put(CT, coreSum/numValidCoreValues);
+		
+		if (skinSum == 0 || numValidSkinValues == 0)
+			algoValues.put(ST,  GREY);
+		else
+			algoValues.put(ST, skinSum/numValidSkinValues);
+		
 		return algoValues;
 	}
 	
