@@ -9,34 +9,44 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
+import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
 
+import org.json.JSONArray;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
+import welfareSM.IndividualWelfareTracker;
+import welfareSM.WelfareStatus;
+
+import static capstone.client.BackgroundDataSim.DB_UPDATE;
 
 /**
- Background algorithm thread
+ * Created by Grace on 2017-01-25.
  */
 
 public class BackgroundAlgo extends Service {
-
     private volatile HandlerThread mHandlerThread;
     private Handler mServiceHandler;
 
-    static final String DB_UPDATE = "DB_UPDATE";
+    private DBManager dbManager = null;
     static private BackgroundAlgo _backgroundAlgo = null;
-    private DBManager databseManager = null;
     private LocalBroadcastManager broadcaster = null;
 
     public static final int PERIOD = 15000;
 
-    //singleton to to pass an instance of BackgroundAlgo
+    public BackgroundAlgo() {
+    }
+
+    //singleton to
     static public BackgroundAlgo get_backgroundAlgo() {
         return _backgroundAlgo;
     }
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -47,13 +57,12 @@ public class BackgroundAlgo extends Service {
     public void onCreate() {
         super.onCreate();
         _backgroundAlgo = this;
-        broadcaster = LocalBroadcastManager.getInstance(this);
-
         // An Android handler thread internally operates on a looper.
-        mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
+        mHandlerThread = new HandlerThread("Algo.HandlerThread");
         mHandlerThread.start();
         // An Android service handler is a handler running on a specific background thread.
         mServiceHandler = new Handler(mHandlerThread.getLooper());
+        broadcaster = LocalBroadcastManager.getInstance(this);
     }
 
     @Override
@@ -66,7 +75,7 @@ public class BackgroundAlgo extends Service {
         mServiceHandler.post(new Runnable() {
             @Override
             public void run() {
-                run_algo();
+                calculateWellness();
             }
         });
         // Keep service around "sticky"
@@ -80,31 +89,34 @@ public class BackgroundAlgo extends Service {
         }
         broadcaster.sendBroadcast(intent);
     }
+    public void calculateWellness(){
+        IndividualWelfareTracker iwt = new IndividualWelfareTracker();
+        dbManager = new DBManager(this);
+        Database userDB = dbManager.getDatabase("data");
+        SimpleDateFormat keyFormat = new SimpleDateFormat("01/24/2017 HH:mm:ss.SSS");
+        JSONArray last15seconds = new JSONArray();
 
-    private void run_algo()
-    {
-        databseManager = new DBManager(this);
-        Database dataDB = databseManager.getDatabase("data");
-        QueryEnumerator rows = null;
+        Query query = userDB.createAllDocumentsQuery();
+        query.setDescending(true);
+        Date now = new Date();
+        String startKey = keyFormat.format(now);
+        now.setTime(now.getTime() - 15000);
+        String endKey = keyFormat.format(now);
+        query.setStartKey(new String(startKey));
+        query.setEndKey(new String(endKey));
         try {
-            rows =  dataDB.createAllDocumentsQuery().run();
-        } catch (CouchbaseLiteException e) {
-            e.printStackTrace();
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                QueryRow row = it.next();
+                last15seconds.put(row.getDocument().toString());
+            }
         }
-        for (Iterator<QueryRow> it = rows; it.hasNext(); ) {
-            QueryRow row = it.next();
-            Document doc = row.getDocument();
-            Map<String, Object> result = doc.getProperties();
-            System.out.println(result.values());
+        catch (CouchbaseLiteException e)
+        {
+            //handle this
         }
-
-        /******************************************************************************
-         ************************** Write algorithms here******************************
-         * ****************************************************************************
-         * */
-
+        WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
     }
 
+
 }
-
-
