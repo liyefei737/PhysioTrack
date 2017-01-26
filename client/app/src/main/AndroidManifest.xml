@@ -17,7 +17,12 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".BackgroundDataSim"
+        android:name=".BackgroundDataSim"
+        android:enabled="true"
+        android:exported="false"
+        android:stopWithTask="false"></service>
+        <service
+            android:name=".BackgroundAlgo"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false"></service>

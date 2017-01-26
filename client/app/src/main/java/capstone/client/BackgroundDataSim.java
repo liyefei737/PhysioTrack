@@ -10,16 +10,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -115,13 +110,8 @@ public class BackgroundDataSim extends Service {
     private void dataSim()
     {
         databseManager = new DBManager(this);
-        String currentUserID = databseManager.getCurrentUserID();
-        if (currentUserID == null){
-            //does not do simulation, no user info entered
-            return;
-        }
 
-        Database userDB = databseManager.getDatabase(currentUserID);
+        Database dataDB = databseManager.getDatabase("data");
         String phpRequestScriptURL = "http://atmacausa.com/ReadRequest.php";
         JSONObject r;
         String responseStr;
@@ -132,25 +122,25 @@ public class BackgroundDataSim extends Service {
             try {
                 r = new JSONArray(responseStr).getJSONObject(0);
 
-                //for now hard-coded medic ip and port
-                String MedicURL ="http://100.64.207.208:8080";
-                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    VolleyLog.v("Response:%n %s", response.toString(4));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.e("Error: ", error.getStackTrace());
-                    }
-                });
-                rQueue.add(jsonRequest);
+//                //for now hard-coded medic ip and port
+//                String MedicURL ="http://100.64.207.208:8080";
+//                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r,
+//                        new Response.Listener<JSONObject>() {
+//                            @Override
+//                            public void onResponse(JSONObject response) {
+//                                try {
+//                                    VolleyLog.v("Response:%n %s", response.toString(4));
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        VolleyLog.e("Error: ", error.getStackTrace());
+//                    }
+//                });
+//                rQueue.add(jsonRequest);
                 //Document doc = database.getDocument(r.getString("DateTime"));
                 Map<String, Object> properties = new HashMap<String, Object>();
                 properties.put("timeCreated", r.getString("DateTime"));
@@ -165,7 +155,7 @@ public class BackgroundDataSim extends Service {
                 //properties.put("motion", r.getString("Motion"));
                 Log.i("saving data", properties.toString());
 
-                Document doc = userDB.createDocument();
+                Document doc = dataDB.createDocument();
                 doc.putProperties(properties);
             } catch (Exception e) {
                 e.printStackTrace();
