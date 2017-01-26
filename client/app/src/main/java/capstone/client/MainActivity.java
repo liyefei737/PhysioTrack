@@ -12,12 +12,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //start two background thread 1. to get simulated data 2. to run algorithms on data.
+
+        /***
+         * starting background threads
+         */
         Intent dataSim = new Intent();
         dataSim.setClass(this, BackgroundDataSim.class);
         startService(dataSim);
-        Intent algorithm = new Intent();
-        algorithm.setClass(this, BackgroundAlgo.class);
-        startService(algorithm);
+        Intent sleepAlgo = new Intent();
+        sleepAlgo.setClass(this, BackgroundSleepAlgo.class);
+        startService(sleepAlgo);
+        Intent wellnessAlgo = new Intent();
+        wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
+        startService(wellnessAlgo);
     }
 }

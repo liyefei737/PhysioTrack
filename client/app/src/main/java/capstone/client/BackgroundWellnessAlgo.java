@@ -16,26 +16,24 @@ import com.couchbase.lite.QueryRow;
 import java.util.Iterator;
 import java.util.Map;
 
-
 /**
- Background algorithm thread
+ * Background Thread for computing the wellness algorithm
  */
 
-public class BackgroundAlgo extends Service {
-
+public class BackgroundWellnessAlgo  extends Service {
     private volatile HandlerThread mHandlerThread;
     private Handler mServiceHandler;
 
     static final String DB_UPDATE = "DB_UPDATE";
-    static private BackgroundAlgo _backgroundAlgo = null;
+    static private BackgroundWellnessAlgo _BackgroundWellnessAlgo = null;
     private DBManager databseManager = null;
     private LocalBroadcastManager broadcaster = null;
 
     public static final int PERIOD = 15000;
 
-    //singleton to to pass an instance of BackgroundAlgo
-    static public BackgroundAlgo get_backgroundAlgo() {
-        return _backgroundAlgo;
+    //singleton to to pass an instance of BackgroundWellnessAlgo
+    static public BackgroundWellnessAlgo get_BackgroundWellnessAlgo() {
+        return _BackgroundWellnessAlgo;
     }
 
     @Override
@@ -46,7 +44,7 @@ public class BackgroundAlgo extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        _backgroundAlgo = this;
+        _BackgroundWellnessAlgo = this;
         broadcaster = LocalBroadcastManager.getInstance(this);
 
         // An Android handler thread internally operates on a looper.
@@ -97,14 +95,10 @@ public class BackgroundAlgo extends Service {
             Map<String, Object> result = doc.getProperties();
             System.out.println(result.values());
         }
-
         /******************************************************************************
          ************************** Write algorithms here******************************
          * ****************************************************************************
          * */
 
     }
-
 }
-
-
