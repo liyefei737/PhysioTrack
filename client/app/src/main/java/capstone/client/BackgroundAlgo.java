@@ -89,7 +89,8 @@ public class BackgroundAlgo extends Service {
         }
         broadcaster.sendBroadcast(intent);
     }
-    public void calculateWellness(){
+
+    public void calculateWellness() {
         IndividualWelfareTracker iwt = new IndividualWelfareTracker();
         dbManager = new DBManager(this);
         Database userDB = dbManager.getDatabase("data");
@@ -110,13 +111,60 @@ public class BackgroundAlgo extends Service {
                 QueryRow row = it.next();
                 last15seconds.put(row.getDocument().toString());
             }
-        }
-        catch (CouchbaseLiteException e)
-        {
+        } catch (CouchbaseLiteException e) {
             //handle this
         }
         WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
     }
 
+    public void calculateSleep() {
+        IndividualWelfareTracker iwt = new IndividualWelfareTracker();
+        dbManager = new DBManager(this);
+        Database userDB = dbManager.getDatabase("data");
+        SimpleDateFormat keyFormat = new SimpleDateFormat("01/24/2017 HH:mm:ss.SSS");
+        JSONArray last8seconds = new JSONArray();
 
+        Query query = userDB.createAllDocumentsQuery();
+        query.setDescending(true);
+        Date now = new Date();
+        String startKey = keyFormat.format(now);
+        now.setTime(now.getTime() - 8000);
+        String endKey = keyFormat.format(now);
+        query.setStartKey(new String(startKey));
+        query.setEndKey(new String(endKey));
+        try {
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                QueryRow row = it.next();
+                last8seconds.put(row.getDocument().toString());
+            }
+        } catch (CouchbaseLiteException e) {
+        }
+        int thres = 1;
+        int val0 = 0.04 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n - 4).x, 2) + Math.pow(last7seconds.getJSONObject(n - 4).y, 2) + Math.pow(last7seconds.getJSONObject(n - 4).z, 2))
+                + 0.04 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n - 3).x, 2) + Math.pow(last7seconds.getJSONObject(n - 3).y, 2) + Math.pow(last7seconds.getJSONObject(n - 3).z, 2))
+                + 0.2 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n - 2).x, 2) + Math.pow(last7seconds.getJSONObject(n - 2).y, 2) + Math.pow(last7seconds.getJSONObject(n - 2).z, 2))
+                + 0.2 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n - 1).x, 2) + Math.pow(last7seconds.getJSONObject(n - 1).y, 2) + Math.pow(last7seconds.getJSONObject(n - 1).z, 2))
+                + 0.2 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n).x, 2) + Math.pow(last7seconds.getJSONObject(n).y, 2) + Math.pow(last7seconds.getJSONObject(n).z, 2))
+                + 0.2 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n + 1).x, 2) + Math.pow(last7seconds.getJSONObject(n + 1).y, 2) + Math.pow(last7seconds.getJSONObject(n + 1).z, 2))
+                + 0.04 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n + 2).x, 2) + Math.pow(last7seconds.getJSONObject(n + 2).y, 2) + Math.pow(last7seconds.getJSONObject(n + 2).z, 2)
+                + 0.04 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n + 3).x, 2) + Math.pow(last7seconds.getJSONObject(n + 3).y, 2) + Math.pow(last7seconds.getJSONObject(n + 3).z, 2));
+
+//        for (int x = 0; x < 8; x = x + 1) {
+//            JSONArray last7seconds = new JSONArray();
+//            for (int k = 0; k < 7; k = k + 1) {
+//                last7seconds.put(last7seconds.getJSONObject(k));
+//            }
+//            last7seconds
+//        }
+
+        if (val0 > thres) {
+            System.err.println("awake");
+        } else {
+            System.err.println("sleeping");
+
+        }
+
+        WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
+    }
 }
