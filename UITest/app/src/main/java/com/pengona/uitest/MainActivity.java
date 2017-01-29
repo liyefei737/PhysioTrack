@@ -15,9 +15,11 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
 
     private int[] mTabsIcons = {
-            R.drawable.ic_recents_selector,
-            R.drawable.ic_favorite_selector,
-            R.drawable.ic_place_selector};
+            R.drawable.menu_icons_red,
+            R.drawable.home_icon,
+            R.drawable.home_icon,
+            R.drawable.home_icon,
+            R.drawable.home_icon};
 
 
     @Override
@@ -51,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        public final int PAGE_COUNT = 3;
+        public final int PAGE_COUNT = 5;
 
-        private final String[] mTabsTitle = {"Recents", "Favorites", "Nearby"};
+        private final String[] mTabsTitle = {"Heart", "Lung", "Home", "Skin","Core"};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -72,15 +74,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int pos) {
             switch (pos) {
-
                 case 0:
                     return PageFragment.newInstance(1);
-
                 case 1:
                     return PageFragment.newInstance(2);
                 case 2:
                     return PageFragment.newInstance(3);
-
+                case 3:
+                    return PageFragment.newInstance(4);
+                case 4:
+                    return PageFragment.newInstance(5);
             }
             return null;
         }
