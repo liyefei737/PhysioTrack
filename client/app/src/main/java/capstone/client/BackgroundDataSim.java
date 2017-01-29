@@ -39,7 +39,7 @@ This class does:
  * on PDA side there are two ways a algorithm can get a hold of the data it needs:
  * 1. process data as data are being generated. For this option you can add the algorithm in this file
  * 2. query the data base every x seconds to compute the the result from e.g. the last 10 entries or the last 10 seconds....
- * for option two you can write the algorithms in "BackgroundAlgo" file which is a separate background thread
+ * for option two you can write the algorithms in "BackgroundSleepAlgo" or "BackgroundWellnessAlgo" file which is a separate background thread
  */
 
 public class BackgroundDataSim extends Service {
