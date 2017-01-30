@@ -9,12 +9,19 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
+import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
 
+import org.json.JSONArray;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
+
+import welfareSM.IndividualWelfareTracker;
+import welfareSM.WelfareStatus;
 
 /**
  * Background Thread for computing the wellness algorithm
@@ -26,7 +33,7 @@ public class BackgroundWellnessAlgo  extends Service {
 
     static final String DB_UPDATE = "DB_UPDATE";
     static private BackgroundWellnessAlgo _BackgroundWellnessAlgo = null;
-    private DBManager databseManager = null;
+    private DBManager dbManager = null;
     private LocalBroadcastManager broadcaster = null;
 
     public static final int PERIOD = 15000;
@@ -64,7 +71,7 @@ public class BackgroundWellnessAlgo  extends Service {
         mServiceHandler.post(new Runnable() {
             @Override
             public void run() {
-                run_algo();
+                calculateWellness();
             }
         });
         // Keep service around "sticky"
@@ -79,26 +86,30 @@ public class BackgroundWellnessAlgo  extends Service {
         broadcaster.sendBroadcast(intent);
     }
 
-    private void run_algo()
-    {
-        databseManager = new DBManager(this);
-        Database dataDB = databseManager.getDatabase("data");
-        QueryEnumerator rows = null;
-        try {
-            rows =  dataDB.createAllDocumentsQuery().run();
-        } catch (CouchbaseLiteException e) {
-            e.printStackTrace();
-        }
-        for (Iterator<QueryRow> it = rows; it.hasNext(); ) {
-            QueryRow row = it.next();
-            Document doc = row.getDocument();
-            Map<String, Object> result = doc.getProperties();
-            System.out.println(result.values());
-        }
-        /******************************************************************************
-         ************************** Write algorithms here******************************
-         * ****************************************************************************
-         * */
+    public void calculateWellness() {
+        IndividualWelfareTracker iwt = new IndividualWelfareTracker();
+        dbManager = new DBManager(this);
+        Database userDB = dbManager.getDatabase("data");
+        SimpleDateFormat keyFormat = new SimpleDateFormat("01/24/2017 HH:mm:ss.SSS");
+        JSONArray last15seconds = new JSONArray();
 
+        Query query = userDB.createAllDocumentsQuery();
+        query.setDescending(true);
+        Date now = new Date();
+        String startKey = keyFormat.format(now);
+        now.setTime(now.getTime() - 15000);
+        String endKey = keyFormat.format(now);
+        query.setStartKey(new String(startKey));
+        query.setEndKey(new String(endKey));
+        try {
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                QueryRow row = it.next();
+                last15seconds.put(row.getDocument().toString());
+            }
+        } catch (CouchbaseLiteException e) {
+            //handle this
+        }
+        WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
     }
 }
