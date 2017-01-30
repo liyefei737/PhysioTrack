@@ -13,6 +13,10 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import static capstone.client.R.id.tab_heart;
+import static capstone.client.R.id.tab_home;
+import static capstone.client.R.id.tab_skin;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView messageView;
@@ -27,12 +31,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         messageView =(TextView) findViewById(R.id.messageView);
-
         BottomBar bottomBar=(BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 messageView.setText(TabMessage.get(tabId, false));
+                if(tabId==tab_home){
+                    Toast.makeText(getApplicationContext(), "Heart Rate Page",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this, Soldier.class);
+                    startActivity(intent);
+                }
+                if(tabId == tab_skin){
+                    Toast.makeText(getApplicationContext(), "Skin Temp page",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this, Skin.class);
+                    startActivity(intent);
+                }
             }
         });
         bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
