@@ -117,7 +117,7 @@ public class BackgroundAlgo extends Service {
         WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
     }
 
-    public void calculateSleep() {
+    /*public void calculateSleep() {
         IndividualWelfareTracker iwt = new IndividualWelfareTracker();
         dbManager = new DBManager(this);
         Database userDB = dbManager.getDatabase("data");
@@ -166,5 +166,5 @@ public class BackgroundAlgo extends Service {
         }
 
         WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
-    }
+    }*/
 }
