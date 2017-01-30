@@ -60,8 +60,8 @@ public class IndividualWelfareTracker {
 		HashMap<String, Object> algoValues = processJSONDataArray(lastXsecondsData);
 		if (algoValues == null) return GREY;
 		
-		getHeartStatus((int)algoValues.get(HR));
-		getBreathStatus((int)algoValues.get(BR));
+		getHeartStatus((int) algoValues.get(HR));
+		getBreathStatus((int) algoValues.get(BR));
 		getSkinStatus((float)algoValues.get(ST));
 		getCoreStatus((float)algoValues.get(CT));
 
@@ -92,28 +92,29 @@ public class IndividualWelfareTracker {
 		if (len == 0) return null;
 		
 		HashMap<String, Object> algoValues = new HashMap<String, Object>();
-		JSONObject lastEntry = new JSONObject();
+		JSONObject lastEntry = null;
 		try {
-			lastEntry = lastXsecondsData.getJSONObject(len - 1);
+			String entryTemp = lastXsecondsData.getString(len - 1);
+			lastEntry = new JSONObject(entryTemp);
 		}
 		catch (JSONException e){
-			algoValues.put(HR, GREY);
-			algoValues.put(BR, GREY);
+			algoValues.put(HR, 0);
+			algoValues.put(BR, 0);
 		}
 		
 		try{algoValues.put(HR, lastEntry.getInt("heartRate"));}
-		catch (JSONException e) {algoValues.put(HR, GREY);}
+		catch (JSONException e) {algoValues.put(HR,0);}
 		
 		try {algoValues.put(BR,lastEntry.getInt("breathRate"));}
-		catch (JSONException e){algoValues.put(BR, GREY);}
+		catch (JSONException e){algoValues.put(BR, 0);}
 		
-		JSONObject curr = new JSONObject(0);
+		JSONObject curr = null;
 		float skinSum = 0, coreSum = 0;
 		int numValidSkinValues = 0, numValidCoreValues = 0;
 		
 		for (int i = 0; i < len; i++ )
 		{
-			try {curr = lastXsecondsData.getJSONObject(i);}
+			try {curr = new JSONObject(lastXsecondsData.getString(i));}
 			catch (JSONException e){;}
 			try{
 				skinSum += curr.getInt("skinTemp");
@@ -130,12 +131,12 @@ public class IndividualWelfareTracker {
 			}
 		}
 		if (coreSum == 0 || numValidCoreValues == 0)
-			algoValues.put(CT, GREY);
+			algoValues.put(CT, 0.0f);
 		else
 			algoValues.put(CT, coreSum/numValidCoreValues);
 		
 		if (skinSum == 0 || numValidSkinValues == 0)
-			algoValues.put(ST,  GREY);
+			algoValues.put(ST,  0.0f);
 		else
 			algoValues.put(ST, skinSum/numValidSkinValues);
 		
@@ -147,9 +148,9 @@ public class IndividualWelfareTracker {
 		WelfareStatus next;
 		if (heartRate <= 0)
 			next = GREY;
-		if (heartRate < hrRange.get(0) || heartRate > hrRange.get(3))
+		else if (heartRate < hrRange.get(0) || heartRate > hrRange.get(3))
 			next = RED;
-		if (heartRate < hrRange.get(1) || heartRate > hrRange.get(2))
+		else if (heartRate < hrRange.get(1) || heartRate > hrRange.get(2))
 			next = YELLOW;
 		else
 			next = GREEN;
@@ -162,7 +163,7 @@ public class IndividualWelfareTracker {
 		WelfareStatus next;
 		if (breathRate <= 0)
 			next = GREY;
-		if (breathRate < brRange.get(0) || breathRate > brRange.get(1))
+		else if (breathRate < brRange.get(0) || breathRate > brRange.get(1))
 			next = RED;
 		else
 			next = GREEN;
@@ -176,9 +177,9 @@ public class IndividualWelfareTracker {
 		WelfareStatus next;
 		if (skinTemp <= 0)
 			next = GREY;
-		if (skinTemp < stRange.get(0) || skinTemp> stRange.get(3))
+		else if (skinTemp < stRange.get(0) || skinTemp> stRange.get(3))
 			next = RED;
-		if (skinTemp < stRange.get(1) || skinTemp > stRange.get(2))
+		else if (skinTemp < stRange.get(1) || skinTemp > stRange.get(2))
 			next = YELLOW;
 		else
 			next = GREEN;
@@ -192,9 +193,9 @@ public class IndividualWelfareTracker {
 		WelfareStatus next;
 		if (coreTemp <= 15)
 			next = GREY;
-		if (coreTemp < ctRange.get(0) || coreTemp > ctRange.get(3))
+		else if (coreTemp < ctRange.get(0) || coreTemp > ctRange.get(3))
 			next = RED;
-		if (coreTemp < ctRange.get(1) || coreTemp > ctRange.get(2))
+		else if (coreTemp < ctRange.get(1) || coreTemp > ctRange.get(2))
 			next = YELLOW;
 		else
 			next = GREEN;
