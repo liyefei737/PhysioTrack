@@ -148,7 +148,7 @@ public class BackgroundAlgo extends Service {
                 + 0.2 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n).x, 2) + Math.pow(last7seconds.getJSONObject(n).y, 2) + Math.pow(last7seconds.getJSONObject(n).z, 2))
                 + 0.2 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n + 1).x, 2) + Math.pow(last7seconds.getJSONObject(n + 1).y, 2) + Math.pow(last7seconds.getJSONObject(n + 1).z, 2))
                 + 0.04 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n + 2).x, 2) + Math.pow(last7seconds.getJSONObject(n + 2).y, 2) + Math.pow(last7seconds.getJSONObject(n + 2).z, 2)
-                + 0.04 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n + 3).x, 2) + Math.pow(last7seconds.getJSONObject(n + 3).y, 2) + Math.pow(last7seconds.getJSONObject(n + 3).z, 2));
+                + 0.04 * Math.sqrt(Math.pow(last7seconds.getJSONObject(n + 3).x, 2) + Math.pow(last7seconds.getJSONObject(n + 3).y, 2) + Math.pow(last7seconds.getJSONObject(n + 3).z, 2)));
 
 //        for (int x = 0; x < 8; x = x + 1) {
 //            JSONArray last7seconds = new JSONArray();
