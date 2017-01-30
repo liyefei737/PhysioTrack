@@ -41,6 +41,8 @@ dependencies {
     debugCompile 'im.dino:dbinspector:3.4.0@aar'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.couchbase.lite:couchbase-lite-android:+'
+    compile 'com.roughike:bottom-bar:2.1.1'
+    compile 'com.android.support:design:25.1.0'
 }
 
 
