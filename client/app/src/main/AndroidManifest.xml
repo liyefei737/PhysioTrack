@@ -35,7 +35,10 @@
             android:stopWithTask="false" />
 
         <activity android:name=".Soldier" />
-        <activity android:name=".Skin"></activity>
+        <activity android:name=".Skin" />
+        <activity android:name=".Heart" />
+        <activity android:name=".Core" />
+        <activity android:name=".Lung"></activity>
     </application>
 
 </manifest>

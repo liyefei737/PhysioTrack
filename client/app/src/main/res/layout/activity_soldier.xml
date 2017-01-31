@@ -8,6 +8,15 @@
     android:background="@color/bg"
     >
 
+    <TextView
+        android:id="@+id/messageLung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/bg"
+        />
+
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -110,23 +119,4 @@
             android:textColor="@color/bg"/>
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.roughike.bottombar.BottomBar
-            android:id="@+id/bottomBar"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_alignParentBottom="true"
-            android:background="#FFFFFF"
-            app:bb_tabXmlResource="@xml/bottom"
-            app:bb_behavior="shifting"
-            app:bb_inActiveTabAlpha="0.3"
-            app:bb_inActiveTabColor="@color/inActive"
-            app:bb_activeTabColor="@color/active"
-            app:bb_titleTextAppearance="@style/CustomTitleFont"/>
-
-    </RelativeLayout>
 </LinearLayout>

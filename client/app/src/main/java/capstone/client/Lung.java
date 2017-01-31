@@ -15,47 +15,45 @@ import static capstone.client.R.id.tab_home;
 import static capstone.client.R.id.tab_lung;
 import static capstone.client.R.id.tab_skin;
 
-public class Skin extends AppCompatActivity {
-
+public class Lung extends AppCompatActivity {
     private TextView messageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_skin);
+        setContentView(R.layout.activity_lung);
+
+
         // Bottom navigation menu
-        messageView =(TextView) findViewById(R.id.messageSkin);
+        messageView =(TextView) findViewById(R.id.messageLung);
         BottomBar bottomBar=(BottomBar) findViewById(R.id.bottomBar);
 
-        bottomBar.setDefaultTab(R.id.tab_skin);
+        bottomBar.setDefaultTab(R.id.tab_lung);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 messageView.setText(TabMessage.get(tabId, false));
                 if(tabId==tab_home){
                     //Toast.makeText(getApplicationContext(), "Heart Rate Page",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Skin.this, MainActivity.class);
-                    startActivity(intent);
-                }
-                if(tabId == tab_lung){
-                    //Toast.makeText(getApplicationContext(), "Skin Temp page",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Skin.this, Lung.class);
+                    Intent intent = new Intent(Lung.this, MainActivity.class);
                     startActivity(intent);
                 }
                 if(tabId == tab_heart){
                     //Toast.makeText(getApplicationContext(), "Skin Temp page",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Skin.this, Heart.class);
+                    Intent intent = new Intent(Lung.this, Heart.class);
+                    startActivity(intent);
+                }
+                if(tabId == tab_skin){
+                    //Toast.makeText(getApplicationContext(), "Skin Temp page",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Lung.this, Skin.class);
                     startActivity(intent);
                 }
                 if(tabId == tab_core){
                     //Toast.makeText(getApplicationContext(), "Skin Temp page",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Skin.this, Core.class);
+                    Intent intent = new Intent(Lung.this, Core.class);
                     startActivity(intent);
                 }
             }
         });
 
     }
-
-
-
 }
