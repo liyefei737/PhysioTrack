@@ -14,6 +14,7 @@ import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -95,21 +96,39 @@ public class BackgroundWellnessAlgo  extends Service {
 
         Query query = userDB.createAllDocumentsQuery();
         query.setDescending(true);
-        Date now = new Date();
-        String startKey = keyFormat.format(now);
-        now.setTime(now.getTime() - 15000);
-        String endKey = keyFormat.format(now);
-        query.setStartKey(new String(startKey));
-        query.setEndKey(new String(endKey));
-        try {
-            QueryEnumerator result = query.run();
-            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
-                QueryRow row = it.next();
-                last15seconds.put(row.getDocument().toString());
+        while (true) {
+            Date now = new Date();
+            //now.setTime(now.getTime() - (1800000)); //half an hour ago because simulater is slow
+            int millis = (int)(Math.ceil((double)((now.getTime() % 1000)/40)) * 40);
+
+            String startKey = keyFormat.format(now) + String.format("%03d",millis) ;
+            now.setTime(now.getTime() - 1000);
+            String endKey = keyFormat.format(now)+ String.format("%03d",millis);
+            try {
+                //query.setStartKey(String.valueOf(keyFormat.parse(startKey).getTime()));
+                //query.setEndKey(String.valueOf(keyFormat.parse(endKey).getTime()));
             }
-        } catch (CouchbaseLiteException e) {
-            //handle this
+            catch(Exception e){
+                //all docs query
+            }
+            try {
+                QueryEnumerator result = query.run();
+                for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                    QueryRow row = it.next();
+                    Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
+                    last15seconds.put(new JSONObject(tmpMap));
+                }
+            } catch (CouchbaseLiteException e) {
+                //handle this
+            }
+            WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
+            try {
+                Thread.sleep(15000);
+            }
+            catch (Exception e)
+            {
+                //
+            }
         }
-        WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
     }
 }

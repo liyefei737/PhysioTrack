@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -26,6 +25,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -116,9 +117,18 @@ public class BackgroundDataSim extends Service {
         JSONObject r;
         String responseStr;
 
-        for (int i = 1; i<4735;i++) {
-            responseStr = doRemoteQuery(phpRequestScriptURL, i);
-            Log.i(this.getClass().toString(), responseStr);
+        SimpleDateFormat keyFormat = new SimpleDateFormat("01/24/2017 HH:mm:ss.");
+
+        Date now = new Date();
+        String dateID = keyFormat.format(now);
+        int millis = (int) Math.ceil((double)((now.getTime() % 1000) / 40.0)) * 40;
+
+        while(true) {
+            if (millis == 1000)
+                millis = 0;
+            String updateDateID = dateID + String.format ("%03d", millis);
+            responseStr = doRemoteQuery(phpRequestScriptURL, updateDateID);
+            //Log.i(this.getClass().toString(), responseStr);
             try {
                 r = new JSONArray(responseStr).getJSONObject(0);
 
@@ -141,7 +151,9 @@ public class BackgroundDataSim extends Service {
 //                    }
 //                });
 //                rQueue.add(jsonRequest);
-                //Document doc = database.getDocument(r.getString("DateTime"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+                Date d = dateFormat.parse(r.getString("DateTime"));
+                Document doc = dataDB.getDocument(String.valueOf(d.getTime()));
                 Map<String, Object> properties = new HashMap<String, Object>();
                 properties.put("timeCreated", r.getString("DateTime"));
                 properties.put("accX", r.getString("AccX"));
@@ -149,17 +161,19 @@ public class BackgroundDataSim extends Service {
                 properties.put("accZ", r.getString("AccZ"));
                 properties.put("skinTemp", r.getString("Skin_Temp"));
                 properties.put("coreTemp", r.getString("Core_Temp"));
-                //properties.put("heartRate", r.getString("ECG heart rate"));
-                //properties.put("breathRate", r.getString("Belt Breathing rate"));
-                //properties.put("bodyPosition", r.getString("BodyPosition"));
-                //properties.put("motion", r.getString("Motion"));
-                Log.i("saving data", properties.toString());
+                properties.put("heartRate", r.getString("ECG Heart Rate"));
+                properties.put("breathRate", r.getString("Belt Breathing Rate"));
+                properties.put("bodyPosition", r.getString("BodyPosition"));
+                properties.put("motion", r.getString("Motion"));
 
-                Document doc = dataDB.createDocument();
                 doc.putProperties(properties);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            now.setTime(now.getTime() + 40);
+            int nextMillis = (int) Math.ceil((double)((now.getTime() % 1000)/ 40.0)) * 40;
+            millis = nextMillis;
+            dateID = keyFormat.format(now);
         }
     }
 
@@ -167,7 +181,7 @@ public class BackgroundDataSim extends Service {
     private void sendToMedic(){
 
     }
-    private String doRemoteQuery(String phpRequestURL, int id){
+    private String doRemoteQuery(String phpRequestURL, String id){
         URL url=null;
         HttpURLConnection conn = null;
         try {
@@ -191,9 +205,8 @@ public class BackgroundDataSim extends Service {
             e.printStackTrace();
         }
         try {
-            Uri.Builder builder = new Uri.Builder().appendQueryParameter("searchQuery", String.valueOf(id));
+            Uri.Builder builder = new Uri.Builder().appendQueryParameter("searchQuery", id);
             String query = builder.build().getEncodedQuery();
-            Log.i("info", query);
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
             writer.write(query);
