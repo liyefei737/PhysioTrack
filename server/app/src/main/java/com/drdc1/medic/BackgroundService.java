@@ -6,16 +6,10 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.couchbase.lite.CouchbaseLiteException;
-import com.couchbase.lite.Database;
-import com.couchbase.lite.DatabaseOptions;
-import com.couchbase.lite.DocumentChange;
 import com.couchbase.lite.Manager;
-import com.couchbase.lite.android.AndroidContext;
 
 import java.io.IOException;
 import java.util.Map;
-
 
 /**********************************************************************************************
  * TODO: make the server and database running while app is "swiped away" by making it a service
@@ -27,7 +21,7 @@ public class BackgroundService extends Service {
 
     static final String DB_UPDATE = "DB_UPDATE";
     static private BackgroundService _backgroundService;
-    static private Database database;
+    static private DBManager dbManager;
     private Server server;
     private Manager manager;
     private LocalBroadcastManager broadcaster;
@@ -36,7 +30,6 @@ public class BackgroundService extends Service {
     }
 
     static public BackgroundService getBackgroundService(){return _backgroundService;}
-    static public Database getDatabase(){return database;}
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -46,9 +39,8 @@ public class BackgroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        openDatabase("debug");
+        dbManager = new DBManager(this);
         server = new Server(8080);
-        server.setDatabaseInstance(database);
         try {
             server.start();
         } catch (IOException e) {
@@ -79,28 +71,4 @@ public class BackgroundService extends Service {
         broadcaster.sendBroadcast(intent);
     }
 
-    private void openDatabase(String dbName) {
-        DatabaseOptions options = new DatabaseOptions();
-        options.setCreate(true);
-        try {
-            manager = new Manager(new AndroidContext(getApplicationContext()), Manager.DEFAULT_OPTIONS);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            database = manager.openDatabase(dbName, options);
-        } catch (CouchbaseLiteException e) {
-            e.printStackTrace();
-        }
-        //triger event when there is a change to db e.g. to update a UI
-        database.addChangeListener(new Database.ChangeListener() {
-            @Override
-            public void changed(Database.ChangeEvent event) {
-                for(DocumentChange dc:event.getChanges()){
-                    Log.i(this.getClass().getSimpleName(), "Document changed: "+ dc.getDocumentId());
-                    notifyUI(database.getDocument(dc.getDocumentId()).getProperties());
-                }
-            }
-        });
-    }
 }

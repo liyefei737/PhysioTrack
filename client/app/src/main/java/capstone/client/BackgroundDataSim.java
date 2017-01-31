@@ -9,6 +9,10 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
@@ -134,24 +138,27 @@ public class BackgroundDataSim extends Service {
                 r = new JSONArray(responseStr).getJSONObject(0);
 
 //                //for now hard-coded medic ip and port
-//                String MedicURL ="http://100.64.207.208:8080";
-//                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r,
-//                        new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    VolleyLog.v("Response:%n %s", response.toString(4));
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        VolleyLog.e("Error: ", error.getStackTrace());
-//                    }
-//                });
-//                rQueue.add(jsonRequest);
+               //TODO: WAYNE: when soldier name, id, etc, is set attach to request
+                //r.put ("name",...
+                //r.put("soldierID",...
+                String MedicURL ="http://100.64.207.208:8080";
+                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    VolleyLog.v("Response:%n %s", response.toString(4));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error: ", error.getStackTrace());
+                    }
+                });
+                rQueue.add(jsonRequest);
 
                 Document doc = dataDB.getDocument(r.getString("DateTime"));
                 final JSONObject JSONrow = r;
