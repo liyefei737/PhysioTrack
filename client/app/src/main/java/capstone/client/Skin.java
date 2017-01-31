@@ -26,7 +26,7 @@ public class Skin extends AppCompatActivity {
         messageView =(TextView) findViewById(R.id.messageSkin);
         BottomBar bottomBar=(BottomBar) findViewById(R.id.bottomBar);
 
-        bottomBar.setDefaultTab(R.id.tab_home);
+        bottomBar.setDefaultTab(R.id.tab_skin);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
