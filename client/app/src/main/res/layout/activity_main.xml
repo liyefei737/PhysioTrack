@@ -4,6 +4,19 @@
     android:layout_height="match_parent"
     android:background="@color/bg"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/myhealt_7"
+        android:layout_below="@+id/messageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-40dp"
+        android:id="@+id/imageView6" />
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
@@ -28,20 +41,22 @@
             app:srcCompat="@drawable/center"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:id="@+id/imageView2" />
-    </RelativeLayout>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/white_user_2"
-        android:id="@+id/imageButton"
-        android:background="@color/bg"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentEnd="true" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/white_user_2"
+            android:id="@+id/imageButton"
+            android:layout_marginTop="0dp"
+            android:background="@color/bg"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="13dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/messageView"
@@ -49,7 +64,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/bg"
-        android:layout_alignBottom="@+id/imageButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         />

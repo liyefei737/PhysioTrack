@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="bg">#000</color>
-    <color name="inActive">#DDAA00</color>
-    <color name="active">#00DDFF</color>
+    <color name="inActive">#000</color>
+    <color name="active">#000</color>
     <color name="white">#FFF</color>
     <color name="hint">#DDDDDD</color>
 
