@@ -40,7 +40,7 @@ public class BackgroundService extends Service {
     public void onCreate() {
         super.onCreate();
         dbManager = new DBManager(this);
-        server = new Server(8080);
+        server = new Server(8080, dbManager);
         try {
             server.start();
         } catch (IOException e) {

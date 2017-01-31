@@ -38,7 +38,7 @@ public class DBManager {
     }
 
     public boolean addSoldier(String ID, Map<String, Object> staticInfo){
-        if (_userInfoDB.getExistingDocument(ID) != null)
+        if (soldierInSystem(ID))
             //soldier exists in db already
             return false;
         try {
@@ -56,7 +56,7 @@ public class DBManager {
     }
 
     public boolean removeSoldier(String ID){
-        if (_userInfoDB.getExistingDocument(ID) == null)
+        if (!soldierInSystem(ID))
             //doesn't exist
             return false;
 
@@ -73,6 +73,19 @@ public class DBManager {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean soldierInSystem(String ID){
+        if (_userInfoDB.getExistingDocument(ID) == null){
+            return false;
+        }
+        return true;
+    }
+
+    public Database getSoldierDB(String ID){
+        if (soldierInSystem(ID))
+            return physioDataDBMap.get(ID);
+        return null;
     }
 
     private Database openDatabase(String dbName) {

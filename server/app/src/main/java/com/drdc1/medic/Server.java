@@ -25,9 +25,9 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class Server extends NanoHTTPD {
 
-    static private Database db;
+    static private DBManager dbManager;
 
-    public Server(int port) {
+    public Server(int port, DBManager dbManager) {
         super(port);
     }
 
@@ -46,15 +46,32 @@ public class Server extends NanoHTTPD {
         final String jsonStr = map.get("postData");
 
         try {
-            final JSONObject body = new JSONObject(jsonStr);;
-            Document doc = db.getDocument(body.getString("id"));
+            final JSONObject body = new JSONObject(jsonStr);
+            String soldierID = body.getString("soldierID");
+            if (!dbManager.soldierInSystem(soldierID)) {
+                Map<String,Object> infoMap = null;
+                infoMap.put("name", body.getString("name"));
+                infoMap.put("age", body.getString("age"));
+
+                dbManager.addSoldier(soldierID, infoMap);
+            }
+            Database db = dbManager.getSoldierDB(soldierID);
+            Document doc = db.getDocument(body.getString("DateTime"));
             doc.update(new Document.DocumentUpdater() {
                 @Override
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties = newRevision.getUserProperties();
                     try {
-                        properties.put("ECG1 (raw)", body.getString("ECG1 (raw)"));
-                        properties.put("ECG2 (raw)", body.getString("ECG2 (raw)"));
+                        properties.put("timeCreated", body.getString("DateTime"));
+                        properties.put("accX", body.getString("AccX"));
+                        properties.put("accY", body.getString("AccY"));
+                        properties.put("accZ", body.getString("AccZ"));
+                        properties.put("skinTemp", body.getString("Skin_Temp"));
+                        properties.put("coreTemp", body.getString("Core_Temp"));
+                        properties.put("heartRate", body.getString("ECG Heart Rate"));
+                        properties.put("breathRate", body.getString("Belt Breathing Rate"));
+                        properties.put("bodyPosition", body.getString("BodyPosition"));
+                        properties.put("motion", body.getString("Motion"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -93,10 +110,6 @@ public class Server extends NanoHTTPD {
         return newFixedLengthResponse(msg);
     }
 
-    public void setDatabaseInstance(Database newValue)
-    {
-        db = newValue;
-    }
 
     void dbWrite()
     {
