@@ -23,6 +23,47 @@
             android:textColor="@color/bg"
             />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/myhealt_7"
+            android:id="@+id/imageView8"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="-30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/skin_black"
+            android:id="@+id/imageView9"
+            android:layout_below="@+id/imageView8"
+            android:layout_alignLeft="@+id/imageView8"
+            android:layout_alignStart="@+id/imageView8"
+            />
+
+        <TextView
+            android:text="Current Core Temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:id="@+id/textView"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_below="@+id/imageView8"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/white_user_2"
+            android:id="@+id/imageView10"
+            android:layout_below="@+id/imageView8"
+            android:layout_alignRight="@+id/imageView8"
+            android:layout_alignEnd="@+id/imageView8" />
+
     </RelativeLayout>
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"

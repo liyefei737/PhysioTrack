@@ -6,7 +6,7 @@
     <color name="bg">#000</color>
     <color name="inActive">#000</color>
     <color name="active">#000</color>
-    <color name="white">#FFF</color>
+    <color name="white">#ffffff</color>
     <color name="hint">#DDDDDD</color>
 
 </resources>
