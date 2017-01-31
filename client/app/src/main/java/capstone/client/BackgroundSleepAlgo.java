@@ -102,7 +102,7 @@ public class BackgroundSleepAlgo extends Service {
             QueryRow row = it.next();
             Document doc = row.getDocument();
             Map<String, Object> result = doc.getProperties();
-            if (result.size() > 1) {
+            if (result.size() > 3) {
                 System.out.println(result.values());
                 saa[k] = new float[3];
                 saa[k][0] = Float.parseFloat((String) result.get("accX"));
@@ -126,18 +126,10 @@ public class BackgroundSleepAlgo extends Service {
 
                     }
                     k = 0;
-
                 }
             }
-
         }
-        /******************************************************************************
-         ************************** Write algorithms here******************************
-         * ****************************************************************************
-         * */
-
     }
-
 }
 
 

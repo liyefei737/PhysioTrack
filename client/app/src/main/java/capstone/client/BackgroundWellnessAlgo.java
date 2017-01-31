@@ -116,7 +116,7 @@ public class BackgroundWellnessAlgo  extends Service {
                 for (Iterator<QueryRow> it = result; it.hasNext(); ) {
                     QueryRow row = it.next();
                     Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
-                    if (tmpMap.size() > 1)
+                    if (tmpMap.size() > 3)
                         lastXseconds.put(new JSONObject(tmpMap));
                 }
             } catch (CouchbaseLiteException e) {
