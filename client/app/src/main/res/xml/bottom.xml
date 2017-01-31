@@ -2,11 +2,11 @@
 <tabs>
     <tab
         id="@+id/tab_heart"
-        icon="@drawable/home_icon"
+        icon="@drawable/heart"
         title="Heart" />
     <tab
         id="@+id/tab_lung"
-        icon="@drawable/home_icon"
+        icon="@drawable/lungs"
         title="Lung" />
     <tab
         id="@+id/tab_home"
@@ -14,10 +14,10 @@
         title="Home" />
     <tab
         id="@+id/tab_skin"
-        icon="@drawable/home_icon"
+        icon="@drawable/skin"
         title="Skin" />
     <tab
         id="@+id/tab_core"
-        icon="@drawable/home_icon"
+        icon="@drawable/core"
         title="Core" />
 </tabs>
