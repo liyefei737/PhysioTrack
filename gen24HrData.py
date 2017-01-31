@@ -45,9 +45,9 @@ def getAcceleration():
 		newAccZ = randint(-300, 300)
 	else:
 
-		newAccX = lastAccX + getSign() * (randint(0, 5))
-		newAccY = lastAccY + getSign() * (randint(0, 5))
-		newAccZ = lastAccZ + getSign() * (randint(0, 5))
+		newAccX = max(min(lastAccX + getSign() * (randint(0, 5)), 300), -300)
+		newAccY = max(min(lastAccY + getSign() * (randint(0, 5)), 300), -300)
+		newAccZ = max(min(lastAccZ + getSign() * (randint(0, 5)), 300), -300)
 
 	lastAccX = newAccX
 	lastAccY = newAccY
@@ -64,7 +64,7 @@ def getHeartRate():
 	if lastHR == 0:
 		newHR = randint(60, 80)
 	else:
-		newHR = lastHR + getSign()*randint(0,10)
+		newHR = max(min(lastHR + getSign()*randint(0,10), 250), 25)
 
 	lastHR = newHR
 	return str(newHR)
@@ -79,7 +79,7 @@ def getRespirationRate():
 	if lastRR == 0:
 		newRR = randint(12,18)
 	else:
-		newRR = lastRR + getSign()*randint(0,2)
+		newRR = max(min(lastRR + getSign()*randint(0,2), 90), 2)
 
 	lastRR = newRR
 	return str(newRR)
@@ -94,7 +94,7 @@ def getSkinTemp():
 	if lastST == 0.0:
 		newST = uniform(32.1, 36.0)
 	else:
-		newST = lastST + getSign()*uniform(0, 0.5)
+		newST = max(min(lastST + getSign()*uniform(0, 0.5), 55), 10)
 
 	lastST = newST
 	
@@ -111,7 +111,7 @@ def getCoreTemp():
 	if lastCT == 0.0:
 		newCT = uniform(36.1, 37.8)
 	else:
-		newCT = lastCT + getSign()*uniform(0, 0.5)
+		newCT = max(min(lastCT + getSign()*uniform(0, 0.5), 41), 30)
 
 	lastCT = newCT
 	return "{:.1f}".format(newCT)

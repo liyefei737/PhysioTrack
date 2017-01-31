@@ -9,9 +9,11 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
 import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
+import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,7 +39,6 @@ public class BackgroundWellnessAlgo  extends Service {
     private DBManager dbManager = null;
     private LocalBroadcastManager broadcaster = null;
 
-    public static final int PERIOD = 15000;
 
     //singleton to to pass an instance of BackgroundWellnessAlgo
     static public BackgroundWellnessAlgo get_BackgroundWellnessAlgo() {
@@ -91,22 +92,21 @@ public class BackgroundWellnessAlgo  extends Service {
         IndividualWelfareTracker iwt = new IndividualWelfareTracker();
         dbManager = new DBManager(this);
         Database userDB = dbManager.getDatabase("data");
-        SimpleDateFormat keyFormat = new SimpleDateFormat("01/24/2017 HH:mm:ss.SSS");
-        JSONArray last15seconds = new JSONArray();
-
+        JSONArray lastXseconds = new JSONArray();
+        Date now, XsecondsAgo;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
         Query query = userDB.createAllDocumentsQuery();
         query.setDescending(false);
         while (true) {
-            Date now = new Date();
-            //now.setTime(now.getTime() - (1800000)); //half an hour ago because simulater is slow
-            int millis = (int)(Math.ceil((double)((now.getTime() % 1000)/40)) * 40);
-
-            String startKey = keyFormat.format(now) + String.format("%03d",millis) ;
-            now.setTime(now.getTime() - 1000);
-            String endKey = keyFormat.format(now)+ String.format("%03d",millis);
+            now = new Date();
+            XsecondsAgo = new Date();
+            XsecondsAgo.setTime(now.getTime() - 15000);
+            int millis = (int) (Math.ceil((double)((now.getTime() %1000) /160.0)) * 160);
+            String startKey = dateFormat.format(now) + String.format("%03d", millis);
+            String endKey = dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
             try {
-                query.setEndKeyDocId(String.valueOf(keyFormat.parse(startKey).getTime()));
-                query.setStartKeyDocId(String.valueOf(keyFormat.parse(endKey).getTime()));
+                query.setEndKeyDocId(endKey);
+                query.setStartKeyDocId(startKey);
             }
             catch(Exception e){
                 //all docs query
@@ -116,12 +116,29 @@ public class BackgroundWellnessAlgo  extends Service {
                 for (Iterator<QueryRow> it = result; it.hasNext(); ) {
                     QueryRow row = it.next();
                     Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
-                    last15seconds.put(new JSONObject(tmpMap));
+                    if (tmpMap.size() > 1)
+                        lastXseconds.put(new JSONObject(tmpMap));
                 }
             } catch (CouchbaseLiteException e) {
                 //handle this
             }
-            WelfareStatus nextState = iwt.calculateWelfareStatus(last15seconds);
+            final WelfareStatus nextState = iwt.calculateWelfareStatus(lastXseconds);
+
+            Document saveStateDoc = userDB.getDocument(startKey);
+            try {
+                saveStateDoc.update(new Document.DocumentUpdater() {
+                    @Override
+                    public boolean update(UnsavedRevision newRevision) {
+                        Map<String, Object> properties = newRevision.getUserProperties();
+                        properties.put("state", nextState);
+                        newRevision.setUserProperties(properties);
+                        return true;
+                    }
+                });
+            } catch (CouchbaseLiteException e){
+                //handle this
+            }
+
             try {
                 Thread.sleep(15000);
             }

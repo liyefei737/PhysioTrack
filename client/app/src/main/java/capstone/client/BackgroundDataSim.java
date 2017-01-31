@@ -12,8 +12,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
+import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -27,7 +29,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -117,11 +118,11 @@ public class BackgroundDataSim extends Service {
         JSONObject r;
         String responseStr;
 
-        SimpleDateFormat keyFormat = new SimpleDateFormat("01/24/2017 HH:mm:ss.");
+        SimpleDateFormat keyFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
 
         Date now = new Date();
         String dateID = keyFormat.format(now);
-        int millis = (int) Math.ceil((double)((now.getTime() % 1000) / 40.0)) * 40;
+        int millis = (int) Math.ceil((double)((now.getTime() % 1000) / 160.0)) * 160;
 
         while(true) {
             if (millis == 1000)
@@ -151,27 +152,38 @@ public class BackgroundDataSim extends Service {
 //                    }
 //                });
 //                rQueue.add(jsonRequest);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
-                Date d = dateFormat.parse(r.getString("DateTime"));
-                Document doc = dataDB.getDocument(String.valueOf(d.getTime()));
-                Map<String, Object> properties = new HashMap<String, Object>();
-                properties.put("timeCreated", r.getString("DateTime"));
-                properties.put("accX", r.getString("AccX"));
-                properties.put("accY", r.getString("AccY"));
-                properties.put("accZ", r.getString("AccZ"));
-                properties.put("skinTemp", r.getString("Skin_Temp"));
-                properties.put("coreTemp", r.getString("Core_Temp"));
-                properties.put("heartRate", r.getString("ECG Heart Rate"));
-                properties.put("breathRate", r.getString("Belt Breathing Rate"));
-                properties.put("bodyPosition", r.getString("BodyPosition"));
-                properties.put("motion", r.getString("Motion"));
 
-                doc.putProperties(properties);
+                Document doc = dataDB.getDocument(r.getString("DateTime"));
+                final JSONObject JSONrow = r;
+                doc.update(new Document.DocumentUpdater() {
+                    @Override
+                    public boolean update(UnsavedRevision newRevision) {
+                        Map<String, Object> properties = newRevision.getUserProperties();
+                        try {
+                            properties.put("timeCreated", JSONrow.getString("DateTime"));
+                            properties.put("accX", JSONrow.getString("AccX"));
+                            properties.put("accY", JSONrow.getString("AccY"));
+                            properties.put("accZ", JSONrow.getString("AccZ"));
+                            properties.put("skinTemp", JSONrow.getString("Skin_Temp"));
+                            properties.put("coreTemp", JSONrow.getString("Core_Temp"));
+                            properties.put("heartRate", JSONrow.getString("ECG Heart Rate"));
+                            properties.put("breathRate", JSONrow.getString("Belt Breathing Rate"));
+                            properties.put("bodyPosition", JSONrow.getString("BodyPosition"));
+                            properties.put("motion", JSONrow.getString("Motion"));
+                        }
+                        catch (JSONException e){
+                            //
+                        }
+
+                        newRevision.setUserProperties(properties);
+                        return true;
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            now.setTime(now.getTime() + 40);
-            int nextMillis = (int) Math.ceil((double)((now.getTime() % 1000)/ 40.0)) * 40;
+            now.setTime(now.getTime() + 80);
+            int nextMillis = (int) Math.ceil((double)((now.getTime() % 1000)/ 80.0)) * 80;
             millis = nextMillis;
             dateID = keyFormat.format(now);
         }
