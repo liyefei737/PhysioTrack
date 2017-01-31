@@ -60,11 +60,12 @@
             android:layout_toEndOf="@+id/imageView4"
             android:layout_marginTop="14dp" />
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/white_user_2"
-            android:id="@+id/imageView7"
+            android:id="@+id/imageButton"
+            android:background="@color/bg"
             android:layout_alignBottom="@+id/tvCurrentHR"
             android:layout_alignRight="@+id/imageView5"
             android:layout_alignEnd="@+id/imageView5" />

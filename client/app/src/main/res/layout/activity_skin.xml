@@ -56,12 +56,13 @@
             android:layout_below="@+id/imageView8"
             android:layout_centerHorizontal="true" />
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/white_user_2"
-            android:id="@+id/imageView10"
-            android:layout_below="@+id/imageView8"
+            android:id="@+id/imageButtonSkin"
+            android:background="@color/bg"
+            android:layout_alignBottom="@+id/textView"
             android:layout_alignRight="@+id/imageView8"
             android:layout_alignEnd="@+id/imageView8" />
 
