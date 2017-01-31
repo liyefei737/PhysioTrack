@@ -95,7 +95,7 @@ public class BackgroundWellnessAlgo  extends Service {
         JSONArray last15seconds = new JSONArray();
 
         Query query = userDB.createAllDocumentsQuery();
-        query.setDescending(true);
+        query.setDescending(false);
         while (true) {
             Date now = new Date();
             //now.setTime(now.getTime() - (1800000)); //half an hour ago because simulater is slow
@@ -105,8 +105,8 @@ public class BackgroundWellnessAlgo  extends Service {
             now.setTime(now.getTime() - 1000);
             String endKey = keyFormat.format(now)+ String.format("%03d",millis);
             try {
-                //query.setStartKey(String.valueOf(keyFormat.parse(startKey).getTime()));
-                //query.setEndKey(String.valueOf(keyFormat.parse(endKey).getTime()));
+                query.setEndKeyDocId(String.valueOf(keyFormat.parse(startKey).getTime()));
+                query.setStartKeyDocId(String.valueOf(keyFormat.parse(endKey).getTime()));
             }
             catch(Exception e){
                 //all docs query
