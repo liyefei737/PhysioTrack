@@ -41,7 +41,10 @@ public class DataManager {
     }
 
     public int getNumSoldiers(){
-        return _physioDataDBMap.size();
+        if (_physioDataDBMap != null) {
+            return _physioDataDBMap.size();
+        }
+        else return 0;
     }
     public Database getUserInfoDatabase() {
         return _userInfoDB;

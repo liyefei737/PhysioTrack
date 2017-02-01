@@ -104,50 +104,52 @@ public class BackgroundWellnessAlgo  extends Service {
                 //
             }
 
-            for(Map.Entry<String, Database> entry : dataManager.getPhysioDataMap().entrySet()) {
-                Database userDB = entry.getValue();
-                Query query = userDB.createAllDocumentsQuery();
-                query.setDescending(false);
+            Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+            if (physioDataMap != null) {
+                for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
+                    Database userDB = entry.getValue();
+                    Query query = userDB.createAllDocumentsQuery();
+                    query.setDescending(false);
 
-                now = new Date();
-                XsecondsAgo = new Date();
-                XsecondsAgo.setTime(now.getTime() - 15000);
-                int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / 160.0)) * 160);
-                String startKey = dateFormat.format(now) + String.format("%03d", millis);
-                String endKey = dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
-                try {
-                    query.setEndKeyDocId(endKey);
-                    query.setStartKeyDocId(startKey);
+                    now = new Date();
+                    XsecondsAgo = new Date();
+                    XsecondsAgo.setTime(now.getTime() - 15000);
+                    int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / 160.0)) * 160);
+                    String startKey = dateFormat.format(now) + String.format("%03d", millis);
+                    String endKey = dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
+                    try {
+                        query.setEndKeyDocId(endKey);
+                        query.setStartKeyDocId(startKey);
 
-                    QueryEnumerator result = query.run();
-                    for (Iterator<QueryRow> it = result; it.hasNext(); ) {
-                        QueryRow row = it.next();
-                        Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
-                        if (tmpMap.size() > 3)
-                            lastXseconds.put(new JSONObject(tmpMap));
-                    }
-                } catch (CouchbaseLiteException e) {
-                    //handle this
-                }
-                final WelfareStatus nextState = dataManager.getWellnessTracker(entry.getKey()).calculateWelfareStatus(lastXseconds);
-
-                Document saveStateDoc = userDB.getDocument(startKey);
-                try {
-                    saveStateDoc.update(new Document.DocumentUpdater() {
-                        @Override
-                        public boolean update(UnsavedRevision newRevision) {
-                            Map<String, Object> properties = newRevision.getUserProperties();
-                            properties.put("state", nextState);
-                            newRevision.setUserProperties(properties);
-                            return true;
+                        QueryEnumerator result = query.run();
+                        for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                            QueryRow row = it.next();
+                            Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
+                            if (tmpMap.size() > 3)
+                                lastXseconds.put(new JSONObject(tmpMap));
                         }
-                    });
-                } catch (CouchbaseLiteException e) {
-                    //handle this
+                    } catch (CouchbaseLiteException e) {
+                        //handle this
+                    }
+                    final WelfareStatus nextState = dataManager.getWellnessTracker(entry.getKey()).calculateWelfareStatus(lastXseconds);
+
+                    Document saveStateDoc = userDB.getDocument(startKey);
+                    try {
+                        saveStateDoc.update(new Document.DocumentUpdater() {
+                            @Override
+                            public boolean update(UnsavedRevision newRevision) {
+                                Map<String, Object> properties = newRevision.getUserProperties();
+                                properties.put("state", nextState);
+                                newRevision.setUserProperties(properties);
+                                return true;
+                            }
+                        });
+                    } catch (CouchbaseLiteException e) {
+                        //handle this
+                    }
+
+
                 }
-
-
-
             }
         }
     }
