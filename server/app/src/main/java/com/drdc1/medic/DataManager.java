@@ -30,7 +30,7 @@ public class DataManager {
 
     public DataManager(Context context) {   //won't init physioDataDBMap b/c we don't know how many soldiers we have
         _context = context;
-        _userInfoDB = openDatabase("staticInfo");
+        _userInfoDB = openDatabase("staticinfo");
         if (_userInfoDB == null) {
             Log.e(TAG, " Failed to open user info Database");
         }
