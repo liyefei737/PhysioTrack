@@ -12,162 +12,171 @@
     tools:context="com.pengona.medicui.MainActivity"
     android:background="@color/bg">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/lltab1">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/IItab2">
+            app:srcCompat="@drawable/myhealt_7"
+            android:id="@+id/imageView2"
+            android:layout_marginTop="-34dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
-            <TextView
-                android:text="Squad Status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvSStatus"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:text="Name List"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvNameList"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:text="Individual Soldier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvIndSoldier"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:textColor="@color/white"/>
-        </LinearLayout>
-        <SeekBar
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="24dp"
-            android:id="@+id/sbarStatus"
-            android:layout_alignParentEnd="true"/>
-        <TextView
-            android:text="Overall Health Status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:id="@+id/tvOverallStatus"
-            android:textSize="18sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:textAlignment="center" />
+            android:layout_marginTop="0dp"
+            android:id="@+id/lltab1">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/IItab2">
+
+                <TextView
+                    android:text="Squad Status"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvSStatus"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:onClick="onClick"
+                    android:clickable="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:text="Name List"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvNameList"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:onClick="onClick"
+                    android:clickable="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:text="Individual Soldier"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvIndSoldier"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/clean"
-                android:id="@+id/ivClean1"
-                android:layout_weight="1" />
+                app:srcCompat="@drawable/line"
+                android:id="@+id/imageView6" />
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <TextView
+                android:text="Overall Health Status"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/overall_green"
+                android:layout_marginTop="8dp"
+                android:id="@+id/tvOverallStatus"
+                android:textSize="18sp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/imClean2"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/clean"
-                android:id="@+id/ivClean3"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp">
-
-            <TextView
-                android:text="Core Temp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCoreTemp"
-                android:layout_weight="1"
                 android:textAlignment="center"
                 android:textColor="@color/white"/>
 
-            <TextView
-                android:text="Skin Temp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvSkinTemp"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:textColor="@color/white"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:text="Fatigue Level"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/overall_green"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/imClean2"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvFatigueLevel"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:textColor="@color/white"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:text="Core Temp"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvCoreTemp"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:text="Skin Temp"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvSkinTemp"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:text="Fatigue Level"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvFatigueLevel"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/skin_green"
+                    android:id="@+id/ivCore"
+                    android:layout_weight="1"
+                    android:layout_width="150dp" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/skin_red"
+                    android:id="@+id/ivSkin"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/skin_yellow"
+                    android:id="@+id/ivFatigue"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/skin_green"
-                android:id="@+id/ivCore"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/skin_red"
-                android:id="@+id/ivSkin"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/skin_yellow"
-                android:id="@+id/ivFatigue"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
     </LinearLayout>
-
-
 
 
 </RelativeLayout>
