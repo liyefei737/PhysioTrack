@@ -9,12 +9,12 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
  */
 public class Application extends android.app.Application {
 
-    static BackgroundService backgroundService;
-
+    public DataManager dataManager = null;
     @Override
     public void onCreate() {
         super.onCreate();
-        starBackgroundService();
+        dataManager = new DataManager(this);
+        startBackgroundServices();
         showApp();
     }
 
@@ -25,10 +25,22 @@ public class Application extends android.app.Application {
         startActivity(intent);
     }
 
-    private void starBackgroundService() {
+    private void startBackgroundServices() {
         Intent Serviceintent = new Intent();
-        Serviceintent.setClass(this, BackgroundService.class);
+        Serviceintent.setClass(this, BackgroundServer.class);
         startService(Serviceintent);
+
+        Intent sleepAlgo = new Intent();
+        sleepAlgo.setClass(this, BackgroundSleepAlgo.class);
+        startService(sleepAlgo);
+
+        Intent wellnessAlgo = new Intent();
+        wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
+        startService(wellnessAlgo);
+    }
+
+    public DataManager getDataManager(){
+        return dataManager;
     }
 }
 

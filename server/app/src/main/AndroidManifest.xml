@@ -20,7 +20,7 @@
         </activity>
 
         <service
-            android:name=".BackgroundService"
+            android:name=".BackgroundServer"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false"></service>

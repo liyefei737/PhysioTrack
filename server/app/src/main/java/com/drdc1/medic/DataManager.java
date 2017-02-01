@@ -13,19 +13,22 @@ import com.couchbase.lite.android.AndroidContext;
 import java.io.IOException;
 import java.util.Map;
 
+import welfareSM.IndividualWelfareTracker;
+
 /**
  * Created by Grace on 2017-01-31.
  */
 
-public class DBManager {
+public class DataManager {
     //log TAGs
-    private static final String TAG = "DBManager";
+    private static final String TAG = "DataManager";
 
-    private Map<String, Database> physioDataDBMap = null;   //keys: soldier id, values: Database of physio Data
+    private Map<String, Database> _physioDataDBMap = null;   //keys: soldier id, values: Database of physio Data
     private Database _userInfoDB = null;   //docIDs: soldierIDs, properties of each doc: name, age, height, weight
+    private Map<String, IndividualWelfareTracker> _wellnessInfoMap = null;
     private Context _context = null;
 
-    public DBManager(Context context) {   //won't init physioDataDBMap b/c we don't know how many soldiers we have
+    public DataManager(Context context) {   //won't init physioDataDBMap b/c we don't know how many soldiers we have
         _context = context;
         _userInfoDB = openDatabase("staticInfo");
         if (_userInfoDB == null) {
@@ -33,6 +36,13 @@ public class DBManager {
         }
     }
 
+    public Map<String, Database> getPhysioDataMap(){
+        return _physioDataDBMap;
+    }
+
+    public int getNumSoldiers(){
+        return _physioDataDBMap.size();
+    }
     public Database getUserInfoDatabase() {
         return _userInfoDB;
     }
@@ -46,7 +56,10 @@ public class DBManager {
             doc.putProperties(staticInfo);
 
             Database physioDB = openDatabase(ID);
-            physioDataDBMap.put(ID, physioDB);
+            _physioDataDBMap.put(ID, physioDB);
+
+            IndividualWelfareTracker iwt = new IndividualWelfareTracker();
+            _wellnessInfoMap.put(ID, iwt);
             return true;
 
         } catch (CouchbaseLiteException e) {
@@ -64,8 +77,10 @@ public class DBManager {
             Document doc = _userInfoDB.getDocument(ID);
             doc.delete();
 
-            Database db = physioDataDBMap.get(ID);
-            physioDataDBMap.remove(ID);
+            _wellnessInfoMap.remove(ID);
+
+            Database db = _physioDataDBMap.get(ID);
+            _physioDataDBMap.remove(ID);
             if (db != null)
                 db.delete();
             else return false;
@@ -84,8 +99,20 @@ public class DBManager {
 
     public Database getSoldierDB(String ID){
         if (soldierInSystem(ID))
-            return physioDataDBMap.get(ID);
+            return _physioDataDBMap.get(ID);
         return null;
+    }
+
+    public IndividualWelfareTracker getWellnessTracker(String ID){
+        if (soldierInSystem(ID))
+            return _wellnessInfoMap.get(ID);
+        return null;
+    }
+
+    public void saveWellnessTracker(String ID, IndividualWelfareTracker iwt){
+        if (soldierInSystem(ID)){
+            _wellnessInfoMap.put(ID, iwt);
+        }
     }
 
     private Database openDatabase(String dbName) {

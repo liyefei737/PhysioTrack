@@ -25,9 +25,9 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class Server extends NanoHTTPD {
 
-    static private DBManager dbManager;
+    static private DataManager dataManager;
 
-    public Server(int port, DBManager dbManager) {
+    public Server(int port, DataManager dataManager) {
         super(port);
     }
 
@@ -48,14 +48,14 @@ public class Server extends NanoHTTPD {
         try {
             final JSONObject body = new JSONObject(jsonStr);
             String soldierID = body.getString("soldierID");
-            if (!dbManager.soldierInSystem(soldierID)) {
+            if (!dataManager.soldierInSystem(soldierID)) {
                 Map<String,Object> infoMap = null;
                 infoMap.put("name", body.getString("name"));
                 infoMap.put("age", body.getString("age"));
 
-                dbManager.addSoldier(soldierID, infoMap);
+                dataManager.addSoldier(soldierID, infoMap);
             }
-            Database db = dbManager.getSoldierDB(soldierID);
+            Database db = dataManager.getSoldierDB(soldierID);
             Document doc = db.getDocument(body.getString("DateTime"));
             doc.update(new Document.DocumentUpdater() {
                 @Override

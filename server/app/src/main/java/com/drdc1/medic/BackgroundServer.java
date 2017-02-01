@@ -17,19 +17,19 @@ import java.util.Map;
  *
  ***********************************************************************************************/
 
-public class BackgroundService extends Service {
+public class BackgroundServer extends Service {
 
     static final String DB_UPDATE = "DB_UPDATE";
-    static private BackgroundService _backgroundService;
-    static private DBManager dbManager;
+    static private BackgroundServer _backgroundServer;
+    static private DataManager dataManager;
     private Server server;
     private Manager manager;
     private LocalBroadcastManager broadcaster;
 
-    public BackgroundService() {
+    public BackgroundServer() {
     }
 
-    static public BackgroundService getBackgroundService(){return _backgroundService;}
+    static public BackgroundServer getBackgroundService(){return _backgroundServer;}
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -39,15 +39,15 @@ public class BackgroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        dbManager = new DBManager(this);
-        server = new Server(8080, dbManager);
+        dataManager = ((Application) this.getApplication()).getDataManager();
+        server = new Server(8080, dataManager);
         try {
             server.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
         Log.i(this.getClass().getSimpleName(), "onCreate: Server runing on "+server.getLocalIpAddress()+" Port: " +server.getListeningPort());
-        _backgroundService = this;
+        _backgroundServer = this;
         broadcaster = LocalBroadcastManager.getInstance(this);
 
     }

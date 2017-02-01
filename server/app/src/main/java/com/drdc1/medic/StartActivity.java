@@ -15,7 +15,7 @@ import com.couchbase.lite.Database;
 
 
 public class StartActivity extends AppCompatActivity {
-    BackgroundService backgroundService;
+    BackgroundServer backgroundServer;
     private Database db;
     private BroadcastReceiver receiver;
     private ListAdapter listAdapter;
@@ -35,7 +35,7 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(new Intent(StartActivity.this, DBViewer.class));
             }
         });*/
-        backgroundService = BackgroundService.getBackgroundService();
+        backgroundServer = BackgroundServer.getBackgroundService();
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -57,7 +57,7 @@ public class StartActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
-                new IntentFilter(BackgroundService.DB_UPDATE)
+                new IntentFilter(BackgroundServer.DB_UPDATE)
         );
     }
 
@@ -68,7 +68,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
 //    private void setupViewAndQuery() {
-//        db = backgroundService.getDatabase();
+//        db = backgroundServer.getDatabase();
 //        com.couchbase.lite.View dbView = db.getView("listView");
 //        if (dbView.getMap() == null) {
 //            dbView.setMap(new Mapper() {
