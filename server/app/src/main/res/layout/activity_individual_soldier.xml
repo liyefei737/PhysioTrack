@@ -156,7 +156,7 @@
                         android:ems="10"
                         android:id="@+id/editText4"
                         android:layout_weight="1"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -170,6 +170,15 @@
                         android:id="@+id/tvBodyOr"
                         android:textColor="@color/white"
                         android:layout_width="144dp" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editText8"
+                        android:layout_weight="1"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -271,4 +280,5 @@
             line.png
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>
