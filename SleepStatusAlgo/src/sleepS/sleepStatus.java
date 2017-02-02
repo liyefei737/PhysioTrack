@@ -1,140 +1,92 @@
-package capstone.client;
-
-import android.app.Service;
-import android.content.Intent;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
-
-import com.couchbase.lite.CouchbaseLiteException;
-import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.QueryEnumerator;
-import com.couchbase.lite.QueryRow;
-
-import java.util.Iterator;
+package sleepS;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import static sleepS.SleepState.*;
 
-/**
- * Background algorithm thread
- */
+public class sleepStatus {	
+		
+	public static DateStatePair CalculateSleepStatus(JSONArray last9SecondsData){
+		Map<String,float[]> accCollection = processJSONArray(last9SecondsData);
 
-public class BackgroundSleepAlgo extends Service {
-
-    private volatile HandlerThread mHandlerThread;
-    private Handler mServiceHandler;
-
-    static final String DB_UPDATE = "DB_UPDATE";
-    static private BackgroundSleepAlgo _backgroundSleepAlgo = null;
-    private DBManager databseManager = null;
-    private LocalBroadcastManager broadcaster = null;
-
-    public static final int PERIOD = 15000;
-    int k = 0;
-    public float[][] saa;
-
-
-    //singleton to to pass an instance of BackgroundSleepAlgo
-    static public BackgroundSleepAlgo get_backgroundSleepAlgo() {
-        return _backgroundSleepAlgo;
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        _backgroundSleepAlgo = this;
-        broadcaster = LocalBroadcastManager.getInstance(this);
-
-        // An Android handler thread internally operates on a looper.
-        mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
-        mHandlerThread.start();
-        // An Android service handler is a handler running on a specific background thread.
-        mServiceHandler = new Handler(mHandlerThread.getLooper());
-    }
-
-    @Override
-    public void onDestroy() {
+		if (accCollection.size() < 9){
+			return new DateStatePair(null, NOT_ENOUGH_INFO);
+		}
+		
+		//take magnitude of acc at each time epoch
+		
+		List<Float> accMagnitude = new ArrayList<Float>();
+		int i = 0;
+		String dateN = null;
+		for (Map.Entry<String, float[]> entry : accCollection.entrySet()) {
+			accMagnitude.add(i,(float) Math.sqrt(Math.pow(entry.getValue()[0], 2) + Math.pow(entry.getValue()[0], 2) + Math.pow(entry.getValue()[0], 2)));
+			if (i == 4)
+				dateN = entry.getKey();
+			i++;
+		}
+		float modAcc = (float) (0.04 * accMagnitude.get(0)
+                        + 0.04 * accMagnitude.get(1)
+                        + 0.2 * accMagnitude.get(2)
+                        + 0.2 * accMagnitude.get(3)
+                        + 2 * accMagnitude.get(4)
+                        + 0.2 * accMagnitude.get(5)
+                        + 0.2 * accMagnitude.get(6)
+                        + 0.04 * accMagnitude.get(7)
+                        + 0.04 * accMagnitude.get(8));
+        if (modAcc > 400.0)
+        	return new DateStatePair(dateN, WAKE);
+        else
+        	return new DateStatePair(dateN, SLEEP);
 
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        mServiceHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                run_algo();
-            }
-        });
-        // Keep service around "sticky"
-        return START_STICKY;
-    }
-
-    public void notifyUI(Map<String, Object> document) {
-        Intent intent = new Intent(DB_UPDATE);
-        for (String key : document.keySet()) {
-            intent.putExtra(key, document.get(key).toString());
-        }
-        broadcaster.sendBroadcast(intent);
-    }
-
-    private void run_algo() {
-        databseManager = new DBManager(this);
-        Database dataDB = databseManager.getDatabase("data");
-        QueryEnumerator rows = null;
-        try {
-            rows = dataDB.createAllDocumentsQuery().run();
-        } catch (CouchbaseLiteException e) {
-            e.printStackTrace();
-        }
-
-        if (saa == null) {
-            saa = new float[8][];
-
-        }
-        for (Iterator<QueryRow> it = rows; it.hasNext(); ) {
-            QueryRow row = it.next();
-            Document doc = row.getDocument();
-            Map<String, Object> result = doc.getProperties();
-            System.out.println(result.values());
-            saa[k] = new float[3];
-            saa[k][0] = Float.parseFloat((String) result.get("accX"));
-            saa[k][1] = Float.parseFloat((String) result.get("accY"));
-            saa[k][2] = Float.parseFloat((String) result.get("accZ"));
-            k++;
-            if (k == 8) {
-                double thres = 1;
-                double val0 = 0.04 * Math.sqrt(Math.pow(saa[0][0], 2) + Math.pow(saa[0][1], 2) + Math.pow(saa[0][2], 2))
-                        + 0.04 * Math.sqrt(Math.pow(saa[1][0], 2) + Math.pow(saa[1][1], 2) + Math.pow(saa[1][2], 2))
-                        + 0.2 * Math.sqrt(Math.pow(saa[2][0], 2) + Math.pow(saa[2][1], 2) + Math.pow(saa[2][2], 2))
-                        + 0.2 * Math.sqrt(Math.pow(saa[3][0], 2) + Math.pow(saa[3][1], 2) + Math.pow(saa[3][2], 2))
-                        + 0.2 * Math.sqrt(Math.pow(saa[4][0], 2) + Math.pow(saa[4][1], 2) + Math.pow(saa[4][2], 2))
-                        + 0.2 * Math.sqrt(Math.pow(saa[5][0], 2) + Math.pow(saa[5][1], 2) + Math.pow(saa[5][2], 2))
-                        + 0.04 * Math.sqrt(Math.pow(saa[6][0], 2) + Math.pow(saa[6][1], 2) + Math.pow(saa[6][2], 2)
-                        + 0.04 * Math.sqrt(Math.pow(saa[7][0], 2) + Math.pow(saa[7][1], 2) + Math.pow(saa[7][2], 2)));
-                if (val0 > thres) {
-                    System.err.println("awake");
-                } else {
-                    System.err.println("sleeping");
-
-                }
-                k = 0;
-            }
-
-        }
-        /******************************************************************************
-         ************************** Write algorithms here******************************
-         * ****************************************************************************
-         * */
-
-    }
-
+	public static Map<String,float[]> processJSONArray(JSONArray last9SecondsData){
+		if (last9SecondsData == null)
+			return null;
+		
+		Map<String, float[]> accCollection = new HashMap<String,float[]>();
+		
+		int j = 0;
+		String strData, firstTStampMilli = "000";
+		JSONObject jData;
+		try {
+			strData = last9SecondsData.getString(0);
+			jData = new JSONObject(strData);
+		
+			firstTStampMilli = jData.getString("_id").substring(jData.getString("_id").length() -3);
+		} catch (JSONException e) {
+			//
+		}
+		int len = last9SecondsData.length();
+		for(int i = 0; i < len;i++){
+			try {
+				strData = last9SecondsData.getString(i);
+				jData = new JSONObject(strData);
+				String sDateTime  = jData.getString("_id");
+				if (sDateTime.substring(sDateTime.length() - 3).equals(firstTStampMilli)){
+					//take even seconds
+					float [] accArray = new float[3];
+					accArray[0] = Float.valueOf(jData.getString("accX"));
+					accArray[1] = Float.valueOf(jData.getString("accY"));
+					accArray[2] = Float.valueOf(jData.getString("accZ"));
+					accCollection.put(sDateTime, accArray);
+					j++;
+					if (j > 8)
+						len = 0;
+				}
+			} catch (JSONException e) {
+				
+			}
+			
+		}
+		
+		return accCollection;
+	}
 }
 
 

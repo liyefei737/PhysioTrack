@@ -10,17 +10,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
-import com.couchbase.lite.Query;
-import com.couchbase.lite.QueryEnumerator;
-import com.couchbase.lite.QueryRow;
 import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Map;
 
 import welfareSM.IndividualWelfareTracker;
@@ -92,39 +86,25 @@ public class BackgroundWellnessAlgo  extends Service {
         IndividualWelfareTracker iwt = new IndividualWelfareTracker();
         dbManager = new DBManager(this);
         Database userDB = dbManager.getDatabase("data");
-        JSONArray lastXseconds = new JSONArray();
-        Date now, XsecondsAgo;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
-        Query query = userDB.createAllDocumentsQuery();
-        query.setDescending(false);
+        JSONArray lastXseconds;
+        Date now;
+        int numSeconds = 15, millistep = 160;
+
         while (true) {
+
+            try {
+                Thread.sleep(numSeconds *1000);
+            }
+            catch (Exception e)
+            {
+                //
+            }
             now = new Date();
-            XsecondsAgo = new Date();
-            XsecondsAgo.setTime(now.getTime() - 15000);
-            int millis = (int) (Math.ceil((double)((now.getTime() %1000) /160.0)) * 160);
-            String startKey = dateFormat.format(now) + String.format("%03d", millis);
-            String endKey = dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
-            try {
-                query.setEndKeyDocId(endKey);
-                query.setStartKeyDocId(startKey);
-            }
-            catch(Exception e){
-                //all docs query
-            }
-            try {
-                QueryEnumerator result = query.run();
-                for (Iterator<QueryRow> it = result; it.hasNext(); ) {
-                    QueryRow row = it.next();
-                    Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
-                    if (tmpMap.size() > 3)
-                        lastXseconds.put(new JSONObject(tmpMap));
-                }
-            } catch (CouchbaseLiteException e) {
-                //handle this
-            }
+            lastXseconds = dbManager.QueryLastXSeconds(now, numSeconds, millistep);
+
             final WelfareStatus nextState = iwt.calculateWelfareStatus(lastXseconds);
 
-            Document saveStateDoc = userDB.getDocument(startKey);
+            Document saveStateDoc = userDB.getDocument(dbManager.GetQueryStartKey(now, millistep));
             try {
                 saveStateDoc.update(new Document.DocumentUpdater() {
                     @Override
@@ -139,13 +119,6 @@ public class BackgroundWellnessAlgo  extends Service {
                 //handle this
             }
 
-            try {
-                Thread.sleep(15000);
-            }
-            catch (Exception e)
-            {
-                //
-            }
         }
     }
 }

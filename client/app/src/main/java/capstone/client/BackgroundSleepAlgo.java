@@ -11,10 +11,15 @@ import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.QueryEnumerator;
-import com.couchbase.lite.QueryRow;
+import com.couchbase.lite.UnsavedRevision;
 
-import java.util.Iterator;
+import org.json.JSONArray;
+
+import java.util.Date;
 import java.util.Map;
+
+import sleepS.DateStatePair;
+import sleepS.sleepStatus;
 
 
 /**
@@ -32,8 +37,6 @@ public class BackgroundSleepAlgo extends Service {
     private LocalBroadcastManager broadcaster = null;
 
     public static final int PERIOD = 15000;
-    int k = 0;
-    public float[][] saa;
 
 
     //singleton to to pass an instance of BackgroundSleepAlgo
@@ -88,44 +91,34 @@ public class BackgroundSleepAlgo extends Service {
         databseManager = new DBManager(this);
         Database dataDB = databseManager.getDatabase("data");
         QueryEnumerator rows = null;
-        try {
-            rows = dataDB.createAllDocumentsQuery().run();
-        } catch (CouchbaseLiteException e) {
-            e.printStackTrace();
-        }
+        Date now;
+        int numSeconds = 9, millistep = 1000;
 
-        if (saa == null) {
-            saa = new float[8][];
+        while (true) {
+            try{
+                Thread.sleep(numSeconds * 1000);
+            } catch (Exception e) {
+                //
+            }
 
-        }
-        for (Iterator<QueryRow> it = rows; it.hasNext(); ) {
-            QueryRow row = it.next();
-            Document doc = row.getDocument();
-            Map<String, Object> result = doc.getProperties();
-            if (result.size() > 3) {
-                System.out.println(result.values());
-                saa[k] = new float[3];
-                saa[k][0] = Float.parseFloat((String) result.get("accX"));
-                saa[k][1] = Float.parseFloat((String) result.get("accY"));
-                saa[k][2] = Float.parseFloat((String) result.get("accZ"));
-                k++;
-                if (k == 8) {
-                    double thres = 1;
-                    double val0 = 0.04 * Math.sqrt(Math.pow(saa[0][0], 2) + Math.pow(saa[0][1], 2) + Math.pow(saa[0][2], 2))
-                            + 0.04 * Math.sqrt(Math.pow(saa[1][0], 2) + Math.pow(saa[1][1], 2) + Math.pow(saa[1][2], 2))
-                            + 0.2 * Math.sqrt(Math.pow(saa[2][0], 2) + Math.pow(saa[2][1], 2) + Math.pow(saa[2][2], 2))
-                            + 0.2 * Math.sqrt(Math.pow(saa[3][0], 2) + Math.pow(saa[3][1], 2) + Math.pow(saa[3][2], 2))
-                            + 0.2 * Math.sqrt(Math.pow(saa[4][0], 2) + Math.pow(saa[4][1], 2) + Math.pow(saa[4][2], 2))
-                            + 0.2 * Math.sqrt(Math.pow(saa[5][0], 2) + Math.pow(saa[5][1], 2) + Math.pow(saa[5][2], 2))
-                            + 0.04 * Math.sqrt(Math.pow(saa[6][0], 2) + Math.pow(saa[6][1], 2) + Math.pow(saa[6][2], 2)
-                            + 0.04 * Math.sqrt(Math.pow(saa[7][0], 2) + Math.pow(saa[7][1], 2) + Math.pow(saa[7][2], 2)));
-                    if (val0 > thres) {
-                        System.err.println("awake");
-                    } else {
-                        System.err.println("sleeping");
+            now = new Date();
 
-                    }
-                    k = 0;
+            JSONArray last9Seconds = databseManager.QueryLastXSeconds(now, numSeconds, millistep);
+            final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(last9Seconds);
+            if (sleepResult.getDate() != null) {
+                Document saveStateDoc = dataDB.getDocument(sleepResult.getDate());
+                try {
+                    saveStateDoc.update(new Document.DocumentUpdater() {
+                        @Override
+                        public boolean update(UnsavedRevision newRevision) {
+                            Map<String, Object> properties = newRevision.getUserProperties();
+                            properties.put("sleep", sleepResult.getState());
+                            newRevision.setUserProperties(properties);
+                            return true;
+                        }
+                    });
+                } catch (CouchbaseLiteException e) {
+                    //handle this
                 }
             }
         }

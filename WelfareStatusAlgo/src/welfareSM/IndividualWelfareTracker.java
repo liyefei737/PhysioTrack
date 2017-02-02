@@ -78,7 +78,7 @@ public class IndividualWelfareTracker {
 			float stateAverage = (numGreenParams*GREEN.ordinal() + numYellowParams*YELLOW.ordinal() +
 				numRedParams*RED.ordinal()/numValidParams);
 		
-			nextState = stateAverage < 1 ? RED : (stateAverage < 2 ? YELLOW : GREEN);
+			nextState = stateAverage <= 1 ? RED : (stateAverage <= 2 ? YELLOW : GREEN);
 		}
 		prevStateMap.put(OVERALL, currentStateMap.get(OVERALL));
 		currentStateMap.put(OVERALL, nextState);

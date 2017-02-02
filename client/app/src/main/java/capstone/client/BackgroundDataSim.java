@@ -126,7 +126,7 @@ public class BackgroundDataSim extends Service {
 
         Date now = new Date();
         String dateID = keyFormat.format(now);
-        int millis = (int) Math.ceil((double)((now.getTime() % 1000) / 160.0)) * 160;
+        int millis = (int) Math.ceil((double)((now.getTime() % 1000) / 40.0)) * 40;
 
         while(true) {
             if (millis == 1000)

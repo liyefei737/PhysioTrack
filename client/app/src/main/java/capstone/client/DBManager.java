@@ -7,9 +7,19 @@ import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.DatabaseOptions;
 import com.couchbase.lite.Manager;
+import com.couchbase.lite.Query;
+import com.couchbase.lite.QueryEnumerator;
+import com.couchbase.lite.QueryRow;
 import com.couchbase.lite.android.AndroidContext;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Each User has its own database for its simulated data
@@ -26,6 +36,7 @@ public class DBManager {
     private Database _userDB = null;
     private Database _dataDB = null;
     private Context _context = null;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
 
     public DBManager(Context context) {
         _context = context;
@@ -83,5 +94,44 @@ public class DBManager {
 //            }
 //        });
         return db;
+    }
+
+    public String GetQueryStartKey(Date now, int millistep){
+
+        int millis = (int) (Math.ceil((double)((now.getTime() %1000) /(float)millistep)) * millistep);
+        return dateFormat.format(now) + String.format("%03d", millis);
+
+    }
+
+    public String GetQueryEndKey(Date now, int seconds, int millistep){
+
+       Date XsecondsAgo = new Date();
+        XsecondsAgo.setTime(now.getTime() - (seconds * 1000));
+        int millis = (int) (Math.ceil((double)((now.getTime() %1000) /(float)millistep)) * millistep);
+        return dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
+    }
+
+
+    public JSONArray QueryLastXSeconds(Date now, int seconds, int millistep ) {
+        JSONArray lastXseconds = new JSONArray();
+        Query query = _dataDB.createAllDocumentsQuery();
+        query.setDescending(false);
+        String startKey = GetQueryStartKey(now, millistep);
+        String endKey = GetQueryEndKey(now, seconds, millistep);
+
+        try {
+            query.setEndKeyDocId(endKey);
+            query.setStartKeyDocId(startKey);
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                QueryRow row = it.next();
+                Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
+                if (tmpMap.size() > 3)
+                    lastXseconds.put(new JSONObject(tmpMap));
+            }
+        } catch (CouchbaseLiteException e) {
+            //handle this
+        }
+        return lastXseconds;
     }
 }
