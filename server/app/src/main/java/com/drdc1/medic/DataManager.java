@@ -8,9 +8,19 @@ import com.couchbase.lite.Database;
 import com.couchbase.lite.DatabaseOptions;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.Manager;
+import com.couchbase.lite.Query;
+import com.couchbase.lite.QueryEnumerator;
+import com.couchbase.lite.QueryRow;
 import com.couchbase.lite.android.AndroidContext;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import welfareSM.IndividualWelfareTracker;
@@ -27,10 +37,13 @@ public class DataManager {
     private Database _userInfoDB = null;   //docIDs: soldierIDs, properties of each doc: name, age, height, weight
     private Map<String, IndividualWelfareTracker> _wellnessInfoMap = null;
     private Context _context = null;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
 
     public DataManager(Context context) {   //won't init physioDataDBMap b/c we don't know how many soldiers we have
         _context = context;
         _userInfoDB = openDatabase("staticinfo");
+        _physioDataDBMap = new HashMap<String, Database>();
+        _wellnessInfoMap = new HashMap<String, IndividualWelfareTracker>();
         if (_userInfoDB == null) {
             Log.e(TAG, " Failed to open user info Database");
         }
@@ -137,5 +150,43 @@ public class DataManager {
             e.printStackTrace();
         }
         return db;
+    }
+
+    public String GetQueryStartKey(Date now, int millistep){
+
+        int millis = (int) (Math.ceil((double)((now.getTime() %1000) /(float)millistep)) * millistep);
+        return dateFormat.format(now) + String.format("%03d", millis);
+
+    }
+
+    public String GetQueryEndKey(Date now, int seconds, int millistep){
+
+        Date XsecondsAgo = new Date();
+        XsecondsAgo.setTime(now.getTime() - (seconds * 1000));
+        int millis = (int) (Math.ceil((double)((now.getTime() %1000) /(float)millistep)) * millistep);
+        return dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
+    }
+
+    public JSONArray QueryLastXSeconds(String ID, Date now, int seconds, int millistep ) {
+        JSONArray lastXseconds = new JSONArray();
+        Query query = getSoldierDB(ID).createAllDocumentsQuery();
+        query.setDescending(false);
+        String startKey = GetQueryStartKey(now, millistep);
+        String endKey = GetQueryEndKey(now, seconds, millistep);
+
+        try {
+            query.setEndKeyDocId(endKey);
+            query.setStartKeyDocId(startKey);
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                QueryRow row = it.next();
+                Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
+                if (tmpMap.size() > 3)
+                    lastXseconds.put(new JSONObject(tmpMap));
+            }
+        } catch (CouchbaseLiteException e) {
+            //handle this
+        }
+        return lastXseconds;
     }
 }

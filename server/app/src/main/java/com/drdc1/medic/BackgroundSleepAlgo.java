@@ -6,7 +6,18 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.couchbase.lite.CouchbaseLiteException;
+import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.UnsavedRevision;
+
+import org.json.JSONArray;
+
+import java.util.Date;
 import java.util.Map;
+
+import sleepS.DateStatePair;
+import sleepS.sleepStatus;
 
 
 /**
@@ -22,11 +33,6 @@ public class BackgroundSleepAlgo extends Service {
     static private BackgroundSleepAlgo _backgroundSleepAlgo = null;
     private DataManager dataManager = null;
     private LocalBroadcastManager broadcaster = null;
-
-    public static final int PERIOD = 15000;
-    int k = 0;
-    public float[][] saa;
-
 
     //singleton to to pass an instance of BackgroundSleepAlgo
     static public BackgroundSleepAlgo get_backgroundSleepAlgo() {
@@ -80,6 +86,42 @@ public class BackgroundSleepAlgo extends Service {
 
     private void run_algo() {
 
+        Date now;
+        int numSeconds = 9, millistep = 1000;
+        JSONArray lastXSeconds;
+        while (true) {
+            try {
+                Thread.sleep(numSeconds * 1000);
+            } catch (Exception e) {
+                //
+            }
+
+            now = new Date();
+            Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+            if (physioDataMap != null) {
+                for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
+                    Database userDB = entry.getValue();
+                    lastXSeconds = dataManager.QueryLastXSeconds(entry.getKey(), now, numSeconds, millistep);
+                    final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(lastXSeconds);
+                    if (sleepResult.getDate() != null) {
+                        Document saveStateDoc = userDB.getDocument(sleepResult.getDate());
+                        try {
+                            saveStateDoc.update(new Document.DocumentUpdater() {
+                                @Override
+                                public boolean update(UnsavedRevision newRevision) {
+                                    Map<String, Object> properties = newRevision.getUserProperties();
+                                    properties.put("sleep", sleepResult.getState());
+                                    newRevision.setUserProperties(properties);
+                                    return true;
+                                }
+                            });
+                        } catch (CouchbaseLiteException e) {
+                            //handle this
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
