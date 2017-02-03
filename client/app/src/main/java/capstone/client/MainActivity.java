@@ -2,78 +2,19 @@ package capstone.client;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabReselectListener;
-import com.roughike.bottombar.OnTabSelectListener;
-
-import static capstone.client.R.id.tab_core;
-import static capstone.client.R.id.tab_heart;
-import static capstone.client.R.id.tab_home;
-import static capstone.client.R.id.tab_lung;
-import static capstone.client.R.id.tab_skin;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView messageView;
-    public static final int CONNECTION_TIMEOUT = 10000;
-    public static final int READ_TIMEOUT = 15000;
-
-    private ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Bottom navigation menu
-        messageView =(TextView) findViewById(R.id.messageView);
-        BottomBar bottomBar=(BottomBar) findViewById(R.id.bottomBar);
-
-        bottomBar.setDefaultTab(R.id.tab_home);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-                messageView.setText(TabMessage.get(tabId, false));
-                if(tabId==tab_heart){
-                    //Toast.makeText(getApplicationContext(), "Heart Rate Page",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(MainActivity.this, Heart.class);
-                    startActivity(intent);
-                }
-                if(tabId == tab_lung){
-                    //Toast.makeText(getApplicationContext(), "Skin Temp page",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(MainActivity.this, Lung.class);
-                    startActivity(intent);
-                }
-                if(tabId == tab_skin){
-                    //Toast.makeText(getApplicationContext(), "Skin Temp page",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(MainActivity.this, Skin.class);
-                    startActivity(intent);
-                }
-                if(tabId == tab_core){
-                    //Toast.makeText(getApplicationContext(), "Skin Temp page",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(MainActivity.this, Core.class);
-                    startActivity(intent);
-                }
-
-            }
-        });
-        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
-            @Override
-            public void onTabReSelected(@IdRes int tabId) {
-                Toast.makeText(getApplicationContext(), TabMessage.get(tabId, true), Toast.LENGTH_LONG).show();
-            }
-        });
-
         /***
          * starting background threads
          */
-        Intent dataSim = new Intent();
+
+                    Intent dataSim = new Intent();
         dataSim.setClass(this, BackgroundDataSim.class);
         startService(dataSim);
         Intent sleepAlgo = new Intent();
@@ -83,14 +24,8 @@ public class MainActivity extends AppCompatActivity {
         wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
         startService(wellnessAlgo);
 
-        imageButton = (ImageButton)findViewById(R.id.imageButton);
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentLoader = new Intent(MainActivity.this, Soldier.class);
-                startActivity(intentLoader);
-            }
-        });
+        Intent intentLoader = new Intent(MainActivity.this, BottomBarActivity.class);
+        startActivity(intentLoader);
     }
+
 }

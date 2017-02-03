@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="capstone.client">
-
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="25" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -34,11 +34,10 @@
             android:exported="false"
             android:stopWithTask="false" />
 
-        <activity android:name=".Soldier" />
-        <activity android:name=".Skin" />
-        <activity android:name=".Heart" />
-        <activity android:name=".Core" />
-        <activity android:name=".Lung"></activity>
+        <activity
+            android:name=".BottomBarActivity"
+            android:label="@string/title_activity_bottom_bar"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs xmlns:android="http://schemas.android.com/apk/res/android">
+    <tab
+        id="@+id/bb_menu_heart"
+        icon="@drawable/ic_menu_heart"
+        title="Heart"
+        activeColor="@color/black"
+        inActiveColor="@color/tab_inactive"
+        />
+    <tab
+        id="@+id/bb_menu_breath"
+        icon="@drawable/ic_menu_breath"
+        title="Breath"
+        activeColor="@color/black"
+        inActiveColor="@color/tab_inactive"
+
+        />
+    <tab
+        id="@+id/bb_menu_home"
+        icon="@drawable/ic_menu_home"
+        title="Home"
+        activeColor="@color/black"
+        inActiveColor="@color/tab_inactive"
+
+        />
+    <tab
+        id="@+id/bb_menu_skin_temp"
+        icon="@drawable/ic_menu_skin_temp"
+        title="SkinTemp"
+        activeColor="@color/black"
+        inActiveColor="@color/tab_inactive"
+
+        />
+    <tab
+        id="@+id/bb_menu_core_temp"
+        icon="@drawable/ic_menu_core_temp"
+        title="CoreTemp"
+        activeColor="@color/black"
+        inActiveColor="@color/tab_inactive"
+        />
+</tabs>

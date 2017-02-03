@@ -1,12 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_soldier"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg"
-    >
+    tools:context="capstone.client.EditInfoFragment">
 
     <TextView
         android:id="@+id/messageSoldier"
@@ -22,13 +18,13 @@
         android:layout_marginTop="-40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:srcCompat="@drawable/myhealt_7"
+        android:src="@drawable/myhealt_7"
         android:id="@+id/imageView3" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:srcCompat="@drawable/white_user_2"
+        android:src="@drawable/white_user_2"
         android:id="@+id/imageView"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="20dp"/>
@@ -38,21 +34,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/etSoldierId"
+            android:hint="@string/id_text_edit"
             android:layout_weight="1"
-            android:hint="Soldier ID"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textColorHint="@color/hint"/>
@@ -64,13 +53,13 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_width="0dp"
+            android:inputType="number"
             android:ems="10"
             android:id="@+id/etAge"
             android:layout_weight="1"
-            android:hint="Age"
+            android:hint="@string/age_text_edit"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textColorHint="@color/hint"/>
@@ -82,13 +71,13 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/etWeight"
             android:layout_weight="1"
-            android:hint="Weight"
+            android:hint="@string/weight_text_edit"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textColorHint="@color/hint"/>
@@ -118,25 +107,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:text="Save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btSave"
-            android:layout_weight="1"
-            android:textColor="@color/bg"/>
-
+    <Button
+        android:text="Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btSave"
+        android:layout_weight="1"
+        android:textColor="@color/bg"/>
     </LinearLayout>
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
-        app:bb_tabXmlResource="@xml/bottom"
-        app:bb_behavior="shifting"
-        app:bb_inActiveTabAlpha="0.3"
-        app:bb_inActiveTabColor="@color/inActive"
-        app:bb_activeTabColor="@color/active"
-        app:bb_titleTextAppearance="@style/CustomTitleFont"/>
-</LinearLayout>
+
+
+</FrameLayout>
