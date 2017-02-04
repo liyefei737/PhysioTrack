@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="wellness">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/wellness.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
