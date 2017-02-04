@@ -7,7 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,7 +18,7 @@ import android.view.ViewGroup;
  * Use the {@link EditInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditInfoFragment extends BaseFragment {
+public class EditInfoFragment extends BaseFragment  {
 
     public static EditInfoFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -32,5 +33,6 @@ public class EditInfoFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_info, container, false);
+
     }
 }

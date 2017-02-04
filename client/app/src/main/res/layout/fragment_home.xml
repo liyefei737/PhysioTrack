@@ -20,7 +20,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/white_user_4"
+        android:src="@drawable/white_user_2"
         android:id="@+id/settingsBtn"
         android:layout_marginTop="0dp"
         android:background="@color/bg"
@@ -31,6 +31,6 @@
     <ImageView
         android:layout_width="278dp"
         android:layout_height="268dp"
-        android:src="@drawable/ic_main_health_red"
+        android:src="@drawable/home_center_green"
         android:layout_gravity="center_horizontal"/>
 </LinearLayout>
