@@ -10,4 +10,5 @@
     <string name="name_text_edit">Name</string>
     <string name="id_text_edit">ID</string>
     <string name="age_text_edit">Age</string>
+    <string name="title_top">My Health</string>
 </resources>

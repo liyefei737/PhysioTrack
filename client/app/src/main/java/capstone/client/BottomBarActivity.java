@@ -37,6 +37,8 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
+                if(mNavController.getCurrentStack().peek().getClass() == EditInfoFragment.class)
+                    mNavController.popFragment();
                 switch (tabId) {
                     case R.id.bb_menu_heart:
                         mNavController.switchTab(INDEX_HEART);
