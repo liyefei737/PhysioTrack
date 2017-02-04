@@ -25,7 +25,7 @@
         />
     <tab
         id="@+id/bb_menu_skin_temp"
-        icon="@drawable/ic_menu_skin_temp"
+        icon="@drawable/ic_menu_skin_temp_2"
         title="SkinTemp"
         activeColor="@color/black"
         inActiveColor="@color/tab_inactive"
@@ -33,7 +33,7 @@
         />
     <tab
         id="@+id/bb_menu_core_temp"
-        icon="@drawable/ic_menu_core_temp"
+        icon="@drawable/ic_menu_core_temp_2"
         title="CoreTemp"
         activeColor="@color/black"
         inActiveColor="@color/tab_inactive"
