@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
+import com.couchbase.lite.UnsavedRevision;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
@@ -37,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -54,13 +56,13 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        broadcaster = LocalBroadcastManager.getInstance(this);
-
-        // An Android handler thread internally operates on a looper.
-        mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
-        mHandlerThread.start();
-        // An Android service handler is a handler running on a specific background thread.
-        mServiceHandler = new Handler(mHandlerThread.getLooper());
+//        broadcaster = LocalBroadcastManager.getInstance(this);
+//
+//        // An Android handler thread internally operates on a looper.
+//        mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
+//        mHandlerThread.start();
+//        // An Android service handler is a handler running on a specific background thread.
+//        mServiceHandler = new Handler(mHandlerThread.getLooper());
 
         dataManager = ((Application) this.getApplication()).getDataManager();
 
@@ -204,7 +206,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 
 
             Date now;
-            int numSeconds = 9, millistep = 1000;
+            int numSeconds = 1, millistep = 1000;
             JSONArray lastXSeconds;
 //            while (true) {
 //            try {
@@ -214,20 +216,67 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 //            }
 
             now = new Date();
-            Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
-            if (physioDataMap != null) {
-                for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
-                    Database userDB = entry.getValue();
-                    lastXSeconds = dataManager.QueryLastXSeconds(entry.getKey(), now, numSeconds, millistep);
-                    try {
-                        data.addEntry(new Entry(set.getEntryCount(), (float) (lastXSeconds.get(valueForTesting)) + 30f), 0);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+            Map<String, Object> infoMap = new HashMap<String, Object>();
+            infoMap.put("name", "etst2");
+            infoMap.put("age", "ets55");
+            dataManager.addSoldier("tess8392", infoMap);
+
+            Database db = dataManager.getSoldierDB("tess8392");
+            Document doc = db.getDocument("02/03/2017 00:00:00.000");
+
+            try {
+                doc.update(new Document.DocumentUpdater() {
+                    @Override
+                    public boolean update(UnsavedRevision newRevision) {
+                        Map<String, Object> properties = newRevision.getUserProperties();
+                        properties.put("timeCreated", "02/03/2017 00:00:00.000");
+                        properties.put("accX", "153");
+                        properties.put("accY", "155");
+                        properties.put("accZ", "85");
+                        properties.put("skinTemp", "35.0");
+                        properties.put("coreTemp", "36.8");
+                        properties.put("heartRate", "68");
+                        properties.put("breathRate", "14");
+                        properties.put("bodyPosition", "PRONE");
+                        properties.put("motion", "STOPPED");
+                        newRevision.setUserProperties(properties);
+                        return true;
                     }
+                });
+            } catch (CouchbaseLiteException e) {
+                e.printStackTrace();
+            }
+
+
+
+            Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+
+
+
+
+            if (physioDataMap != null) {
+
+                for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
+//                    Database userDB = entry.getValue();
+
+
+
+                    lastXSeconds = dataManager.QueryLastXSeconds(entry.getKey(), now, numSeconds, millistep);
+                    Toast.makeText(getApplicationContext(), lastXSeconds.toString(), Toast.LENGTH_LONG).show();
+                    NameEditable.setText(lastXSeconds.toString());
+
+//                    try {
+//                        NameEditable.setText(lastXSeconds.toString());
+////                        data.addEntry(new Entry(set.getEntryCount(), (float) (lastXSeconds.get(valueForTesting)) + 30f), 0);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
 
                 }
                 valueForTesting++;
             }
+//            Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
 //            }
 
 

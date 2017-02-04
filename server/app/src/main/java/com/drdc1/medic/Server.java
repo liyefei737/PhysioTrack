@@ -98,8 +98,8 @@ public class Server extends NanoHTTPD {
         dbWrite();
 
         //put userName into the db
-       // Map<String, Object> properties = new HashMap<String, Object>();
-       // properties.put("username", userName);
+        // Map<String, Object> properties = new HashMap<String, Object>();
+        // properties.put("username", userName);
 
 //        try {
 //            document.putProperties(properties);
@@ -116,7 +116,7 @@ public class Server extends NanoHTTPD {
         //write data into database
     }
 
-        private JSONObject inputStreamToJSON (java.io.InputStream in ) throws IOException, JSONException {
+    private JSONObject inputStreamToJSON (java.io.InputStream in ) throws IOException, JSONException {
         BufferedReader streamReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
         StringBuilder responseStrBuilder = new StringBuilder();
 

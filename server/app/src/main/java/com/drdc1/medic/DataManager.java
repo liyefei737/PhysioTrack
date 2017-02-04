@@ -49,42 +49,57 @@ public class DataManager {
         }
     }
 
-    public Map<String, Database> getPhysioDataMap(){
+    public Map<String, Database> getPhysioDataMap() {
         return _physioDataDBMap;
     }
 
-    public int getNumSoldiers(){
+    public int getNumSoldiers() {
         if (_physioDataDBMap != null) {
             return _physioDataDBMap.size();
-        }
-        else return 0;
+        } else return 0;
     }
+
     public Database getUserInfoDatabase() {
         return _userInfoDB;
     }
 
-    public boolean addSoldier(String ID, Map<String, Object> staticInfo){
-        if (soldierInSystem(ID))
+    public boolean addSoldier(String ID, Map<String, Object> staticInfo) {
+        if (soldierInSystem(ID)) {
             //soldier exists in db already
             return false;
-        try {
-            Document doc = _userInfoDB.getDocument(ID);
-            doc.putProperties(staticInfo);
-
-            Database physioDB = openDatabase(ID);
-            _physioDataDBMap.put(ID, physioDB);
-
-            IndividualWelfareTracker iwt = new IndividualWelfareTracker();
-            _wellnessInfoMap.put(ID, iwt);
-            return true;
-
-        } catch (CouchbaseLiteException e) {
-            return false;
         }
+        Document doc = _userInfoDB.getDocument(ID);
+        try {
+            doc.putProperties(staticInfo);
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+        }
+
+        Database physioDB = openDatabase(ID);
+        _physioDataDBMap.put(ID, physioDB);
+
+        IndividualWelfareTracker iwt = new IndividualWelfareTracker();
+        _wellnessInfoMap.put(ID, iwt);
+        return true;
+
+//        try {
+//            Document doc = _userInfoDB.getDocument(ID);
+//            doc.putProperties(staticInfo);
+//
+//            Database physioDB = openDatabase(ID);
+//            _physioDataDBMap.put(ID, physioDB);
+//
+//            IndividualWelfareTracker iwt = new IndividualWelfareTracker();
+//            _wellnessInfoMap.put(ID, iwt);
+//            return true;
+//
+//        } catch (CouchbaseLiteException e) {
+//            return false;
+//        }
 
     }
 
-    public boolean removeSoldier(String ID){
+    public boolean removeSoldier(String ID) {
         if (!soldierInSystem(ID))
             //doesn't exist
             return false;
@@ -106,27 +121,27 @@ public class DataManager {
         }
     }
 
-    public boolean soldierInSystem(String ID){
-        if (_userInfoDB.getExistingDocument(ID) == null){
+    public boolean soldierInSystem(String ID) {
+        if (_userInfoDB.getExistingDocument(ID) == null) {
             return false;
         }
         return true;
     }
 
-    public Database getSoldierDB(String ID){
+    public Database getSoldierDB(String ID) {
         if (soldierInSystem(ID))
             return _physioDataDBMap.get(ID);
         return null;
     }
 
-    public IndividualWelfareTracker getWellnessTracker(String ID){
+    public IndividualWelfareTracker getWellnessTracker(String ID) {
         if (soldierInSystem(ID))
             return _wellnessInfoMap.get(ID);
         return null;
     }
 
-    public void saveWellnessTracker(String ID, IndividualWelfareTracker iwt){
-        if (soldierInSystem(ID)){
+    public void saveWellnessTracker(String ID, IndividualWelfareTracker iwt) {
+        if (soldierInSystem(ID)) {
             _wellnessInfoMap.put(ID, iwt);
         }
     }
@@ -152,22 +167,22 @@ public class DataManager {
         return db;
     }
 
-    public String GetQueryStartKey(Date now, int millistep){
+    public String GetQueryStartKey(Date now, int millistep) {
 
-        int millis = (int) (Math.ceil((double)((now.getTime() %1000) /(float)millistep)) * millistep);
+        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
         return dateFormat.format(now) + String.format("%03d", millis);
 
     }
 
-    public String GetQueryEndKey(Date now, int seconds, int millistep){
+    public String GetQueryEndKey(Date now, int seconds, int millistep) {
 
         Date XsecondsAgo = new Date();
         XsecondsAgo.setTime(now.getTime() - (seconds * 1000));
-        int millis = (int) (Math.ceil((double)((now.getTime() %1000) /(float)millistep)) * millistep);
+        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
         return dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
     }
 
-    public JSONArray QueryLastXSeconds(String ID, Date now, int seconds, int millistep ) {
+    public JSONArray QueryLastXSeconds(String ID, Date now, int seconds, int millistep) {
         JSONArray lastXseconds = new JSONArray();
         Query query = getSoldierDB(ID).createAllDocumentsQuery();
         query.setDescending(false);
