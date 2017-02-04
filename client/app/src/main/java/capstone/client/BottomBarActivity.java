@@ -5,7 +5,9 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
@@ -17,6 +19,8 @@ import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.Map;
+
+import static android.view.View.VISIBLE;
 
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation, FragNavController.TransactionListener, FragNavController.RootFragmentListener {
     private BottomBar mBottomBar;
@@ -173,7 +177,35 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         }
 
     }
+    public void edit_fields(View view){
+        Button savebtn = (Button)findViewById(R.id.btSave);
+        savebtn.setVisibility(VISIBLE);
+        EditText id = (EditText) findViewById(R.id.etSoldierId);
+        EditText age = (EditText) findViewById(R.id.etAge);
+        EditText weight = (EditText) findViewById(R.id.etWeight);
+        EditText height = (EditText) findViewById(R.id.etHeight);
 
+        id.setClickable(true);
+        id.setCursorVisible(true);
+        id.setFocusable(true);
+        id.setFocusableInTouchMode(true);
+
+        age.setClickable(true);
+        age.setCursorVisible(true);
+        age.setFocusable(true);
+        age.setFocusableInTouchMode(true);
+
+        weight.setClickable(true);
+        weight.setCursorVisible(true);
+        weight.setFocusable(true);
+        weight.setFocusableInTouchMode(true);
+
+        height.setClickable(true);
+        height.setCursorVisible(true);
+        height.setFocusable(true);
+        height.setFocusableInTouchMode(true);
+
+    }
 }
 
 
