@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,27 +21,39 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:src="@drawable/white_user_4"
+        android:src="@drawable/white_user_2"
         android:id="@+id/imageView"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
-
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="30dp"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
-            android:layout_width="0dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:ems="10"
             android:id="@+id/etSoldierId"
             android:hint="@string/id_text_edit"
             android:layout_weight="1"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textColorHint="@color/hint"/>
+            android:textColorHint="@color/hint"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@drawable/ic_edit_3"
+            android:id="@+id/edit_data"
+            android:backgroundTint="@color/bg"
+            android:layout_marginRight="10dp"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -58,7 +71,9 @@
             android:hint="@string/age_text_edit"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textColorHint="@color/hint"/>
+            android:textColorHint="@color/hint"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +91,9 @@
             android:hint="@string/weight_text_edit"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textColorHint="@color/hint"/>
+            android:textColorHint="@color/hint"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="20dp"/>
 
     </LinearLayout>
 
@@ -88,14 +105,16 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/etHeight"
             android:layout_weight="1"
             android:hint="Height"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textColorHint="@color/hint"/>
+            android:textColorHint="@color/hint"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -109,7 +128,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/btSave"
         android:layout_weight="1"
-        android:textColor="@color/bg"/>
+        android:textColor="@color/bg"
+        android:visibility="invisible"/>
     </LinearLayout>
 
 
