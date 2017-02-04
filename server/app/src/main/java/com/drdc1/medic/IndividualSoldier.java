@@ -105,9 +105,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         GenderEditable.setText("thistest1");
         AgeEditable.setText("thistest2");
         BodyOrientEditable.setText("thistest3");
-
-        SquadStatus.setText("DENEME");
-
+        
         mChart = (LineChart) findViewById(R.id.chart);
         mChart.setOnChartValueSelectedListener(this);
 

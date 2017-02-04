@@ -145,6 +145,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     }
 
     public void edit_info_save(View view){
+        final Button btnSave = (Button)findViewById(R.id.btSave);
         Database userDB = dbManager.getDatabase(dbManager.USER_DB);
         EditText id = (EditText) findViewById(R.id.etSoldierId);
         final String newId = id.getText().toString();
@@ -168,6 +169,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
                     properties.put(dbManager.WEIGHT_KEY, newWeight);
                     properties.put(dbManager.HEIGHT_KEY, newHeight);
                     newRevision.setUserProperties(properties);
+                    //btnSave.setVisibility(View.INVISIBLE);
                     return true;
                 }
             });
