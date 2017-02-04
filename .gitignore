@@ -19,3 +19,4 @@
 /server/.idea
 /server/.gradle
 /server/build/*
+/server/app/app.iml
