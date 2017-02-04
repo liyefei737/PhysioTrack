@@ -37,6 +37,15 @@ public class DBManager {
     private Database _dataDB = null;
     private Context _context = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
+    public String USER_DB = "user";
+    public String DATA_DB = "data";
+
+    //property keys for soldier details
+    public String ID_KEY = "id";
+    public String NAME_KEY ="name";
+    public String WEIGHT_KEY = "weight";
+    public String AGE_KEY = "age";
+    public String HEIGHT_KEY = "height";
 
     public DBManager(Context context) {
         _context = context;
@@ -133,5 +142,34 @@ public class DBManager {
             //handle this
         }
         return lastXseconds;
+    }
+
+    public Soldier getSoldierDetails(){
+        Query query = _userDB.createAllDocumentsQuery();
+        QueryEnumerator result;
+        try {
+            result = query.run();
+        }
+        catch (CouchbaseLiteException e) {
+            return null;
+        }
+        try {
+            Map<String, Object> tmpMap = result.getRow(0).getDocument().getProperties();
+            String id = (String) tmpMap.get(ID_KEY);
+          //  String name = (String) tmpMap.get(NAME_KEY);
+            int age = Integer.valueOf((String)tmpMap.get(AGE_KEY));
+            int weight = Integer.valueOf((String)tmpMap.get(WEIGHT_KEY));
+            int height = Integer.valueOf((String)tmpMap.get(HEIGHT_KEY));
+            Soldier s = new Soldier(id, "", age, weight, height);
+            return s;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    public void setSoldierDetails(Soldier soldier){
+
+
     }
 }

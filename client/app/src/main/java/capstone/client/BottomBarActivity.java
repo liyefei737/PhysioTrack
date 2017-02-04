@@ -5,15 +5,23 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 
+import com.couchbase.lite.CouchbaseLiteException;
+import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.UnsavedRevision;
 import com.ncapdevi.fragnav.FragNavController;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import java.util.Map;
+
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation, FragNavController.TransactionListener, FragNavController.RootFragmentListener {
     private BottomBar mBottomBar;
     private FragNavController mNavController;
+    private DBManager dbManager;
 
     //Better convention to properly name the indices what they are in your app
     private final int INDEX_HEART = FragNavController.TAB1;
@@ -25,6 +33,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbManager = new DBManager(this);
         setContentView(R.layout.activity_bottom_bar);
 
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
@@ -131,7 +140,39 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         pushFragment(new EditInfoFragment());
     }
 
+    public void edit_info_save(View view){
+        Database userDB = dbManager.getDatabase(dbManager.USER_DB);
+        EditText id = (EditText) findViewById(R.id.etSoldierId);
+        final String newId = id.getText().toString();
 
+        EditText age = (EditText) findViewById(R.id.etAge);
+        final String newAge = age.getText().toString();
+
+        EditText weight = (EditText) findViewById(R.id.etWeight);
+        final String newWeight = weight.getText().toString();
+
+        EditText height = (EditText) findViewById(R.id.etHeight);
+        final String newHeight = age.getText().toString();
+        Document doc = userDB.getDocument("1");
+        try {
+            doc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    properties.put(dbManager.ID_KEY, newId);
+                    properties.put(dbManager.AGE_KEY, newAge);
+                    properties.put(dbManager.WEIGHT_KEY, newWeight);
+                    properties.put(dbManager.HEIGHT_KEY, newHeight);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        }catch (CouchbaseLiteException e){
+
+
+        }
+
+    }
 
 }
 

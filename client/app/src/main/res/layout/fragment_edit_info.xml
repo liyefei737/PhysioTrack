@@ -5,19 +5,18 @@
     android:layout_height="match_parent"
     tools:context="capstone.client.EditInfoFragment"
     android:orientation="vertical">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/title_top"
-    android:textSize="@dimen/title_bar"
-    android:gravity="center"
-    android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_top"
+        android:textSize="@dimen/title_bar"
+        android:gravity="center"
+        android:textColor="@color/white"/>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/white_line"
         android:layout_marginBottom="5dp"/>
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -103,13 +102,13 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:ems="10"
             android:id="@+id/etHeight"
             android:layout_weight="1"
-            android:hint="Height"
+            android:hint="@string/height_text_edit"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textColorHint="@color/hint"
@@ -123,13 +122,14 @@
         android:layout_height="wrap_content">
 
     <Button
-        android:text="Save"
-        android:layout_width="wrap_content"
+        android:text="@string/edit_info_save_btn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/btSave"
         android:layout_weight="1"
         android:textColor="@color/bg"
         android:visibility="invisible"/>
+        android:onClick="edit_info_save"/>
     </LinearLayout>
 
 

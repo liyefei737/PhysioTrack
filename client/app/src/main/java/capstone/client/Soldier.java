@@ -12,7 +12,11 @@ public class Soldier {
     private int height;
 
     public Soldier(){
-
+        soldierID = "";
+        name = "";
+        age = -1;
+        weight = -1;
+        height = -1;
     }
 
     public Soldier(String strId, String strName, int iAge, int iWeight, int iHeight){
