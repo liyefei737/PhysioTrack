@@ -146,7 +146,7 @@
         android:id="@+id/btSave"
         android:layout_weight="1"
         android:textColor="@color/bg"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
         android:onClick="edit_info_save"/>
     </LinearLayout>
 
