@@ -174,6 +174,13 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
     }
 
+    public void updateHomeFragment(String state){
+        if(mNavController.getCurrentFrag().getClass() == HomeFragment.class){
+            HomeFragment homeFrag = (HomeFragment) mNavController.getCurrentFrag();
+            homeFrag.updateWellnessStatus(state);
+        }
+    }
+
 }
 
 

@@ -4,6 +4,8 @@ import android.app.Application;
 
 import java.util.Date;
 
+import welfareSM.WelfareStatus;
+
 /**
  * Created by Grace on 2017-01-21.
  */
@@ -19,7 +21,15 @@ public class DRDCClient extends Application {
     private Date dob;
     private float weight;
     private float height;
+    private WelfareStatus lastState;
 
+    public WelfareStatus getLastState(){
+        return lastState;
+    }
+
+    public void setLastState(WelfareStatus state){
+        lastState = state;
+    }
 
     public String getServiceNumber() {
         return serviceNumber;

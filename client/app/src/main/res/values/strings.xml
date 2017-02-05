@@ -12,4 +12,5 @@
     <string name="age_text_edit">Age</string>
     <string name="title_top">My Health</string>
     <string name="edit_info_save_btn">Save</string>
+    <string name="title_activity_basic">BasicActivity</string>
 </resources>

@@ -31,6 +31,7 @@
     <ImageView
         android:layout_width="278dp"
         android:layout_height="268dp"
+        android:id="@+id/wellness_status"
         android:src="@drawable/home_center_green"
         android:layout_gravity="center_horizontal"/>
 </LinearLayout>

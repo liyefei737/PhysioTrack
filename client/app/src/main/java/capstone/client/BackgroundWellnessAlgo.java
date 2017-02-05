@@ -28,7 +28,7 @@ public class BackgroundWellnessAlgo  extends Service {
     private volatile HandlerThread mHandlerThread;
     private Handler mServiceHandler;
 
-    static final String DB_UPDATE = "DB_UPDATE";
+    static final String STATUS_UPDATE = "STATUS_UPDATE";
     static private BackgroundWellnessAlgo _BackgroundWellnessAlgo = null;
     private DBManager dbManager = null;
     private LocalBroadcastManager broadcaster = null;
@@ -74,12 +74,11 @@ public class BackgroundWellnessAlgo  extends Service {
         return START_STICKY;
     }
 
-    public void notifyUI(Map<String, Object> document) {
-        Intent intent = new Intent(DB_UPDATE);
-        for (String key : document.keySet()) {
-            intent.putExtra(key, document.get(key).toString());
-        }
-        broadcaster.sendBroadcast(intent);
+    public void notifyUI(WelfareStatus state) {
+        Intent intent = new Intent();
+        intent.setAction("capstone.client.BackgroundWellnessAlgo.STATUS_UPDATE");
+        intent.putExtra(STATUS_UPDATE, state.toString());
+        sendBroadcast(intent);
     }
 
     public void calculateWellness() {
@@ -95,9 +94,7 @@ public class BackgroundWellnessAlgo  extends Service {
             try {
                 Thread.sleep(numSeconds *1000);
             }
-            catch (Exception e)
-            {
-                //
+            catch (Exception e) {
             }
             now = new Date();
             lastXseconds = dbManager.QueryLastXSeconds(now, numSeconds, millistep);
@@ -118,7 +115,8 @@ public class BackgroundWellnessAlgo  extends Service {
             } catch (CouchbaseLiteException e){
                 //handle this
             }
-
+            notifyUI(nextState);
+            ((DRDCClient) this.getApplication()).setLastState(nextState);
         }
     }
 }
