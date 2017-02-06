@@ -144,6 +144,24 @@ public class DBManager {
         return lastXseconds;
     }
 
+    public QueryEnumerator quickQuery(Date now, int seconds, int millistep ) {
+        Query query = _dataDB.createAllDocumentsQuery();
+        query.setDescending(false);
+        String startKey = GetQueryStartKey(now, millistep);
+        String endKey = GetQueryEndKey(now, seconds, millistep);
+
+        try {
+            query.setEndKeyDocId(endKey);
+            query.setStartKeyDocId(startKey);
+            QueryEnumerator result = query.run();
+            //result
+            return result;
+        } catch (CouchbaseLiteException e) {
+            //handle this
+        }
+        return null;
+    }
+
     public Soldier getSoldierDetails(){
         Query query = _userDB.createAllDocumentsQuery();
         QueryEnumerator result;
