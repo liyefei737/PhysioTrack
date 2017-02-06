@@ -32,7 +32,7 @@
             android:layout_marginTop="13dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/currentSkinTemp"
-            android:textSize="14sp"
+            android:textSize="35sp"
             android:textColor="@color/white"
             android:layout_weight="1"/>
 

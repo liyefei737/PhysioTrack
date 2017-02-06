@@ -2,8 +2,6 @@ package capstone.client;
 
 import android.app.Application;
 
-import java.util.Date;
-
 import welfareSM.WelfareStatus;
 
 /**
@@ -16,11 +14,6 @@ public class DRDCClient extends Application {
     //access in any activity by String s = ((MyApplication) this.getApplication()).getSomeVariable(); or
     //    ((MyApplication) this.getApplication()).setSomeVariable("foo");
 
-    private String serviceNumber;
-    private String name;
-    private Date dob;
-    private float weight;
-    private float height;
     private WelfareStatus lastState;
 
     public WelfareStatus getLastState(){
@@ -31,42 +24,44 @@ public class DRDCClient extends Application {
         lastState = state;
     }
 
-    public String getServiceNumber() {
-        return serviceNumber;
+    private String lastHeartRate = "--";
+    public String getLastHeartRate(){
+        return lastHeartRate;
     }
 
-    public void setServiceNumber(String id) {
-        this.serviceNumber = id;
+    public void setLastHeartRate(String hr){
+        if (hr != null)
+            if(!hr.isEmpty())
+                lastHeartRate = hr;
     }
 
-    public String getName() {
-        return name;
+    private String lastBreathingRate = "--";
+    public String getLastBreathingRate(){
+        return lastBreathingRate;
+    }
+    public void setLastBreathingRate(String br){
+        if (br != null)
+            if(!br.isEmpty())
+                lastBreathingRate = br;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    private String lastSkinTemp  = "--";
+    public String getLastSkinTemp(){
+        return lastSkinTemp;
     }
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public float getWeight() {
-        return weight;
+    public void setLastSkinTemp(String st){
+        if (st != null)
+            if(!st.isEmpty())
+                lastSkinTemp = st;
     }
 
-    public void setWeight(float w) {
-        this.weight = w;
+    private String lastCoreTemp  = "--";
+    public String getLastCoreTemp(){
+        return lastCoreTemp;
     }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float h) {
-        this.height = h;
+    public void setLastCoreTemp(String ct){
+        if (ct != null)
+            if(!ct.isEmpty())
+                lastCoreTemp = ct;
     }
 }

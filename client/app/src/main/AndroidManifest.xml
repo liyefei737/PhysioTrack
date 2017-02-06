@@ -48,7 +48,10 @@
             android:label="@string/title_activity_bottom_bar"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
+        <service
+            android:name=".BackgroundParameterUpdate"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
