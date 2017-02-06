@@ -180,7 +180,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         final String newWeight = weight.getText().toString();
 
         EditText height = (EditText) findViewById(R.id.etHeight);
-        final String newHeight = age.getText().toString();
+        final String newHeight = height.getText().toString();
         Document doc = userDB.getDocument("1");
         try {
             doc.update(new Document.DocumentUpdater() {

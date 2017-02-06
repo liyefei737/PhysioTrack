@@ -18,7 +18,7 @@
         android:layout_marginBottom="5dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -36,12 +36,7 @@
             android:textColor="@color/white"
             android:layout_weight="1"/>
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/breathChart"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            android:layout_gravity="left|bottom"
-            android:layout_marginLeft="-60dp"/>
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,4 +49,12 @@
             android:layout_gravity="right"
             android:onClick="edit_info"
             android:layout_weight="0"/></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/breathChart"
+            android:layout_width="350dp"
+            android:layout_height="350dp"/>
+    </LinearLayout>
 </LinearLayout>

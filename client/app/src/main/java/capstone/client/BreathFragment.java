@@ -26,7 +26,6 @@ import java.util.Map;
 public class BreathFragment extends BaseFragment implements DataObserver {
     private LineChart lineChart;
 
-    public static BreathFragment  newInstance(int instance) {
     private ParamReceiver mReceiver;
     private Intent intent;
 
