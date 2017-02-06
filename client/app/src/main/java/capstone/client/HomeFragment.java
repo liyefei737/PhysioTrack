@@ -59,8 +59,9 @@ public class HomeFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         WelfareStatus state = ((DRDCClient) getActivity().getApplication()).getLastState();
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ImageView iv = (ImageView) view.findViewById(R.id.wellness_status);
         if (state != null)
-            updateWellnessStatus(state.toString());
+            updateWellnessStatus(state.toString(), iv);
         return view;
     }
 
@@ -92,8 +93,7 @@ public class HomeFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    public void updateWellnessStatus(String state){
-        ImageView wellnessStatus = (ImageView) getActivity().findViewById(R.id.wellness_status);
+    public void updateWellnessStatus(String state, ImageView wellnessStatus){
 
         if (state.equals("GREEN")){
             wellnessStatus.setImageResource(R.drawable.home_center_green);
