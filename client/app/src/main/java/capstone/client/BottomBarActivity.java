@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
@@ -232,7 +234,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     public void updateHomeFragment(String state){
         if(mNavController.getCurrentFrag().getClass() == HomeFragment.class){
             HomeFragment homeFrag = (HomeFragment) mNavController.getCurrentFrag();
-            homeFrag.updateWellnessStatus(state);
+            homeFrag.updateWellnessStatus(state, (ImageView) homeFrag.getView().findViewById(R.id.wellness_status));
         }
     }
 
@@ -269,6 +271,36 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
             notifyObserver(data);
         }
     }
+
+    public void updateHeartFragment(String param){
+        if(mNavController.getCurrentFrag().getClass() == HeartFragment.class){
+            HeartFragment heartFrag = (HeartFragment) mNavController.getCurrentFrag();
+            heartFrag.updateParam(param, (TextView) heartFrag.getView().findViewById(R.id.currentHeartRate));
+        }
+    }
+
+    public void updateBreathFragment(String param){
+        if(mNavController.getCurrentFrag().getClass() == BreathFragment.class){
+            BreathFragment breathFrag= (BreathFragment) mNavController.getCurrentFrag();
+            breathFrag.updateParam(param, (TextView) breathFrag.getView().findViewById(R.id.currentBreathRate));
+        }
+    }
+
+    public void updateSkinFragment(String param){
+        if(mNavController.getCurrentFrag().getClass() == SkinTempFragment.class){
+            SkinTempFragment skinFrag = (SkinTempFragment) mNavController.getCurrentFrag();
+            skinFrag.updateParam(param, (TextView) skinFrag.getView().findViewById(R.id.currentSkinTemp));
+        }
+    }
+
+    public void updateCoreFragment(String param){
+        if(mNavController.getCurrentFrag().getClass() == CoreTempFragment.class){
+            CoreTempFragment coreFrag = (CoreTempFragment) mNavController.getCurrentFrag();
+            coreFrag.updateParam(param, (TextView) coreFrag.getView().findViewById(R.id.currentCoreTemp));
+        }
+    }
+
+
 
 }
 

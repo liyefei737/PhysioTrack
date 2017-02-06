@@ -92,7 +92,7 @@ public class BackgroundSleepAlgo extends Service {
         Database dataDB = databseManager.getDatabase("data");
         QueryEnumerator rows = null;
         Date now;
-        int numSeconds = 9, millistep = 1000;
+        int numSeconds = 9, millistep = 0;
 
         while (true) {
             try{
