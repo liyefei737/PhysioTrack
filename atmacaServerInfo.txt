@@ -1,0 +1,13 @@
+www.atmacausa.com/phpmyadmi
+root
+Ma80Ny08@sql
+
+
+var/www/atmacausa.com/public_html
+
+
+ssh connection: ssh root@atmacausa.com
+                pass: HTuna2014@li
+                
+                /var/www/atmacausa.com/public_html
+                

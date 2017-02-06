@@ -1,0 +1,1 @@
+If you make changes and want to repackage the .jar file, use eclipse and go to File->Export.
