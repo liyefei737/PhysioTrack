@@ -7,8 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-public class BaseFragment extends Fragment {
+    public class BaseFragment extends Fragment {
         public static final String ARGS_INSTANCE = "com.ncapdevi.sample.argsInstance";
 
         FragmentNavigation mFragmentNavigation;
@@ -22,7 +21,6 @@ public class BaseFragment extends Fragment {
             if (args != null) {
                 mInt = args.getInt(ARGS_INSTANCE);
             }
-
             this.onCreate();
         }
 
@@ -54,10 +52,8 @@ public class BaseFragment extends Fragment {
             }
         }
 
-    public interface FragmentNavigation {
+        public interface FragmentNavigation {
             public void pushFragment(Fragment fragment);
         }
-
-
     }
 

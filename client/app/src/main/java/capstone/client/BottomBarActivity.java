@@ -1,19 +1,15 @@
 package capstone.client;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
@@ -23,23 +19,14 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import static android.view.View.VISIBLE;
 
-public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation,
-                                                                FragNavController.TransactionListener,
-                    FragNavController.RootFragmentListener,FragmentDataManager  {
+public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation, FragNavController.TransactionListener, FragNavController.RootFragmentListener {
     private BottomBar mBottomBar;
     private FragNavController mNavController;
     private DBManager dbManager;
-
-    static private HashMap data; //one data shared by all fragments
-    private DataReceiver dataReceiver;
-    //this list is all the fragments that needs to know when data updates
-    private ArrayList<DataObserver> fragmentlist;
 
     //Better convention to properly name the indices what they are in your app
     private final int INDEX_HEART = FragNavController.TAB1;
@@ -60,14 +47,6 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         mNavController =
                 new FragNavController(savedInstanceState, getSupportFragmentManager(), R.id.container,this,5, INDEX_HOME);
         mNavController.setTransactionListener(this);
-
-        //data for all the graphs from background
-        data = new HashMap();
-        fragmentlist = new ArrayList<>();
-
-        IntentFilter UPDATEDATA = new IntentFilter("UI_UPDATE");
-        dataReceiver = new DataReceiver();
-        LocalBroadcastManager.getInstance(this).registerReceiver(dataReceiver,UPDATEDATA);
 
         mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -237,40 +216,6 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         }
     }
 
-    @Override
-    public void registerFragment(DataObserver o) {
-        fragmentlist.add(o);
-    }
-
-    @Override
-    public void unregisterFragment(DataObserver o) {
-        int observerIndex = fragmentlist.indexOf(o);
-        fragmentlist.remove(observerIndex);
-    }
-
-    @Override
-    public void notifyObserver(Map data) {
-        for(DataObserver observer : fragmentlist){
-            observer.update(data);
-        }
-
-
-    }
-
-    class DataReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            data.put("skinTemp",intent.getFloatArrayExtra("skinTemp"));
-            data.put("coreTemp",intent.getFloatArrayExtra("coreTemp"));
-            data.put("br",intent.getIntArrayExtra("br"));
-            data.put("hr",intent.getIntArrayExtra("hr"));
-            System.out.println("receiving...");
-            System.out.println(intent.getAction());
-            notifyObserver(data);
-        }
-    }
-
     public void updateHeartFragment(String param){
         if(mNavController.getCurrentFrag().getClass() == HeartFragment.class){
             HeartFragment heartFrag = (HeartFragment) mNavController.getCurrentFrag();
@@ -298,6 +243,8 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
             coreFrag.updateParam(param, (TextView) coreFrag.getView().findViewById(R.id.currentCoreTemp));
         }
     }
+
+
 
 }
 
