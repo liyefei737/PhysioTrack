@@ -9,10 +9,26 @@
     android:background="@color/colorBlack"
     tools:context="com.drdc.medicui.MainActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name list" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:textColor="@color/colorWhite"
+                android:ems="10"
+                android:id="@+id/etName" />
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>
