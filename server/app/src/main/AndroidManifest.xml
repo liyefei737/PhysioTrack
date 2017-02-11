@@ -11,12 +11,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".StartActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="com.drdc1.medic.STARTACTIVITY" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DBViewer"></activity>
+
+        <activity android:name=".DBViewer" />
 
         <service
             android:name=".BackgroundServer"
@@ -34,7 +34,7 @@
             android:exported="false"
             android:stopWithTask="false" />
 
-        <activity android:name=".IndividualSoldier"></activity>
+        <activity android:name=".IndividualSoldier" />
     </application>
 
 </manifest>
