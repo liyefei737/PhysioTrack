@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
@@ -21,6 +22,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.Map;
 
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation, FragNavController.TransactionListener, FragNavController.RootFragmentListener {
@@ -139,10 +141,38 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         }
         throw new IllegalStateException("Need to send an index that we know");
     }
-
-
     public void edit_info(View view) {
         pushFragment(new EditInfoFragment());
+    }
+    public void cancel_info(View view){
+        Button savebtn = (Button)findViewById(R.id.btSave);
+        Button cancelbtn = (Button)findViewById(R.id.btCancel);
+        savebtn.setVisibility(INVISIBLE);
+        cancelbtn.setVisibility(INVISIBLE);
+        EditText id = (EditText) findViewById(R.id.etSoldierId);
+        EditText age = (EditText) findViewById(R.id.etAge);
+        EditText weight = (EditText) findViewById(R.id.etWeight);
+        EditText height = (EditText) findViewById(R.id.etHeight);
+
+        id.setClickable(false);
+        id.setCursorVisible(false);
+        id.setFocusable(false);
+        id.setFocusableInTouchMode(false);
+
+        age.setClickable(false);
+        age.setCursorVisible(false);
+        age.setFocusable(false);
+        age.setFocusableInTouchMode(false);
+
+        weight.setClickable(false);
+        weight.setCursorVisible(false);
+        weight.setFocusable(false);
+        weight.setFocusableInTouchMode(false);
+
+        height.setClickable(false);
+        height.setCursorVisible(false);
+        height.setFocusable(false);
+        height.setFocusableInTouchMode(false);
     }
 
     public void edit_info_save(View view){
@@ -182,7 +212,9 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     }
     public void edit_fields(View view){
         Button savebtn = (Button)findViewById(R.id.btSave);
+        Button cancelbtn = (Button)findViewById(R.id.btCancel);
         savebtn.setVisibility(VISIBLE);
+        cancelbtn.setVisibility(VISIBLE);
         EditText id = (EditText) findViewById(R.id.etSoldierId);
         EditText age = (EditText) findViewById(R.id.etAge);
         EditText weight = (EditText) findViewById(R.id.etWeight);
@@ -243,7 +275,6 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
             coreFrag.updateParam(param, (TextView) coreFrag.getView().findViewById(R.id.currentCoreTemp));
         }
     }
-
 
 
 }

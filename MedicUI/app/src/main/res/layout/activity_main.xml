@@ -29,7 +29,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bottomline"
+            android:background="@color/colorBlack"
             app:tabMode="scrollable" />
 
     </android.support.design.widget.AppBarLayout>

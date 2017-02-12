@@ -24,25 +24,32 @@
             android:layout_height="match_parent"
             android:id="@+id/layoutSearch">
 
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_search"
+                android:id="@+id/imageView" />
+
             <EditText
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="text"
                 android:id="@+id/etSearch"
                 android:textAlignment="center"
                 android:hint="Search for Soldier Name"
-                android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorGrey"
+                android:textColor="@color/colorGrey"
+                android:textColorHint="@color/colorBlack"
                 android:textSize="@dimen/fontsize"
                 android:backgroundTint="@color/colorGrey"
-                android:layout_width="300dp" />
+                android:layout_marginRight="14dp"
+                android:background="@color/colorGrey"
+                android:layout_width="260dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_help2"
                 android:id="@+id/imageButton"
-                android:background="@color/colorBlack"
-                android:layout_weight="1" />
+                android:background="@color/colorBlack" />
         </LinearLayout>
 
     </LinearLayout>
