@@ -105,7 +105,6 @@
         app:srcCompat="@drawable/ic_help2"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/btHelp"
-        android:onClick="fragmentClick" />
+        android:id="@+id/btHelp" />
 
 </RelativeLayout>

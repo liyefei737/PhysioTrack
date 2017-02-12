@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.support.v4.app.Fragment;
-import android.widget.TextView;
 
 public class HelpPage extends Fragment {
 

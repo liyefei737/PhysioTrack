@@ -27,8 +27,9 @@
             <ImageView
                 android:layout_width="29dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_search"
-                android:id="@+id/imageView" />
+                app:srcCompat="@drawable/search3"
+                android:background="@color/colorGrey"
+                android:id="@+id/serchIcon" />
 
             <EditText
                 android:layout_height="match_parent"
@@ -40,15 +41,15 @@
                 android:textColorHint="@color/colorBlack"
                 android:textSize="@dimen/fontsize"
                 android:backgroundTint="@color/colorGrey"
-                android:layout_marginRight="14dp"
+                android:layout_marginRight="50dp"
                 android:background="@color/colorGrey"
-                android:layout_width="260dp" />
+                android:layout_width="230dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_help2"
-                android:id="@+id/imageButton"
+                android:id="@+id/ibHelp"
                 android:background="@color/colorBlack" />
         </LinearLayout>
 
@@ -64,74 +65,91 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:id="@+id/layoutName"
             android:layout_height="wrap_content"
-            android:id="@+id/layoutName">
+            android:layout_marginTop="20dp">
 
 
-            <TextView
-                android:text="Soldier Name :"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvSoldierName"
-                android:layout_weight="0.64"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fontsize2"
-                android:layout_width="60dp" />
-
-            <EditText
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/etSoldierName"
-                android:layout_weight="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fontsize2"/>
-        </LinearLayout>
+                android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layoutGender">
+                <TextView
+                    android:text="Soldier Name :"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvSoldierName"
+                    android:layout_weight="0.64"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fontsize2"
+                    android:layout_width="wrap_content" />
 
-            <TextView
-                android:text="Gender :"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvGender"
-                android:layout_weight="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fontsize2"/>
+                <TextView
+                    android:text="Gender :"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvGender"
+                    android:layout_weight="0.64"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fontsize2"/>
 
-            <EditText
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/etGender"
-                android:layout_weight="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fontsize2"/>
+            </LinearLayout>
 
-            <TextView
-                android:text="Age :"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvAge"
-                android:layout_weight="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fontsize2"
-                android:textAlignment="center" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/layoutGender"
+                android:layout_weight="0.64">
 
-            <EditText
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/etAge"
-                android:layout_weight="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fontsize2"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="130dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/etSoldierName"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/fontsize2"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/etGender"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/fontsize2"/>
+                </LinearLayout>
+
+                <TextView
+                    android:text="Age :"
+                    android:layout_width="66dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvAge"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fontsize2"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:layout_width="20dp"
+                    android:layout_height="21dp"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/etAge"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fontsize2"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.29" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -242,7 +260,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/layoutButton">
 
