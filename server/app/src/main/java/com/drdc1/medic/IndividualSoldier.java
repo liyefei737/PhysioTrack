@@ -50,7 +50,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
     int valueForTesting = 0;
     TextView NameList, SquadStatus, IndSoldier;
     EditText NameEditable, GenderEditable, AgeEditable, BodyOrientEditable;
-    private LineChart mChart;
+    private LineChart hrchart, respchart, skinchart, ctchart;
 
 
     @Override
@@ -105,57 +105,158 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         GenderEditable.setText("thistest1");
         AgeEditable.setText("thistest2");
         BodyOrientEditable.setText("thistest3");
-        
-        mChart = (LineChart) findViewById(R.id.chart);
-        mChart.setOnChartValueSelectedListener(this);
+
+        hrchart = (LineChart) findViewById(R.id.hrrchart);
+        respchart = (LineChart) findViewById(R.id.resprchart);
+        skinchart = (LineChart) findViewById(R.id.skinrchart);
+        ctchart = (LineChart) findViewById(R.id.ctrchart);
+
+        hrchart.setOnChartValueSelectedListener(this);
+        respchart.setOnChartValueSelectedListener(this);
+        skinchart.setOnChartValueSelectedListener(this);
+        ctchart.setOnChartValueSelectedListener(this);
 
         // enable description text
-        mChart.getDescription().setEnabled(true);
+        hrchart.getDescription().setEnabled(true);
+        respchart.getDescription().setEnabled(true);
+        skinchart.getDescription().setEnabled(true);
+        ctchart.getDescription().setEnabled(true);
 
         // enable touch gestures
-        mChart.setTouchEnabled(true);
+        hrchart.setTouchEnabled(true);
+        respchart.setTouchEnabled(true);
+        skinchart.setTouchEnabled(true);
+        ctchart.setTouchEnabled(true);
 
         // enable scaling and dragging
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
-        mChart.setDrawGridBackground(false);
+        hrchart.setDragEnabled(true);
+        hrchart.setScaleEnabled(true);
+        hrchart.setDrawGridBackground(false);
+
+        respchart.setDragEnabled(true);
+        respchart.setScaleEnabled(true);
+        respchart.setDrawGridBackground(false);
+
+        skinchart.setDragEnabled(true);
+        skinchart.setScaleEnabled(true);
+        skinchart.setDrawGridBackground(false);
+
+        ctchart.setDragEnabled(true);
+        ctchart.setScaleEnabled(true);
+        ctchart.setDrawGridBackground(false);
+
 
         // if disabled, scaling can be done on x- and y-axis separately
-        mChart.setPinchZoom(true);
+        hrchart.setPinchZoom(true);
+        respchart.setPinchZoom(true);
+        skinchart.setPinchZoom(true);
+        ctchart.setPinchZoom(true);
+
 
         // set an alternative background color
-        mChart.setBackgroundColor(Color.LTGRAY);
+        hrchart.setBackgroundColor(Color.LTGRAY);
+        respchart.setBackgroundColor(Color.LTGRAY);
+        skinchart.setBackgroundColor(Color.LTGRAY);
+        ctchart.setBackgroundColor(Color.LTGRAY);
+
 
         LineData data = new LineData();
         data.setValueTextColor(Color.WHITE);
 
         // add empty data
-        mChart.setData(data);
+        hrchart.setData(data);
+        respchart.setData(data);
+        skinchart.setData(data);
+        ctchart.setData(data);
+
 
         // get the legend (only possible after setting data)
-        Legend l = mChart.getLegend();
+        Legend l = hrchart.getLegend();
+        Legend lrespchart = respchart.getLegend();
+        Legend lskinchart = skinchart.getLegend();
+        Legend lctchart = ctchart.getLegend();
+
 
         // modify the legend ...
         l.setForm(LegendForm.LINE);
+        lrespchart.setForm(LegendForm.LINE);
+        lskinchart.setForm(LegendForm.LINE);
+        lctchart.setForm(LegendForm.LINE);
+
 //        l.setTypeface(mTfLight);
         l.setTextColor(Color.WHITE);
+        lrespchart.setTextColor(Color.WHITE);
+        lskinchart.setTextColor(Color.WHITE);
+        lctchart.setTextColor(Color.WHITE);
 
-        XAxis xl = mChart.getXAxis();
+        XAxis xl = hrchart.getXAxis();
 //        xl.setTypeface(mTfLight);
         xl.setTextColor(Color.WHITE);
         xl.setDrawGridLines(false);
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
 
-        YAxis leftAxis = mChart.getAxisLeft();
+        XAxis xlrespchart = respchart.getXAxis();
+//        xl.setTypeface(mTfLight);
+        xlrespchart.setTextColor(Color.WHITE);
+        xlrespchart.setDrawGridLines(false);
+        xlrespchart.setAvoidFirstLastClipping(true);
+        xlrespchart.setEnabled(true);
+
+        XAxis xskinchart = skinchart.getXAxis();
+//        xl.setTypeface(mTfLight);
+        xskinchart.setTextColor(Color.WHITE);
+        xskinchart.setDrawGridLines(false);
+        xskinchart.setAvoidFirstLastClipping(true);
+        xskinchart.setEnabled(true);
+
+        XAxis xctchart = ctchart.getXAxis();
+//        xl.setTypeface(mTfLight);
+        xctchart.setTextColor(Color.WHITE);
+        xctchart.setDrawGridLines(false);
+        xctchart.setAvoidFirstLastClipping(true);
+        xctchart.setEnabled(true);
+
+
+        YAxis leftAxis = hrchart.getAxisLeft();
 //        leftAxis.setTypeface(mTfLight);
         leftAxis.setTextColor(Color.WHITE);
         leftAxis.setAxisMaximum(100f);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setDrawGridLines(true);
 
-        YAxis rightAxis = mChart.getAxisRight();
+        YAxis rightAxis = hrchart.getAxisRight();
         rightAxis.setEnabled(false);
+
+        YAxis leftAxisrespchart = respchart.getAxisLeft();
+//        leftAxis.setTypeface(mTfLight);
+        leftAxisrespchart.setTextColor(Color.WHITE);
+        leftAxisrespchart.setAxisMaximum(100f);
+        leftAxisrespchart.setAxisMinimum(0f);
+        leftAxisrespchart.setDrawGridLines(true);
+
+        YAxis rightAxisrespchart = respchart.getAxisRight();
+        rightAxisrespchart.setEnabled(false);
+
+        YAxis leftAxisskinchart = skinchart.getAxisLeft();
+//        leftAxis.setTypeface(mTfLight);
+        leftAxisskinchart.setTextColor(Color.WHITE);
+        leftAxisskinchart.setAxisMaximum(100f);
+        leftAxisskinchart.setAxisMinimum(0f);
+        leftAxisskinchart.setDrawGridLines(true);
+
+        YAxis rightAxisskinchart = skinchart.getAxisRight();
+        rightAxisskinchart.setEnabled(false);
+
+        YAxis leftAxisctchart = ctchart.getAxisLeft();
+//        leftAxis.setTypeface(mTfLight);
+        leftAxisctchart.setTextColor(Color.WHITE);
+        leftAxisctchart.setAxisMaximum(100f);
+        leftAxisctchart.setAxisMinimum(0f);
+        leftAxisctchart.setDrawGridLines(true);
+
+        YAxis rightAxisctchart = ctchart.getAxisRight();
+        rightAxisctchart.setEnabled(false);
 
 
     }
@@ -176,7 +277,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
                 break;
             }
             case R.id.actionClear: {
-                mChart.clearValues();
+                hrchart.clearValues();
                 Toast.makeText(this, "Chart cleared!", Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -190,7 +291,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 
     private void addEntry() {
 
-        LineData data = mChart.getData();
+        LineData data = hrchart.getData();
 
         if (data != null) {
 
@@ -218,10 +319,10 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
             Map<String, Object> infoMap = new HashMap<String, Object>();
             infoMap.put("name", "etst2");
             infoMap.put("age", "ets55");
-            dataManager.addSoldier("tess8392", infoMap);
+            dataManager.addSoldier("tess81", infoMap);
 
-            Database db = dataManager.getSoldierDB("tess8392");
-            Document doc = db.getDocument("02/03/2017 00:00:00.000");
+            Database db = dataManager.getSoldierDB("tess81");
+            Document doc = db.getDocument("02/13/2017 00:00:00.000");
 
             try {
                 doc.update(new Document.DocumentUpdater() {
@@ -247,10 +348,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
             }
 
 
-
             Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
-
-
 
 
             if (physioDataMap != null) {
@@ -259,17 +357,18 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 //                    Database userDB = entry.getValue();
 
 
-
                     lastXSeconds = dataManager.QueryLastXSeconds(entry.getKey(), now, numSeconds, millistep);
                     Toast.makeText(getApplicationContext(), lastXSeconds.toString(), Toast.LENGTH_LONG).show();
                     NameEditable.setText(lastXSeconds.toString());
 
-//                    try {
+                    try {
 //                        NameEditable.setText(lastXSeconds.toString());
-////                        data.addEntry(new Entry(set.getEntryCount(), (float) (lastXSeconds.get(valueForTesting)) + 30f), 0);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
+                        NameEditable.setText(lastXSeconds.getJSONObject(0).getString("heartRate"));
+
+                        data.addEntry(new Entry(set.getEntryCount(), (float) (lastXSeconds.getJSONObject(0).getInt("heartRate")) + 30f), 0);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                 }
                 valueForTesting++;
@@ -282,17 +381,17 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
             data.notifyDataChanged();
 
             // let the chart know it's data has changed
-            mChart.notifyDataSetChanged();
+            hrchart.notifyDataSetChanged();
 
             // limit the number of visible entries
-            mChart.setVisibleXRangeMaximum(120);
-            // mChart.setVisibleYRange(30, AxisDependency.LEFT);
+            hrchart.setVisibleXRangeMaximum(120);
+            // hrchart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry
-            mChart.moveViewToX(data.getEntryCount());
+            hrchart.moveViewToX(data.getEntryCount());
 
             // this automatically refreshes the chart (calls invalidate())
-            // mChart.moveViewTo(data.getXValCount()-7, 55f,
+            // hrchart.moveViewTo(data.getXValCount()-7, 55f,
             // AxisDependency.LEFT);
         }
     }

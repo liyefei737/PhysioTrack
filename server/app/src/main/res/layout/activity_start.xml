@@ -15,16 +15,17 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/myhealt_7"
-            android:id="@+id/imageView2"
-            android:layout_marginTop="-34dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginLeft="2dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/appheader"
+            android:id="@+id/appheader"
+            android:layout_marginTop="-8dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginLeft="0dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true" />
@@ -83,7 +84,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/line"
+                app:srcCompat="@drawable/whiteline2"
                 android:id="@+id/imageView6" />
 
             <TextView
