@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.support.v4.app.Fragment;
 
-public class HelpPage extends Fragment {
+public class HelpPage extends Fragment implements View.OnClickListener {
 
 
 
@@ -18,5 +18,10 @@ public class HelpPage extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_help_page, container, false);
         return rootView;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
