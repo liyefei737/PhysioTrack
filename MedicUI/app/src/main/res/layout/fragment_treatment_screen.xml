@@ -6,12 +6,299 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorBlack"
+    android:background="@color/colorWhite"
     tools:context="com.drdc.medicui.MainActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Treatment Screen"/>
+
+    ET3
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/svTreatment"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:id="@+id/llayout1">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llHeader">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorBlack"
+                    android:gravity="center"
+                    android:layout_width="190dp"
+                    android:id="@+id/llMedevac">
+
+                    <TextView
+                        android:text='MEDEVAC "9 Liner" REQUEST'
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv1"
+                        android:textColor="@color/colorWhite"
+                        android:layout_weight="1"
+                        android:layout_width="260dp"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:layout_weight="1"
+                    android:id="@+id/llDTG">
+
+                    <TextView
+                        android:text="DTG"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvDTG"
+                        android:layout_width="34dp"
+                        android:layout_weight="1"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/etDTG"
+                        android:layout_width="50dp"
+                        android:layout_weight="1"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:text="Unit"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvUnit"
+                        android:layout_width="34dp"
+                        android:layout_weight="1"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/et2"
+                        android:layout_width="50dp"
+                        android:layout_weight="1"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llLocation">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGrey"
+                    android:id="@+id/ll0">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:gravity="center"
+                        android:background="@drawable/border"
+                        android:id="@+id/ll1"
+                        android:layout_width="10dp">
+
+                        <TextView
+                            android:text="1"
+                            android:layout_width="match_parent"
+                            android:id="@+id/tv2"
+                            android:textSize="10sp"
+                            android:layout_weight="0.11"
+                            android:background="@drawable/border"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:text="2"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/border"
+                            android:id="@+id/tv3"
+                            android:textSize="10sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ll2"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:text="LOCATION (GRID of pick up zone)"
+                            android:layout_width="match_parent"
+                            android:id="@+id/tvLocation"
+                            android:background="@drawable/border"
+                            android:textSize="10sp"
+                            android:layout_weight="1.05"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textAlignment="viewStart" />
+
+                        <TextView
+                            android:text="CALL SIGN and FREQ"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/border"
+                            android:id="@+id/tvCall"
+                            android:textSize="10sp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textAlignment="viewStart" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll3"
+                    android:layout_width="162dp">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:background="@drawable/border"
+                        android:id="@+id/et3"
+                        android:hint="(1)"
+                        android:textSize="10sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/et4"
+                        android:hint="(2)"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:id="@+id/ll4">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/ll5"
+                    android:layout_width="190dp">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_weight="1"
+                        android:id="@+id/ll9">
+
+                        <TextView
+                            android:text="3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/tv4"
+                            android:textSize="10sp"
+                            android:layout_weight="1"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:id="@+id/ll7">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:text="# OF PATIENT/PRECEDENCE"
+                            android:ems="10"
+                            android:id="@+id/et5"
+                            android:layout_weight="0.67"
+                            android:textSize="10sp"
+                            android:textAlignment="viewStart" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="162dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/ll8">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/rg1">
+
+                        <RadioButton
+                            android:text="A"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rb1"
+                            android:layout_weight="1"
+                            android:textSize="10sp"
+                            android:scaleX="0.5"
+                            android:scaleY="0.5"
+                            android:checked="true" />
+
+                        <RadioButton
+                            android:text="B"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rb2"
+                            android:layout_weight="1"
+                            android:scaleX="0.5"
+                            android:scaleY="0.5"
+                            android:textSize="10sp" />
+
+                        <RadioButton
+                            android:text="C"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rb3"
+                            android:layout_weight="1"
+                            android:scaleX="0.5"
+                            android:scaleY="0.5"
+                            android:textSize="10sp" />
+                    </RadioGroup>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
