@@ -20,15 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <EditText
+            <TextView
+                android:text="Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Name"
+                android:id="@+id/textView2"
                 android:textColor="@color/colorWhite"
-                android:ems="10"
-                android:id="@+id/etName" />
+                android:textSize="30sp" />
         </TableRow>
     </TableLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="39dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:entries="s" />
 
 </RelativeLayout>
