@@ -205,96 +205,156 @@
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border"
                     android:layout_weight="1"
-                    android:id="@+id/ll5"
-                    android:layout_width="190dp">
+                    android:id="@+id/ll9">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/border"
-                        android:layout_weight="1"
-                        android:id="@+id/ll9">
-
-                        <TextView
-                            android:text="3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/tv4"
-                            android:textSize="10sp"
-                            android:layout_weight="1"
-                            android:gravity="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
+                    <TextView
+                        android:text="3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:id="@+id/tv4"
+                        android:textSize="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:id="@+id/ll7">
-
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
-                            android:text="# OF PATIENT/PRECEDENCE"
-                            android:ems="10"
-                            android:id="@+id/et5"
-                            android:layout_weight="0.67"
-                            android:textSize="10sp"
-                            android:textAlignment="viewStart" />
-
-                    </LinearLayout>
-
+                        android:gravity="center" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="162dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/ll8">
+                    android:id="@+id/ll10">
 
-                    <RadioGroup
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/ll11">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:id="@+id/ll5"
+                            android:background="@drawable/border"
+                            android:layout_width="match_parent">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:id="@+id/ll7">
+
+                                <EditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName"
+                                    android:text="# OF PATIENT/PRECEDENCE"
+                                    android:ems="10"
+                                    android:id="@+id/et5"
+                                    android:layout_weight="0.67"
+                                    android:textSize="10sp"
+                                    android:textAlignment="viewStart" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border"
+                            android:id="@+id/ll8">
+
+                            <RadioGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:id="@+id/rg1">
+
+                                <RadioButton
+                                    android:text="A"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/rb1"
+                                    android:layout_weight="1"
+                                    android:textSize="10sp"
+                                    android:scaleX="0.4"
+                                    android:scaleY="0.4"
+                                    android:checked="true" />
+
+                                <RadioButton
+                                    android:text="B"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/rb2"
+                                    android:layout_weight="1"
+                                    android:scaleX="0.4"
+                                    android:scaleY="0.4"
+                                    android:textSize="10sp" />
+
+                                <RadioButton
+                                    android:text="C"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/rb3"
+                                    android:layout_weight="1"
+                                    android:scaleX="0.4"
+                                    android:scaleY="0.4"
+                                    android:textSize="10sp" />
+                            </RadioGroup>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:orientation="horizontal"
-                        android:id="@+id/rg1">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/ll12">
 
-                        <RadioButton
-                            android:text="A"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/rb1"
-                            android:layout_weight="1"
-                            android:textSize="10sp"
-                            android:scaleX="0.5"
-                            android:scaleY="0.5"
-                            android:checked="true" />
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/ll13">
 
-                        <RadioButton
-                            android:text="B"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/rb2"
-                            android:layout_weight="1"
-                            android:scaleX="0.5"
-                            android:scaleY="0.5"
-                            android:textSize="10sp" />
+                            <CheckBox
+                                android:text="A-URGENT (90 min. Save LLE)"
+                                android:layout_width="106dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/checkBox1"
+                                android:textSize="10sp"
+                                android:textAlignment="viewStart" />
 
-                        <RadioButton
-                            android:text="C"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/rb3"
-                            android:layout_weight="1"
-                            android:scaleX="0.5"
-                            android:scaleY="0.5"
-                            android:textSize="10sp" />
-                    </RadioGroup>
+                            <CheckBox
+                                android:text="B-PRIORITY (4 hours)"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/checkBox2"
+                                android:layout_weight="1"
+                                android:textSize="10sp" />
+
+                            <CheckBox
+                                android:text="C-ROUTINE (24 hours)"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/checkBox3"
+                                android:layout_weight="1"
+                                android:textSize="10sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
