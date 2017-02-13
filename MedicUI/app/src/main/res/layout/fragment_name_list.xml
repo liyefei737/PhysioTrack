@@ -35,7 +35,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="39dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:entries="s" />
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

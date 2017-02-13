@@ -15,6 +15,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/border"
         android:id="@+id/svTreatment"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
@@ -197,16 +198,16 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border"
-                android:id="@+id/ll4">
+                android:id="@+id/ll4"
+                android:background="@drawable/border">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border"
                     android:layout_weight="1"
-                    android:id="@+id/ll9">
+                    android:id="@+id/ll9"
+                    android:background="@drawable/border">
 
                     <TextView
                         android:text="3"
@@ -215,7 +216,9 @@
                         android:id="@+id/tv4"
                         android:textSize="10sp"
                         android:layout_weight="1"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        android:background="@drawable/border" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -230,13 +233,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:id="@+id/ll11">
+                        android:id="@+id/ll11"
+                        android:background="@drawable/border">
 
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_height="match_parent"
                             android:id="@+id/ll5"
-                            android:background="@drawable/border"
                             android:layout_width="180dp">
 
                             <LinearLayout
@@ -249,14 +252,15 @@
 
                                 <EditText
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:inputType="textPersonName"
                                     android:text="# OF PATIENT/PRECEDENCE"
                                     android:ems="10"
                                     android:id="@+id/et5"
                                     android:layout_weight="0.67"
                                     android:textSize="10sp"
-                                    android:textAlignment="viewStart" />
+                                    android:textAlignment="viewStart"
+                                    android:background="@drawable/border" />
 
                             </LinearLayout>
 
@@ -322,21 +326,24 @@
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/ll17">
+                            android:id="@+id/ll17"
+                            android:background="@color/colorGrey">
 
                             <CheckBox
                                 android:text="A-URGENT (90 min. Save LLE)"
                                 android:layout_width="106dp"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/checkBox1"
+                                android:id="@+id/cb1"
                                 android:textSize="10sp"
-                                android:textAlignment="viewStart" />
+                                android:textAlignment="viewStart"
+                                android:background="@drawable/border" />
 
                             <CheckBox
                                 android:text="B-PRIORITY (4 hours)"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/checkBox2"
+                                android:background="@drawable/border"
+                                android:id="@+id/cb2"
                                 android:layout_weight="1"
                                 android:textSize="10sp" />
 
@@ -344,9 +351,10 @@
                                 android:text="C-ROUTINE (24 hours)"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/checkBox3"
+                                android:id="@+id/cb3"
                                 android:layout_weight="1"
-                                android:textSize="10sp" />
+                                android:textSize="10sp"
+                                android:background="@drawable/border" />
 
                         </LinearLayout>
 
@@ -414,7 +422,8 @@
                                     android:id="@+id/tv6"
                                     android:textSize="10sp"
                                     android:layout_width="match_parent"
-                                    android:gravity="center"/>
+                                    android:gravity="center"
+                                    android:textAlignment="viewStart" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -444,13 +453,37 @@
                             android:background="@drawable/border"
                             android:id="@+id/ll21">
 
-                            <EditText
-                                android:layout_width="match_parent"
+                            <CheckBox
+                                android:text="A-none"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPersonName"
-                                android:text="Name"
-                                android:ems="10"
-                                android:id="@+id/editText3"
+                                android:id="@+id/cb4"
+                                android:layout_weight="1"
+                                android:textSize="10sp" />
+
+                            <CheckBox
+                                android:text="B-hoist(Winch)"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/border"
+                                android:id="@+id/cb5"
+                                android:layout_weight="1"
+                                android:textSize="10sp" />
+
+                            <CheckBox
+                                android:text="C-extrication"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cb6"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:textSize="10sp" />
+
+                            <CheckBox
+                                android:text="D-ventilator"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cb7"
                                 android:layout_weight="1"
                                 android:textSize="10sp" />
                         </LinearLayout>
