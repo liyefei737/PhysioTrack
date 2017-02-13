@@ -153,9 +153,7 @@
                             android:textSize="10sp"
                             android:layout_weight="1.05"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textAlignment="viewStart" />
-
+                            android:gravity="center"/>
                         <TextView
                             android:text="CALL SIGN and FREQ"
                             android:layout_width="match_parent"
@@ -163,8 +161,7 @@
                             android:id="@+id/tvCall"
                             android:textSize="10sp"
                             android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textAlignment="viewStart" />
+                            android:gravity="center"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -238,10 +235,9 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
                             android:id="@+id/ll5"
                             android:background="@drawable/border"
-                            android:layout_width="match_parent">
+                            android:layout_width="180dp">
 
                             <LinearLayout
                                 android:orientation="horizontal"
@@ -268,7 +264,7 @@
 
                         <LinearLayout
                             android:orientation="horizontal"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border"
@@ -287,8 +283,8 @@
                                     android:id="@+id/rb1"
                                     android:layout_weight="1"
                                     android:textSize="10sp"
-                                    android:scaleX="0.4"
-                                    android:scaleY="0.4"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
                                     android:checked="true" />
 
                                 <RadioButton
@@ -297,8 +293,8 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rb2"
                                     android:layout_weight="1"
-                                    android:scaleX="0.4"
-                                    android:scaleY="0.4"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
                                     android:textSize="10sp" />
 
                                 <RadioButton
@@ -307,8 +303,8 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/rb3"
                                     android:layout_weight="1"
-                                    android:scaleX="0.4"
-                                    android:scaleY="0.4"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
                                     android:textSize="10sp" />
                             </RadioGroup>
                         </LinearLayout>
@@ -318,6 +314,7 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/border"
                         android:layout_weight="1"
                         android:id="@+id/ll12">
 
@@ -325,7 +322,7 @@
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/ll13">
+                            android:id="@+id/ll17">
 
                             <CheckBox
                                 android:text="A-URGENT (90 min. Save LLE)"
@@ -355,6 +352,110 @@
 
                     </LinearLayout>
 
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border"
+                android:id="@+id/ll13">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border"
+                    android:id="@+id/ll14">
+
+                    <TextView
+                        android:text="4"
+                        android:layout_height="match_parent"
+                        android:id="@+id/tv5"
+                        android:layout_weight="1"
+                        android:textSize="10sp"
+                        android:layout_width="10dp"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/ll15">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border"
+                        android:id="@+id/ll16">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border"
+                            android:id="@+id/ll18">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_height="match_parent"
+                                android:id="@+id/ll19"
+                                android:background="@drawable/border"
+                                android:layout_width="180dp">
+
+                                <TextView
+                                    android:text="SPECIAL EQUIPT REQ'D"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/tv6"
+                                    android:textSize="10sp"
+                                    android:layout_width="match_parent"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.12"
+                                android:id="@+id/ll20">
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName"
+                                    android:ems="10"
+                                    android:id="@+id/et6"
+                                    android:layout_weight="1"
+                                    android:hint="(4)"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border"
+                            android:id="@+id/ll21">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPersonName"
+                                android:text="Name"
+                                android:ems="10"
+                                android:id="@+id/editText3"
+                                android:layout_weight="1"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
