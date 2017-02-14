@@ -166,6 +166,10 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     public void edit_info(View view) {
         pushFragment(new EditInfoFragment());
     }
+    public void callHelpPage(View view){
+        pushFragment(new HelpPage());
+    }
+
     public void cancel_info(View view){
         Button savebtn = (Button)findViewById(R.id.btSave);
         Button cancelbtn = (Button)findViewById(R.id.btCancel);
@@ -264,6 +268,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         height.setFocusableInTouchMode(true);
 
     }
+
     public void updateHomeFragment(String state){
         if(mNavController.getCurrentFrag().getClass() == HomeFragment.class){
             HomeFragment homeFrag = (HomeFragment) mNavController.getCurrentFrag();
