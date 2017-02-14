@@ -1,6 +1,9 @@
 package com.drdc1.medic;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -361,14 +364,14 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
                     Toast.makeText(getApplicationContext(), lastXSeconds.toString(), Toast.LENGTH_LONG).show();
                     NameEditable.setText(lastXSeconds.toString());
 
-                    try {
-//                        NameEditable.setText(lastXSeconds.toString());
-                        NameEditable.setText(lastXSeconds.getJSONObject(0).getString("heartRate"));
-
-                        data.addEntry(new Entry(set.getEntryCount(), (float) (lastXSeconds.getJSONObject(0).getInt("heartRate")) + 30f), 0);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+////                        NameEditable.setText(lastXSeconds.toString());
+//                        NameEditable.setText(lastXSeconds.getJSONObject(0).getString("heartRate"));
+//
+//                        data.addEntry(new Entry(set.getEntryCount(), (float) (lastXSeconds.getJSONObject(0).getInt("heartRate")) + 30f), 0);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
 
                 }
                 valueForTesting++;
@@ -458,6 +461,38 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
     @Override
     public void onNothingSelected() {
         Log.i("Nothing selected", "Nothing selected.");
+    }
+
+    @Override
+    public void onResume() {
+        broadcaster = LocalBroadcastManager.getInstance(AppContext.getContext());
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //receive your message here
+                Map<String, Object> props = intent.getParcelableExtra("props");
+                LineData data = hrchart.getData();
+
+                data.addEntry(new Entry(1, (float) (props.get("heartRate"))), 0);
+                data.notifyDataChanged();
+
+                // let the chart know it's data has changed
+                hrchart.notifyDataSetChanged();
+
+                // limit the number of visible entries
+                hrchart.setVisibleXRangeMaximum(120);
+                // hrchart.setVisibleYRange(30, AxisDependency.LEFT);
+
+                // move to the latest entry
+                hrchart.moveViewToX(data.getEntryCount());
+
+            }
+
+        };
+        broadcaster.registerReceiver(receiver, new IntentFilter("intent-filter"));
+        super.onResume();
+
     }
 
     @Override

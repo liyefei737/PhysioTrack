@@ -1,5 +1,8 @@
 package com.drdc1.medic;
 
+import android.content.Intent;
+import android.os.Parcelable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.couchbase.lite.CouchbaseLiteException;
@@ -33,7 +36,7 @@ public class Server extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
-        Log.i(this.getClass().getSimpleName(), "request type: "+ session.getMethod());
+        Log.i(this.getClass().getSimpleName(), "request type: " + session.getMethod());
         final Map<String, String> map = new HashMap<>();
         try {
             session.parseBody(map);
@@ -49,7 +52,7 @@ public class Server extends NanoHTTPD {
             final JSONObject body = new JSONObject(jsonStr);
             String soldierID = body.getString("soldierID");
             if (!dataManager.soldierInSystem(soldierID)) {
-                Map<String,Object> infoMap = null;
+                Map<String, Object> infoMap = null;
                 infoMap.put("name", body.getString("name"));
                 infoMap.put("age", body.getString("age"));
 
@@ -57,6 +60,7 @@ public class Server extends NanoHTTPD {
             }
             Database db = dataManager.getSoldierDB(soldierID);
             Document doc = db.getDocument(body.getString("DateTime"));
+
             doc.update(new Document.DocumentUpdater() {
                 @Override
                 public boolean update(UnsavedRevision newRevision) {
@@ -76,6 +80,10 @@ public class Server extends NanoHTTPD {
                         e.printStackTrace();
                     }
                     newRevision.setUserProperties(properties);
+                    Intent intent = new Intent("soldierandproperties");
+                    intent.putExtra("props", (Parcelable) properties);
+                    LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
+
                     return true;
                 }
             });
@@ -111,12 +119,11 @@ public class Server extends NanoHTTPD {
     }
 
 
-    void dbWrite()
-    {
+    void dbWrite() {
         //write data into database
     }
 
-    private JSONObject inputStreamToJSON (java.io.InputStream in ) throws IOException, JSONException {
+    private JSONObject inputStreamToJSON(java.io.InputStream in) throws IOException, JSONException {
         BufferedReader streamReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
         StringBuilder responseStrBuilder = new StringBuilder();
 
