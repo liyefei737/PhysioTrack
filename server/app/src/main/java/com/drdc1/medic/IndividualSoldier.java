@@ -471,10 +471,10 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
             @Override
             public void onReceive(Context context, Intent intent) {
                 //receive your message here
-                Map<String, Object> props = intent.getParcelableExtra("props");
+                HashMap<String, Object> props = (HashMap<String, Object>) intent.getSerializableExtra("props");
                 LineData data = hrchart.getData();
 
-                data.addEntry(new Entry(1, (float) (props.get("heartRate"))), 0);
+                data.addEntry(new Entry(1, (float) (props.get("HRATE"))), 0);
                 data.notifyDataChanged();
 
                 // let the chart know it's data has changed

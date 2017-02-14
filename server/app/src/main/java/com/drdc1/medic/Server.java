@@ -65,6 +65,7 @@ public class Server extends NanoHTTPD {
                 @Override
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties = newRevision.getUserProperties();
+                    HashMap<String, Object> hM = null;
                     try {
                         properties.put("timeCreated", body.getString("DateTime"));
                         properties.put("accX", body.getString("AccX"));
@@ -73,6 +74,7 @@ public class Server extends NanoHTTPD {
                         properties.put("skinTemp", body.getString("Skin_Temp"));
                         properties.put("coreTemp", body.getString("Core_Temp"));
                         properties.put("heartRate", body.getString("ECG Heart Rate"));
+                        hM.put("HRATE",body.getString("ECG Heart Rate"));
                         properties.put("breathRate", body.getString("Belt Breathing Rate"));
                         properties.put("bodyPosition", body.getString("BodyPosition"));
                         properties.put("motion", body.getString("Motion"));
@@ -81,7 +83,7 @@ public class Server extends NanoHTTPD {
                     }
                     newRevision.setUserProperties(properties);
                     Intent intent = new Intent("soldierandproperties");
-                    intent.putExtra("props", (Parcelable) properties);
+                    intent.putExtra("props", hM );
                     LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
                     return true;
