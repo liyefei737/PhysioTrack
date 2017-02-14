@@ -65,7 +65,8 @@
                         android:id="@+id/tvDTG"
                         android:layout_width="34dp"
                         android:layout_weight="1"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        android:layout_marginLeft="4dp" />
 
                     <EditText
                         android:layout_height="wrap_content"
@@ -82,7 +83,8 @@
                         android:id="@+id/tvUnit"
                         android:layout_width="34dp"
                         android:layout_weight="1"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        android:layout_marginLeft="4dp" />
 
                     <EditText
                         android:layout_height="wrap_content"
@@ -150,19 +152,22 @@
                             android:text="LOCATION (GRID of pick up zone)"
                             android:layout_width="match_parent"
                             android:id="@+id/tvLocation"
-                            android:background="@drawable/border"
                             android:textSize="10sp"
                             android:layout_weight="1.05"
                             android:layout_height="wrap_content"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:textAlignment="viewStart"
+                            android:background="@drawable/border" />
                         <TextView
                             android:text="CALL SIGN and FREQ"
                             android:layout_width="match_parent"
-                            android:background="@drawable/border"
                             android:id="@+id/tvCall"
                             android:textSize="10sp"
                             android:layout_height="match_parent"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:textAlignment="viewStart"
+                            android:layout_marginLeft="4dp"
+                            android:background="@drawable/border" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -260,7 +265,7 @@
                                     android:layout_weight="0.67"
                                     android:textSize="10sp"
                                     android:textAlignment="viewStart"
-                                    android:background="@drawable/border" />
+                                    android:layout_marginLeft="4dp" />
 
                             </LinearLayout>
 
