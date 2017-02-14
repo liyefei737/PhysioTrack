@@ -16,7 +16,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DBViewer" />
 
         <service
             android:name=".BackgroundServer"
