@@ -48,7 +48,7 @@ public class SkinTempFragment extends BaseFragment implements DataObserver {
 
 
     /***
-     * @param data the update data from from the background
+     * @param data is the skin tmp data received from the background. Currently its type is float array.
      */
     @Override
     public void update(Map data) {

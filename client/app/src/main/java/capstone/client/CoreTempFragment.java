@@ -47,7 +47,7 @@ public class CoreTempFragment extends BaseFragment implements DataObserver {
     }
 
     /***
-     * @param data the update data from from the background
+     * @param data is the core tmp data received from the background. Currently its type is float array.
      */
     @Override
     public void update(Map data) {
@@ -62,7 +62,7 @@ public class CoreTempFragment extends BaseFragment implements DataObserver {
             entries.add(new Entry(i, skinTemps[i]));
         }
 
-        //the following code is playing around with the graph for heart rate, feel free to play around
+        //the following code is playing around with the graph for skin tmp, feel free to play around
         LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
         //dataSet.setHighlightEnabled(true);
         //dataSet.setColor();

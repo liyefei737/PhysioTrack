@@ -47,7 +47,7 @@ public class BreathFragment extends BaseFragment implements DataObserver {
     }
 
     /***
-     * @param data is the heart rate data received from the background. Currently its type is int array.
+     * @param data is the breath rate data received from the background. Currently its type is int array.
      */
     @Override
     public void update(Map data) {
@@ -62,7 +62,7 @@ public class BreathFragment extends BaseFragment implements DataObserver {
             entries.add(new Entry(i, breathRates[i]));
         }
 
-        //the following code is playing around with the graph for heart rate, feel free to play around
+        //the following code is playing around with the graph for breath rate, feel free to play around
         LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
         //dataSet.setHighlightEnabled(true);
         //dataSet.setColor();

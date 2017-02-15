@@ -46,7 +46,7 @@ public class HeartFragment extends BaseFragment implements DataObserver {
     }
 
     /***
-     * @param data the update data from from the background
+     * @param data is the heart rate data received from the background. Currently its type is int array.
      */
     @Override
     public void update(Map data) {
