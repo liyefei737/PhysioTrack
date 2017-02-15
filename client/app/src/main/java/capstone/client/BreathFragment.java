@@ -1,10 +1,6 @@
 package capstone.client;
 
 import android.graphics.Color;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,21 +21,7 @@ import java.util.Map;
 
 public class BreathFragment extends BaseFragment implements DataObserver {
     private LineChart lineChart;
-
-    private ParamReceiver mReceiver;
-    private Intent intent;
-
-    public class ParamReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String param = intent.getStringExtra("BREATH_UPDATE");
-            if (param != null) {
-                BottomBarActivity activity = (BottomBarActivity) getActivity();
-                activity.updateBreathFragment(param);
-            }
-
-        }
-    }
+    private BottomBarActivity bottomBarActivity;
 
     public static BreathFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -50,42 +32,37 @@ public class BreathFragment extends BaseFragment implements DataObserver {
     }
 
     @Override
-    public void onCreate(){
-        mReceiver = new ParamReceiver();
-        IntentFilter ifilter = new IntentFilter();
-        ifilter.addAction("capstone.client.BackgroundParameterUpdate.PARAM_UPDATE");
-        getActivity().registerReceiver(mReceiver, ifilter);
+    public void onCreate() {
+        bottomBarActivity = (BottomBarActivity) getActivity();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentDataManager fm = (FragmentDataManager)getActivity();
-        fm.registerFragment(this);
-        intent = new Intent();
-        intent.setAction("BREATH");
-        intent.setClass(getActivity(), BackgroundParameterUpdate.class);
-        getActivity().startService(intent);
+        bottomBarActivity.registerFragment(this);
         View view = inflater.inflate(R.layout.fragment_breath, container, false);
         TextView tv = (TextView) view.findViewById(R.id.currentBreathRate);
-        updateParam(((DRDCClient) getActivity().getApplication()).getLastBreathingRate(), tv);
+        updateParam(((DRDCClient) bottomBarActivity.getApplication()).getLastBreathingRate(), tv);
         return view;
     }
+
     /***
-     *
-     * @param data the update data from from the background
+     * @param data is the heart rate data received from the background. Currently its type is int array.
      */
     @Override
     public void update(Map data) {
         lineChart = (LineChart) getActivity().findViewById(R.id.breathChart);
-        int[] breathRates= (int[]) data.get("br");
+        int[] breathRates = (int[]) data.get("br");
+        String latestBR = String.valueOf(breathRates[breathRates.length - 1]);
+        bottomBarActivity.updateBreathFragment(latestBR);
 
         List<Entry> entries = new ArrayList<Entry>();
 
-        for(int i = 0; i< breathRates.length; i++){
+        for (int i = 0; i < breathRates.length; i++) {
             entries.add(new Entry(i, breathRates[i]));
         }
+
+        //the following code is playing around with the graph for heart rate, feel free to play around
         LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
         //dataSet.setHighlightEnabled(true);
         //dataSet.setColor();
@@ -111,47 +88,16 @@ public class BreathFragment extends BaseFragment implements DataObserver {
         yAxis.setLabelCount(5, true); // force 6 labels
         lineChart.setNoDataText("Loading...");
         lineChart.invalidate(); // refresh
-
-
-    }
-
-    @Override
-    public void onResume(){
-        IntentFilter ifilter = new IntentFilter();
-        ifilter.addAction("capstone.client.BackgroundParameterUpdate.PARAM_UPDATE");
-        getActivity().registerReceiver(mReceiver, ifilter);
-        super.onResume();
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        try {
-            getActivity().unregisterReceiver(mReceiver);
-            getActivity().stopService(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void onDestroyView() {
-        try {
-
-        FragmentDataManager fm = (FragmentDataManager)getActivity();
-        fm.unregisterFragment(this);
-            getActivity().unregisterReceiver(mReceiver);
-            getActivity().stopService(intent);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        bottomBarActivity.unregisterFragment(this);
         super.onDestroyView();
     }
 
-    public void updateParam(String param, TextView br){
+    public void updateParam(String param, TextView br) {
         br.setText(param);
         br.refreshDrawableState();
     }
-
-
 }

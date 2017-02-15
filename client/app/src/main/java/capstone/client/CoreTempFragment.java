@@ -1,13 +1,7 @@
 package capstone.client;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.graphics.Color;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,38 +13,15 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HeartFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HeartFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CoreTempFragment extends BaseFragment implements DataObserver {
     private LineChart lineChart;
-
-    private ParamReceiver mReceiver;
-    private Intent intent;
-
-    public class ParamReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String param = intent.getStringExtra("CORE_UPDATE");
-            if(param != null) {
-                BottomBarActivity activity = (BottomBarActivity) getActivity();
-                activity.updateCoreFragment(param);
-            }
-
-        }
-    }
+    private BottomBarActivity bottomBarActivity;
 
     public static CoreTempFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -61,46 +32,37 @@ public class CoreTempFragment extends BaseFragment implements DataObserver {
     }
 
     @Override
-    public void onCreate(){
-        mReceiver = new ParamReceiver();
-        IntentFilter ifilter = new IntentFilter();
-        ifilter.addAction("capstone.client.BackgroundParameterUpdate.PARAM_UPDATE");
-        getActivity().registerReceiver(mReceiver, ifilter);
+    public void onCreate() {
+        bottomBarActivity = (BottomBarActivity) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        FragmentDataManager fm = (FragmentDataManager)getActivity();
-        fm.registerFragment(this);
-
-
-        intent = new Intent();
-        intent.setAction("CORE");
-        intent.setClass(getActivity(), BackgroundParameterUpdate.class);
-        getActivity().startService(intent);
+        bottomBarActivity.registerFragment(this);
         View view = inflater.inflate(R.layout.fragment_core_temp, container, false);
         TextView tv = (TextView) view.findViewById(R.id.currentCoreTemp);
-        updateParam(((DRDCClient) getActivity().getApplication()).getLastCoreTemp(), tv);
+        updateParam(((DRDCClient) bottomBarActivity.getApplication()).getLastCoreTemp(), tv);
         return view;
     }
 
-
     /***
-     *
      * @param data the update data from from the background
      */
     @Override
     public void update(Map data) {
         lineChart = (LineChart) getActivity().findViewById(R.id.coreTempChart);
-        float[] skinTemps= (float[]) data.get("coreTemp");
+        float[] skinTemps = (float[]) data.get("coreTemp");
+        String latestCT = String.valueOf(skinTemps[skinTemps.length - 1]);
+        bottomBarActivity.updateCoreFragment(latestCT);
 
         List<Entry> entries = new ArrayList<Entry>();
 
-        for(int i = 0; i< skinTemps.length; i++){
+        for (int i = 0; i < skinTemps.length; i++) {
             entries.add(new Entry(i, skinTemps[i]));
         }
+
+        //the following code is playing around with the graph for heart rate, feel free to play around
         LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
         //dataSet.setHighlightEnabled(true);
         //dataSet.setColor();
@@ -126,44 +88,16 @@ public class CoreTempFragment extends BaseFragment implements DataObserver {
         yAxis.setLabelCount(5, true); // force 6 labels
         lineChart.setNoDataText("Loading...");
         lineChart.invalidate(); // refresh
-
-
-    }
-
-    @Override
-    public void onResume(){
-        IntentFilter ifilter = new IntentFilter();
-        ifilter.addAction("capstone.client.BackgroundParameterUpdate.PARAM_UPDATE");
-        getActivity().registerReceiver(mReceiver, ifilter);
-        super.onResume();
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        try {
-            getActivity().unregisterReceiver(mReceiver);
-            getActivity().stopService(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void onDestroyView() {
-        try {
-FragmentDataManager fm = (FragmentDataManager)getActivity();
-        fm.unregisterFragment(this);
-            getActivity().unregisterReceiver(mReceiver);
-            getActivity().stopService(intent);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        bottomBarActivity.unregisterFragment(this);
         super.onDestroyView();
     }
 
 
-    public void updateParam(String param, TextView hr){
+    public void updateParam(String param, TextView hr) {
         hr.setText(param);
         hr.refreshDrawableState();
     }
