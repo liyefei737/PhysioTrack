@@ -14,7 +14,6 @@ import java.util.Map;
 /**********************************************************************************************
  * TODO: make the server and database running while app is "swiped away" by making it a service
  * TODO: add proper data fields
- *
  ***********************************************************************************************/
 
 public class BackgroundServer extends Service {
@@ -29,7 +28,9 @@ public class BackgroundServer extends Service {
     public BackgroundServer() {
     }
 
-    static public BackgroundServer getBackgroundService(){return _backgroundServer;}
+    static public BackgroundServer getBackgroundService() {
+        return _backgroundServer;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -46,7 +47,7 @@ public class BackgroundServer extends Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.i(this.getClass().getSimpleName(), "onCreate: Server runing on "+server.getLocalIpAddress()+" Port: " +server.getListeningPort());
+        Log.i(this.getClass().getSimpleName(), "onCreate: Server runing on " + server.getLocalIpAddress() + " Port: " + server.getListeningPort());
         _backgroundServer = this;
         broadcaster = LocalBroadcastManager.getInstance(this);
 
@@ -63,10 +64,10 @@ public class BackgroundServer extends Service {
         return Service.START_NOT_STICKY;
     }
 
-    public void notifyUI(Map<String,Object> document) {
+    public void notifyUI(Map<String, Object> document) {
         Intent intent = new Intent(DB_UPDATE);
-        for(String key :document.keySet()){
-            intent.putExtra(key,document.get(key).toString());
+        for (String key : document.keySet()) {
+            intent.putExtra(key, document.get(key).toString());
         }
         broadcaster.sendBroadcast(intent);
     }

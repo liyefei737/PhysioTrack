@@ -40,10 +40,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 
 public class IndividualSoldier extends AppCompatActivity implements OnChartValueSelectedListener {
     private volatile HandlerThread mHandlerThread;
@@ -54,7 +55,8 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
     TextView NameList, SquadStatus, IndSoldier;
     EditText NameEditable, GenderEditable, AgeEditable, BodyOrientEditable;
     private LineChart hrchart, respchart, skinchart, ctchart;
-
+    private BroadcastReceiver receiver;
+    List<Entry> entries = new ArrayList<Entry>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,6 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_soldier);
-
 
         // Setup Button Links to new activity
         NameEditable = (EditText) findViewById(R.id.etSoldierName);
@@ -148,20 +149,17 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         ctchart.setScaleEnabled(true);
         ctchart.setDrawGridBackground(false);
 
-
         // if disabled, scaling can be done on x- and y-axis separately
         hrchart.setPinchZoom(true);
         respchart.setPinchZoom(true);
         skinchart.setPinchZoom(true);
         ctchart.setPinchZoom(true);
 
-
         // set an alternative background color
         hrchart.setBackgroundColor(Color.LTGRAY);
         respchart.setBackgroundColor(Color.LTGRAY);
         skinchart.setBackgroundColor(Color.LTGRAY);
         ctchart.setBackgroundColor(Color.LTGRAY);
-
 
         LineData data = new LineData();
         data.setValueTextColor(Color.WHITE);
@@ -172,13 +170,11 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         skinchart.setData(data);
         ctchart.setData(data);
 
-
         // get the legend (only possible after setting data)
         Legend l = hrchart.getLegend();
         Legend lrespchart = respchart.getLegend();
         Legend lskinchart = skinchart.getLegend();
         Legend lctchart = ctchart.getLegend();
-
 
         // modify the legend ...
         l.setForm(LegendForm.LINE);
@@ -220,7 +216,6 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         xctchart.setAvoidFirstLastClipping(true);
         xctchart.setEnabled(true);
 
-
         YAxis leftAxis = hrchart.getAxisLeft();
 //        leftAxis.setTypeface(mTfLight);
         leftAxis.setTextColor(Color.WHITE);
@@ -260,10 +255,83 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 
         YAxis rightAxisctchart = ctchart.getAxisRight();
         rightAxisctchart.setEnabled(false);
+        receiver = new BroadcastReceiver() {
 
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //receive your message here
+
+                String message = intent.getStringExtra("message");
+                Log.d("receiver", "Got message: " + message);
+                entries.add(new Entry(entries.size(), Float.parseFloat(message)));
+                LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+                //dataSet.setHighlightEnabled(true);
+                //dataSet.setColor();
+                //dataSet.setValueTextColor(...); // styling, ...
+                LineData lineData = new LineData(dataSet);
+                //dataSet.setDrawFilled(true);
+                //dataSet.setFillDrawable(gradientDrawable);
+                hrchart.setData(lineData);
+                XAxis xAxis = hrchart.getXAxis();
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                xAxis.setTextSize(14f);
+                xAxis.setTextColor(Color.WHITE);
+                xAxis.setDrawAxisLine(true);
+                xAxis.setDrawGridLines(false);
+                YAxis yAxis = hrchart.getAxisLeft();
+                //yAxis.setTypeface(...);
+                yAxis.setTextSize(14f); // set the text size
+                yAxis.setAxisMinimum(10f); // start at zero
+                yAxis.setAxisMaximum(20f); // the axis maximum is 100
+                yAxis.setTextColor(Color.WHITE);
+                //yAxis.setValueFormatter(new MyValueFormatter());
+                //yAxis.setGranularity(1f); // interval 1
+                yAxis.setLabelCount(5, true); // force 6 labels
+                hrchart.setNoDataText("Loading...");
+                hrchart.invalidate(); // refresh
+
+//                LineData data2 = hrchart.getData();
+//
+//                if (data2 != null) {
+//                    Log.d("receiver", "Got message2: " + message);
+//
+//                    ILineDataSet set = data2.getDataSetByIndex(0);
+//                    // set.addEntry(...); // can be called as well
+//
+//                    if (set == null) {
+//                        set = createSet();
+//                        data2.addDataSet(set);
+//                    }
+//                    data2.addEntry(new Entry(set.getEntryCount(), Float.parseFloat(message)), 0);
+////                    data2.addEntry(new Entry(set.getEntryCount(), (float) (Math.random() * 40) + 30f), 0);
+////            data.addEntry(new Entry(1, Float.parseFloat(message)), 0);
+//
+//
+//                    data2.notifyDataChanged();
+//                    hrchart.invalidate(); // refresh
+//
+//                    // let the chart know it's data has changed
+//                    hrchart.notifyDataSetChanged();
+//
+//                    // limit the number of visible entries
+//                    hrchart.setVisibleXRangeMaximum(120);
+//                    // hrchart.setVisibleYRange(30, AxisDependency.LEFT);
+//
+//                    // move to the latest entry
+//                    hrchart.moveViewToX(data2.getEntryCount());
+//
+//                }
+
+//                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+            }
+
+        };
+
+        LocalBroadcastManager.getInstance(AppContext.getContext()).registerReceiver(receiver,
+                new IntentFilter("custom-event-name"));
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -306,7 +374,6 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
                 data.addDataSet(set);
             }
 
-
             Date now;
             int numSeconds = 1, millistep = 1000;
             JSONArray lastXSeconds;
@@ -322,6 +389,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
             Map<String, Object> infoMap = new HashMap<String, Object>();
             infoMap.put("name", "etst2");
             infoMap.put("age", "ets55");
+
             dataManager.addSoldier("tess81", infoMap);
 
             Database db = dataManager.getSoldierDB("tess81");
@@ -350,15 +418,12 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
                 e.printStackTrace();
             }
 
-
             Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
-
 
             if (physioDataMap != null) {
 
                 for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
 //                    Database userDB = entry.getValue();
-
 
                     lastXSeconds = dataManager.QueryLastXSeconds(entry.getKey(), now, numSeconds, millistep);
                     Toast.makeText(getApplicationContext(), lastXSeconds.toString(), Toast.LENGTH_LONG).show();
@@ -378,7 +443,6 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
             }
 //            Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
 //            }
-
 
 //            data.addEntry(new Entry(set.getEntryCount(), (float) (Math.random() * 40) + 30f), 0);
             data.notifyDataChanged();
@@ -465,32 +529,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 
     @Override
     public void onResume() {
-        broadcaster = LocalBroadcastManager.getInstance(AppContext.getContext());
-        BroadcastReceiver receiver = new BroadcastReceiver() {
 
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                //receive your message here
-                HashMap<String, Object> props = (HashMap<String, Object>) intent.getSerializableExtra("props");
-                LineData data = hrchart.getData();
-
-                data.addEntry(new Entry(1, (float) (props.get("HRATE"))), 0);
-                data.notifyDataChanged();
-
-                // let the chart know it's data has changed
-                hrchart.notifyDataSetChanged();
-
-                // limit the number of visible entries
-                hrchart.setVisibleXRangeMaximum(120);
-                // hrchart.setVisibleYRange(30, AxisDependency.LEFT);
-
-                // move to the latest entry
-                hrchart.moveViewToX(data.getEntryCount());
-
-            }
-
-        };
-        broadcaster.registerReceiver(receiver, new IntentFilter("intent-filter"));
         super.onResume();
 
     }

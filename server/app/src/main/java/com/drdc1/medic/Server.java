@@ -50,6 +50,14 @@ public class Server extends NanoHTTPD {
 
         try {
             final JSONObject body = new JSONObject(jsonStr);
+
+            Log.d("sender", "Broadcasting message");
+            Intent intent = new Intent("custom-event-name");
+            // You can also include some extra data.
+//            intent.putExtra("message", "99999");
+            intent.putExtra("message", body.getString("ECG Heart Rate"));
+            LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
+
             String soldierID = body.getString("soldierID");
             if (!dataManager.soldierInSystem(soldierID)) {
                 Map<String, Object> infoMap = null;
@@ -65,7 +73,8 @@ public class Server extends NanoHTTPD {
                 @Override
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties = newRevision.getUserProperties();
-                    HashMap<String, Object> hM = null;
+//                    HashMap<String, Object> hM = null;
+                    String hrate = null;
                     try {
                         properties.put("timeCreated", body.getString("DateTime"));
                         properties.put("accX", body.getString("AccX"));
@@ -74,7 +83,7 @@ public class Server extends NanoHTTPD {
                         properties.put("skinTemp", body.getString("Skin_Temp"));
                         properties.put("coreTemp", body.getString("Core_Temp"));
                         properties.put("heartRate", body.getString("ECG Heart Rate"));
-                        hM.put("HRATE",body.getString("ECG Heart Rate"));
+                        hrate = body.getString("ECG Heart Rate");
                         properties.put("breathRate", body.getString("Belt Breathing Rate"));
                         properties.put("bodyPosition", body.getString("BodyPosition"));
                         properties.put("motion", body.getString("Motion"));
@@ -82,19 +91,16 @@ public class Server extends NanoHTTPD {
                         e.printStackTrace();
                     }
                     newRevision.setUserProperties(properties);
-                    Intent intent = new Intent("soldierandproperties");
-                    intent.putExtra("props", hM );
-                    LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
                     return true;
                 }
             });
+
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (CouchbaseLiteException e) {
             e.printStackTrace();
         }
-
 
         String msg = "<html><body><h1> request success </h1></body></html>\n";
 //        String userName = null;
@@ -119,7 +125,6 @@ public class Server extends NanoHTTPD {
 
         return newFixedLengthResponse(msg);
     }
-
 
     void dbWrite() {
         //write data into database

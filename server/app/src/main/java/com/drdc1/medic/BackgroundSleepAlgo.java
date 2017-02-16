@@ -1,4 +1,5 @@
 package com.drdc1.medic;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
@@ -18,7 +19,6 @@ import java.util.Map;
 
 import sleepS.DateStatePair;
 import sleepS.sleepStatus;
-
 
 /**
  * Background algorithm thread

@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 import com.couchbase.lite.Database;
 
-
 public class StartActivity extends AppCompatActivity {
     BackgroundServer backgroundServer;
     private Database db;
     private BroadcastReceiver receiver;
     private ListAdapter listAdapter;
-    TextView NameList, SquadStatus,IndSoldier;
+    TextView NameList, SquadStatus, IndSoldier;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,8 +28,8 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         // Setup Button Links to new activity
         NameList = (TextView) findViewById(R.id.tvNameList);
-        SquadStatus=(TextView) findViewById(R.id.tvSStatus);
-        IndSoldier=(TextView) findViewById(R.id.tvIndSoldier);
+        SquadStatus = (TextView) findViewById(R.id.tvSStatus);
+        IndSoldier = (TextView) findViewById(R.id.tvIndSoldier);
 
         NameList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,11 +54,10 @@ public class StartActivity extends AppCompatActivity {
         });
         //End of OnClick Links
 
-
         //ListView listView = (ListView) findViewById(R.id.list);
 //        setupViewAndQuery();
         //listView.setAdapter(listAdapter);
-       // Button show_db_data = (Button) findViewById(R.id.show_db_data);
+        // Button show_db_data = (Button) findViewById(R.id.show_db_data);
         /*show_db_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -10,6 +10,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class Application extends android.app.Application {
 
     public DataManager dataManager = null;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,7 +40,7 @@ public class Application extends android.app.Application {
         startService(wellnessAlgo);
     }
 
-    public DataManager getDataManager(){
+    public DataManager getDataManager() {
         return dataManager;
     }
 }
