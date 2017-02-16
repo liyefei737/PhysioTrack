@@ -13,7 +13,6 @@ import static android.R.attr.id;
 import static android.R.attr.name;
 import static capstone.client.R.drawable.soldier;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -22,7 +21,7 @@ import static capstone.client.R.drawable.soldier;
  * Use the {@link EditInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditInfoFragment extends BaseFragment  {
+public class EditInfoFragment extends BaseFragment {
 
     public static EditInfoFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -39,37 +38,37 @@ public class EditInfoFragment extends BaseFragment  {
         DBManager dbManager = new DBManager(getActivity());
         Soldier soldier = dbManager.getSoldierDetails();
         View view = inflater.inflate(R.layout.fragment_edit_info, container, false);
-        if (soldier != null){
-          view = setEditFields(soldier, view);
+        if (soldier != null) {
+            view = setEditFields(soldier, view);
         }
-       return view;
+        return view;
 
     }
 
-    public View setEditFields(Soldier s, View view){
+    public View setEditFields(Soldier s, View view) {
         String strID = s.getSoldierID();
-        if (strID!= null && !strID.isEmpty()){
+        if (strID != null && !strID.isEmpty()) {
             EditText id = (EditText) view.findViewById(R.id.etSoldierId);
             id.setHint(strID);
             id.setText(strID);
         }
 
         int iAge = s.getAge();
-        if(iAge > 0) {
+        if (iAge > 0) {
             EditText age = (EditText) view.findViewById(R.id.etAge);
             age.setHint(String.valueOf(iAge));
             age.setText(String.valueOf(iAge));
         }
 
         int iWeight = s.getWeight();
-        if (iWeight > 0 ) {
+        if (iWeight > 0) {
             EditText weight = (EditText) view.findViewById(R.id.etWeight);
             weight.setHint(String.valueOf(iWeight));
             weight.setText(String.valueOf(iWeight));
         }
 
         int iHeight = s.getHeight();
-        if (iHeight >0) {
+        if (iHeight > 0) {
             EditText height = (EditText) view.findViewById(R.id.etHeight);
             height.setHint(String.valueOf(iHeight));
             height.setText(String.valueOf(iHeight));

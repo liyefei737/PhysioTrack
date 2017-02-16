@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class BreathFragment extends BaseFragment implements DataObserver {
     private LineChart lineChart;
     private BottomBarActivity bottomBarActivity;

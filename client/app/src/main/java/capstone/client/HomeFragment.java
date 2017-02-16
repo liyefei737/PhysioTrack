@@ -15,7 +15,6 @@ import welfareSM.WelfareStatus;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -47,7 +46,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         mReceiver = new AlgoReceiver();
         IntentFilter ifilter = new IntentFilter();
         ifilter.addAction("capstone.client.BackgroundWellnessAlgo.STATUS_UPDATE");
@@ -66,7 +65,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         try {
             getActivity().unregisterReceiver(mReceiver);
@@ -76,7 +75,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         IntentFilter ifilter = new IntentFilter();
         ifilter.addAction("capstone.client.BackgroundWellnessAlgo.STATUS_UPDATE");
@@ -87,21 +86,19 @@ public class HomeFragment extends BaseFragment {
     public void onDestroyView() {
         try {
             getActivity().unregisterReceiver(mReceiver);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         super.onDestroyView();
     }
 
-    public void updateWellnessStatus(String state, ImageView wellnessStatus){
+    public void updateWellnessStatus(String state, ImageView wellnessStatus) {
 
-        if (state.equals("GREEN")){
+        if (state.equals("GREEN")) {
             wellnessStatus.setImageResource(R.drawable.home_center_green);
-        }
-        else if (state.equals("YELLOW")){
+        } else if (state.equals("YELLOW")) {
             wellnessStatus.setImageResource(R.drawable.home_center_yellow);
-        }
-        else{
+        } else {
             wellnessStatus.setImageResource(R.drawable.home_center_red);
         }
         wellnessStatus.refreshDrawableState();

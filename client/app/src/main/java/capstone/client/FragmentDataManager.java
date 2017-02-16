@@ -10,7 +10,9 @@ import java.util.Map;
 
 public interface FragmentDataManager {
     public void registerFragment(DataObserver o);
+
     public void unregisterFragment(DataObserver o);
+
     public void notifyObserver(Map data);
 
 }

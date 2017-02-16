@@ -21,7 +21,6 @@ import java.util.Map;
 import sleepS.DateStatePair;
 import sleepS.sleepStatus;
 
-
 /**
  * Background algorithm thread
  */
@@ -37,7 +36,6 @@ public class BackgroundSleepAlgo extends Service {
     private LocalBroadcastManager broadcaster = null;
 
     public static final int PERIOD = 15000;
-
 
     //singleton to to pass an instance of BackgroundSleepAlgo
     static public BackgroundSleepAlgo get_backgroundSleepAlgo() {
@@ -95,7 +93,7 @@ public class BackgroundSleepAlgo extends Service {
         int numSeconds = 9, millistep = 0;
 
         while (true) {
-            try{
+            try {
                 Thread.sleep(numSeconds * 1000);
             } catch (Exception e) {
                 //

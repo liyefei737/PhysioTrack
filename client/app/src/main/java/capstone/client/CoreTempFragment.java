@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class CoreTempFragment extends BaseFragment implements DataObserver {
     private LineChart lineChart;
     private BottomBarActivity bottomBarActivity;
@@ -95,7 +94,6 @@ public class CoreTempFragment extends BaseFragment implements DataObserver {
         bottomBarActivity.unregisterFragment(this);
         super.onDestroyView();
     }
-
 
     public void updateParam(String param, TextView hr) {
         hr.setText(param);

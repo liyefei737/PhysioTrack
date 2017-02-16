@@ -35,12 +35,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-
 /**
-This class does:
- 1. Generate Data every x seconds
- 2. Insert data into the database
- *
+ * This class does:
+ * 1. Generate Data every x seconds
+ * 2. Insert data into the database
+ * <p>
  * Comment:I would propose to put algorithms on background service
  * on PDA side there are two ways a algorithm can get a hold of the data it needs:
  * 1. process data as data are being generated. For this option you can add the algorithm in this file
@@ -113,8 +112,8 @@ public class BackgroundDataSim extends Service {
         }
         broadcaster.sendBroadcast(intent);
     }
-    private void dataSim()
-    {
+
+    private void dataSim() {
         databseManager = new DBManager(this);
 
         Database dataDB = databseManager.getDatabase("data");
@@ -126,22 +125,22 @@ public class BackgroundDataSim extends Service {
 
         Date now = new Date();
         String dateID = keyFormat.format(now);
-        int millis = (int) Math.ceil((double)((now.getTime() % 1000) / 40.0)) * 40;
+        int millis = (int) Math.ceil((double) ((now.getTime() % 1000) / 40.0)) * 40;
 
-        while(true) {
+        while (true) {
             if (millis == 1000)
                 millis = 0;
-            String updateDateID = dateID + String.format ("%03d", millis);
+            String updateDateID = dateID + String.format("%03d", millis);
             responseStr = doRemoteQuery(phpRequestScriptURL, updateDateID);
             //Log.i(this.getClass().toString(), responseStr);
             try {
                 r = new JSONArray(responseStr).getJSONObject(0);
 
 //                //for now hard-coded medic ip and port
-               //TODO: WAYNE: when soldier name, id, etc, is set attach to request
+                //TODO: WAYNE: when soldier name, id, etc, is set attach to request
                 //r.put ("name",...
                 //r.put("soldierID",...
-                String MedicURL ="http://100.64.207.208:8080";
+                String MedicURL = "http://100.64.207.208:8080";
                 JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -155,7 +154,7 @@ public class BackgroundDataSim extends Service {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                       // VolleyLog.e("Error: ", error.getStackTrace());
+                        // VolleyLog.e("Error: ", error.getStackTrace());
                     }
                 });
                 rQueue.add(jsonRequest);
@@ -177,8 +176,7 @@ public class BackgroundDataSim extends Service {
                             properties.put("breathRate", JSONrow.getString("Belt Breathing Rate"));
                             properties.put("bodyPosition", JSONrow.getString("BodyPosition"));
                             properties.put("motion", JSONrow.getString("Motion"));
-                        }
-                        catch (JSONException e){
+                        } catch (JSONException e) {
                             //
                         }
 
@@ -190,18 +188,18 @@ public class BackgroundDataSim extends Service {
                 e.printStackTrace();
             }
             now.setTime(now.getTime() + 80);
-            int nextMillis = (int) Math.ceil((double)((now.getTime() % 1000)/ 80.0)) * 80;
+            int nextMillis = (int) Math.ceil((double) ((now.getTime() % 1000) / 80.0)) * 80;
             millis = nextMillis;
             dateID = keyFormat.format(now);
         }
     }
 
-
-    private void sendToMedic(){
+    private void sendToMedic() {
 
     }
-    private String doRemoteQuery(String phpRequestURL, String id){
-        URL url=null;
+
+    private String doRemoteQuery(String phpRequestURL, String id) {
+        URL url = null;
         HttpURLConnection conn = null;
         try {
             url = new URL(phpRequestURL);

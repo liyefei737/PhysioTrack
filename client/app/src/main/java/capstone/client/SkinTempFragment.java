@@ -22,7 +22,6 @@ public class SkinTempFragment extends BaseFragment implements DataObserver {
     private LineChart lineChart;
     private BottomBarActivity bottomBarActivity;
 
-
     public static SkinTempFragment newInstance(int instance) {
         Bundle args = new Bundle();
         args.putInt("argsInstance", instance);
@@ -45,7 +44,6 @@ public class SkinTempFragment extends BaseFragment implements DataObserver {
         updateParam(((DRDCClient) bottomBarActivity.getApplication()).getLastSkinTemp(), tv);
         return view;
     }
-
 
     /***
      * @param data is the skin tmp data received from the background. Currently its type is float array.

@@ -16,52 +16,59 @@ public class DRDCClient extends Application {
 
     private WelfareStatus lastState;
 
-    public WelfareStatus getLastState(){
+    public WelfareStatus getLastState() {
         return lastState;
     }
 
-    public void setLastState(WelfareStatus state){
+    public void setLastState(WelfareStatus state) {
         lastState = state;
     }
 
     private String lastHeartRate = "--";
-    public String getLastHeartRate(){
+
+    public String getLastHeartRate() {
         return lastHeartRate;
     }
 
-    public void setLastHeartRate(String hr){
+    public void setLastHeartRate(String hr) {
         if (hr != null)
-            if(!hr.isEmpty())
+            if (!hr.isEmpty())
                 lastHeartRate = hr;
     }
 
     private String lastBreathingRate = "--";
-    public String getLastBreathingRate(){
+
+    public String getLastBreathingRate() {
         return lastBreathingRate;
     }
-    public void setLastBreathingRate(String br){
+
+    public void setLastBreathingRate(String br) {
         if (br != null)
-            if(!br.isEmpty())
+            if (!br.isEmpty())
                 lastBreathingRate = br;
     }
 
-    private String lastSkinTemp  = "--";
-    public String getLastSkinTemp(){
+    private String lastSkinTemp = "--";
+
+    public String getLastSkinTemp() {
         return lastSkinTemp;
     }
-    public void setLastSkinTemp(String st){
+
+    public void setLastSkinTemp(String st) {
         if (st != null)
-            if(!st.isEmpty())
+            if (!st.isEmpty())
                 lastSkinTemp = st;
     }
 
-    private String lastCoreTemp  = "--";
-    public String getLastCoreTemp(){
+    private String lastCoreTemp = "--";
+
+    public String getLastCoreTemp() {
         return lastCoreTemp;
     }
-    public void setLastCoreTemp(String ct){
+
+    public void setLastCoreTemp(String ct) {
         if (ct != null)
-            if(!ct.isEmpty())
+            if (!ct.isEmpty())
                 lastCoreTemp = ct;
     }
 }

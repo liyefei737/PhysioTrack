@@ -42,7 +42,7 @@ public class DBManager {
 
     //property keys for soldier details
     public String ID_KEY = "id";
-    public String NAME_KEY ="name";
+    public String NAME_KEY = "name";
     public String WEIGHT_KEY = "weight";
     public String AGE_KEY = "age";
     public String HEIGHT_KEY = "height";
@@ -60,14 +60,13 @@ public class DBManager {
     }
 
     /***
-     *
      * @param type of the data base
      * @return returns the the instance of that type
      */
     public Database getDatabase(String type) {
-        if(type.equals("user")){
+        if (type.equals("user")) {
             return _userDB;
-        }else if(type.equals("data")){
+        } else if (type.equals("data")) {
             return _dataDB;
         }
 
@@ -105,23 +104,22 @@ public class DBManager {
         return db;
     }
 
-    public String GetQueryStartKey(Date now, int millistep){
+    public String GetQueryStartKey(Date now, int millistep) {
 
-        int millis = (int) (Math.ceil((double)((now.getTime() %1000) /(float)millistep)) * millistep);
+        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
         return dateFormat.format(now) + String.format("%03d", millis);
 
     }
 
-    public String GetQueryEndKey(Date now, int seconds, int millistep){
+    public String GetQueryEndKey(Date now, int seconds, int millistep) {
 
-       Date XsecondsAgo = new Date();
+        Date XsecondsAgo = new Date();
         XsecondsAgo.setTime(now.getTime() - (seconds * 1000));
-        int millis = (int) (Math.ceil((double)((now.getTime() %1000) /(float)millistep)) * millistep);
+        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
         return dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
     }
 
-
-    public JSONArray QueryLastXSeconds(Date now, int seconds, int millistep ) {
+    public JSONArray QueryLastXSeconds(Date now, int seconds, int millistep) {
         JSONArray lastXseconds = new JSONArray();
         Query query = _dataDB.createAllDocumentsQuery();
         query.setDescending(false);
@@ -144,7 +142,7 @@ public class DBManager {
         return lastXseconds;
     }
 
-    public QueryEnumerator quickQuery(Date now, int seconds, int millistep ) {
+    public QueryEnumerator quickQuery(Date now, int seconds, int millistep) {
         Query query = _dataDB.createAllDocumentsQuery();
         query.setDescending(false);
         String startKey = GetQueryStartKey(now, millistep);
@@ -162,22 +160,21 @@ public class DBManager {
         return null;
     }
 
-    public Soldier getSoldierDetails(){
+    public Soldier getSoldierDetails() {
         Query query = _userDB.createAllDocumentsQuery();
         QueryEnumerator result;
         try {
             result = query.run();
-        }
-        catch (CouchbaseLiteException e) {
+        } catch (CouchbaseLiteException e) {
             return null;
         }
         try {
             Map<String, Object> tmpMap = result.getRow(0).getDocument().getProperties();
             String id = (String) tmpMap.get(ID_KEY);
-          //  String name = (String) tmpMap.get(NAME_KEY);
-            int age = Integer.valueOf((String)tmpMap.get(AGE_KEY));
-            int weight = Integer.valueOf((String)tmpMap.get(WEIGHT_KEY));
-            int height = Integer.valueOf((String)tmpMap.get(HEIGHT_KEY));
+            //  String name = (String) tmpMap.get(NAME_KEY);
+            int age = Integer.valueOf((String) tmpMap.get(AGE_KEY));
+            int weight = Integer.valueOf((String) tmpMap.get(WEIGHT_KEY));
+            int height = Integer.valueOf((String) tmpMap.get(HEIGHT_KEY));
             Soldier s = new Soldier(id, "", age, weight, height);
             return s;
         } catch (Exception e) {
@@ -186,8 +183,7 @@ public class DBManager {
 
     }
 
-    public void setSoldierDetails(Soldier soldier){
-
+    public void setSoldierDetails(Soldier soldier) {
 
     }
 }

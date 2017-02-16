@@ -11,7 +11,7 @@ public class Soldier {
     private int weight;
     private int height;
 
-    public Soldier(){
+    public Soldier() {
         soldierID = "";
         name = "";
         age = -1;
@@ -19,7 +19,7 @@ public class Soldier {
         height = -1;
     }
 
-    public Soldier(String strId, String strName, int iAge, int iWeight, int iHeight){
+    public Soldier(String strId, String strName, int iAge, int iWeight, int iHeight) {
         soldierID = strId;
         name = strName;
         age = iAge;
@@ -27,34 +27,43 @@ public class Soldier {
         height = iHeight;
     }
 
-    public String getSoldierID(){
+    public String getSoldierID() {
         return soldierID;
     }
-    public void setSoldierID(String newID){
+
+    public void setSoldierID(String newID) {
         soldierID = newID;
     }
-    public String getSoldierName(){
+
+    public String getSoldierName() {
         return name;
     }
-    public void setSoldierName(String newName){
+
+    public void setSoldierName(String newName) {
         name = newName;
     }
-    public int getAge(){
+
+    public int getAge() {
         return age;
     }
-    public void setAge(int newAge){
+
+    public void setAge(int newAge) {
         age = newAge;
     }
-    public int getWeight(){
+
+    public int getWeight() {
         return weight;
     }
-    public void setWeight(int newWeight){
+
+    public void setWeight(int newWeight) {
         weight = newWeight;
     }
-    public int getHeight(){
+
+    public int getHeight() {
         return height;
     }
-    public void setHeight(int newHeight){
+
+    public void setHeight(int newHeight) {
         height = newHeight;
     }
 }

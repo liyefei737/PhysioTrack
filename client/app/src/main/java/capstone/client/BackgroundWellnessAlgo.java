@@ -24,7 +24,7 @@ import welfareSM.WelfareStatus;
  * Background Thread for computing the wellness algorithm
  */
 
-public class BackgroundWellnessAlgo  extends Service {
+public class BackgroundWellnessAlgo extends Service {
     private volatile HandlerThread mHandlerThread;
     private Handler mServiceHandler;
 
@@ -32,7 +32,6 @@ public class BackgroundWellnessAlgo  extends Service {
     static private BackgroundWellnessAlgo _BackgroundWellnessAlgo = null;
     private DBManager dbManager = null;
     private LocalBroadcastManager broadcaster = null;
-
 
     //singleton to to pass an instance of BackgroundWellnessAlgo
     static public BackgroundWellnessAlgo get_BackgroundWellnessAlgo() {
@@ -92,9 +91,8 @@ public class BackgroundWellnessAlgo  extends Service {
         while (true) {
 
             try {
-                Thread.sleep(numSeconds *1000);
-            }
-            catch (Exception e) {
+                Thread.sleep(numSeconds * 1000);
+            } catch (Exception e) {
             }
             now = new Date();
             lastXseconds = dbManager.QueryLastXSeconds(now, numSeconds, millistep);
@@ -112,7 +110,7 @@ public class BackgroundWellnessAlgo  extends Service {
                         return true;
                     }
                 });
-            } catch (CouchbaseLiteException e){
+            } catch (CouchbaseLiteException e) {
                 //handle this
             }
             notifyUI(nextState);

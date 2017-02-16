@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class HelpPage extends Fragment {
-
 
     public HelpPage() {
         // Required empty public constructor

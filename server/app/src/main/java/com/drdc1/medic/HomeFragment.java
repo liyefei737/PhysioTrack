@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
 // This is the home page of the tab application.
 public class HomeFragment extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class HomeFragment extends AppCompatActivity {
         });
 
     }
-    
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -100,7 +101,7 @@ public class HomeFragment extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     SquadStatus tab1 = new SquadStatus();
                     return tab1;

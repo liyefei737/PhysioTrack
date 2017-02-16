@@ -33,8 +33,8 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation,
-                                                                FragNavController.TransactionListener,
-                    FragNavController.RootFragmentListener,FragmentDataManager  {
+        FragNavController.TransactionListener,
+        FragNavController.RootFragmentListener, FragmentDataManager {
     private BottomBar mBottomBar;
     private FragNavController mNavController;
     private DBManager dbManager;
@@ -61,7 +61,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         mBottomBar.selectTabAtPosition(INDEX_HOME);
 
         mNavController =
-                new FragNavController(savedInstanceState, getSupportFragmentManager(), R.id.container,this,5, INDEX_HOME);
+                new FragNavController(savedInstanceState, getSupportFragmentManager(), R.id.container, this, 5, INDEX_HOME);
         mNavController.setTransactionListener(this);
 
         //data for all the graphs from background
@@ -70,12 +70,12 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
         IntentFilter UPDATEDATA = new IntentFilter("UI_UPDATE");
         dataReceiver = new DataReceiver();
-        LocalBroadcastManager.getInstance(this).registerReceiver(dataReceiver,UPDATEDATA);
+        LocalBroadcastManager.getInstance(this).registerReceiver(dataReceiver, UPDATEDATA);
 
         mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                if(mNavController.getCurrentStack().peek().getClass() == EditInfoFragment.class)
+                if (mNavController.getCurrentStack().peek().getClass() == EditInfoFragment.class)
                     mNavController.popFragment();
                 switch (tabId) {
                     case R.id.bb_menu_heart:
@@ -99,7 +99,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
         mBottomBar.setOnTabReselectListener(new OnTabReselectListener() {
             @Override
-            public void onTabReSelected(@IdRes int tabId){
+            public void onTabReSelected(@IdRes int tabId) {
                 mNavController.clearStack();
             }
         });
@@ -133,7 +133,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     @Override
     public void onTabTransaction(Fragment fragment, int index) {
         // If we have a backstack, show the back button
-        if(getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(!mNavController.isRootFragment());
         }
     }
@@ -142,7 +142,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     public void onFragmentTransaction(Fragment fragment) {
         //do fragmentty stuff. Maybe change title, I'm not going to tell you how to live your life
         // If we have a backstack, show the back button
-        if(getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(!mNavController.isRootFragment());
         }
     }
@@ -163,16 +163,18 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         }
         throw new IllegalStateException("Need to send an index that we know");
     }
+
     public void edit_info(View view) {
         pushFragment(new EditInfoFragment());
     }
-    public void callHelpPage(View view){
+
+    public void callHelpPage(View view) {
         pushFragment(new HelpPage());
     }
 
-    public void cancel_info(View view){
-        Button savebtn = (Button)findViewById(R.id.btSave);
-        Button cancelbtn = (Button)findViewById(R.id.btCancel);
+    public void cancel_info(View view) {
+        Button savebtn = (Button) findViewById(R.id.btSave);
+        Button cancelbtn = (Button) findViewById(R.id.btCancel);
         savebtn.setVisibility(INVISIBLE);
         cancelbtn.setVisibility(INVISIBLE);
         EditText id = (EditText) findViewById(R.id.etSoldierId);
@@ -201,9 +203,9 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         height.setFocusableInTouchMode(false);
     }
 
-    public void edit_info_save(View view){
-        final Button btnSave = (Button)findViewById(R.id.btSave);
-        final Button cancelbtn = (Button)findViewById(R.id.btCancel);
+    public void edit_info_save(View view) {
+        final Button btnSave = (Button) findViewById(R.id.btSave);
+        final Button cancelbtn = (Button) findViewById(R.id.btCancel);
         Database userDB = dbManager.getDatabase(dbManager.USER_DB);
         EditText id = (EditText) findViewById(R.id.etSoldierId);
         final String newId = id.getText().toString();
@@ -232,14 +234,14 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
                     return true;
                 }
             });
-        }catch (CouchbaseLiteException e){
-
+        } catch (CouchbaseLiteException e) {
 
         }
     }
-    public void edit_fields(View view){
-        Button savebtn = (Button)findViewById(R.id.btSave);
-        Button cancelbtn = (Button)findViewById(R.id.btCancel);
+
+    public void edit_fields(View view) {
+        Button savebtn = (Button) findViewById(R.id.btSave);
+        Button cancelbtn = (Button) findViewById(R.id.btCancel);
         savebtn.setVisibility(VISIBLE);
         cancelbtn.setVisibility(VISIBLE);
         EditText id = (EditText) findViewById(R.id.etSoldierId);
@@ -269,8 +271,8 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
     }
 
-    public void updateHomeFragment(String state){
-        if(mNavController.getCurrentFrag().getClass() == HomeFragment.class){
+    public void updateHomeFragment(String state) {
+        if (mNavController.getCurrentFrag().getClass() == HomeFragment.class) {
             HomeFragment homeFrag = (HomeFragment) mNavController.getCurrentFrag();
             homeFrag.updateWellnessStatus(state, (ImageView) homeFrag.getView().findViewById(R.id.wellness_status));
         }
@@ -289,10 +291,9 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
     @Override
     public void notifyObserver(Map data) {
-        for(DataObserver observer : fragmentlist){
+        for (DataObserver observer : fragmentlist) {
             observer.update(data);
         }
-
 
     }
 
@@ -300,44 +301,43 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            data.put("skinTemp",intent.getFloatArrayExtra("skinTemp"));
-            data.put("coreTemp",intent.getFloatArrayExtra("coreTemp"));
-            data.put("br",intent.getIntArrayExtra("br"));
-            data.put("hr",intent.getIntArrayExtra("hr"));
+            data.put("skinTemp", intent.getFloatArrayExtra("skinTemp"));
+            data.put("coreTemp", intent.getFloatArrayExtra("coreTemp"));
+            data.put("br", intent.getIntArrayExtra("br"));
+            data.put("hr", intent.getIntArrayExtra("hr"));
             System.out.println("receiving...");
             System.out.println(intent.getAction());
             notifyObserver(data);
         }
     }
 
-    public void updateHeartFragment(String param){
-        if(mNavController.getCurrentFrag().getClass() == HeartFragment.class){
+    public void updateHeartFragment(String param) {
+        if (mNavController.getCurrentFrag().getClass() == HeartFragment.class) {
             HeartFragment heartFrag = (HeartFragment) mNavController.getCurrentFrag();
             heartFrag.updateParam(param, (TextView) heartFrag.getView().findViewById(R.id.currentHeartRate));
         }
     }
 
-    public void updateBreathFragment(String param){
-        if(mNavController.getCurrentFrag().getClass() == BreathFragment.class){
-            BreathFragment breathFrag= (BreathFragment) mNavController.getCurrentFrag();
+    public void updateBreathFragment(String param) {
+        if (mNavController.getCurrentFrag().getClass() == BreathFragment.class) {
+            BreathFragment breathFrag = (BreathFragment) mNavController.getCurrentFrag();
             breathFrag.updateParam(param, (TextView) breathFrag.getView().findViewById(R.id.currentBreathRate));
         }
     }
 
-    public void updateSkinFragment(String param){
-        if(mNavController.getCurrentFrag().getClass() == SkinTempFragment.class){
+    public void updateSkinFragment(String param) {
+        if (mNavController.getCurrentFrag().getClass() == SkinTempFragment.class) {
             SkinTempFragment skinFrag = (SkinTempFragment) mNavController.getCurrentFrag();
             skinFrag.updateParam(param, (TextView) skinFrag.getView().findViewById(R.id.currentSkinTemp));
         }
     }
 
-    public void updateCoreFragment(String param){
-        if(mNavController.getCurrentFrag().getClass() == CoreTempFragment.class){
+    public void updateCoreFragment(String param) {
+        if (mNavController.getCurrentFrag().getClass() == CoreTempFragment.class) {
             CoreTempFragment coreFrag = (CoreTempFragment) mNavController.getCurrentFrag();
             coreFrag.updateParam(param, (TextView) coreFrag.getView().findViewById(R.id.currentCoreTemp));
         }
     }
-
 
 }
 
