@@ -263,6 +263,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 
                 String message = intent.getStringExtra("message");
                 Log.d("receiver", "Got message: " + message);
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 entries.add(new Entry(entries.size(), Float.parseFloat(message)));
                 LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
                 //dataSet.setHighlightEnabled(true);
@@ -289,40 +290,6 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
                 yAxis.setLabelCount(5, true); // force 6 labels
                 hrchart.setNoDataText("Loading...");
                 hrchart.invalidate(); // refresh
-
-//                LineData data2 = hrchart.getData();
-//
-//                if (data2 != null) {
-//                    Log.d("receiver", "Got message2: " + message);
-//
-//                    ILineDataSet set = data2.getDataSetByIndex(0);
-//                    // set.addEntry(...); // can be called as well
-//
-//                    if (set == null) {
-//                        set = createSet();
-//                        data2.addDataSet(set);
-//                    }
-//                    data2.addEntry(new Entry(set.getEntryCount(), Float.parseFloat(message)), 0);
-////                    data2.addEntry(new Entry(set.getEntryCount(), (float) (Math.random() * 40) + 30f), 0);
-////            data.addEntry(new Entry(1, Float.parseFloat(message)), 0);
-//
-//
-//                    data2.notifyDataChanged();
-//                    hrchart.invalidate(); // refresh
-//
-//                    // let the chart know it's data has changed
-//                    hrchart.notifyDataSetChanged();
-//
-//                    // limit the number of visible entries
-//                    hrchart.setVisibleXRangeMaximum(120);
-//                    // hrchart.setVisibleYRange(30, AxisDependency.LEFT);
-//
-//                    // move to the latest entry
-//                    hrchart.moveViewToX(data2.getEntryCount());
-//
-//                }
-
-//                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
             }
 
