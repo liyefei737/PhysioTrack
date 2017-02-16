@@ -88,7 +88,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="47abef1b0f74f12903e11242a0980125b4b56952">
+        sha1="1ac00c2075f1de2df2ec4fd974e474dd27fd4b6a">
         <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_a9c4d7cc70de91c27a650f52e48579d69c109986/classes.dex" />
     </item>
     <item
@@ -205,7 +205,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="8e548e88db195e00a7fd19df2a1a76e9142bd745">
+        sha1="3be01c3c5a346b5d28e51ebd3dfdca3cec40ea79">
         <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_a889d106952ab82c6a5c3bed65a8dde10e15e3a4/classes.dex" />
     </item>
     <item
