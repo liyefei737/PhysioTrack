@@ -18,14 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HeartFragment extends BaseFragment implements DataObserver {
+import capstone.client.Activities.BottomBarActivity;
+
+public class SkinTempFragment extends capstone.client.BaseFragment implements DataObserver {
     private LineChart lineChart;
     private BottomBarActivity bottomBarActivity;
 
-    public static HeartFragment newInstance(int instance) {
+    public static SkinTempFragment newInstance(int instance) {
         Bundle args = new Bundle();
         args.putInt("argsInstance", instance);
-        HeartFragment fragment = new HeartFragment();
+        SkinTempFragment fragment = new SkinTempFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,29 +41,40 @@ public class HeartFragment extends BaseFragment implements DataObserver {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
-        View view = inflater.inflate(R.layout.fragment_heart, container, false);
-        TextView tv = (TextView) view.findViewById(R.id.currentHeartRate);
-        updateParam(((DRDCClient) bottomBarActivity.getApplication()).getLastHeartRate(), tv);
+        View view = inflater.inflate(R.layout.fragment_skin_temp, container, false);
+        TextView tv = (TextView) view.findViewById(R.id.currentSkinTemp);
+        updateParam(((DRDCClient) bottomBarActivity.getApplication()).getLastSkinTemp(), tv);
         return view;
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bottomBarActivity.unregisterFragment(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bottomBarActivity.registerFragment(this);
+    }
+
     /***
-     * @param data is the heart rate data received from the background. Currently its type is int array.
+     * @param data is the skin tmp data received from the background. Currently its type is float array.
      */
     @Override
     public void update(Map data) {
-        lineChart = (LineChart) getActivity().findViewById(R.id.heartChart);
-        int[] heartRates = (int[]) data.get("hr");
-        String latestHR = String.valueOf(heartRates[heartRates.length - 1]);
-        bottomBarActivity.updateHeartFragment(latestHR);
+        lineChart = (LineChart) getActivity().findViewById(R.id.skinTempChart);
+        float[] skinTemps = (float[]) data.get("skinTemp");
+        String latestST = String.valueOf(skinTemps[skinTemps.length - 1]);
+        bottomBarActivity.updateSkinFragment(latestST);
 
         List<Entry> entries = new ArrayList<Entry>();
 
-        for (int i = 0; i < heartRates.length; i++) {
-            entries.add(new Entry(i, heartRates[i]));
+        for (int i = 0; i < skinTemps.length; i++) {
+            entries.add(new Entry(i, skinTemps[i]));
         }
-
-        //the following code is playing around with the graph for heart rate, feel free to play around
         LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
         //dataSet.setHighlightEnabled(true);
         //dataSet.setColor();
@@ -79,8 +92,8 @@ public class HeartFragment extends BaseFragment implements DataObserver {
         YAxis yAxis = lineChart.getAxisLeft();
         //yAxis.setTypeface(...);
         yAxis.setTextSize(14f); // set the text size
-        yAxis.setAxisMinimum(0f); // start at zero
-        yAxis.setAxisMaximum(200f); // the axis maximum is 100
+        yAxis.setAxisMinimum(30f); // start at zero
+        yAxis.setAxisMaximum(45f); // the axis maximum is 100
         yAxis.setTextColor(Color.WHITE);
         //yAxis.setValueFormatter(new MyValueFormatter());
         //yAxis.setGranularity(1f); // interval 1

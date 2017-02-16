@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,34 +27,31 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".BackgroundDataSim"
-            android:enabled="true"
-            android:exported="false"
-            android:stopWithTask="false" />
-        <service
-            android:name=".BackgroundSleepAlgo"
-            android:enabled="true"
-            android:exported="false"
-            android:stopWithTask="false" />
-        <service
-            android:name=".BackgroundWellnessAlgo"
-            android:enabled="true"
-            android:exported="false"
-            android:stopWithTask="false" />
-        <service
-            android:name=".BackgroundUIUpdator"
-            android:enabled="true"
-            android:exported="false"
-            android:stopWithTask="false" />
-
-
-
         <activity
-            android:name=".BottomBarActivity"
+            android:name=".Activities.BottomBarActivity"
             android:label="@string/title_activity_bottom_bar"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <service
+            android:name=".BackgroundServices.BackgroundDataSim"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false" />
+        <service
+            android:name=".BackgroundServices.BackgroundSleepAlgo"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false" />
+        <service
+            android:name=".BackgroundServices.BackgroundWellnessAlgo"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false" />
+        <service
+            android:name=".BackgroundServices.BackgroundUIUpdator"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false" />
     </application>
 
 </manifest>

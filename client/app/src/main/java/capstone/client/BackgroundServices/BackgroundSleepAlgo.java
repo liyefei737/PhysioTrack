@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.BackgroundServices;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,18 +6,22 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.format.DateUtils;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
-import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import capstone.client.DBManager;
 import sleepS.DateStatePair;
 import sleepS.sleepStatus;
 
@@ -32,7 +36,7 @@ public class BackgroundSleepAlgo extends Service {
 
     static final String DB_UPDATE = "DB_UPDATE";
     static private BackgroundSleepAlgo _backgroundSleepAlgo = null;
-    private DBManager databseManager = null;
+    private DBManager dbManager = null;
     private LocalBroadcastManager broadcaster = null;
 
     public static final int PERIOD = 15000;
@@ -54,7 +58,7 @@ public class BackgroundSleepAlgo extends Service {
         broadcaster = LocalBroadcastManager.getInstance(this);
 
         // An Android handler thread internally operates on a looper.
-        mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
+        mHandlerThread = new HandlerThread("SleepAlgoService.HandlerThread");
         mHandlerThread.start();
         // An Android service handler is a handler running on a specific background thread.
         mServiceHandler = new Handler(mHandlerThread.getLooper());
@@ -67,12 +71,23 @@ public class BackgroundSleepAlgo extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mServiceHandler.post(new Runnable() {
+        dbManager = new DBManager(this);
+        Timer timer = new Timer();
+        TimerTask doSleepCallback = new TimerTask() {
             @Override
             public void run() {
-                run_algo();
+                mServiceHandler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            run_sleep_algo();
+                        } catch (Exception e) {
+                        }
+                    }
+                });
             }
-        });
+        };
+        timer.schedule(doSleepCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
+
         // Keep service around "sticky"
         return START_STICKY;
     }
@@ -85,26 +100,16 @@ public class BackgroundSleepAlgo extends Service {
         broadcaster.sendBroadcast(intent);
     }
 
-    private void run_algo() {
-        databseManager = new DBManager(this);
-        Database dataDB = databseManager.getDatabase("data");
-        QueryEnumerator rows = null;
-        Date now;
-        int numSeconds = 9, millistep = 0;
-
-        while (true) {
-            try {
-                Thread.sleep(numSeconds * 1000);
-            } catch (Exception e) {
-                //
-            }
-
-            now = new Date();
-
-            JSONArray last9Seconds = databseManager.QueryLastXSeconds(now, numSeconds, millistep);
-            final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(last9Seconds);
+    private void run_sleep_algo() {
+        Database dataDB = dbManager.getDatabase(dbManager.DATA_DB);
+        Calendar now = new GregorianCalendar();
+        now.set(2017, 01, 30); //hardcode for datasim
+        JSONArray last9Minutes = dbManager.QueryLastXMinutes(now, 9);
+        if (last9Minutes.length() == 9){
+            final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(last9Minutes);
             if (sleepResult.getDate() != null) {
-                Document saveStateDoc = dataDB.getDocument(sleepResult.getDate());
+                long docID = org.apache.commons.lang3.time.DateUtils.round(sleepResult.getDate(), Calendar.MINUTE).getTime();
+                Document saveStateDoc = dataDB.getDocument(String.valueOf(docID));
                 try {
                     saveStateDoc.update(new Document.DocumentUpdater() {
                         @Override

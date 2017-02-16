@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.BackgroundServices;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.format.DateUtils;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
@@ -14,9 +15,14 @@ import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import capstone.client.DBManager;
+import capstone.client.DRDCClient;
 import welfareSM.IndividualWelfareTracker;
 import welfareSM.WelfareStatus;
 
@@ -50,7 +56,7 @@ public class BackgroundWellnessAlgo extends Service {
         broadcaster = LocalBroadcastManager.getInstance(this);
 
         // An Android handler thread internally operates on a looper.
-        mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
+        mHandlerThread = new HandlerThread("WellnessAlgoService.HandlerThread");
         mHandlerThread.start();
         // An Android service handler is a handler running on a specific background thread.
         mServiceHandler = new Handler(mHandlerThread.getLooper());
@@ -63,12 +69,24 @@ public class BackgroundWellnessAlgo extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mServiceHandler.post(new Runnable() {
+
+        dbManager = new DBManager(this);
+        Timer timer = new Timer();
+        TimerTask doWellnessAlgoCallback = new TimerTask() {
             @Override
             public void run() {
-                calculateWellness();
+                mServiceHandler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            calculateWellness();
+                        } catch (Exception e) {
+                        }
+                    }
+                });
             }
-        });
+        };
+        timer.schedule(doWellnessAlgoCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
+
         // Keep service around "sticky"
         return START_STICKY;
     }
@@ -82,39 +100,28 @@ public class BackgroundWellnessAlgo extends Service {
 
     public void calculateWellness() {
         IndividualWelfareTracker iwt = new IndividualWelfareTracker();
-        dbManager = new DBManager(this);
-        Database userDB = dbManager.getDatabase("data");
-        JSONArray lastXseconds;
-        Date now;
-        int numSeconds = 15, millistep = 160;
-
-        while (true) {
-
-            try {
-                Thread.sleep(numSeconds * 1000);
-            } catch (Exception e) {
-            }
-            now = new Date();
-            lastXseconds = dbManager.QueryLastXSeconds(now, numSeconds, millistep);
-
-            final WelfareStatus nextState = iwt.calculateWelfareStatus(lastXseconds);
-
-            Document saveStateDoc = userDB.getDocument(dbManager.GetQueryStartKey(now, millistep));
-            try {
-                saveStateDoc.update(new Document.DocumentUpdater() {
-                    @Override
-                    public boolean update(UnsavedRevision newRevision) {
-                        Map<String, Object> properties = newRevision.getUserProperties();
-                        properties.put("state", nextState);
-                        newRevision.setUserProperties(properties);
-                        return true;
-                    }
-                });
-            } catch (CouchbaseLiteException e) {
-                //handle this
-            }
-            notifyUI(nextState);
-            ((DRDCClient) this.getApplication()).setLastState(nextState);
+        Database userDB = dbManager.getDatabase(dbManager.DATA_DB);
+        Calendar now = new GregorianCalendar();
+        now.set(2017, 01, 30); //hardcode for datasim
+        JSONArray last5Minutes = dbManager.QueryLastXMinutes(now, 5);
+        final WelfareStatus nextState = iwt.calculateWelfareStatus(last5Minutes);
+        Calendar nearestMinute = org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+        Document saveStateDoc = userDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+        try {
+            saveStateDoc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    properties.put("state", nextState);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        } catch (CouchbaseLiteException e){
+            //handle this
         }
+        notifyUI(nextState);
+        ((DRDCClient) this.getApplication()).setLastState(nextState);
+
     }
 }

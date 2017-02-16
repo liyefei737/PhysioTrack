@@ -6,18 +6,21 @@ import android.util.Log;
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.DatabaseOptions;
+import com.couchbase.lite.Document;
 import com.couchbase.lite.Manager;
 import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
+import com.couchbase.lite.UnsavedRevision;
 import com.couchbase.lite.android.AndroidContext;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -36,9 +39,8 @@ public class DBManager {
     private Database _userDB = null;
     private Database _dataDB = null;
     private Context _context = null;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
-    public String USER_DB = "user";
-    public String DATA_DB = "data";
+    public static String USER_DB = "user";
+    public static String DATA_DB = "data";
 
     //property keys for soldier details
     public String ID_KEY = "id";
@@ -104,31 +106,17 @@ public class DBManager {
         return db;
     }
 
-    public String GetQueryStartKey(Date now, int millistep) {
-
-        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
-        return dateFormat.format(now) + String.format("%03d", millis);
-
-    }
-
-    public String GetQueryEndKey(Date now, int seconds, int millistep) {
-
-        Date XsecondsAgo = new Date();
-        XsecondsAgo.setTime(now.getTime() - (seconds * 1000));
-        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
-        return dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
-    }
-
-    public JSONArray QueryLastXSeconds(Date now, int seconds, int millistep) {
+    public JSONArray QueryLastXMinutes(Calendar now, int minutes ) {
         JSONArray lastXseconds = new JSONArray();
+        Calendar nearestMinute = DateUtils.round(now, Calendar.MINUTE);
         Query query = _dataDB.createAllDocumentsQuery();
-        query.setDescending(false);
-        String startKey = GetQueryStartKey(now, millistep);
-        String endKey = GetQueryEndKey(now, seconds, millistep);
+        query.setDescending(true);
+        String startKey = String.valueOf(nearestMinute.getTimeInMillis());
+        String endKey = String.valueOf(nearestMinute.getTimeInMillis() - android.text.format.DateUtils.MINUTE_IN_MILLIS* minutes);
 
         try {
-            query.setEndKeyDocId(endKey);
-            query.setStartKeyDocId(startKey);
+            query.setEndKey(endKey);
+            query.setStartKey(startKey);
             QueryEnumerator result = query.run();
             for (Iterator<QueryRow> it = result; it.hasNext(); ) {
                 QueryRow row = it.next();
@@ -142,22 +130,23 @@ public class DBManager {
         return lastXseconds;
     }
 
-    public QueryEnumerator quickQuery(Date now, int seconds, int millistep) {
-        Query query = _dataDB.createAllDocumentsQuery();
-        query.setDescending(false);
-        String startKey = GetQueryStartKey(now, millistep);
-        String endKey = GetQueryEndKey(now, seconds, millistep);
+    public JSONObject getCurrentDataRow() {
+        Calendar now = new GregorianCalendar();
+        //because of dataSim, hardcode date
+        now.set(2017,01,30);
+        Calendar nearestMinute = DateUtils.round(now, Calendar.MINUTE);
+        Document doc = _dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+        JSONObject jObj = new JSONObject(doc.getProperties());
+        return jObj;
+    }
 
-        try {
-            query.setEndKeyDocId(endKey);
-            query.setStartKeyDocId(startKey);
-            QueryEnumerator result = query.run();
-            //result
-            return result;
-        } catch (CouchbaseLiteException e) {
-            //handle this
-        }
-        return null;
+    public JSONObject getDataRowAtTime(Calendar time)
+    {
+        Calendar nearestMinute = DateUtils.round(time, Calendar.MINUTE);
+        nearestMinute.set(2017, 01, 30);
+        Document doc = _dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+        JSONObject jObj = new JSONObject((doc.getProperties()));
+        return jObj;
     }
 
     public Soldier getSoldierDetails() {
@@ -171,16 +160,35 @@ public class DBManager {
         try {
             Map<String, Object> tmpMap = result.getRow(0).getDocument().getProperties();
             String id = (String) tmpMap.get(ID_KEY);
-            //  String name = (String) tmpMap.get(NAME_KEY);
-            int age = Integer.valueOf((String) tmpMap.get(AGE_KEY));
-            int weight = Integer.valueOf((String) tmpMap.get(WEIGHT_KEY));
-            int height = Integer.valueOf((String) tmpMap.get(HEIGHT_KEY));
-            Soldier s = new Soldier(id, "", age, weight, height);
+            String name = (String) tmpMap.get(NAME_KEY);
+            int age = (Integer)tmpMap.get(AGE_KEY);
+            int weight = (Integer) tmpMap.get(WEIGHT_KEY);
+            int height = (Integer) tmpMap.get(HEIGHT_KEY);
+            Soldier s = new Soldier(id, name, age, weight, height);
             return s;
         } catch (Exception e) {
             return null;
         }
+    }
 
+    public void initDefaultSoldierDetails() {
+        Document doc = _userDB.getDocument("default");
+        try {
+            doc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    properties.put(HEIGHT_KEY, 5);
+                    properties.put(WEIGHT_KEY, 5);
+                    properties.put(NAME_KEY, "a a");
+                    properties.put(AGE_KEY, 5);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        } catch (CouchbaseLiteException e){
+            //handle this
+        }
     }
 
     public void setSoldierDetails(Soldier soldier) {

@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.BackgroundServices;
 
 import android.app.Service;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.format.DateUtils;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,8 +33,14 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import capstone.client.DBManager;
+import capstone.client.Soldier;
 
 /**
  * This class does:
@@ -54,13 +61,18 @@ public class BackgroundDataSim extends Service {
 
     static final String DB_UPDATE = "DB_UPDATE";
     static private BackgroundDataSim _backgroundDataSim = null;
-    private DBManager databseManager = null;
+    private DBManager dbManager = null;
+    private Database dataDB = null;
     private LocalBroadcastManager broadcaster = null;
     //Volley is a easy to use http lib
     private RequestQueue rQueue = null;
 
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
+
+    private static String phpRequestScriptURL = "http://atmacausa.com/ReadRequestMinute.php";
+    private static SimpleDateFormat keyFormat = new SimpleDateFormat("01/30/2017 HH:mm:");
+    private static String regexSecondsAndMilli = "[0-9]{2}\\.[0-9]{3}";
 
     public BackgroundDataSim() {
     }
@@ -82,7 +94,7 @@ public class BackgroundDataSim extends Service {
         rQueue = Volley.newRequestQueue(this);
         broadcaster = LocalBroadcastManager.getInstance(this);
         // An Android handler thread internally operates on a looper.
-        mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
+        mHandlerThread = new HandlerThread("DataSimService.HandlerThread");
         mHandlerThread.start();
         // An Android service handler is a handler running on a specific background thread.
         mServiceHandler = new Handler(mHandlerThread.getLooper());
@@ -95,63 +107,78 @@ public class BackgroundDataSim extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mServiceHandler.post(new Runnable() {
+
+        dbManager = new DBManager(this);
+        dataDB = dbManager.getDatabase(dbManager.DATA_DB);
+        if (dbManager.getSoldierDetails() == null){
+            dbManager.initDefaultSoldierDetails();
+        }
+        Timer timer = new Timer();
+        TimerTask doDataSimCallback = new TimerTask() {
             @Override
             public void run() {
-                dataSim();
+                mServiceHandler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            dataSim();
+                        } catch (Exception e) {
+                        }
+                    }
+                });
             }
-        });
+        };
+        timer.schedule(doDataSimCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
+
         // Keep service around "sticky"
         return START_STICKY;
     }
 
-    public void notifyUI(Map<String, Object> document) {
-        Intent intent = new Intent(DB_UPDATE);
-        for (String key : document.keySet()) {
-            intent.putExtra(key, document.get(key).toString());
-        }
-        broadcaster.sendBroadcast(intent);
-    }
 
     private void dataSim() {
-        databseManager = new DBManager(this);
-
-        Database dataDB = databseManager.getDatabase("data");
-        String phpRequestScriptURL = "http://atmacausa.com/ReadRequest.php";
-        JSONObject r;
         String responseStr;
+        double accSum = 0;
 
-        SimpleDateFormat keyFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
+        Calendar now = new GregorianCalendar();
+        now.set(2017, 01, 30);
+        keyFormat.setCalendar(now);
+        String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
+        Calendar nearestMinute  = org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+        //get one minute worth of data
+        responseStr = doRemoteQuery(phpRequestScriptURL, dateID);
+        try {
+            JSONArray minuteData = new JSONArray(responseStr);
+            //iterate through minute data to sum up acceleration
+            for (int i = 0; i < minuteData.length(); i++ ){
+                accSum += getAccelerationMagnitude(minuteData.getJSONObject(i));
+            }
 
-        Date now = new Date();
-        String dateID = keyFormat.format(now);
-        int millis = (int) Math.ceil((double) ((now.getTime() % 1000) / 40.0)) * 40;
+            //get last data row in minute for the representative row to be saved and transmitted
+            JSONObject lastRow = minuteData.getJSONObject(minuteData.length() - 1);
 
-        while (true) {
-            if (millis == 1000)
-                millis = 0;
-            String updateDateID = dateID + String.format("%03d", millis);
-            responseStr = doRemoteQuery(phpRequestScriptURL, updateDateID);
-            //Log.i(this.getClass().toString(), responseStr);
-            try {
-                r = new JSONArray(responseStr).getJSONObject(0);
+            //replace accelerations with magnitude
+            lastRow.remove("AccX");
+            lastRow.remove("AccY");
+            lastRow.remove("AccZ");
+            lastRow.put("accSum", accSum);
 
-//                //for now hard-coded medic ip and port
-                //TODO: WAYNE: when soldier name, id, etc, is set attach to request
-                //r.put ("name",...
-                //r.put("soldierID",...
-                String MedicURL = "http://100.64.207.208:8080";
-                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, r,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    VolleyLog.v("Response:%n %s", response.toString(4));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+            //put ID on http request
+            Soldier soldierDetails = dbManager.getSoldierDetails();
+            JSONObject jsonObjForRequest = lastRow;
+            jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
+
+            //for now hard-coded medic ip and port
+            String MedicURL = "http://100.64.207.208:8080";
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            VolleyLog.v("Response:%n %s", response.toString(4));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // VolleyLog.e("Error: ", error.getStackTrace());
@@ -159,17 +186,16 @@ public class BackgroundDataSim extends Service {
                 });
                 rQueue.add(jsonRequest);
 
-                Document doc = dataDB.getDocument(r.getString("DateTime"));
-                final JSONObject JSONrow = r;
+                //save to DB
+                Document doc = dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+                final JSONObject JSONrow = lastRow;
                 doc.update(new Document.DocumentUpdater() {
                     @Override
                     public boolean update(UnsavedRevision newRevision) {
                         Map<String, Object> properties = newRevision.getUserProperties();
                         try {
                             properties.put("timeCreated", JSONrow.getString("DateTime"));
-                            properties.put("accX", JSONrow.getString("AccX"));
-                            properties.put("accY", JSONrow.getString("AccY"));
-                            properties.put("accZ", JSONrow.getString("AccZ"));
+                            properties.put("accSum", JSONrow.getString("accSum"));
                             properties.put("skinTemp", JSONrow.getString("Skin_Temp"));
                             properties.put("coreTemp", JSONrow.getString("Core_Temp"));
                             properties.put("heartRate", JSONrow.getString("ECG Heart Rate"));
@@ -184,22 +210,16 @@ public class BackgroundDataSim extends Service {
                         return true;
                     }
                 });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            now.setTime(now.getTime() + 80);
-            int nextMillis = (int) Math.ceil((double) ((now.getTime() % 1000) / 80.0)) * 80;
-            millis = nextMillis;
-            dateID = keyFormat.format(now);
-        }
-    }
 
-    private void sendToMedic() {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
     private String doRemoteQuery(String phpRequestURL, String id) {
-        URL url = null;
+
+        URL url=null;
         HttpURLConnection conn = null;
         try {
             url = new URL(phpRequestURL);
@@ -266,6 +286,19 @@ public class BackgroundDataSim extends Service {
 
             conn.disconnect();
         }
+    }
+
+    public double getAccelerationMagnitude(JSONObject dataObj){
+        double accX = 0, accY = 0, accZ = 0;
+        try {
+            accX = Double.valueOf(dataObj.getString("AccX"));
+            accY = Double.valueOf(dataObj.getString("AccY"));
+            accZ = Double.valueOf(dataObj.getString("AccZ"));
+
+        } catch (JSONException e){
+
+        }
+        return Math.sqrt(accX*accX + accY * accY + accZ*accZ);
     }
 }
 
