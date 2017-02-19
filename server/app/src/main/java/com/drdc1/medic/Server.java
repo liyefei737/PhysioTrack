@@ -63,6 +63,8 @@ public class Server extends NanoHTTPD {
                 Map<String, Object> infoMap = null;
                 infoMap.put("name", body.getString("name"));
                 infoMap.put("age", body.getString("age"));
+                infoMap.put("height", body.getString("height"));
+                infoMap.put("weight", body.getString("weight"));
 
                 dataManager.addSoldier(soldierID, infoMap);
             }
