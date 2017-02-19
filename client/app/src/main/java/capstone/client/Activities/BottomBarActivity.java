@@ -65,6 +65,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme);
         dbManager = new DBManager(this);
         setContentView(R.layout.activity_bottom_bar);
 
