@@ -121,6 +121,51 @@ public class DataManager {
         }
     }
 
+    /**
+     * The given static info map should have the fields name, age, height, weight
+     * @param ID
+     * @param staticInfo
+     * @return
+     */
+    public boolean updateSoldierStaticInfo(String ID, Map<String, Object> staticInfo) {
+        if (!soldierInSystem(ID))
+            //doesn't exist
+            return false;
+        Document docStatic = _userInfoDB.getDocument(ID);
+        try {
+            docStatic.putProperties(staticInfo);
+
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "Error putting", e);
+        }
+        return true;
+
+    }
+
+    /**
+     * The given dynamic info map should have the fields timeCreated, accX, accY,
+     * accZ, skinTemp, coreTemp, heartRate, breathRate, bodyPosition, motion
+     * @param ID
+     * @param DateTime
+     * @param dynamicInfo
+     * @return
+     */
+    public boolean updateSoldierDynamicInfo(String ID, String DateTime, Map<String, Object> dynamicInfo) {
+        if (!soldierInSystem(ID))
+            //doesn't exist
+            return false;
+        Database dbPhysio = _physioDataDBMap.get(ID);
+        Document docPhysio = dbPhysio.getDocument(DateTime);
+        try {
+            docPhysio.putProperties(dynamicInfo);
+
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "Error putting", e);
+        }
+        return true;
+
+    }
+
     public boolean soldierInSystem(String ID) {
         if (_userInfoDB.getExistingDocument(ID) == null) {
             return false;
