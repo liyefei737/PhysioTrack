@@ -22,7 +22,7 @@ public class Application extends android.app.Application {
     private void showApp() {
         Intent intent = new Intent();
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-        intent.setClass(getApplicationContext(), StartActivity.class);
+        intent.setClass(getApplicationContext(), HomeFragment.class);
         startActivity(intent);
     }
 
