@@ -15,18 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:textSize="20dp"
         android:gravity="center"
         android:textColor="@color/colorWhite"
         android:text="Overall Health Status"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/overall_green"
-        android:layout_below="@+id/section_label"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:id="@+id/overallStatus" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -40,31 +32,36 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
             android:id="@+id/temps">
 
             <TextView
                 android:text="Core Temp"
-                android:layout_width="100dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
                 android:gravity="center"
+                android:textSize="20dp"
                 android:id="@+id/tvCoreTemp" />
 
             <TextView
                 android:text="Fatigue Level"
-                android:layout_width="100dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginRight="10dp"
+                android:textSize="20dp"
                 android:id="@+id/tvFatiqueLevel"
                 android:gravity="center"
                 android:textColor="@color/colorWhite" />
 
             <TextView
                 android:text="Skin Temp"
-                android:layout_width="100dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvSkinTemp"
+                android:layout_marginLeft="40dp"
+                android:textSize="20dp"
                 android:gravity="center"
                 android:textColor="@color/colorWhite" />
 
@@ -77,34 +74,46 @@
             android:id="@+id/graphs">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="240dp"
+                android:layout_height="200dp"
                 app:srcCompat="@drawable/skin_green"
                 android:id="@+id/ivCoreTemp" />
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="240dp"
+                android:layout_height="200dp"
                 app:srcCompat="@drawable/skin_red"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:id="@+id/ivSkinTemp" />
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="240dp"
+                android:layout_height="200dp"
                 app:srcCompat="@drawable/skin_red"
                 android:id="@+id/ivFatiqueLevel" />
         </LinearLayout>
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        app:srcCompat="@drawable/overall_green"
+        android:layout_marginTop="26dp"
+        android:id="@+id/overallStatus"
+        android:layout_below="@+id/section_label"
+        android:layout_centerHorizontal="true" />
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorBlack"
-        app:srcCompat="@drawable/ic_help2"
+        app:srcCompat="@drawable/ic_help"
+        android:id="@+id/btHelp"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/btHelp" />
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp" />
 
 </RelativeLayout>
