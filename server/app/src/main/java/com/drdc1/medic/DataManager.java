@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -212,31 +212,17 @@ public class DataManager {
         return db;
     }
 
-    public String GetQueryStartKey(Date now, int millistep) {
-
-        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
-        return dateFormat.format(now) + String.format("%03d", millis);
-
-    }
-
-    public String GetQueryEndKey(Date now, int seconds, int millistep) {
-
-        Date XsecondsAgo = new Date();
-        XsecondsAgo.setTime(now.getTime() - (seconds * 1000));
-        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
-        return dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
-    }
-
-    public JSONArray QueryLastXSeconds(String ID, Date now, int seconds, int millistep) {
+    public JSONArray QueryLastXMinutes(String ID, Calendar now, int minutes) {
         JSONArray lastXseconds = new JSONArray();
         Query query = getSoldierDB(ID).createAllDocumentsQuery();
-        query.setDescending(false);
-        String startKey = GetQueryStartKey(now, millistep);
-        String endKey = GetQueryEndKey(now, seconds, millistep);
+        Calendar nearestMinute =  org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+        query.setDescending(true);
+        String startKey = String.valueOf(nearestMinute.getTimeInMillis());
+        String endKey = String.valueOf(nearestMinute.getTimeInMillis() - android.text.format.DateUtils.MINUTE_IN_MILLIS* minutes);
 
         try {
-            query.setEndKeyDocId(endKey);
-            query.setStartKeyDocId(startKey);
+            query.setEndKey(endKey);
+            query.setStartKey(startKey);
             QueryEnumerator result = query.run();
             for (Iterator<QueryRow> it = result; it.hasNext(); ) {
                 QueryRow row = it.next();
