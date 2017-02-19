@@ -1,6 +1,7 @@
 package capstone.client.BackgroundServices;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -73,6 +74,10 @@ public class BackgroundUIUpdator extends Service {
     }
 
     public void updateDataAndBroadcast(){
+        updateDataAndBroadcast(dbManager, getApplicationContext());
+    }
+
+    public static void updateDataAndBroadcast(DBManager dbManager, Context context){
         int num_data_pts = 10;
         float [] coreTemp = new float[num_data_pts];
         float [] skinTemp = new float[num_data_pts];
@@ -100,7 +105,7 @@ public class BackgroundUIUpdator extends Service {
             }
             try {
                 JSONObject lastRow = last10Minutes.getJSONObject(last10Minutes.length() - 1);
-                 state = lastRow.getString("state");
+                state = lastRow.getString("state");
             } catch (JSONException e){
 
             }
@@ -111,8 +116,7 @@ public class BackgroundUIUpdator extends Service {
             i.putExtra("br", br);
             i.putExtra("hr", hr);
             i.putExtra("state", state);
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(i);
         }
-
     }
 }

@@ -20,10 +20,15 @@ import java.util.List;
 import java.util.Map;
 
 import capstone.client.Activities.BottomBarActivity;
+import capstone.client.BackgroundServices.BackgroundUIUpdator;
+
+import static android.R.attr.format;
 
 public class HeartFragment extends capstone.client.BaseFragment implements DataObserver {
     private LineChart lineChart;
     private capstone.client.Activities.BottomBarActivity bottomBarActivity;
+    private static float heartMin = 0;
+    private static float heartMax = 200;
 
     public static HeartFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -42,9 +47,8 @@ public class HeartFragment extends capstone.client.BaseFragment implements DataO
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
         View view = inflater.inflate(R.layout.fragment_heart, container, false);
-        TextView tv = (TextView) view.findViewById(R.id.currentHeartRate);
-        updateParam(((DRDCClient) bottomBarActivity.getApplication()).getLastHeartRate(), tv);
         return view;
     }
 
@@ -70,7 +74,6 @@ public class HeartFragment extends capstone.client.BaseFragment implements DataO
         int[] heartRates = (int[]) data.get("hr");
         String latestHR = String.valueOf(heartRates[0]);
         TextView hrText = (TextView) getActivity().findViewById(R.id.currentHeartRate);
-        bottomBarActivity.updateHeartFragment(latestHR);
         updateParam(latestHR, hrText);
 
         List<Entry> entries = new ArrayList<Entry>();
@@ -80,33 +83,7 @@ public class HeartFragment extends capstone.client.BaseFragment implements DataO
             entries.add(new Entry(i, heartRates[arrLength - 1 - i]));
         }
 
-        //the following code is playing around with the graph for heart rate, feel free to play around
-        LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-        //dataSet.setHighlightEnabled(true);
-        //dataSet.setColor();
-        //dataSet.setValueTextColor(...); // styling, ...
-        LineData lineData = new LineData(dataSet);
-        //dataSet.setDrawFilled(true);
-        //dataSet.setFillDrawable(gradientDrawable);
-        lineChart.setData(lineData);
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(14f);
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setDrawAxisLine(true);
-        xAxis.setDrawGridLines(false);
-        YAxis yAxis = lineChart.getAxisLeft();
-        //yAxis.setTypeface(...);
-        yAxis.setTextSize(14f); // set the text size
-        yAxis.setAxisMinimum(0f); // start at zero
-        yAxis.setAxisMaximum(200f); // the axis maximum is 100
-        yAxis.setTextColor(Color.WHITE);
-        //yAxis.setValueFormatter(new MyValueFormatter());
-        //yAxis.setGranularity(1f); // interval 1
-        yAxis.setLabelCount(5, true); // force 6 labels
-        lineChart.setNoDataText("Loading...");
-        lineChart.refreshDrawableState();
-        lineChart.invalidate();
+        ViewUtils.formatUpdateLineChart(lineChart, entries, heartMin, heartMax);
     }
 
     @Override

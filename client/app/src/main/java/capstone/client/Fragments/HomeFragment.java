@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import java.util.Map;
 
+import capstone.client.BackgroundServices.BackgroundUIUpdator;
 import capstone.client.BaseFragment;
 import capstone.client.Activities.BottomBarActivity;
 import capstone.client.DRDCClient;
@@ -47,6 +48,8 @@ public class HomeFragment extends BaseFragment implements DataObserver {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        bottomBarActivity.registerFragment(this);
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
         WelfareStatus state = ((DRDCClient) getActivity().getApplication()).getLastState();
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ImageView iv = (ImageView) view.findViewById(R.id.wellness_status);
@@ -74,19 +77,25 @@ public class HomeFragment extends BaseFragment implements DataObserver {
     }
 
     public void updateWellnessStatus(String state, ImageView wellnessStatus) {
-
-        if (state.equals("GREEN")) {
-            wellnessStatus.setImageResource(R.drawable.home_center_green);
-        } else if (state.equals("YELLOW")) {
-            wellnessStatus.setImageResource(R.drawable.home_center_yellow);
-        } else {
-            wellnessStatus.setImageResource(R.drawable.home_center_red);
+        if (state == null){
+            //TODO: GREY HOME SYMBOL
+        }
+        else {
+            if (state.equals("GREEN")) {
+                wellnessStatus.setImageResource(R.drawable.home_center_green);
+            } else if (state.equals("YELLOW")) {
+                wellnessStatus.setImageResource(R.drawable.home_center_yellow);
+            } else {
+                wellnessStatus.setImageResource(R.drawable.home_center_red);
+            }
         }
         wellnessStatus.refreshDrawableState();
 
     }
 
     public void update(Map data){
-
+        String state = (String) data.get("state");
+        ImageView wellnessView = (ImageView) getActivity().findViewById(R.id.wellness_status);
+        updateWellnessStatus(state, wellnessView);
     }
 }

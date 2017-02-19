@@ -14,17 +14,21 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import capstone.client.Activities.BottomBarActivity;
+import capstone.client.BackgroundServices.BackgroundUIUpdator;
 
 
 public class BreathFragment extends capstone.client.BaseFragment implements DataObserver {
     private LineChart lineChart;
     private BottomBarActivity bottomBarActivity;
-
+    private static float breathMin = 0;
+    private static float breathMax = 70;
     public static BreathFragment newInstance(int instance) {
         Bundle args = new Bundle();
         args.putInt("argsInstance", instance);
@@ -42,9 +46,8 @@ public class BreathFragment extends capstone.client.BaseFragment implements Data
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
         View view = inflater.inflate(R.layout.fragment_breath, container, false);
-        TextView tv = (TextView) view.findViewById(R.id.currentBreathRate);
-        updateParam(((DRDCClient) bottomBarActivity.getApplication()).getLastBreathingRate(), tv);
         return view;
     }
 
@@ -67,42 +70,21 @@ public class BreathFragment extends capstone.client.BaseFragment implements Data
     @Override
     public void update(Map data) {
         lineChart = (LineChart) getActivity().findViewById(R.id.breathChart);
+        TextView brNum = (TextView) getActivity().findViewById(R.id.currentBreathRate);
         int[] breathRates = (int[]) data.get("br");
-        String latestBR = String.valueOf(breathRates[breathRates.length - 1]);
-        bottomBarActivity.updateBreathFragment(latestBR);
+        String latestBR = String.valueOf(breathRates[0]);
+        updateParam(latestBR, brNum);
 
         List<Entry> entries = new ArrayList<Entry>();
 
-        for (int i = 0; i < breathRates.length; i++) {
-            entries.add(new Entry(i, breathRates[i]));
+        int arrLength = breathRates.length;
+        //X values need to be sorted or line chart throws exception
+        //Do reversed order b/c showing last ten minutes (most recent data at 10)
+        for (int i = 0; i < arrLength ; i++) {
+            entries.add(new Entry(i, breathRates[arrLength - 1 - i]));
         }
 
-        //the following code is playing around with the graph for breath rate, feel free to play around
-        LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-        //dataSet.setHighlightEnabled(true);
-        //dataSet.setColor();
-        //dataSet.setValueTextColor(...); // styling, ...
-        LineData lineData = new LineData(dataSet);
-        //dataSet.setDrawFilled(true);
-        //dataSet.setFillDrawable(gradientDrawable);
-        lineChart.setData(lineData);
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(14f);
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setDrawAxisLine(true);
-        xAxis.setDrawGridLines(false);
-        YAxis yAxis = lineChart.getAxisLeft();
-        //yAxis.setTypeface(...);
-        yAxis.setTextSize(14f); // set the text size
-        yAxis.setAxisMinimum(10f); // start at zero
-        yAxis.setAxisMaximum(20f); // the axis maximum is 100
-        yAxis.setTextColor(Color.WHITE);
-        //yAxis.setValueFormatter(new MyValueFormatter());
-        //yAxis.setGranularity(1f); // interval 1
-        yAxis.setLabelCount(5, true); // force 6 labels
-        lineChart.setNoDataText("Loading...");
-        lineChart.invalidate(); // refresh
+        ViewUtils.formatUpdateLineChart(lineChart, entries, breathMin, breathMax);
     }
 
     @Override
