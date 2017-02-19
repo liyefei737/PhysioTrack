@@ -5,16 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,11 +36,13 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +70,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 //        // An Android service handler is a handler running on a specific background thread.
 //        mServiceHandler = new Handler(mHandlerThread.getLooper());
 
-        dataManager = ((Application) this.getApplication()).getDataManager();
+        dataManager = ((AppContext) this.getApplication()).getDataManager();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_soldier);
@@ -93,7 +94,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         SquadStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(IndividualSoldier.this, StartActivity.class);
+                Intent in = new Intent(IndividualSoldier.this, HomeFragment.class);
                 startActivity(in);
             }
         });
@@ -360,7 +361,9 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
             dataManager.addSoldier("tess81", infoMap);
 
             Database db = dataManager.getSoldierDB("tess81");
-            Document doc = db.getDocument("02/13/2017 00:00:00.000");
+            Calendar nowCal = new GregorianCalendar();
+            nowCal.set(2017, 01, 30);
+            Document doc = db.getDocument(String.valueOf(DateUtils.round(nowCal,Calendar.MINUTE).getTimeInMillis()));
 
             try {
                 doc.update(new Document.DocumentUpdater() {
@@ -386,13 +389,14 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
             }
 
             Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+            int numMinutes = 5;
 
             if (physioDataMap != null) {
 
                 for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
 //                    Database userDB = entry.getValue();
 
-                    lastXSeconds = dataManager.QueryLastXSeconds(entry.getKey(), now, numSeconds, millistep);
+                    lastXSeconds = dataManager.QueryLastXMinutes(entry.getKey(), nowCal, numMinutes);
                     Toast.makeText(getApplicationContext(), lastXSeconds.toString(), Toast.LENGTH_LONG).show();
                     NameEditable.setText(lastXSeconds.toString());
 

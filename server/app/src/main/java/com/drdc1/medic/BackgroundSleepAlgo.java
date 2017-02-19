@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.format.DateUtils;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
@@ -14,8 +15,11 @@ import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import sleepS.DateStatePair;
 import sleepS.sleepStatus;
@@ -56,7 +60,7 @@ public class BackgroundSleepAlgo extends Service {
         // An Android service handler is a handler running on a specific background thread.
         mServiceHandler = new Handler(mHandlerThread.getLooper());
 
-        dataManager = ((Application) this.getApplication()).getDataManager();
+        dataManager = ((AppContext) this.getApplication()).getDataManager();
     }
 
     @Override
@@ -66,12 +70,22 @@ public class BackgroundSleepAlgo extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mServiceHandler.post(new Runnable() {
+        Timer timer = new Timer();
+        TimerTask doSleepCallback = new TimerTask() {
             @Override
             public void run() {
-                run_algo();
+                mServiceHandler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            run_sleep_algo();
+                        } catch (Exception e) {
+                        }
+                    }
+                });
             }
-        });
+        };
+        timer.schedule(doSleepCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
+
         // Keep service around "sticky"
         return START_STICKY;
     }
@@ -84,44 +98,36 @@ public class BackgroundSleepAlgo extends Service {
         broadcaster.sendBroadcast(intent);
     }
 
-    private void run_algo() {
-
-        Date now;
-        int numSeconds = 9, millistep = 1000;
-        JSONArray lastXSeconds;
-        while (true) {
-            try {
-                Thread.sleep(numSeconds * 1000);
-            } catch (Exception e) {
-                //
-            }
-
-            now = new Date();
-            Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
-            if (physioDataMap != null) {
-                for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
-                    Database userDB = entry.getValue();
-                    lastXSeconds = dataManager.QueryLastXSeconds(entry.getKey(), now, numSeconds, millistep);
-                    final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(lastXSeconds);
-                    if (sleepResult.getDate() != null) {
-                        Document saveStateDoc = userDB.getDocument(sleepResult.getDate());
-                        try {
-                            saveStateDoc.update(new Document.DocumentUpdater() {
-                                @Override
-                                public boolean update(UnsavedRevision newRevision) {
-                                    Map<String, Object> properties = newRevision.getUserProperties();
-                                    properties.put("sleep", sleepResult.getState());
-                                    newRevision.setUserProperties(properties);
-                                    return true;
-                                }
-                            });
-                        } catch (CouchbaseLiteException e) {
-                            //handle this
-                        }
+    private void run_sleep_algo() {
+        int numMinutes = 9;
+        Calendar now = new GregorianCalendar();
+        now.set(2017, 01, 30); // hard code for sim data
+        JSONArray last9Minutes;
+        Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+        if (physioDataMap != null) {
+            for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
+                Database userDB = entry.getValue();
+                last9Minutes = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
+                final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(last9Minutes);
+                if (sleepResult.getDate() != null) {
+                    Document saveStateDoc = userDB.getDocument(sleepResult.getDate());
+                    try {
+                        saveStateDoc.update(new Document.DocumentUpdater() {
+                            @Override
+                            public boolean update(UnsavedRevision newRevision) {
+                                Map<String, Object> properties = newRevision.getUserProperties();
+                                properties.put("sleep", sleepResult.getState());
+                                newRevision.setUserProperties(properties);
+                                return true;
+                            }
+                        });
+                    } catch (CouchbaseLiteException e) {
+                        //handle this
                     }
                 }
             }
         }
+        
     }
 }
 

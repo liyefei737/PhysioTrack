@@ -40,7 +40,7 @@ public class BackgroundServer extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        dataManager = ((Application) this.getApplication()).getDataManager();
+        dataManager = ((AppContext) this.getApplicationContext()).getDataManager();
         server = new Server(8080, dataManager);
         try {
             server.start();

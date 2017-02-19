@@ -1,7 +1,6 @@
 package com.drdc1.medic;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -20,7 +19,10 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +31,7 @@ import fi.iki.elonen.NanoHTTPD;
 public class Server extends NanoHTTPD {
 
     static private DataManager dataManager;
-
+    private static SimpleDateFormat keyFormat = new SimpleDateFormat("01/30/2017 HH:mm:SS.sss");
     public Server(int port, DataManager dataManager) {
         super(port);
     }
@@ -63,11 +65,22 @@ public class Server extends NanoHTTPD {
                 Map<String, Object> infoMap = null;
                 infoMap.put("name", body.getString("name"));
                 infoMap.put("age", body.getString("age"));
+                infoMap.put("height", body.getString("height"));
+                infoMap.put("weight", body.getString("weight"));
 
                 dataManager.addSoldier(soldierID, infoMap);
             }
+
+            Calendar keyCal = new GregorianCalendar();
+            try {
+                keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
+            } catch (Exception e) {
+                keyCal.set(2017, 01, 30);
+            }
+            Calendar nearestMinute  = org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);
+
             Database db = dataManager.getSoldierDB(soldierID);
-            Document doc = db.getDocument(body.getString("DateTime"));
+            Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
 
             doc.update(new Document.DocumentUpdater() {
                 @Override
@@ -77,9 +90,7 @@ public class Server extends NanoHTTPD {
                     String hrate = null;
                     try {
                         properties.put("timeCreated", body.getString("DateTime"));
-                        properties.put("accX", body.getString("AccX"));
-                        properties.put("accY", body.getString("AccY"));
-                        properties.put("accZ", body.getString("AccZ"));
+                        properties.put("accSum", body.getString("accSum"));
                         properties.put("skinTemp", body.getString("Skin_Temp"));
                         properties.put("coreTemp", body.getString("Core_Temp"));
                         properties.put("heartRate", body.getString("ECG Heart Rate"));

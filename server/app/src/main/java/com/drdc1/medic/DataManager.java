@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -121,6 +121,51 @@ public class DataManager {
         }
     }
 
+    /**
+     * The given static info map should have the fields name, age, height, weight
+     * @param ID
+     * @param staticInfo
+     * @return
+     */
+    public boolean updateSoldierStaticInfo(String ID, Map<String, Object> staticInfo) {
+        if (!soldierInSystem(ID))
+            //doesn't exist
+            return false;
+        Document docStatic = _userInfoDB.getDocument(ID);
+        try {
+            docStatic.putProperties(staticInfo);
+
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "Error putting", e);
+        }
+        return true;
+
+    }
+
+    /**
+     * The given dynamic info map should have the fields timeCreated, accX, accY,
+     * accZ, skinTemp, coreTemp, heartRate, breathRate, bodyPosition, motion
+     * @param ID
+     * @param DateTime
+     * @param dynamicInfo
+     * @return
+     */
+    public boolean updateSoldierDynamicInfo(String ID, String DateTime, Map<String, Object> dynamicInfo) {
+        if (!soldierInSystem(ID))
+            //doesn't exist
+            return false;
+        Database dbPhysio = _physioDataDBMap.get(ID);
+        Document docPhysio = dbPhysio.getDocument(DateTime);
+        try {
+            docPhysio.putProperties(dynamicInfo);
+
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "Error putting", e);
+        }
+        return true;
+
+    }
+
     public boolean soldierInSystem(String ID) {
         if (_userInfoDB.getExistingDocument(ID) == null) {
             return false;
@@ -167,31 +212,17 @@ public class DataManager {
         return db;
     }
 
-    public String GetQueryStartKey(Date now, int millistep) {
-
-        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
-        return dateFormat.format(now) + String.format("%03d", millis);
-
-    }
-
-    public String GetQueryEndKey(Date now, int seconds, int millistep) {
-
-        Date XsecondsAgo = new Date();
-        XsecondsAgo.setTime(now.getTime() - (seconds * 1000));
-        int millis = (int) (Math.ceil((double) ((now.getTime() % 1000) / (float) millistep)) * millistep);
-        return dateFormat.format(XsecondsAgo) + String.format("%03d", millis);
-    }
-
-    public JSONArray QueryLastXSeconds(String ID, Date now, int seconds, int millistep) {
+    public JSONArray QueryLastXMinutes(String ID, Calendar now, int minutes) {
         JSONArray lastXseconds = new JSONArray();
         Query query = getSoldierDB(ID).createAllDocumentsQuery();
-        query.setDescending(false);
-        String startKey = GetQueryStartKey(now, millistep);
-        String endKey = GetQueryEndKey(now, seconds, millistep);
+        Calendar nearestMinute =  org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+        query.setDescending(true);
+        String startKey = String.valueOf(nearestMinute.getTimeInMillis());
+        String endKey = String.valueOf(nearestMinute.getTimeInMillis() - android.text.format.DateUtils.MINUTE_IN_MILLIS* minutes);
 
         try {
-            query.setEndKeyDocId(endKey);
-            query.setStartKeyDocId(startKey);
+            query.setEndKey(endKey);
+            query.setStartKey(startKey);
             QueryEnumerator result = query.run();
             for (Iterator<QueryRow> it = result; it.hasNext(); ) {
                 QueryRow row = it.next();
