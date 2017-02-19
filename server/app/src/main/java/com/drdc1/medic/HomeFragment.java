@@ -14,13 +14,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 // This is the home page of the tab application.
 public class HomeFragment extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    private ImageButton btnHelp;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -150,6 +153,11 @@ public class HomeFragment extends AppCompatActivity {
         Intent wellnessAlgo = new Intent();
         wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
         startService(wellnessAlgo);
+    }
+    
+    public void helpPageStarter(View view){
+        btnHelp = (ImageButton) findViewById(R.id.ibHelp);
+        Toast.makeText(this, "Button clieck", Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -41,7 +41,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                     android:layout_weight="0.02"
                     android:layout_gravity="right"
                     android:background="@android:color/black"
-                    android:layout_marginLeft="600dp" />
+                    android:layout_marginLeft="600dp"
+                    android:onClick="helpPageStarter" />
 
             </LinearLayout>
 
