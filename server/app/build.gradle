@@ -45,4 +45,5 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     testCompile 'junit:junit:4.12'
     debugCompile 'im.dino:dbinspector:3.4.0@aar'
+    compile 'com.github.arimorty:floatingsearchview:2.0.3'
 }
