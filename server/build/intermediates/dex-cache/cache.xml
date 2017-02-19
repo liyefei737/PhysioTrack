@@ -3,6 +3,24 @@
 
     <item
         is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c61641e333fa88da21758bab8cc28ee16604b05f">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.8.0_d2876eee312d030fed7dd47f6d0a36e0bad593ba/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.5.0/b2ece1bd57ac7b4c315b7505b65ac79cb1da4270/jackson-core-2.5.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b2ece1bd57ac7b4c315b7505b65ac79cb1da4270">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-core-2.5.0_5c4ac7689a944254dc19252342b2c742e24d8441/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.1.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -12,12 +30,39 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.8.0_61ce5e9a04c0e16fe6af2982cf14ca8101ac1bdb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/transition/25.1.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="15b049fedbd8e3926bf99d9e45dfc9b2a1043bb9">
         <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-transition-25.1.1_3a6256d3b039bd5f0c1f03f5122221299f6059cc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.couchbase.lite/couchbase-lite-android/1.3.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2ce3006140ca3087f08a9f0ba1211255253474c5">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.couchbase.lite-couchbase-lite-android-1.3.1_89a2ff0d2fcc9d8035a68ee63db57e76e6e4b988/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.5.0/a2a55a3375bc1cef830ca426d68d2ea22961190e/jackson-annotations-2.5.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a2a55a3375bc1cef830ca426d68d2ea22961190e">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-annotations-2.5.0_3f0eefbe5366d342a6214bfa5cdcc6ee17fdfc42/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -57,12 +102,48 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.8.0/5ea7af56cc7c567ed9856d99efb30740e9b17ff/okio-1.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.8.0_91bc15f4c4e85a9290f1f6b4475ec71539619a3f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6914103de273c00f042c74ebed5c4f201a459e87">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_a889d106952ab82c6a5c3bed65a8dde10e15e3a4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v3.0.1/369f9aa48a629b4e92557b37326f42dc3de796e4/MPAndroidChart-v3.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="369f9aa48a629b4e92557b37326f42dc3de796e4">
         <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/MPAndroidChart-v3.0.1_b2112d2332025cb0401a12e0f27efdcc1c390eca/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.3.1/19047bdb6a4fc00a44124f64ca98e88fc204e7e3/okhttp-3.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="19047bdb6a4fc00a44124f64ca98e88fc204e7e3">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.3.1_66435b63fff28add9dcdd10f254ff79428a9fd5a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.5.0/489b7552dd3322b63f694122d16ce62c21c303b5/jackson-databind-2.5.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="489b7552dd3322b63f694122d16ce62c21c303b5">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-databind-2.5.0_c07e3bbe198fe9adde5ece2daa16c78d890c782a/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -75,6 +156,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e2719c102dca3a7a5b02ce07f769362da6ddb4ab">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.1.1_a548e36447648371d8418104acf98bfd7edb57b8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.github.oxo42/stateless4j/2.4.0/128aca4ace585f0b42faa739d0b968a154debb7a/stateless4j-2.4.0.jar"
         jumboMode="true"
         optimize="true"
@@ -84,11 +174,29 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="02741d05d4b697fba5e279e9881aaa1da0ca7c7f">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.1.1_46b662275293868bc6da29f9dcc01a15b223ceba/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/9.8.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e3234cd25e23069abd48ecd2117bc0e8011bf45a">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appindexing-9.8.0_19550ba92125f60cd2fc1658253cdc014643542f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="be36e2f07a2db799943aaa9e7286400ae185bc28">
+        sha1="6c22ae525a7f4ccb53d88f9d7c3565dc7c698e3f">
         <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_a9c4d7cc70de91c27a650f52e48579d69c109986/classes.dex" />
     </item>
     <item
@@ -120,147 +228,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/libs/wellness.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="ac7e9d2e2340721d7db336ae68eddb9e1fdf8ca2">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/2/wellness_6183fa5a8bd55f77929cff48ea7319b903046b7f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.couchbase.lite/couchbase-lite-android-sqlite-custom/1.3.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c82bc8adb671652b83ea2d785d0847435e4f3442">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.couchbase.lite-couchbase-lite-android-sqlite-custom-1.3.1_ef82880e18749f3718f69634375f4d7d629192ae/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.1.1_37e4bd38f8a95836836995219d8a92addd6fdbb4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.8.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c61641e333fa88da21758bab8cc28ee16604b05f">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.8.0_d2876eee312d030fed7dd47f6d0a36e0bad593ba/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.5.0/b2ece1bd57ac7b4c315b7505b65ac79cb1da4270/jackson-core-2.5.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b2ece1bd57ac7b4c315b7505b65ac79cb1da4270">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-core-2.5.0_5c4ac7689a944254dc19252342b2c742e24d8441/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.8.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.8.0_61ce5e9a04c0e16fe6af2982cf14ca8101ac1bdb/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.couchbase.lite/couchbase-lite-android/1.3.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="2ce3006140ca3087f08a9f0ba1211255253474c5">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.couchbase.lite-couchbase-lite-android-1.3.1_89a2ff0d2fcc9d8035a68ee63db57e76e6e4b988/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.5.0/a2a55a3375bc1cef830ca426d68d2ea22961190e/jackson-annotations-2.5.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="a2a55a3375bc1cef830ca426d68d2ea22961190e">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-annotations-2.5.0_3f0eefbe5366d342a6214bfa5cdcc6ee17fdfc42/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.8.0/5ea7af56cc7c567ed9856d99efb30740e9b17ff/okio-1.8.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.8.0_91bc15f4c4e85a9290f1f6b4475ec71539619a3f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="6914103de273c00f042c74ebed5c4f201a459e87">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_a889d106952ab82c6a5c3bed65a8dde10e15e3a4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.3.1/19047bdb6a4fc00a44124f64ca98e88fc204e7e3/okhttp-3.3.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="19047bdb6a4fc00a44124f64ca98e88fc204e7e3">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.3.1_66435b63fff28add9dcdd10f254ff79428a9fd5a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.5.0/489b7552dd3322b63f694122d16ce62c21c303b5/jackson-databind-2.5.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="489b7552dd3322b63f694122d16ce62c21c303b5">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-databind-2.5.0_c07e3bbe198fe9adde5ece2daa16c78d890c782a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e2719c102dca3a7a5b02ce07f769362da6ddb4ab">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.1.1_a548e36447648371d8418104acf98bfd7edb57b8/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="02741d05d4b697fba5e279e9881aaa1da0ca7c7f">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.1.1_46b662275293868bc6da29f9dcc01a15b223ceba/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/9.8.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e3234cd25e23069abd48ecd2117bc0e8011bf45a">
-        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appindexing-9.8.0_19550ba92125f60cd2fc1658253cdc014643542f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="c03bf57f358aa10d253f21989e93bcf6014b3b17">
         <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.1.1_9d329d34978fe02f1b6adbf9b96551a76f2ef411/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/libs/wellness.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ac7e9d2e2340721d7db336ae68eddb9e1fdf8ca2">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/2/wellness_6183fa5a8bd55f77929cff48ea7319b903046b7f/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -279,6 +261,24 @@
         revision="25.0.0"
         sha1="3e04ac8ca644ea7baddf6fdcf72e15c79e9df94a">
         <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.1.1_2bd443620e81882cc171227a73c0344931c96077/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.4/5fe28b9518e58819180a43a850fbc0dd24b7c050/commons-lang3-3.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5fe28b9518e58819180a43a850fbc0dd24b7c050">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/commons-lang3-3.4_a5e1e60ef2a5633c37f7afbce70cd6f45a01d786/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.couchbase.lite/couchbase-lite-android-sqlite-custom/1.3.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c82bc8adb671652b83ea2d785d0847435e4f3442">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.couchbase.lite-couchbase-lite-android-sqlite-custom-1.3.1_ef82880e18749f3718f69634375f4d7d629192ae/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -306,6 +306,15 @@
         revision="25.0.0"
         sha1="cd7951e04cfb9a8bf008d544a478d9a8d8192d38">
         <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-25.1.1_c579d86a7b825f984f0fdba5e221f42c9a786395/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
+        <dex dex="/Users/mehmetatmaca/Desktop/drdc1/server/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.1.1_37e4bd38f8a95836836995219d8a92addd6fdbb4/classes.dex" />
     </item>
 
 </items>
