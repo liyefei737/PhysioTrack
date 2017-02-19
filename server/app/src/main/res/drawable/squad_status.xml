@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is a bullseye graph that consists of cicles with different radius -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="250dp"
+    android:viewportWidth="200"
+    android:viewportHeight="250">
+
+    <path
+        android:name="s1"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 3 C 153.571620734 3 197 46.4283792664 197 100 C 197 153.571620734 153.571620734 197 100 197 C 46.4283792664 197 3 153.571620734 3 100 C 3 46.4283792664 46.4283792664 3 100 3 Z" />
+    <path
+        android:name="s2"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 13 C 148.048773235 13 187 51.9512267647 187 100 C 187 148.048773235 148.048773235 187 100 187 C 51.9512267647 187 13 148.048773235 13 100 C 13 51.9512267647 51.9512267647 13 100 13 Z" />
+    <path
+        android:name="s3"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 23 C 142.525925737 23 177 57.474074263 177 100 C 177 142.525925737 142.525925737 177 100 177 C 57.474074263 177 23 142.525925737 23 100 C 23 57.474074263 57.474074263 23 100 23 Z" />
+    <path
+        android:name="s4"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 33 C 137.003078239 33 167 62.9969217613 167 100 C 167 137.003078239 137.003078239 167 100 167 C 62.9969217613 167 33 137.003078239 33 100 C 33 62.9969217613 62.9969217613 33 100 33 Z" />
+    <path
+        android:name="s5"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 43 C 131.48023074 43 157 68.5197692596 157 100 C 157 131.48023074 131.48023074 157 100 157 C 68.5197692596 157 43 131.48023074 43 100 C 43 68.5197692596 68.5197692596 43 100 43 Z" />
+    <path
+        android:name="s6"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 53 C 125.957383242 53 147 74.042616758 147 100 C 147 125.957383242 125.957383242 147 100 147 C 74.042616758 147 53 125.957383242 53 100 C 53 74.042616758 74.042616758 53 100 53 Z" />
+    <path
+        android:name="s7"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 63 C 120.434535744 63 137 79.5654642563 137 100 C 137 120.434535744 120.434535744 137 100 137 C 79.5654642563 137 63 120.434535744 63 100 C 63 79.5654642563 79.5654642563 63 100 63 Z" />
+    <path
+        android:name="s8"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 73 C 114.911688245 73 127 85.0883117546 127 100 C 127 114.911688245 114.911688245 127 100 127 C 85.0883117546 127 73 114.911688245 73 100 C 73 85.0883117546 85.0883117546 73 100 73 Z" />
+    <path
+        android:name="s9"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 83 C 109.388840747 83 117 90.6111592529 117 100 C 117 109.388840747 109.388840747 117 100 117 C 90.6111592529 117 83 109.388840747 83 100 C 83 90.6111592529 90.6111592529 83 100 83 Z" />
+    <path
+        android:name="s10"
+        android:strokeColor="#ff0000"
+        android:strokeWidth="4"
+        android:pathData="M 100 93 C 103.865993249 93 107 96.1340067512 107 100 C 107 103.865993249 103.865993249 107 100 107 C 96.1340067512 107 93 103.865993249 93 100 C 93 96.1340067512 96.1340067512 93 100 93 Z" />
+</vector>

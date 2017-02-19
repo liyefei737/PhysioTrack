@@ -22,11 +22,11 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/overall_green"
+        app:srcCompat="@drawable/squad_status"
         android:layout_below="@+id/section_label"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
-        android:id="@+id/overallStatus" />
+        android:id="@+id/overallStatusGraph" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -79,22 +79,22 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/skin_green"
-                android:id="@+id/ivCoreTemp" />
+                app:srcCompat="@drawable/squad_status"
+                android:id="@+id/coreTempGraph" />
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/skin_red"
+                app:srcCompat="@drawable/squad_status"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/ivSkinTemp" />
+                android:id="@+id/skinTempGraph" />
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/skin_red"
-                android:id="@+id/ivFatiqueLevel" />
+                app:srcCompat="@drawable/squad_status"
+                android:id="@+id/fatiqueLevelGraph" />
         </LinearLayout>
     </LinearLayout>
 
