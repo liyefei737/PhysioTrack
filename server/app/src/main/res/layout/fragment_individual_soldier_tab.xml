@@ -49,13 +49,9 @@
                     android:layout_marginLeft="30dp"
                     app:srcCompat="@drawable/ic_help"
                     android:id="@+id/ibHelp"
-<<<<<<< HEAD
                     android:background="@color/colorBlack" />
 
-=======
-                    android:background="@color/colorBlack"
-                    android:onClick="helpPageStarter" />
->>>>>>> origin/master
+
             </LinearLayout>
 
         </LinearLayout>

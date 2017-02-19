@@ -81,9 +81,9 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         super.onCreate(savedInstanceState);
 
         // Setup Button Links to new activity
-        NameNonEditable = (TextView) rootView.findViewById(R.id.etSoldierName);
-        GenderNonEditable = (TextView) rootView.findViewById(R.id.etGender);
-        AgeNonEditable = (TextView) rootView.findViewById(R.id.editText4);
+        NameNonEditable = (TextView) rootView.findViewById(R.id.NameNonEditable);
+        GenderNonEditable = (TextView) rootView.findViewById(R.id.GenderNonEditable);
+        AgeNonEditable = (TextView) rootView.findViewById(R.id.AgeNonEditable);
 
         //End of OnClick Links
 //            NameEditable.setText("thistest");
