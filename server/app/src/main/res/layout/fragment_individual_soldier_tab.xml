@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true">
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="346dp"
                 android:layout_height="match_parent"
                 android:id="@+id/layoutSearch">
 
@@ -41,15 +41,16 @@
                     android:backgroundTint="@color/colorGrey"
                     android:layout_marginRight="0dp"
                     android:background="@color/colorGrey"
-                    android:layout_width="600dp" />
+                    android:layout_width="match_parent" />
 
                 <ImageButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     app:srcCompat="@drawable/ic_help"
                     android:id="@+id/ibHelp"
                     android:background="@color/colorBlack" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -64,77 +65,78 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:id="@+id/layoutName"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_height="116dp"
+                android:weightSum="1">
+
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/layoutTextView">
+                    android:layout_width="183dp"
+                    android:layout_height="113dp"
+                    android:weightSum="1"
+                    android:layout_weight="1">
 
-                    <TextView
-                        android:text="Soldier Name :"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvSoldierName"
-                        android:layout_weight="0.64"
-                        android:paddingBottom="24dp"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/fontsize3"
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="10dp"/>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp">
 
-                    <TextView
-                        android:text="Gender          :"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvGender"
-                        android:layout_weight="0.64"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/fontsize3"/>
+                        <TextView
+                            android:text="Soldier Name :"
+                            android:layout_height="match_parent"
+                            android:id="@+id/tvSoldierName"
+                            android:paddingBottom="24dp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            android:layout_width="64dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="0.03"/>
+
+                        <TextView
+                            android:text="TextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/NameNonEditable"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                        <TextView
+                            android:text="Gender:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/tvGender"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp"
+                            android:layout_weight="0.05"/>
+
+                        <TextView
+                            android:text="TextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/GenderNonEditable"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
+                    android:layout_width="107dp"
                     android:layout_height="match_parent"
                     android:id="@+id/layoutGender"
-                    android:layout_weight="0.64">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:id="@+id/layoutEditText">
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
-                            android:ems="10"
-                            android:id="@+id/etSoldierName"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/fontsize3"/>
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
-                            android:ems="10"
-                            android:id="@+id/etGender"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/fontsize3"/>
-                    </LinearLayout>
+                    >
 
                     <TextView
                         android:text="Age :"
-                        android:layout_width="66dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/tvAge"
                         android:textColor="@color/colorWhite"
@@ -142,18 +144,17 @@
                         android:textSize="@dimen/fontsize3"
                         android:textAlignment="center" />
 
-                    <EditText
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:id="@+id/etAge"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/fontsize3"
-                        android:layout_marginTop="20dp"
-                        android:layout_weight="0.29" />
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="54dp"
+                        android:id="@+id/AgeNonEditable"
+                        />
+
                 </LinearLayout>
+
             </LinearLayout>
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -214,54 +215,43 @@
                 android:id="@+id/layoutGraphsUpper"
                 android:layout_height="140dp">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/graph08"
-                    android:id="@+id/imHeartRateGraph"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_weight="1" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/hrrchart"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.23" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/graph08"
-                    android:id="@+id/imRespirationRateGraph"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_weight="1" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/resprchart"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.31" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:id="@+id/layoutGraphsBottom">
+                android:id="@+id/layoutGraphsBottom"
+                android:weightSum="1">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/graph08"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:id="@+id/imCoreTemp"
-                    android:layout_weight="1" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/skinrchart"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.45"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/graph08"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:id="@+id/imSkinTemp"
-                    android:layout_weight="1" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/ctrchart"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.54"/>
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 android:id="@+id/layoutButton">
