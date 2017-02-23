@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 // This is the home page of the tab application.
@@ -150,5 +151,9 @@ public class HomeFragment extends AppCompatActivity {
         Intent wellnessAlgo = new Intent();
         wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
         startService(wellnessAlgo);
+    }
+    public void callHelp(View v){
+        Intent callhelp = new Intent(HomeFragment.this, HelpActivity.class);
+        startActivity(callhelp);
     }
 }

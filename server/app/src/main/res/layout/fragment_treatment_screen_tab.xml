@@ -40,7 +40,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                     android:id="@+id/ibHelp"
                     android:layout_weight="1"
                     android:background="@android:color/black"
-                    android:layout_marginLeft="300dp" />
+                    android:layout_marginLeft="300dp"
+                    android:onClick="callHelp" />
 
             </LinearLayout>
 
