@@ -1,280 +1,249 @@
- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.drdc1.medic.IndividualSoldierTab">
+
+
+    <LinearLayout
+        android:id="@+id/soldierInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:background="@color/colorBlack"
-        tools:context="com.drdc1.medic.IndividualSoldierTab">
+        android:orientation="vertical">
+
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"
+            app:floatingSearch_leftActionMode="noLeftAction"
+            app:floatingSearch_searchHint="Search..."
+            app:floatingSearch_showSearchKey="false"
+            app:floatingSearch_suggestionsListAnimDuration="250" />
+
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/layoutName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchbar"
-            android:layout_alignParentTop="true">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:id="@+id/layoutTextView"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/layoutSearch">
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/search3"
-                    android:background="@color/colorGrey"
-                    android:id="@+id/serchIcon" />
-
-                <EditText
-                    android:layout_height="match_parent"
-                    android:inputType="text"
-                    android:id="@+id/etSearch"
-                    android:textAlignment="center"
-                    android:hint="Search for Soldier Name"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/fontsize3"
-                    android:backgroundTint="@color/colorGrey"
-                    android:layout_marginRight="0dp"
-                    android:background="@color/colorGrey"
-                    android:layout_width="600dp" />
-
-                <ImageButton
+                <TextView
+                    android:id="@+id/tvSoldierName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    app:srcCompat="@drawable/ic_help"
-                    android:id="@+id/ibHelp"
-                    android:background="@color/colorBlack" />
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="0.64"
+                    android:paddingBottom="24dp"
+                    android:text="Soldier Name :"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fontsize3" />
+
+                <TextView
+                    android:id="@+id/tvGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.64"
+                    android:paddingBottom="10dp"
+                    android:text="Gender          :"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fontsize3" />
+
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layoutGender"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.64"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/layoutEditText"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/etSoldierName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/fontsize3" />
+
+                    <EditText
+                        android:id="@+id/etGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/fontsize3" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvAge"
+                    android:layout_width="66dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Age :"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fontsize3" />
+
+                <EditText
+                    android:id="@+id/etAge"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="0.29"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fontsize3" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/layoutBody"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/searchbar"
-            android:id="@+id/soldierInfo">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:id="@+id/layoutName"
+            <TextView
+                android:id="@+id/tvBody"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/layoutTextView">
-
-                    <TextView
-                        android:text="Soldier Name :"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvSoldierName"
-                        android:layout_weight="0.64"
-                        android:paddingBottom="24dp"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/fontsize3"
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="10dp"/>
-
-                    <TextView
-                        android:text="Gender          :"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvGender"
-                        android:layout_weight="0.64"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/fontsize3"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/layoutGender"
-                    android:layout_weight="0.64">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:id="@+id/layoutEditText">
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
-                            android:ems="10"
-                            android:id="@+id/etSoldierName"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/fontsize3"/>
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
-                            android:ems="10"
-                            android:id="@+id/etGender"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/fontsize3"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:text="Age :"
-                        android:layout_width="66dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvAge"
-                        android:textColor="@color/colorWhite"
-                        android:layout_marginTop="20dp"
-                        android:textSize="@dimen/fontsize3"
-                        android:textAlignment="center" />
-
-                    <EditText
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:id="@+id/etAge"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/fontsize3"
-                        android:layout_marginTop="20dp"
-                        android:layout_weight="0.29" />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/layoutBody">
-
-                <TextView
-                    android:text="Body Orientation :"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/tvBody"
-                    android:layout_weight="1.30"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/fontsize3"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/standing_inactive"
-                    android:id="@+id/ivStanding"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/run2"
-                    android:id="@+id/ivRunActive"
-                    android:layout_weight="1"
-                    android:background="@color/colorBlack"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/run_inactive"
-                    android:id="@+id/ivSleepFaceDown"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/run_inactive"
-                    android:id="@+id/ivSleepFaceUp"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
+                android:layout_marginTop="10dp"
+                android:layout_weight="1.30"
+                android:text="Body Orientation :"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/fontsize3" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:id="@+id/ivStanding"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/line"
-                android:id="@+id/imWhiteLine" />
+                android:layout_weight="1"
+                app:srcCompat="@drawable/standing_inactive" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:id="@+id/layoutGraphsUpper"
-                android:layout_height="140dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/graph08"
-                    android:id="@+id/imHeartRateGraph"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/graph08"
-                    android:id="@+id/imRespirationRateGraph"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:id="@+id/layoutGraphsBottom">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/graph08"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:id="@+id/imCoreTemp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/graph08"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:id="@+id/imSkinTemp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/ivRunActive"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:id="@+id/layoutButton">
+                android:layout_weight="1"
+                android:background="@color/colorBlack"
+                app:srcCompat="@drawable/run2" />
 
-                <Button
-                    android:text="9 Liner Request"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btLinerRequest"
-                    android:layout_gravity="center"
-                    android:textAlignment="center" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/ivSleepFaceDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/run_inactive" />
+
+            <ImageView
+                android:id="@+id/ivSleepFaceUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/run_inactive" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/imWhiteLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:srcCompat="@drawable/line" />
+
+        <LinearLayout
+            android:id="@+id/layoutGraphsUpper"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imHeartRateGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/graph08" />
+
+            <ImageView
+                android:id="@+id/imRespirationRateGraph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/graph08" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutGraphsBottom"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imCoreTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/graph08" />
+
+            <ImageView
+                android:id="@+id/imSkinTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/graph08" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btLinerRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="9 Liner Request"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
