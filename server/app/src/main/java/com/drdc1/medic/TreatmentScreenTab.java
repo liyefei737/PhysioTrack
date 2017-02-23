@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TreatmentScreenTab extends Fragment {
+public class TreatmentScreenTab extends Fragment implements View.OnClickListener {
     CheckBox precedence_urgent, precedence_priority, precedence_routine, eqreq_none, eqreq_hoist,
             eqreq_extrication, eqreq_ventilator, patienttype_litter, patienttype_walking,
             patienttype_escort, securityatpickup_noenem, securityatpickup_possibileenem,
@@ -83,115 +83,115 @@ public class TreatmentScreenTab extends Fragment {
         terrainobstacles = (EditText) rootView.findViewById(R.id.terrainobstacles);
 
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
-        btSubmit.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (precedence_urgent.isChecked()) {
-                    precedence = 0;
-                }
-                if (precedence_priority.isChecked()) {
-                    precedence = 1;
-                }
-                if (precedence_routine.isChecked()) {
-                    precedence = 2;
-                }
-                if (eqreq_none.isChecked()) {
-                    eqreq = 0;
-                }
-                if (eqreq_hoist.isChecked()) {
-                    eqreq = 1;
-                }
-                if (eqreq_extrication.isChecked()) {
-                    eqreq = 2;
-                }
-                if (eqreq_ventilator.isChecked()) {
-                    eqreq = 3;
-                }
-                if (patienttype_litter.isChecked()) {
-                    patienttype = 0;
-                }
-                if (patienttype_walking.isChecked()) {
-                    patienttype = 1;
-                }
-                if (patienttype_escort.isChecked()) {
-                    patienttype = 2;
-                }
-                if (securityatpickup_noenem.isChecked()) {
-                    securityatpickup = 0;
-                }
-                if (securityatpickup_possibileenem.isChecked()) {
-                    securityatpickup = 1;
-                }
-                if (securityatpickup_eneminarea.isChecked()) {
-                    securityatpickup = 2;
-                }
-                if (securityatpickup_hotpz.isChecked()) {
-                    securityatpickup = 3;
-                }
-                if (pzmarking_panles.isChecked()) {
-                    pzmarking = 0;
-                }
-                if (pzmarking_pyro.isChecked()) {
-                    pzmarking = 1;
-                }
-                if (pzmarking_smoke.isChecked()) {
-                    pzmarking = 2;
-                }
-                if (pzmarking_other.isChecked()) {
-                    pzmarking = 3;
-                }
-                if (patientnatstatus_coalitionmil.isChecked()) {
-                    patientnatstatus = 0;
-                }
-                if (patientnatstatus_civiliancf.isChecked()) {
-                    patientnatstatus = 1;
-                }
-                if (patientnatstatus_noncoalitionsf.isChecked()) {
-                    patientnatstatus = 2;
-                }
-                if (patientnatstatus_noncoalitioncivil.isChecked()) {
-                    patientnatstatus = 3;
-                }
-                if (patientnatstatus_opforces.isChecked()) {
-                    patientnatstatus = 4;
-                }
-                if (patientnatstatus_child.isChecked()) {
-                    patientnatstatus = 5;
-                }
-
-                Database db = dataManager.getOnelinerDatabase();
-                Document doc = db.getDocument(sendingid);
-
-                try {
-                    doc.update(new Document.DocumentUpdater() {
-                        @Override
-                        public boolean update(UnsavedRevision newRevision) {
-                            Map<String, Object> properties = newRevision.getUserProperties();
-                            properties.put("precedence", precedence);
-                            properties.put("eqreq", eqreq);
-                            properties.put("patienttype", patienttype);
-                            properties.put("securityatpickup", securityatpickup);
-                            properties.put("pzmarking", pzmarking);
-                            properties.put("patientnatstatus", patientnatstatus);
-                            properties.put("location", location.getText());
-                            properties.put("callsign_freq", callsign_freq.getText());
-                            properties.put("number_patient", number_patient.getText());
-                            properties.put("terrainobstacles", terrainobstacles.getText());
-
-                            newRevision.setUserProperties(properties);
-                            return true;
-                        }
-                    });
-                } catch (CouchbaseLiteException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        btSubmit.setOnClickListener(this);
 
         // Inflate the layout for this fragment
         return rootView;
 
     }
 
+    @Override
+    public void onClick(View v) {
+        {
+            if (precedence_urgent.isChecked()) {
+                precedence = 0;
+            }
+            if (precedence_priority.isChecked()) {
+                precedence = 1;
+            }
+            if (precedence_routine.isChecked()) {
+                precedence = 2;
+            }
+            if (eqreq_none.isChecked()) {
+                eqreq = 0;
+            }
+            if (eqreq_hoist.isChecked()) {
+                eqreq = 1;
+            }
+            if (eqreq_extrication.isChecked()) {
+                eqreq = 2;
+            }
+            if (eqreq_ventilator.isChecked()) {
+                eqreq = 3;
+            }
+            if (patienttype_litter.isChecked()) {
+                patienttype = 0;
+            }
+            if (patienttype_walking.isChecked()) {
+                patienttype = 1;
+            }
+            if (patienttype_escort.isChecked()) {
+                patienttype = 2;
+            }
+            if (securityatpickup_noenem.isChecked()) {
+                securityatpickup = 0;
+            }
+            if (securityatpickup_possibileenem.isChecked()) {
+                securityatpickup = 1;
+            }
+            if (securityatpickup_eneminarea.isChecked()) {
+                securityatpickup = 2;
+            }
+            if (securityatpickup_hotpz.isChecked()) {
+                securityatpickup = 3;
+            }
+            if (pzmarking_panles.isChecked()) {
+                pzmarking = 0;
+            }
+            if (pzmarking_pyro.isChecked()) {
+                pzmarking = 1;
+            }
+            if (pzmarking_smoke.isChecked()) {
+                pzmarking = 2;
+            }
+            if (pzmarking_other.isChecked()) {
+                pzmarking = 3;
+            }
+            if (patientnatstatus_coalitionmil.isChecked()) {
+                patientnatstatus = 0;
+            }
+            if (patientnatstatus_civiliancf.isChecked()) {
+                patientnatstatus = 1;
+            }
+            if (patientnatstatus_noncoalitionsf.isChecked()) {
+                patientnatstatus = 2;
+            }
+            if (patientnatstatus_noncoalitioncivil.isChecked()) {
+                patientnatstatus = 3;
+            }
+            if (patientnatstatus_opforces.isChecked()) {
+                patientnatstatus = 4;
+            }
+            if (patientnatstatus_child.isChecked()) {
+                patientnatstatus = 5;
+            }
+
+            Database db = dataManager.getOnelinerDatabase();
+            Document doc = db.getDocument(sendingid);
+
+            try {
+                doc.update(new Document.DocumentUpdater() {
+                    @Override
+                    public boolean update(UnsavedRevision newRevision) {
+                        Map<String, Object> properties = newRevision.getUserProperties();
+                        properties.put("precedence", precedence);
+                        properties.put("eqreq", eqreq);
+                        properties.put("patienttype", patienttype);
+                        properties.put("securityatpickup", securityatpickup);
+                        properties.put("pzmarking", pzmarking);
+                        properties.put("patientnatstatus", patientnatstatus);
+                        properties.put("location", location.getText());
+                        properties.put("callsign_freq", callsign_freq.getText());
+                        properties.put("number_patient", number_patient.getText());
+                        properties.put("terrainobstacles", terrainobstacles.getText());
+
+                        newRevision.setUserProperties(properties);
+                        return true;
+                    }
+                });
+            } catch (CouchbaseLiteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
