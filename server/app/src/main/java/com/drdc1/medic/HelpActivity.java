@@ -17,7 +17,7 @@ public class HelpActivity extends AppCompatActivity {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HelpActivity.this, HomeFragment.class);
+                Intent intent = new Intent(HelpActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

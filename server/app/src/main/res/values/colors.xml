@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#DDD</color>
-    <color name="bg">#000</color>
+    <color name="black">#000</color>
     <color name="white">#FFF</color>
-    <color name="colorAccentBackup">#FF4081</color>
-    <color name="colorBlack">#000000</color>
-    <color name="colorWhite">#ffffff</color>
-    <color name="colorGrey">#cccccc</color>
-    <color name="colorBlue">#BBDDFF</color>
+    <color name="grey">#cccccc</color>
+    <color name="bullsEyeRed">#FA0526</color>
+    <color name="bullsEyeYellow">#F2FA05</color>
+    <color name="bullsEyeGreen">#08BD32</color>
+    <color name="colorAccent">#000</color>
+    <color name="colorPrimary">#000</color>
+    <color name="colorPrimaryDark">#000</color>
 </resources>

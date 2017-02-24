@@ -7,8 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorBlack"
-    tools:context="com.drdc1.medic.HomeFragment$PlaceholderFragment">
+    android:background="@color/black"
+    tools:context="com.drdc1.medic.HomeActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"
@@ -17,30 +17,21 @@
         android:layout_marginTop="20dp"
         android:textSize="20dp"
         android:gravity="center"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/white"
         android:text="Overall Health Status"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/squad_status"
-        android:layout_below="@+id/section_label"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:id="@+id/overallStatusGraph" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/overallStatus"
+        android:layout_height="match_parent"
         android:layout_marginTop="40dp"
         android:id="@+id/layoutwrapper">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:id="@+id/temps">
 
@@ -48,7 +39,7 @@
                 android:text="Core Temp"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:textSize="20dp"
                 android:id="@+id/tvCoreTemp" />
@@ -62,7 +53,7 @@
                 android:textSize="20dp"
                 android:id="@+id/tvFatiqueLevel"
                 android:gravity="center"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/white" />
 
             <TextView
                 android:text="Skin Temp"
@@ -72,7 +63,7 @@
                 android:layout_marginLeft="40dp"
                 android:textSize="20dp"
                 android:gravity="center"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
@@ -82,41 +73,42 @@
             android:layout_height="match_parent"
             android:id="@+id/graphs">
 
-            <ImageView
-                android:layout_width="240dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/squad_status"
-                android:id="@+id/coreTempGraph" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/bullsEyeCoreTemp">
 
-            <ImageView
-                android:layout_width="240dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/squad_status"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/skinTempGraph" />
 
-            <ImageView
-                android:layout_width="240dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/squad_status"
-                android:id="@+id/fatiqueLevelGraph" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/bullsEyeFatigue">
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/bullsEyeSkinTemp">
+
+
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bullsEyeOverallHealth">
 
-    <ImageView
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        app:srcCompat="@drawable/overall_green"
-        android:layout_marginTop="26dp"
-        android:id="@+id/overallStatus"
-        android:layout_below="@+id/section_label"
-        android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorBlack"
+        android:background="@color/black"
         app:srcCompat="@drawable/ic_help"
         android:id="@+id/btHelp"
         android:layout_alignParentTop="true"

@@ -7,7 +7,7 @@ android:paddingBottom="@dimen/activity_vertical_margin"
 android:paddingLeft="@dimen/activity_horizontal_margin"
 android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
-android:background="@color/colorBlack"
+android:background="@color/black"
 tools:context="com.drdc1.medic.TreatmentScreenTab">
 
     <ScrollView
@@ -138,8 +138,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                     android:layout_height="wrap_content"
                     android:id="@+id/precedence_urgent"
                     android:layout_weight="1"
-                    android:textColor="@color/colorWhite"
-                    android:buttonTint="@color/colorWhite"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
                     android:textSize="10sp" />
 
                 <CheckBox
@@ -148,8 +148,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                     android:layout_height="wrap_content"
                     android:id="@+id/precedence_priority"
                     android:layout_weight="1"
-                    android:textColor="@color/colorWhite"
-                    android:buttonTint="@color/colorWhite"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
                     android:textSize="10sp" />
 
                 <CheckBox
@@ -158,8 +158,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                     android:layout_height="wrap_content"
                     android:id="@+id/precedence_routine"
                     android:layout_weight="1"
-                    android:textColor="@color/colorWhite"
-                    android:buttonTint="@color/colorWhite"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
                     android:textSize="10sp" />
             </LinearLayout>
 
@@ -198,8 +198,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:id="@+id/eqreq_none"
                             android:layout_weight="1"
                             android:textSize="10sp"
-                            android:buttonTint="@color/colorWhite"
-                            android:textColor="@color/colorWhite" />
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
 
                         <CheckBox
                             android:text="Hoist"
@@ -207,8 +207,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/eqreq_hoist"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -217,8 +217,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/eqreq_extrication"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -227,8 +227,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/eqreq_ventilator"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
                     </LinearLayout>
 
@@ -270,8 +270,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:id="@+id/patienttype_litter"
                             android:layout_weight="1"
                             android:textSize="10sp"
-                            android:buttonTint="@color/colorWhite"
-                            android:textColor="@color/colorWhite" />
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
 
                         <CheckBox
                             android:text="Walking"
@@ -279,8 +279,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/patienttype_walking"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -289,8 +289,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/patienttype_escort"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                     </LinearLayout>
@@ -333,8 +333,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:id="@+id/securityatpickup_noenem"
                             android:layout_weight="1"
                             android:textSize="10sp"
-                            android:buttonTint="@color/colorWhite"
-                            android:textColor="@color/colorWhite" />
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
 
                         <CheckBox
                             android:text="Possible Enemy"
@@ -342,8 +342,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/securityatpickup_possibileenem"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -352,8 +352,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/securityatpickup_eneminarea"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -361,8 +361,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_width="104dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/securityatpickup_hotpz"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
                     </LinearLayout>
 
@@ -404,8 +404,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:id="@+id/pzmarking_panles"
                             android:layout_weight="1"
                             android:textSize="10sp"
-                            android:buttonTint="@color/colorWhite"
-                            android:textColor="@color/colorWhite" />
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
 
                         <CheckBox
                             android:text="Pyro"
@@ -413,8 +413,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/pzmarking_pyro"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -423,8 +423,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/pzmarking_smoke"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -432,8 +432,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/pzmarking_other"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp"
                             android:layout_weight="0.46" />
                     </LinearLayout>
@@ -476,8 +476,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:id="@+id/patientnatstatus_coalitionmil"
                             android:layout_weight="1"
                             android:textSize="10sp"
-                            android:buttonTint="@color/colorWhite"
-                            android:textColor="@color/colorWhite" />
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
 
                         <CheckBox
                             android:text="Civilian with CF"
@@ -485,8 +485,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/patientnatstatus_civiliancf"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -495,8 +495,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/patientnatstatus_noncoalitionsf"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                     </LinearLayout>
@@ -514,8 +514,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:id="@+id/patientnatstatus_noncoalitioncivil"
                             android:layout_weight="1"
                             android:textSize="10sp"
-                            android:buttonTint="@color/colorWhite"
-                            android:textColor="@color/colorWhite" />
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
 
                         <CheckBox
                             android:text="OP Forces/ PW/ Detainee"
@@ -523,8 +523,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/patientnatstatus_opforces"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
 
                         <CheckBox
@@ -533,8 +533,8 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                             android:layout_height="wrap_content"
                             android:id="@+id/patientnatstatus_child"
                             android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:buttonTint="@color/colorWhite"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
                             android:textSize="10sp" />
                     </LinearLayout>
 
@@ -598,7 +598,7 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                     android:background="@color/white"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/black"
                     android:textSize="10dp"
                     android:id="@+id/terrainobstacles"
                     android:hint="Notes:" />

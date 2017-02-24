@@ -7,7 +7,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:background="@color/colorBlack"
+        android:background="@color/black"
         tools:context="com.drdc1.medic.IndividualSoldierTab">
 
         <LinearLayout
@@ -26,7 +26,7 @@
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     app:srcCompat="@drawable/search3"
-                    android:background="@color/colorGrey"
+                    android:background="@color/grey"
                     android:id="@+id/serchIcon" />
 
                 <EditText
@@ -35,12 +35,12 @@
                     android:id="@+id/etSearch"
                     android:textAlignment="center"
                     android:hint="Search for Soldier Name"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
                     android:textSize="@dimen/fontsize3"
-                    android:backgroundTint="@color/colorGrey"
+                    android:backgroundTint="@color/grey"
                     android:layout_marginRight="0dp"
-                    android:background="@color/colorGrey"
+                    android:background="@color/grey"
                     android:layout_width="match_parent" />
 
                 <ImageButton
@@ -49,7 +49,7 @@
                     android:layout_marginLeft="30dp"
                     app:srcCompat="@drawable/ic_help"
                     android:id="@+id/ibHelp"
-                    android:background="@color/colorBlack" />
+                    android:background="@color/black" />
 
 
             </LinearLayout>
@@ -86,7 +86,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/tvSoldierName"
                             android:paddingBottom="24dp"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/white"
                             android:textSize="18sp"
                             android:layout_width="64dp"
                             android:layout_marginBottom="10dp"
@@ -113,7 +113,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/tvGender"
                             android:paddingBottom="10dp"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/white"
                             android:textSize="18sp"
                             android:layout_weight="0.05"/>
 
@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/tvAge"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@color/white"
                         android:layout_marginTop="20dp"
                         android:textSize="@dimen/fontsize3"
                         android:textAlignment="center" />
@@ -169,7 +169,7 @@
                     android:layout_marginTop="10dp"
                     android:id="@+id/tvBody"
                     android:layout_weight="1.80"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/fontsize3"/>
 
                 <ImageView
@@ -185,7 +185,7 @@
                     app:srcCompat="@drawable/run2"
                     android:id="@+id/ivRunActive"
                     android:layout_weight="1"
-                    android:background="@color/colorBlack"/>
+                    android:background="@color/black"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
