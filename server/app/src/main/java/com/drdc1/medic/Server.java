@@ -32,6 +32,8 @@ public class Server extends NanoHTTPD {
 
     static private DataManager dataManager;
     private static SimpleDateFormat keyFormat = new SimpleDateFormat("01/30/2017 HH:mm:SS.sss");
+    static Map connectionlist = new HashMap();
+
     public Server(int port, DataManager dataManager) {
         super(port);
     }
@@ -47,12 +49,17 @@ public class Server extends NanoHTTPD {
         } catch (ResponseException e) {
             e.printStackTrace();
         }
-
+        if (connectionlist.size() > 10) {
+            throw new IndexOutOfBoundsException();
+        }
         final String jsonStr = map.get("postData");
 
         try {
             final JSONObject body = new JSONObject(jsonStr);
-
+            if (!connectionlist.containsKey(body.getString("soldierID"))) {
+                connectionlist.put(body.getString("soldierID"),
+                        session.getHeaders().get("http-client-ip"));
+            }
             Log.d("sender", "Broadcasting message");
             Intent intent = new Intent("custom-event-name");
             // You can also include some extra data.
@@ -77,7 +84,8 @@ public class Server extends NanoHTTPD {
             } catch (Exception e) {
                 keyCal.set(2017, 01, 30);
             }
-            Calendar nearestMinute  = org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);
+            Calendar nearestMinute =
+                    org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);
 
             Database db = dataManager.getSoldierDB(soldierID);
             Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));

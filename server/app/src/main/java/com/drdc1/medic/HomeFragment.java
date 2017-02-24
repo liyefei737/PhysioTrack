@@ -87,7 +87,8 @@ public class HomeFragment extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            textView.setText(
+                    getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -139,6 +140,7 @@ public class HomeFragment extends AppCompatActivity {
             return null;
         }
     }
+
     private void startBackgroundServices() {
         Intent Serviceintent = new Intent();
         Serviceintent.setClass(this, BackgroundServer.class);

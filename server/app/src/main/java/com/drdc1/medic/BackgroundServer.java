@@ -47,7 +47,9 @@ public class BackgroundServer extends Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.i(this.getClass().getSimpleName(), "onCreate: Server runing on " + server.getLocalIpAddress() + " Port: " + server.getListeningPort());
+        Log.i(this.getClass().getSimpleName(),
+                "onCreate: Server runing on " + server.getLocalIpAddress() + " Port: " +
+                        server.getListeningPort());
         _backgroundServer = this;
         broadcaster = LocalBroadcastManager.getInstance(this);
 

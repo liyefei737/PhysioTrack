@@ -68,7 +68,7 @@ public class BackgroundWellnessAlgo extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-         Timer timer = new Timer();
+        Timer timer = new Timer();
         TimerTask doWellnessAlgoCallback = new TimerTask() {
             @Override
             public void run() {
@@ -82,7 +82,8 @@ public class BackgroundWellnessAlgo extends Service {
                 });
             }
         };
-        timer.schedule(doWellnessAlgoCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
+        timer.schedule(doWellnessAlgoCallback, 0,
+                DateUtils.MINUTE_IN_MILLIS); //execute every minute
 
         // Keep service around "sticky"
         return START_STICKY;
@@ -109,7 +110,8 @@ public class BackgroundWellnessAlgo extends Service {
 
                 lastMinute = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
 
-                final WelfareStatus nextState = dataManager.getWellnessTracker(entry.getKey()).calculateWelfareStatus(lastMinute);
+                final WelfareStatus nextState = dataManager.getWellnessTracker(entry.getKey())
+                        .calculateWelfareStatus(lastMinute);
 
                 Document saveStateDoc = userDB.getDocument(entry.getKey());
                 try {

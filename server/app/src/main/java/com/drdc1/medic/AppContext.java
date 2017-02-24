@@ -25,6 +25,9 @@ public class AppContext extends Application {
     public static Context getContext() {
         return instance;
     }
-    public DataManager getDataManager() { return dataManager;}
+
+    public DataManager getDataManager() {
+        return dataManager;
+    }
 
 }
