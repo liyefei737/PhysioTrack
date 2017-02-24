@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 // This is the home page of the tab application.
@@ -119,7 +120,7 @@ public class HomeFragment extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 4 total pages.
             return 4;
         }
 
@@ -151,5 +152,8 @@ public class HomeFragment extends AppCompatActivity {
         wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
         startService(wellnessAlgo);
     }
-
+    public void callHelp(View v){
+        Intent callhelp = new Intent(HomeFragment.this, HelpActivity.class);
+        startActivity(callhelp);
+    }
 }
