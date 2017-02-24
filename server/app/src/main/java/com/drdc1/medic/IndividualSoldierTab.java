@@ -66,7 +66,8 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
+        View rootView =
+                inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
 
 //        broadcaster = LocalBroadcastManager.getInstance(this);
 //
@@ -298,7 +299,8 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
             }
             case R.id.actionClear: {
                 hrchart.clearValues();
-                Toast.makeText(AppContext.getContext(), "Chart cleared!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AppContext.getContext(), "Chart cleared!", Toast.LENGTH_SHORT)
+                        .show();
                 break;
             }
             case R.id.actionFeedMultiple: {
@@ -433,8 +435,9 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
     private void feedMultiple() {
 
-        if (thread != null)
+        if (thread != null) {
             thread.interrupt();
+        }
 
         final Runnable runnable = new Runnable() {
 
