@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.drdc1.medic.uitls.Trie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +19,17 @@ public class IndividualSoldierTab extends Fragment {
     private FloatingSearchView seachView;
     private Squad squad;
 
-    public IndividualSoldierTab() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
+        seachView = (FloatingSearchView)rootView.findViewById(R.id.searchBar);
         squad = Squad.getInstance();
         setupSearchBar();
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
+        return rootView;
     }
-
+    
     private void setupSearchBar() {
         seachView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
 
@@ -45,17 +44,31 @@ public class IndividualSoldierTab extends Fragment {
                     //you can call it where ever you want, but
                     //it makes sense to do it when loading something in
                     //the background.
-                    //seachView.showProgress();
-                    seachView.swapSuggestions(getNameSearchSuggestions(newQuery));
+                    seachView.showProgress();
+                     List<NameSuggestion> nameSearchSuggestions = getNameSearchSuggestions(newQuery);
+                    seachView.swapSuggestions(nameSearchSuggestions);
                     seachView.hideProgress();
                 }
             }
         });
     }
 
-    private List<Suggestion> getNameSearchSuggestions (String name) {
-        List<Suggestion> suggestions = new ArrayList<Suggestion>();
-        return suggestions;
+    /***
+     *
+     * @param searchString is the user input in the search box
+     * @return a List of Suggestions for the searchString
+     */
+    private List<NameSuggestion> getNameSearchSuggestions (String searchString) {
+
+        Trie trie = new Trie();
+        for (Soldier s : squad.getMonitoringSoildiersSoildiers()) {
+            trie.insert(s.getName());
+        }
+        List<NameSuggestion> nameSuggestions = new ArrayList<NameSuggestion>();
+        for(String name : trie.autoComplete(searchString)) {
+            nameSuggestions.add(new NameSuggestion(name));
+        }
+        return nameSuggestions;
     }
 
 }

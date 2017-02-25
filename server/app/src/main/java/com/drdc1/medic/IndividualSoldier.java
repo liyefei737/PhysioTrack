@@ -18,10 +18,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.UnsavedRevision;
+import com.drdc1.medic.uitls.Trie;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
@@ -58,6 +60,8 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
     private LineChart hrchart, respchart, skinchart, ctchart;
     private BroadcastReceiver receiver;
     List<Entry> entries = new ArrayList<Entry>();
+    private FloatingSearchView seachView;
+    private Squad squad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,9 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_soldier);
+        squad = Squad.getInstance();
+       // seachView = (FloatingSearchView) findViewById(R.id.searchBar);
+        setupSearchBar();
 
         // Setup Button Links to new activity
         NameEditable = (EditText) findViewById(R.id.etSoldierName);
@@ -514,4 +521,48 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         }
     }
 
+    private void setupSearchBar() {
+        seachView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+
+                if (!oldQuery.equals("") && newQuery.equals("")) {
+                    seachView.clearSuggestions();
+                } else {
+
+                    //this shows the top left circular progress
+                    //you can call it where ever you want, but
+                    //it makes sense to do it when loading something in
+                    //the background.
+                    seachView.showProgress();
+                    seachView.swapSuggestions(getNameSearchSuggestions(newQuery));
+                    seachView.hideProgress();
+                }
+            }
+        });
+    }
+
+    /***
+     *
+     * @param searchString is the user input in the search box
+     * @return a List of Suggestions for the searchString
+     */
+    private List<NameSuggestion> getNameSearchSuggestions (String searchString) {
+
+        Trie trie = new Trie();
+        for (Soldier s : squad.getMonitoringSoildiersSoildiers()) {
+            trie.insert(s.getName());
+        }
+        List<NameSuggestion> nameSuggestions = new ArrayList<NameSuggestion>();
+        for(String name : trie.autoComplete(searchString)) {
+            nameSuggestions.add(new NameSuggestion(name));
+        }
+        return nameSuggestions;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

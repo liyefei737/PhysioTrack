@@ -10,10 +10,10 @@ import java.util.List;
 public class Squad {
     private static Squad instance = null;
 
-    //monitoring list has all the soildiers that are currently being monitored,
+    //monitoringSoildiers list has all the soildiers that are currently being monitored,
     //whereas pendding list has the soliders yet to be acknowledged by the medic
-    private static List<Soldier> monitoring = null;
-    private static List<Soldier> pending = null;
+    private static List<Soldier> monitoringSoildiers = null;
+    private static List<Soldier> pendingSoildiers = null;
 
     public static Squad getInstance() {
         if (instance == null) {
@@ -23,22 +23,31 @@ public class Squad {
     }
 
     private Squad() {
-        monitoring = new ArrayList<>();
-        pending = new ArrayList<>();
+        monitoringSoildiers = new ArrayList<>();
+        pendingSoildiers = new ArrayList<>();
+        addSoldierTomonitoringSoildiers(new Soldier("James John", "6sad6df8hsdf", "Male", "upright"));
+        addSoldierTomonitoringSoildiers(new Soldier("Kevin Scott", "fdsifjlk3343", "Male", "upright"));
     }
 
-    public void addSoldierToMonitoring (Soldier newSoldier) {
+    public void addSoldierTomonitoringSoildiers(Soldier newSoldier) {
         if (newSoldier == null) {
             throw new InvalidParameterException();
         }
-        monitoring.add(newSoldier);
+        monitoringSoildiers.add(newSoldier);
     }
 
-    public void addSoldierToPending (Soldier newSoldier) {
+    public void addSoldierTopendingSoildiers(Soldier newSoldier) {
         if (newSoldier == null) {
             throw new InvalidParameterException();
         }
-        pending.add(newSoldier);
+        pendingSoildiers.add(newSoldier);
     }
 
+    public List<Soldier> getMonitoringSoildiersSoildiers() {
+        return monitoringSoildiers;
+    }
+
+    public static List<Soldier> getPendingSoildiers() {
+        return pendingSoildiers;
+    }
 }
