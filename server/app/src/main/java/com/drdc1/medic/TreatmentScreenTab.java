@@ -1,5 +1,6 @@
 package com.drdc1.medic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -44,7 +45,7 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
         dataManager = ((AppContext) this.getActivity().getApplication()).getDataManager();
 
         View rootView =
-                inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
+                inflater.inflate(R.layout.fragment_treatment_screen_tab, container, false);
 
         precedence_urgent = (CheckBox) rootView.findViewById(R.id.precedence_urgent);
         precedence_priority = (CheckBox) rootView.findViewById(R.id.precedence_priority);
@@ -83,7 +84,13 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
         terrainobstacles = (EditText) rootView.findViewById(R.id.terrainobstacles);
 
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
-        btSubmit.setOnClickListener(this);
+
+        btSubmit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+//                Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+//                startActivity(myIntent);    // change to startActivity
+            }
+        });
 
         // Inflate the layout for this fragment
         return rootView;
