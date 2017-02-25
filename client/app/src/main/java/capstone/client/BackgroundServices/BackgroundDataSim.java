@@ -110,9 +110,6 @@ public class BackgroundDataSim extends Service {
 
         dbManager = new DBManager(this);
         dataDB = dbManager.getDatabase(dbManager.DATA_DB);
-        if (dbManager.getSoldierDetails() == null){
-            dbManager.initDefaultSoldierDetails();
-        }
         Timer timer = new Timer();
         TimerTask doDataSimCallback = new TimerTask() {
             @Override
@@ -163,6 +160,8 @@ public class BackgroundDataSim extends Service {
 
             //put ID on http request
             Soldier soldierDetails = dbManager.getSoldierDetails();
+            if (soldierDetails == null)
+                soldierDetails = dbManager.getDefaultSoldier();
             JSONObject jsonObjForRequest = lastRow;
             jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
 

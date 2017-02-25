@@ -11,7 +11,6 @@ import com.couchbase.lite.Manager;
 import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
-import com.couchbase.lite.UnsavedRevision;
 import com.couchbase.lite.android.AndroidContext;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -93,16 +92,7 @@ public class DBManager {
         } catch (CouchbaseLiteException e) {
             e.printStackTrace();
         }
-//        //triger event when there is a change to db e.g. to update a UI
-//        database.addChangeListener(new Database.ChangeListener() {
-//            @Override
-//            public void changed(Database.ChangeEvent event) {
-//                for(DocumentChange dc:event.getChanges()){
-//                    Log.i(this.getClass().getSimpleName(), "Document changed: "+ dc.getDocumentId());
-//                    notifyUI(database.getDocument(dc.getDocumentId()).getProperties());
-//                }
-//            }
-//        });
+
         return db;
     }
 
@@ -161,9 +151,9 @@ public class DBManager {
             Map<String, Object> tmpMap = result.getRow(0).getDocument().getProperties();
             String id = (String) tmpMap.get(ID_KEY);
             String name = (String) tmpMap.get(NAME_KEY);
-            int age = (Integer)tmpMap.get(AGE_KEY);
-            int weight = (Integer) tmpMap.get(WEIGHT_KEY);
-            int height = (Integer) tmpMap.get(HEIGHT_KEY);
+            int age = Integer.valueOf((String)tmpMap.get(AGE_KEY));
+            int weight = Integer.valueOf((String)tmpMap.get(WEIGHT_KEY));
+            int height = Integer.valueOf((String) tmpMap.get(HEIGHT_KEY));
             Soldier s = new Soldier(id, name, age, weight, height);
             return s;
         } catch (Exception e) {
@@ -171,24 +161,8 @@ public class DBManager {
         }
     }
 
-    public void initDefaultSoldierDetails() {
-        Document doc = _userDB.getDocument("default");
-        try {
-            doc.update(new Document.DocumentUpdater() {
-                @Override
-                public boolean update(UnsavedRevision newRevision) {
-                    Map<String, Object> properties = newRevision.getUserProperties();
-                    properties.put(HEIGHT_KEY, 5);
-                    properties.put(WEIGHT_KEY, 5);
-                    properties.put(NAME_KEY, "a a");
-                    properties.put(AGE_KEY, 5);
-                    newRevision.setUserProperties(properties);
-                    return true;
-                }
-            });
-        } catch (CouchbaseLiteException e){
-            //handle this
-        }
+    public Soldier getDefaultSoldier() {
+        return new Soldier("ID", "name", -1, -1, -1);
     }
 
     public void setSoldierDetails(Soldier soldier) {
