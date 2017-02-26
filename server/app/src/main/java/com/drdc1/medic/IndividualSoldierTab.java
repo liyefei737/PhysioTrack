@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.drdc1.medic.uitls.Trie;
 
 import java.util.ArrayList;
@@ -51,6 +52,28 @@ public class IndividualSoldierTab extends Fragment {
                 }
             }
         });
+        seachView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
+             System.out.println("hello");
+            }
+
+            @Override
+            public void onSearchAction(String query) {
+//                mLastQuery = query;
+//
+//                DataHelper.findColors(getActivity(), query,
+//                        new DataHelper.OnFindColorsListener() {
+//
+//                            @Override
+//                            public void onResults(List<ColorWrapper> results) {
+//                                mSearchResultsAdapter.swapData(results);
+//                            }
+//
+//                        });
+//                Log.d(TAG, "onSearchAction()");
+            }
+        });
     }
 
     /***
@@ -72,3 +95,10 @@ public class IndividualSoldierTab extends Fragment {
     }
 
 }
+
+/***
+ * TODO SearchBar and Invidual soldier page
+ * 1. when a user select a soldier, show/populates the fields i.e. Name, gender, body orentation graphs
+ * 2. graphes need to be updatable
+ * 3. a better UI for the searchbar
+ */
