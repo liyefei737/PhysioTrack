@@ -25,8 +25,8 @@ public class Squad {
     private Squad() {
         monitoringSoildiers = new ArrayList<>();
         pendingSoildiers = new ArrayList<>();
-        addSoldierTomonitoringSoildiers(new Soldier("James John", "6sad6df8hsdf", "Male", "upright"));
-        addSoldierTomonitoringSoildiers(new Soldier("Kevin Scott", "fdsifjlk3343", "Male", "upright"));
+        addSoldierTomonitoringSoildiers(new Soldier("James John", "6sad6df8hsdf", "Male"));
+        addSoldierTomonitoringSoildiers(new Soldier("Kevin Scott", "fdsifjlk3343", "Male"));
     }
 
     public void addSoldierTomonitoringSoildiers(Soldier newSoldier) {

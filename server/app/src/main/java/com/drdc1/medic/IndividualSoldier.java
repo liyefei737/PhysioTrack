@@ -94,8 +94,8 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         NameList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent in = new Intent(IndividualSoldier.this, NameList.class);
-//                startActivity(in);
+                Intent in = new Intent(IndividualSoldier.this, NameList.class);
+                startActivity(in);
             }
         });
         SquadStatus.setOnClickListener(new View.OnClickListener() {
