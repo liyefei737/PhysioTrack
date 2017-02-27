@@ -5,9 +5,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -56,7 +53,7 @@ public class Server extends NanoHTTPD {
         } catch (ResponseException e) {
             e.printStackTrace();
         }
-        if (connectionlist.size() > 10) {
+        if (connectionlist.size() >= 10) {
             throw new IndexOutOfBoundsException();
         }
         final String jsonStr = map.get("postData");
