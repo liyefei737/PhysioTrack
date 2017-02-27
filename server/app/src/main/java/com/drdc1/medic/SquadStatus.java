@@ -47,7 +47,7 @@ public class SquadStatus extends Fragment {
         RelativeLayout relLayoutFatigue = (RelativeLayout) view.findViewById(R.id.bullsEyeFatigue);
         RelativeLayout relLayoutSkin = (RelativeLayout) view.findViewById(R.id.bullsEyeSkinTemp);
         if (numSoldiers != 0) {
-            WelfareStatus statusArray[] = {RED, GREEN, YELLOW, YELLOW, GREEN, RED, YELLOW};
+            WelfareStatus[] statusArray = {RED, GREEN, YELLOW, YELLOW, GREEN, RED, YELLOW};
             Resources resources = getActivity().getResources();
             BullsEye.drawBullsEye(resources, relLayoutOverall, numSoldiers, Arrays.asList(statusArray));
             //BullsEye.drawBullsEye(resources, relLayoutCore, numSoldiers, Arrays.asList(statusArray));

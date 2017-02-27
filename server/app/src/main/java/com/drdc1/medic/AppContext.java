@@ -2,12 +2,13 @@ package com.drdc1.medic;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 /**
  * Created by ub on 2/14/17.
  */
 
-public class AppContext extends Application {
+public class AppContext extends  MultiDexApplication {
 
     private static AppContext instance;
     public DataManager dataManager = null;
