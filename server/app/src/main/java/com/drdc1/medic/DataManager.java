@@ -37,7 +37,7 @@ public class DataManager {
     //keys: soldier id, values: Database of physio Data
     private Database _userInfoDB = null;
     //docIDs: soldierIDs, properties of each doc: name, age, height, weight
-    private Database _oneLinerDB = null;
+    private Database _nineLinerDB = null;
     private Map<String, IndividualWelfareTracker> _wellnessInfoMap = null;
     private Context _context = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
@@ -47,7 +47,7 @@ public class DataManager {
         _context = context;
         _userInfoDB = openDatabase("staticinfo");
         _physioDataDBMap = new HashMap<String, Database>();
-        _oneLinerDB = openDatabase("onliner");
+        _nineLinerDB = openDatabase("nineliner");
         _wellnessInfoMap = new HashMap<String, IndividualWelfareTracker>();
         if (_userInfoDB == null) {
             Log.e(TAG, " Failed to open user info Database");
@@ -58,8 +58,8 @@ public class DataManager {
         return _physioDataDBMap;
     }
 
-    public Database getOnelinerDatabase() {
-        return _oneLinerDB;
+    public Database getNinelinerDatabase() {
+        return _nineLinerDB;
     }
 
     public int getNumSoldiers() {
@@ -80,7 +80,7 @@ public class DataManager {
             return false;
         }
         Document doc = _userInfoDB.getDocument(ID);
-        Document docOl = _oneLinerDB.getDocument(ID);
+        Document docOl = _nineLinerDB.getDocument(ID);
 
         try {
             doc.putProperties(staticInfo);
@@ -121,7 +121,7 @@ public class DataManager {
 
         try {
             Document doc = _userInfoDB.getDocument(ID);
-            Document docOl = _oneLinerDB.getDocument(ID);
+            Document docOl = _nineLinerDB.getDocument(ID);
 
             doc.delete();
             docOl.delete();

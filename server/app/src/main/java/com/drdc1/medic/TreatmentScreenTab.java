@@ -173,7 +173,7 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
                 patientnatstatus = 5;
             }
 
-            Database db = dataManager.getOnelinerDatabase();
+            Database db = dataManager.getNinelinerDatabase();
             Document doc = db.getDocument(sendingid);
 
             try {
