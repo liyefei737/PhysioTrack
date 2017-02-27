@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
@@ -39,6 +38,7 @@ import capstone.client.HelpPageFragment;
 import capstone.client.HomeFragment;
 import capstone.client.R;
 import capstone.client.SkinTempFragment;
+import capstone.client.Soldier;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -216,6 +216,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     }
 
     public void edit_info_save(View view) {
+        Soldier soldier = dbManager.getSoldierDetails();
         final Button btnSave = (Button) findViewById(R.id.btSave);
         final Button cancelbtn = (Button) findViewById(R.id.btCancel);
         Database userDB = dbManager.getDatabase(dbManager.USER_DB);
@@ -230,7 +231,16 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
         EditText height = (EditText) findViewById(R.id.etHeight);
         final String newHeight = height.getText().toString();
-        Document doc = userDB.getDocument("1");
+        if (soldier != null && newId != soldier.getSoldierID()){
+            //delete old doc
+            Document doc = userDB.getDocument(soldier.getSoldierID());
+            try {
+                doc.delete();
+            }catch (CouchbaseLiteException e){
+
+            }
+        }
+        Document doc = userDB.getDocument(newId);
         try {
             doc.update(new Document.DocumentUpdater() {
                 @Override
@@ -283,12 +293,6 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
     }
 
-    public void updateHomeFragment(String state) {
-        if (mNavController.getCurrentFrag().getClass() == HomeFragment.class) {
-            HomeFragment homeFrag = (HomeFragment) mNavController.getCurrentFrag();
-            homeFrag.updateWellnessStatus(state, (ImageView) homeFrag.getView().findViewById(R.id.wellness_status));
-        }
-    }
 
     @Override
     public void registerFragment(DataObserver o) {

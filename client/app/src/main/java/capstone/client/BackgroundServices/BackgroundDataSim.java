@@ -110,9 +110,6 @@ public class BackgroundDataSim extends Service {
 
         dbManager = new DBManager(this);
         dataDB = dbManager.getDatabase(dbManager.DATA_DB);
-        if (dbManager.getSoldierDetails() == null){
-            dbManager.initDefaultSoldierDetails();
-        }
         Timer timer = new Timer();
         TimerTask doDataSimCallback = new TimerTask() {
             @Override
@@ -163,11 +160,13 @@ public class BackgroundDataSim extends Service {
 
             //put ID on http request
             Soldier soldierDetails = dbManager.getSoldierDetails();
+            if (soldierDetails == null)
+                soldierDetails = dbManager.getDefaultSoldier();
             JSONObject jsonObjForRequest = lastRow;
             jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
 
             //for now hard-coded medic ip and port
-            String MedicURL = "http://100.64.207.208:8080";
+            String MedicURL = "http://192.168.43.13:8080";
             JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
                 new Response.Listener<JSONObject>() {
                     @Override

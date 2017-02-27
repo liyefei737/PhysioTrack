@@ -40,16 +40,7 @@ public class BackgroundServer extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        dataManager = ((AppContext) this.getApplicationContext()).getDataManager();
-        server = new Server(8080, dataManager);
-        try {
-            server.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.i(this.getClass().getSimpleName(), "onCreate: Server runing on " + server.getLocalIpAddress() + " Port: " + server.getListeningPort());
         _backgroundServer = this;
-        broadcaster = LocalBroadcastManager.getInstance(this);
 
     }
 
@@ -61,7 +52,20 @@ public class BackgroundServer extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //return super.onStartCommand(intent, flags, startId);
-        return Service.START_NOT_STICKY;
+        dataManager = ((AppContext) this.getApplicationContext()).getDataManager();
+        server = new Server(8080, dataManager);
+        try {
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.i(this.getClass().getSimpleName(),
+                "onCreate: Server runing on " + server.getLocalIpAddress() + " Port: " +
+                        server.getListeningPort());
+        _backgroundServer = this;
+        broadcaster = LocalBroadcastManager.getInstance(this);
+
+        return START_STICKY;
     }
 
     public void notifyUI(Map<String, Object> document) {

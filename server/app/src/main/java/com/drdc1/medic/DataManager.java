@@ -33,16 +33,21 @@ public class DataManager {
     //log TAGs
     private static final String TAG = "DataManager";
 
-    private Map<String, Database> _physioDataDBMap = null;   //keys: soldier id, values: Database of physio Data
-    private Database _userInfoDB = null;   //docIDs: soldierIDs, properties of each doc: name, age, height, weight
+    private Map<String, Database> _physioDataDBMap = null;
+    //keys: soldier id, values: Database of physio Data
+    private Database _userInfoDB = null;
+    //docIDs: soldierIDs, properties of each doc: name, age, height, weight
+    private Database _nineLinerDB = null;
     private Map<String, IndividualWelfareTracker> _wellnessInfoMap = null;
     private Context _context = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
 
-    public DataManager(Context context) {   //won't init physioDataDBMap b/c we don't know how many soldiers we have
+    public DataManager(
+            Context context) {   //won't init physioDataDBMap b/c we don't know how many soldiers we have
         _context = context;
         _userInfoDB = openDatabase("staticinfo");
         _physioDataDBMap = new HashMap<String, Database>();
+        _nineLinerDB = openDatabase("nineliner");
         _wellnessInfoMap = new HashMap<String, IndividualWelfareTracker>();
         if (_userInfoDB == null) {
             Log.e(TAG, " Failed to open user info Database");
@@ -53,10 +58,16 @@ public class DataManager {
         return _physioDataDBMap;
     }
 
+    public Database getNinelinerDatabase() {
+        return _nineLinerDB;
+    }
+
     public int getNumSoldiers() {
         if (_physioDataDBMap != null) {
             return _physioDataDBMap.size();
-        } else return 0;
+        } else {
+            return 0;
+        }
     }
 
     public Database getUserInfoDatabase() {
@@ -69,6 +80,8 @@ public class DataManager {
             return false;
         }
         Document doc = _userInfoDB.getDocument(ID);
+        Document docOl = _nineLinerDB.getDocument(ID);
+
         try {
             doc.putProperties(staticInfo);
         } catch (CouchbaseLiteException e) {
@@ -101,20 +114,27 @@ public class DataManager {
 
     public boolean removeSoldier(String ID) {
         if (!soldierInSystem(ID))
-            //doesn't exist
+        //doesn't exist
+        {
             return false;
+        }
 
         try {
             Document doc = _userInfoDB.getDocument(ID);
+            Document docOl = _nineLinerDB.getDocument(ID);
+
             doc.delete();
+            docOl.delete();
 
             _wellnessInfoMap.remove(ID);
 
             Database db = _physioDataDBMap.get(ID);
             _physioDataDBMap.remove(ID);
-            if (db != null)
+            if (db != null) {
                 db.delete();
-            else return false;
+            } else {
+                return false;
+            }
             return true;
         } catch (Exception e) {
             return false;
@@ -123,14 +143,17 @@ public class DataManager {
 
     /**
      * The given static info map should have the fields name, age, height, weight
+     *
      * @param ID
      * @param staticInfo
      * @return
      */
     public boolean updateSoldierStaticInfo(String ID, Map<String, Object> staticInfo) {
         if (!soldierInSystem(ID))
-            //doesn't exist
+        //doesn't exist
+        {
             return false;
+        }
         Document docStatic = _userInfoDB.getDocument(ID);
         try {
             docStatic.putProperties(staticInfo);
@@ -145,15 +168,19 @@ public class DataManager {
     /**
      * The given dynamic info map should have the fields timeCreated, accX, accY,
      * accZ, skinTemp, coreTemp, heartRate, breathRate, bodyPosition, motion
+     *
      * @param ID
      * @param DateTime
      * @param dynamicInfo
      * @return
      */
-    public boolean updateSoldierDynamicInfo(String ID, String DateTime, Map<String, Object> dynamicInfo) {
+    public boolean updateSoldierDynamicInfo(String ID, String DateTime,
+                                            Map<String, Object> dynamicInfo) {
         if (!soldierInSystem(ID))
-            //doesn't exist
+        //doesn't exist
+        {
             return false;
+        }
         Database dbPhysio = _physioDataDBMap.get(ID);
         Document docPhysio = dbPhysio.getDocument(DateTime);
         try {
@@ -174,14 +201,16 @@ public class DataManager {
     }
 
     public Database getSoldierDB(String ID) {
-        if (soldierInSystem(ID))
+        if (soldierInSystem(ID)) {
             return _physioDataDBMap.get(ID);
+        }
         return null;
     }
 
     public IndividualWelfareTracker getWellnessTracker(String ID) {
-        if (soldierInSystem(ID))
+        if (soldierInSystem(ID)) {
             return _wellnessInfoMap.get(ID);
+        }
         return null;
     }
 
@@ -215,10 +244,12 @@ public class DataManager {
     public JSONArray QueryLastXMinutes(String ID, Calendar now, int minutes) {
         JSONArray lastXseconds = new JSONArray();
         Query query = getSoldierDB(ID).createAllDocumentsQuery();
-        Calendar nearestMinute =  org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+        Calendar nearestMinute =
+                org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
         query.setDescending(true);
         String startKey = String.valueOf(nearestMinute.getTimeInMillis());
-        String endKey = String.valueOf(nearestMinute.getTimeInMillis() - android.text.format.DateUtils.MINUTE_IN_MILLIS* minutes);
+        String endKey = String.valueOf(nearestMinute.getTimeInMillis() -
+                android.text.format.DateUtils.MINUTE_IN_MILLIS * minutes);
 
         try {
             query.setEndKey(endKey);
@@ -227,8 +258,9 @@ public class DataManager {
             for (Iterator<QueryRow> it = result; it.hasNext(); ) {
                 QueryRow row = it.next();
                 Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
-                if (tmpMap.size() > 3)
+                if (tmpMap.size() > 3) {
                     lastXseconds.put(new JSONObject(tmpMap));
+                }
             }
         } catch (CouchbaseLiteException e) {
             //handle this

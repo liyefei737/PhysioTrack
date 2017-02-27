@@ -23,7 +23,7 @@ import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.UnsavedRevision;
-import com.drdc1.medic.uitls.Trie;
+import com.drdc1.medic.utils.Trie;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
@@ -60,7 +60,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
     private LineChart hrchart, respchart, skinchart, ctchart;
     private BroadcastReceiver receiver;
     List<Entry> entries = new ArrayList<Entry>();
-    private FloatingSearchView seachView;
+    private FloatingSearchView searchView;
     private Squad squad;
 
     @Override
@@ -79,7 +79,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_soldier);
         squad = Squad.getInstance();
-       // seachView = (FloatingSearchView) findViewById(R.id.searchBar);
+        searchView = (FloatingSearchView) findViewById(R.id.searchBar);
         setupSearchBar();
 
         // Setup Button Links to new activity
@@ -101,7 +101,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
         SquadStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(IndividualSoldier.this, HomeFragment.class);
+                Intent in = new Intent(IndividualSoldier.this, HomeActivity.class);
                 startActivity(in);
             }
         });
@@ -522,22 +522,22 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
     }
 
     private void setupSearchBar() {
-        seachView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
 
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
 
                 if (!oldQuery.equals("") && newQuery.equals("")) {
-                    seachView.clearSuggestions();
+                    searchView.clearSuggestions();
                 } else {
 
                     //this shows the top left circular progress
                     //you can call it where ever you want, but
                     //it makes sense to do it when loading something in
                     //the background.
-                    seachView.showProgress();
-                    seachView.swapSuggestions(getNameSearchSuggestions(newQuery));
-                    seachView.hideProgress();
+                    searchView.showProgress();
+                    searchView.swapSuggestions(getNameSearchSuggestions(newQuery));
+                    searchView.hideProgress();
                 }
             }
         });
