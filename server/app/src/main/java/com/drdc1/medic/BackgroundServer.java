@@ -40,6 +40,18 @@ public class BackgroundServer extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        _backgroundServer = this;
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //return super.onStartCommand(intent, flags, startId);
         dataManager = ((AppContext) this.getApplicationContext()).getDataManager();
         server = new Server(8080, dataManager);
         try {
@@ -53,17 +65,7 @@ public class BackgroundServer extends Service {
         _backgroundServer = this;
         broadcaster = LocalBroadcastManager.getInstance(this);
 
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        //return super.onStartCommand(intent, flags, startId);
-        return Service.START_NOT_STICKY;
+        return START_STICKY;
     }
 
     public void notifyUI(Map<String, Object> document) {
