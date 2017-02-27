@@ -50,4 +50,5 @@ dependencies {
     compile 'com.mcxiaoke.volley:library-aar:1.0.1'
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    compile 'com.github.arimorty:floatingsearchview:2.0.3'
 }

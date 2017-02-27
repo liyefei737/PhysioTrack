@@ -41,7 +41,22 @@ public class HomeActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
@@ -100,19 +115,21 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+
+
             switch (position) {
                 case 0:
                     SquadStatus tab1 = new SquadStatus();
                     return tab1;
                 case 1:
-                    NameList tab2 = new NameList();
-                    return tab2;
+                    TreatmentScreenTab tab4 = new TreatmentScreenTab();
+                    return tab4;
                 case 2:
                     IndividualSoldierTab tab3 = new IndividualSoldierTab();
                     return tab3;
                 case 3:
-                    TreatmentScreenTab tab4 = new TreatmentScreenTab();
-                    return tab4;
+                    NameList tab2 = new NameList();
+                    return tab2;
                 default:
                     return null;
             }

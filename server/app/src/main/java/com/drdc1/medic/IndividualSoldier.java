@@ -8,26 +8,28 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.UnsavedRevision;
+import com.drdc1.medic.utils.Trie;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -36,51 +38,33 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.arlib.floatingsearchview.FloatingSearchView;
-import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
-import com.drdc1.medic.utils.Trie;
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class IndividualSoldierTab extends Fragment implements OnChartValueSelectedListener {
+public class IndividualSoldier extends AppCompatActivity implements OnChartValueSelectedListener {
     private volatile HandlerThread mHandlerThread;
     private Handler mServiceHandler;
     private LocalBroadcastManager broadcaster = null;
     private DataManager dataManager = null;
     int valueForTesting = 0;
-    TextView NameNonEditable, GenderNonEditable, AgeNonEditable;
+    TextView NameList, SquadStatus, IndSoldier;
+    EditText NameEditable, GenderEditable, AgeEditable, BodyOrientEditable;
     private LineChart hrchart, respchart, skinchart, ctchart;
     private BroadcastReceiver receiver;
     List<Entry> entries = new ArrayList<Entry>();
-    private FloatingSearchView seachView;
+    private FloatingSearchView searchView;
     private Squad squad;
 
-    public IndividualSoldierTab() {
-        // Required empty public constructor
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View rootView =
-                inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
-                
-                seachView = (FloatingSearchView)rootView.findViewById(R.id.searchBar);
-squad = Squad.getInstance();
- setupSearchBar();
+    protected void onCreate(Bundle savedInstanceState) {
 
 //        broadcaster = LocalBroadcastManager.getInstance(this);
 //
@@ -90,24 +74,54 @@ squad = Squad.getInstance();
 //        // An Android service handler is a handler running on a specific background thread.
 //        mServiceHandler = new Handler(mHandlerThread.getLooper());
 
-        dataManager = ((AppContext) this.getActivity().getApplication()).getDataManager();
+        dataManager = ((AppContext) this.getApplication()).getDataManager();
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_individual_soldier);
+        squad = Squad.getInstance();
+        searchView = (FloatingSearchView) findViewById(R.id.searchBar);
+        setupSearchBar();
 
         // Setup Button Links to new activity
-        NameNonEditable = (TextView) rootView.findViewById(R.id.NameNonEditable);
-        GenderNonEditable = (TextView) rootView.findViewById(R.id.GenderNonEditable);
-        AgeNonEditable = (TextView) rootView.findViewById(R.id.AgeNonEditable);
+        NameEditable = (EditText) findViewById(R.id.etSoldierName);
+        GenderEditable = (EditText) findViewById(R.id.etGender);
+        AgeEditable = (EditText) findViewById(R.id.editText4);
+        BodyOrientEditable = (EditText) findViewById(R.id.editText8);
+        NameList = (TextView) findViewById(R.id.tvNameList);
+        SquadStatus = (TextView) findViewById(R.id.tvSStatus);
+        IndSoldier = (TextView) findViewById(R.id.tvIndSoldier);
 
+        NameList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(IndividualSoldier.this, NameList.class);
+                startActivity(in);
+            }
+        });
+        SquadStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(IndividualSoldier.this, HomeActivity.class);
+                startActivity(in);
+            }
+        });
+        IndSoldier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(IndividualSoldier.this, IndividualSoldier.class);
+                startActivity(in);
+            }
+        });
         //End of OnClick Links
-//            NameEditable.setText("thistest");
-//            GenderEditable.setText("thistest1");
-//            AgeEditable.setText("thistest2");
+        NameEditable.setText("thistest");
+        GenderEditable.setText("thistest1");
+        AgeEditable.setText("thistest2");
+        BodyOrientEditable.setText("thistest3");
 
-        hrchart = (LineChart) rootView.findViewById(R.id.hrrchart);
-        respchart = (LineChart) rootView.findViewById(R.id.resprchart);
-        skinchart = (LineChart) rootView.findViewById(R.id.skinrchart);
-        ctchart = (LineChart) rootView.findViewById(R.id.ctrchart);
+        hrchart = (LineChart) findViewById(R.id.hrrchart);
+        respchart = (LineChart) findViewById(R.id.resprchart);
+        skinchart = (LineChart) findViewById(R.id.skinrchart);
+        ctchart = (LineChart) findViewById(R.id.ctrchart);
 
         hrchart.setOnChartValueSelectedListener(this);
         respchart.setOnChartValueSelectedListener(this);
@@ -171,10 +185,10 @@ squad = Squad.getInstance();
         Legend lctchart = ctchart.getLegend();
 
         // modify the legend ...
-        l.setForm(Legend.LegendForm.LINE);
-        lrespchart.setForm(Legend.LegendForm.LINE);
-        lskinchart.setForm(Legend.LegendForm.LINE);
-        lctchart.setForm(Legend.LegendForm.LINE);
+        l.setForm(LegendForm.LINE);
+        lrespchart.setForm(LegendForm.LINE);
+        lskinchart.setForm(LegendForm.LINE);
+        lctchart.setForm(LegendForm.LINE);
 
 //        l.setTypeface(mTfLight);
         l.setTextColor(Color.WHITE);
@@ -257,7 +271,7 @@ squad = Squad.getInstance();
 
                 String message = intent.getStringExtra("message");
                 Log.d("receiver", "Got message: " + message);
-                Toast.makeText(AppContext.getContext(), message, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 entries.add(new Entry(entries.size(), Float.parseFloat(message)));
                 LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
                 //dataSet.setHighlightEnabled(true);
@@ -292,13 +306,11 @@ squad = Squad.getInstance();
         LocalBroadcastManager.getInstance(AppContext.getContext()).registerReceiver(receiver,
                 new IntentFilter("custom-event-name"));
 
-        // Inflate the layout for this fragment
-        return rootView;
     }
 
-    //    @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getActivity().getMenuInflater().inflate(R.menu.realtime, menu);
+        getMenuInflater().inflate(R.menu.realtime, menu);
         return true;
     }
 
@@ -312,8 +324,7 @@ squad = Squad.getInstance();
             }
             case R.id.actionClear: {
                 hrchart.clearValues();
-                Toast.makeText(AppContext.getContext(), "Chart cleared!", Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(this, "Chart cleared!", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.actionFeedMultiple: {
@@ -357,7 +368,9 @@ squad = Squad.getInstance();
             dataManager.addSoldier("tess81", infoMap);
 
             Database db = dataManager.getSoldierDB("tess81");
-            Document doc = db.getDocument("02/13/2017 00:00:00.000");
+            Calendar nowCal = new GregorianCalendar();
+            nowCal.set(2017, 01, 30);
+            Document doc = db.getDocument(String.valueOf(DateUtils.round(nowCal,Calendar.MINUTE).getTimeInMillis()));
 
             try {
                 doc.update(new Document.DocumentUpdater() {
@@ -383,15 +396,16 @@ squad = Squad.getInstance();
             }
 
             Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+            int numMinutes = 5;
 
             if (physioDataMap != null) {
 
                 for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
 //                    Database userDB = entry.getValue();
 
-//                    lastXSeconds = dataManager.QueryLastXSeconds(entry.getKey(), now, numSeconds, millistep);
-//                    Toast.makeText(getApplicationContext(), lastXSeconds.toString(), Toast.LENGTH_LONG).show();
-//                    NameEditable.setText(lastXSeconds.toString());
+                    lastXSeconds = dataManager.QueryLastXMinutes(entry.getKey(), nowCal, numMinutes);
+                    Toast.makeText(getApplicationContext(), lastXSeconds.toString(), Toast.LENGTH_LONG).show();
+                    NameEditable.setText(lastXSeconds.toString());
 
 //                    try {
 ////                        NameEditable.setText(lastXSeconds.toString());
@@ -430,7 +444,7 @@ squad = Squad.getInstance();
     private LineDataSet createSet() {
 
         LineDataSet set = new LineDataSet(null, "Dynamic Data");
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set.setAxisDependency(AxisDependency.LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
         set.setCircleColor(Color.WHITE);
         set.setLineWidth(2f);
@@ -448,9 +462,8 @@ squad = Squad.getInstance();
 
     private void feedMultiple() {
 
-        if (thread != null) {
+        if (thread != null)
             thread.interrupt();
-        }
 
         final Runnable runnable = new Runnable() {
 
@@ -467,7 +480,7 @@ squad = Squad.getInstance();
                 for (int i = 0; i < 6; i++) {
 
                     // Don't generate garbage runnables inside the loop.
-                    getActivity().runOnUiThread(runnable);
+                    runOnUiThread(runnable);
 
                     try {
                         Thread.sleep(25);
@@ -500,85 +513,56 @@ squad = Squad.getInstance();
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
 
         if (thread != null) {
             thread.interrupt();
         }
     }
+
     private void setupSearchBar() {
-    seachView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
 
-        @Override
-        public void onSearchTextChanged(String oldQuery, final String newQuery) {
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
 
-            if (!oldQuery.equals("") && newQuery.equals("")) {
-                seachView.clearSuggestions();
-            } else {
+                if (!oldQuery.equals("") && newQuery.equals("")) {
+                    searchView.clearSuggestions();
+                } else {
 
-                //this shows the top left circular progress
-                //you can call it where ever you want, but
-                //it makes sense to do it when loading something in
-                //the background.
-                seachView.showProgress();
-                 List<NameSuggestion> nameSearchSuggestions = getNameSearchSuggestions(newQuery);
-                seachView.swapSuggestions(nameSearchSuggestions);
-                seachView.hideProgress();
+                    //this shows the top left circular progress
+                    //you can call it where ever you want, but
+                    //it makes sense to do it when loading something in
+                    //the background.
+                    searchView.showProgress();
+                    searchView.swapSuggestions(getNameSearchSuggestions(newQuery));
+                    searchView.hideProgress();
+                }
             }
-        }
-    });
-    seachView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
-        @Override
-        public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
-         System.out.println("hello");
-        }
-
-        @Override
-        public void onSearchAction(String query) {
-//                mLastQuery = query;
-//
-//                DataHelper.findColors(getActivity(), query,
-//                        new DataHelper.OnFindColorsListener() {
-//
-//                            @Override
-//                            public void onResults(List<ColorWrapper> results) {
-//                                mSearchResultsAdapter.swapData(results);
-//                            }
-//
-//                        });
-//                Log.d(TAG, "onSearchAction()");
-        }
-    });
-}
-
-/***
- *
- * @param searchString is the user input in the search box
- * @return a List of Suggestions for the searchString
- */
-private List<NameSuggestion> getNameSearchSuggestions (String searchString) {
-
-    Trie trie = new Trie();
-    for (Soldier s : squad.getMonitoringSoildiersSoildiers()) {
-        trie.insert(s.getName());
+        });
     }
-    List<NameSuggestion> nameSuggestions = new ArrayList<NameSuggestion>();
-    for(String name : trie.autoComplete(searchString)) {
-        nameSuggestions.add(new NameSuggestion(name));
+
+    /***
+     *
+     * @param searchString is the user input in the search box
+     * @return a List of Suggestions for the searchString
+     */
+    private List<NameSuggestion> getNameSearchSuggestions (String searchString) {
+
+        Trie trie = new Trie();
+        for (Soldier s : squad.getMonitoringSoildiersSoildiers()) {
+            trie.insert(s.getName());
+        }
+        List<NameSuggestion> nameSuggestions = new ArrayList<NameSuggestion>();
+        for(String name : trie.autoComplete(searchString)) {
+            nameSuggestions.add(new NameSuggestion(name));
+        }
+        return nameSuggestions;
     }
-    return nameSuggestions;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
-
-
-
-
-
-}
-
-/***
- * TODO SearchBar and Invidual soldier page
- * 1. when a user select a soldier, show/populates the fields i.e. Name, gender, body orentation graphs
- * 2. graphes need to be updatable
- * 3. a better UI for the searchbar
- */
