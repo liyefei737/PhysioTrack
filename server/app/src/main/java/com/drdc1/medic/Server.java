@@ -53,9 +53,7 @@ public class Server extends NanoHTTPD {
         } catch (ResponseException e) {
             e.printStackTrace();
         }
-        if (connectionlist.size() >= 10) {
-            throw new IndexOutOfBoundsException();
-        }
+
         final String jsonStr = map.get("postData");
 
         try {
@@ -63,6 +61,11 @@ public class Server extends NanoHTTPD {
             String soldierID = body.getString("soldierID");
 
             if (!connectionlist.containsKey(soldierID)) {
+                //a new id comes in, check if the current connection list has less than 10 soldiers
+                if (connectionlist.size() >= 10) {
+                    return new newFixedLengthResponse(Response.Status.BAD_REQUEST);
+                }
+
                 connectionlist.put(body.getString("soldierID"),
                         session.getHeaders().get("http-client-ip"));
                 if (!dataManager.soldierInSystem(soldierID)) {
@@ -161,8 +164,6 @@ public class Server extends NanoHTTPD {
         } catch (CouchbaseLiteException e) {
             e.printStackTrace();
         }
-
-        String msg = "<html><body><h1> request success </h1></body></html>\n";
 //        String userName = null;
 //        Map<String, String> parms = session.getParms();
 //        if (parms.get("username") == null) {
@@ -182,8 +183,7 @@ public class Server extends NanoHTTPD {
 //        } catch (CouchbaseLiteException e) {
 //            e.printStackTrace();
 //        }
-
-        return newFixedLengthResponse(msg);
+        return new newFixedLengthResponse(Response.Status.OK);
     }
 
     void dbWrite() {
