@@ -63,7 +63,7 @@ public class Server extends NanoHTTPD {
             if (!connectionlist.containsKey(soldierID)) {
                 //a new id comes in, check if the current connection list has less than 10 soldiers
                 if (connectionlist.size() >= 10) {
-                    return new newFixedLengthResponse(Response.Status.BAD_REQUEST);
+                    return newFixedLengthResponse(Response.Status.BAD_REQUEST,"text/plain","too many soldiers connected");
                 }
 
                 connectionlist.put(body.getString("soldierID"),
@@ -183,7 +183,7 @@ public class Server extends NanoHTTPD {
 //        } catch (CouchbaseLiteException e) {
 //            e.printStackTrace();
 //        }
-        return new newFixedLengthResponse(Response.Status.OK);
+        return newFixedLengthResponse(Response.Status.OK,"text/plain","success");
     }
 
     void dbWrite() {
