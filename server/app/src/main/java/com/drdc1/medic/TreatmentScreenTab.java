@@ -85,12 +85,12 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
 
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
 
-        btSubmit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-//                Intent myIntent = new Intent(getActivity(), LoginActivity.class);
-//                startActivity(myIntent);    // change to startActivity
-            }
-        });
+//        btSubmit.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+////                Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+////                startActivity(myIntent);    // change to startActivity
+//            }
+//        });
 
         // Inflate the layout for this fragment
         return rootView;
