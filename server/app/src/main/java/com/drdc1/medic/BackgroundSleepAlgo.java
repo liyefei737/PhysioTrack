@@ -101,7 +101,7 @@ public class BackgroundSleepAlgo extends Service {
     private void run_sleep_algo() {
         int numMinutes = 9;
         Calendar now = new GregorianCalendar();
-        now.set(2017, 01, 30); // hard code for sim data
+        now.set(2017, 02, 25); // hard code for sim data
         JSONArray last9Minutes;
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
         if (physioDataMap != null) {

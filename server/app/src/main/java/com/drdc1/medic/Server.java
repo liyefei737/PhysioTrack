@@ -35,7 +35,7 @@ import fi.iki.elonen.NanoHTTPD;
 public class Server extends NanoHTTPD {
 
     static private DataManager dataManager;
-    private static SimpleDateFormat keyFormat = new SimpleDateFormat("01/30/2017 HH:mm:SS.sss");
+    private static SimpleDateFormat keyFormat = new SimpleDateFormat("02/25/2017 HH:mm:SS.sss");
     static Map connectionlist = new HashMap();
 
     public Server(int port, DataManager dataManager) {
@@ -124,7 +124,7 @@ public class Server extends NanoHTTPD {
                 try {
                     keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
                 } catch (Exception e) {
-                    keyCal.set(2017, 01, 30);
+                    keyCal.set(2017, 02, 25);
                 }
                 Calendar nearestMinute =
                         org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);

@@ -369,7 +369,7 @@ public class IndividualSoldier extends AppCompatActivity implements OnChartValue
 
             Database db = dataManager.getSoldierDB("tess81");
             Calendar nowCal = new GregorianCalendar();
-            nowCal.set(2017, 01, 30);
+            nowCal.set(2017, 02, 25);
             Document doc = db.getDocument(String.valueOf(DateUtils.round(nowCal,Calendar.MINUTE).getTimeInMillis()));
 
             try {

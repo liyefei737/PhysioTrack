@@ -40,7 +40,7 @@ public class DataManager {
     private Database _nineLinerDB = null;
     private Map<String, IndividualWelfareTracker> _wellnessInfoMap = null;
     private Context _context = null;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("01/30/2017 HH:mm:ss.");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("02/25/2017 HH:mm:ss.");
 
     public DataManager(
             Context context) {   //won't init physioDataDBMap b/c we don't know how many soldiers we have

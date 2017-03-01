@@ -100,7 +100,7 @@ public class BackgroundWellnessAlgo extends Service {
     public void calculateWellness() {
         JSONArray lastMinute;
         Calendar now = new GregorianCalendar();
-        now.set(2017, 01, 30); //hard code for sim data
+        now.set(2017, 02, 25); //hard code for sim data
         int numMinutes = 1;
 
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
