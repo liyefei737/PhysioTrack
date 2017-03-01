@@ -3,6 +3,7 @@ package com.drdc1.medic;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,23 +24,40 @@ public class NameList extends Fragment {
     public NameList() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_name_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_name_list, container, false);
         final ListView listView = (ListView) rootView.findViewById(R.id.soldierList);
         // Construct the data source
-        ArrayList<Soldier> soldiers = (ArrayList<Soldier>) Squad.getInstance().getMonitoringSoildiersSoildiers();
+        ArrayList<Soldier> soldiers =
+                (ArrayList<Soldier>) Squad.getInstance().getMonitoringSoildiersSoildiers();
         adapter = new SoldierListAdapter(getContext(), soldiers);
         // Attach the adapter to a ListView
         listView.setAdapter(adapter);
         return rootView;
     }
+
+    private void setFragmentTransition(String id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id); // Put anything what you want
+
+        IndividualSoldierTab fragment2 = new IndividualSoldierTab();
+        fragment2.setArguments(bundle);
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment2)
+                .commit();
+
+    }
+
     private class SoldierListAdapter extends ArrayAdapter<Soldier> {
 
         public SoldierListAdapter(Context context, ArrayList<Soldier> soldiers) {
-            super(context, R.layout.list_item_soldier,soldiers);
+            super(context, R.layout.list_item_soldier, soldiers);
         }
 
         @Override
@@ -48,7 +66,8 @@ public class NameList extends Fragment {
             Soldier soldier = getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_soldier, parent, false);
+                convertView = LayoutInflater.from(getContext())
+                        .inflate(R.layout.list_item_soldier, parent, false);
             }
             // Lookup view for data population
             TextView name = (TextView) convertView.findViewById(R.id.name);
@@ -60,6 +79,7 @@ public class NameList extends Fragment {
             return convertView;
         }
     }
+
     /************************************************************************
      * Comparator classes to support different ordering of soldiers
      *************************************************************************/
