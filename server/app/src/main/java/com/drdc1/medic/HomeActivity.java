@@ -115,21 +115,19 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-
-
             switch (position) {
                 case 0:
                     SquadStatus tab1 = new SquadStatus();
                     return tab1;
                 case 1:
-                    TreatmentScreenTab tab4 = new TreatmentScreenTab();
-                    return tab4;
+                    NameList tab2 = new NameList();
+                    return tab2;
                 case 2:
                     IndividualSoldierTab tab3 = new IndividualSoldierTab();
                     return tab3;
                 case 3:
-                    NameList tab2 = new NameList();
-                    return tab2;
+                    TreatmentScreenTab tab4 = new TreatmentScreenTab();
+                    return tab4;
                 default:
                     return null;
             }

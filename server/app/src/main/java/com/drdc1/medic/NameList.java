@@ -23,7 +23,6 @@ public class NameList extends Fragment {
     public NameList() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,7 +36,6 @@ public class NameList extends Fragment {
         listView.setAdapter(adapter);
         return rootView;
     }
-
     private class SoldierListAdapter extends ArrayAdapter<Soldier> {
 
         public SoldierListAdapter(Context context, ArrayList<Soldier> soldiers) {
@@ -61,9 +59,7 @@ public class NameList extends Fragment {
             // Return the completed view to render on screen
             return convertView;
         }
-
     }
-
     /************************************************************************
      * Comparator classes to support different ordering of soldiers
      *************************************************************************/
