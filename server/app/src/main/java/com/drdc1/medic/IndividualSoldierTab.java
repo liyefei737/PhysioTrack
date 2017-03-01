@@ -78,11 +78,12 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         View rootView =
                 inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
 
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-//            bundle.getString("id");
-            // handle code for id from namelist here.
-        }
+//        Bundle bundle = this.getArguments();
+//        if(bundle != null){
+//            String IDpassed = bundle.getString("id");
+//            // handle code for id from namelist here.
+//
+//        }
 
 
         seachView = (FloatingSearchView) rootView.findViewById(R.id.searchBar);
