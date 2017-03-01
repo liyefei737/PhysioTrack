@@ -1,7 +1,5 @@
 package capstone.client;
 
-import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +7,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import capstone.client.Activities.BottomBarActivity;
 import capstone.client.BackgroundServices.BackgroundUIUpdator;
-
-import static android.R.attr.format;
+import capstone.client.DataManagement.DBManager;
+import capstone.client.DataManagement.DataObserver;
 
 public class HeartFragment extends capstone.client.BaseFragment implements DataObserver {
     private LineChart lineChart;
@@ -83,7 +76,7 @@ public class HeartFragment extends capstone.client.BaseFragment implements DataO
             entries.add(new Entry(i, heartRates[arrLength - 1 - i]));
         }
 
-        ViewUtils.formatUpdateLineChart(lineChart, entries, heartMin, heartMax);
+        ViewUtils.formatUpdateLineChart(getResources(),lineChart, entries, heartMin, heartMax);
     }
 
     @Override

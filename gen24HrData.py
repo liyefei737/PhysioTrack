@@ -64,7 +64,7 @@ def getHeartRate():
 	if lastHR == 0:
 		newHR = randint(60, 80)
 	else:
-		newHR = max(min(lastHR + getSign()*randint(0,10), 250), 25)
+		newHR = max(min(lastHR + getSign()*randint(0,4), 200), 25)
 
 	lastHR = newHR
 	return str(newHR)
@@ -79,7 +79,7 @@ def getRespirationRate():
 	if lastRR == 0:
 		newRR = randint(12,18)
 	else:
-		newRR = max(min(lastRR + getSign()*randint(0,2), 90), 2)
+		newRR = max(min(lastRR + getSign()*randint(0,4), 70), 2)
 
 	lastRR = newRR
 	return str(newRR)
@@ -94,7 +94,7 @@ def getSkinTemp():
 	if lastST == 0.0:
 		newST = uniform(32.1, 36.0)
 	else:
-		newST = max(min(lastST + getSign()*uniform(0, 0.5), 55), 10)
+		newST = max(min(lastST + getSign()*uniform(0, 0.1), 40), 10)
 
 	lastST = newST
 	
@@ -111,7 +111,7 @@ def getCoreTemp():
 	if lastCT == 0.0:
 		newCT = uniform(36.1, 37.8)
 	else:
-		newCT = max(min(lastCT + getSign()*uniform(0, 0.5), 41), 30)
+		newCT = max(min(lastCT + getSign()*uniform(0, 0.01), 41), 30)
 
 	lastCT = newCT
 	return "{:.1f}".format(newCT)
@@ -152,7 +152,10 @@ def main():
 	f.write('DateTime,Core_Temp,Skin_Temp,AccX,AccY,AccZ,BodyPosition,Motion,Belt Breathing Rate,ECG Heart Rate\n')
 	for i in range(0, 2160000):  #milliseconds in a day
 		acc = getAcceleration()
-		line = date.strftime(dateFormatString)[:-3] + ',' + getCoreTemp() + ',' + getSkinTemp() + ',' + acc[0] + ',' + acc[1] + ',' + acc[2] + ',' + getBodyPosition() + ',' + getMotion() + ',' + getRespirationRate() +','+getHeartRate()
+		if i%1500 == 0:
+			line = date.strftime(dateFormatString)[:-3] + ',' + getCoreTemp() + ',' + getSkinTemp() + ',' + acc[0] + ',' + acc[1] + ',' + acc[2] + ',' + getBodyPosition() + ',' + getMotion() + ',' + getRespirationRate() +','+getHeartRate()
+		else:
+			line = date.strftime(dateFormatString)[:-3] + ',' + "{:.1f}".format(lastCT) + ',' + "{:.1f}".format(lastST) + ',' + acc[0] + ',' + acc[1] + ',' + acc[2] + ',' + getBodyPosition() + ',' + getMotion() + ',' + str(lastRR) +','+str(lastHR)
 		f.write(line + '\n')
 		date = date + timedelta(milliseconds = 40)
 	f.close()

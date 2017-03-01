@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.DataManagement;
 
 import android.content.Context;
 import android.util.Log;
@@ -123,7 +123,7 @@ public class DBManager {
     public JSONObject getCurrentDataRow() {
         Calendar now = new GregorianCalendar();
         //because of dataSim, hardcode date
-        now.set(2017,01,30);
+        now.set(2017,02,25);
         Calendar nearestMinute = DateUtils.round(now, Calendar.MINUTE);
         Document doc = _dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
         JSONObject jObj = new JSONObject(doc.getProperties());
@@ -133,7 +133,7 @@ public class DBManager {
     public JSONObject getDataRowAtTime(Calendar time)
     {
         Calendar nearestMinute = DateUtils.round(time, Calendar.MINUTE);
-        nearestMinute.set(2017, 01, 30);
+        nearestMinute.set(2017, 02, 25);
         Document doc = _dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
         JSONObject jObj = new JSONObject((doc.getProperties()));
         return jObj;

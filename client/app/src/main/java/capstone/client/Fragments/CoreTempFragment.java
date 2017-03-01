@@ -1,6 +1,5 @@
 package capstone.client;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +15,8 @@ import java.util.Map;
 
 import capstone.client.Activities.BottomBarActivity;
 import capstone.client.BackgroundServices.BackgroundUIUpdator;
+import capstone.client.DataManagement.DBManager;
+import capstone.client.DataManagement.DataObserver;
 
 
 public class CoreTempFragment extends capstone.client.BaseFragment implements DataObserver {
@@ -81,7 +78,7 @@ public class CoreTempFragment extends capstone.client.BaseFragment implements Da
         for (int i = 0; i < arrLength ; i++) {
             entries.add(new Entry(i, coreTemps[arrLength - 1 - i]));
         }
-        ViewUtils.formatUpdateLineChart(lineChart, entries, coreMin, coreMax);
+        ViewUtils.formatUpdateLineChart(getResources(), lineChart, entries, coreMin, coreMax);
     }
 
     @Override

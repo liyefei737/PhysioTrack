@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateUtils;
 
+import com.couchbase.lite.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +21,7 @@ import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import capstone.client.DBManager;
+import capstone.client.DataManagement.DBManager;
 
 import static welfareSM.WelfareStatus.GREY;
 
@@ -86,21 +88,21 @@ public class BackgroundUIUpdator extends Service {
         String state = GREY.toString();
         //hardcode for simdata
         Calendar date = new GregorianCalendar();
-        date.set(2017, 01, 30);
+        date.set(2017, 02, 25);
         JSONArray last10Minutes = dbManager.QueryLastXMinutes(date, 10);
+        int last10MinutesArrLength = last10Minutes.length();
+        if (last10MinutesArrLength != 0) {
 
-        if (last10Minutes.length() != 0) {
 
-
-            for (int i = 0; i < last10Minutes.length(); i++) {
+            for (int i = 0; i < Math.min(10, last10MinutesArrLength); i++) {
                 try {
                     JSONObject jsonRow = last10Minutes.getJSONObject(i);
                     br[i] = Integer.valueOf(jsonRow.getString("breathRate"));
                     hr[i] = Integer.valueOf(jsonRow.getString("heartRate"));
                     coreTemp[i] = Float.valueOf(jsonRow.getString("coreTemp"));
                     skinTemp[i] = Float.valueOf(jsonRow.getString("skinTemp"));
-                } catch (JSONException e) {
-
+                } catch (Exception e) {
+                    Log.e("UIUpdator", String.format(" index %d", i));
                 }
             }
             try {

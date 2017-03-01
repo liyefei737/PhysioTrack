@@ -1,9 +1,5 @@
 package capstone.client;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,11 +9,10 @@ import android.widget.ImageView;
 
 import java.util.Map;
 
-import capstone.client.BackgroundServices.BackgroundUIUpdator;
-import capstone.client.BaseFragment;
 import capstone.client.Activities.BottomBarActivity;
-import capstone.client.DRDCClient;
-import capstone.client.R;
+import capstone.client.BackgroundServices.BackgroundUIUpdator;
+import capstone.client.DataManagement.DBManager;
+import capstone.client.DataManagement.DataObserver;
 import welfareSM.WelfareStatus;
 
 /**
@@ -28,7 +23,7 @@ import welfareSM.WelfareStatus;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends BaseFragment implements DataObserver {
+public class HomeFragment extends capstone.client.BaseFragment implements DataObserver {
 
     private BottomBarActivity bottomBarActivity;
 

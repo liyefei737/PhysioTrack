@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import capstone.client.DBManager;
+import capstone.client.DataManagement.DBManager;
 import sleepS.DateStatePair;
 import sleepS.sleepStatus;
 
@@ -103,7 +103,7 @@ public class BackgroundSleepAlgo extends Service {
     private void run_sleep_algo() {
         Database dataDB = dbManager.getDatabase(dbManager.DATA_DB);
         Calendar now = new GregorianCalendar();
-        now.set(2017, 01, 30); //hardcode for datasim
+        now.set(2017, 02, 25); //hardcode for datasim
         JSONArray last9Minutes = dbManager.QueryLastXMinutes(now, 9);
         if (last9Minutes.length() == 9){
             final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(last9Minutes);

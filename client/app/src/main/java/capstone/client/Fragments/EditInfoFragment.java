@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import capstone.client.BaseFragment;
-import capstone.client.DBManager;
-import capstone.client.R;
-import capstone.client.Soldier;
+import capstone.client.DataManagement.DBManager;
+import capstone.client.DataManagement.Soldier;
 
 /**
  * A simple {@link Fragment} subclass.

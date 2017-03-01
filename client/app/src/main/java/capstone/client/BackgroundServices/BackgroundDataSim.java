@@ -39,8 +39,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import capstone.client.DBManager;
-import capstone.client.Soldier;
+import capstone.client.DataManagement.DBManager;
+import capstone.client.DataManagement.Soldier;
 
 /**
  * This class does:
@@ -71,7 +71,7 @@ public class BackgroundDataSim extends Service {
     public static final int READ_TIMEOUT = 15000;
 
     private static String phpRequestScriptURL = "http://atmacausa.com/ReadRequestMinute.php";
-    private static SimpleDateFormat keyFormat = new SimpleDateFormat("01/30/2017 HH:mm:");
+    private static SimpleDateFormat keyFormat = new SimpleDateFormat("02/25/2017 HH:mm:");
     private static String regexSecondsAndMilli = "[0-9]{2}\\.[0-9]{3}";
 
     public BackgroundDataSim() {
@@ -136,7 +136,7 @@ public class BackgroundDataSim extends Service {
         double accSum = 0;
 
         Calendar now = new GregorianCalendar();
-        now.set(2017, 01, 30);
+        now.set(2017, 02, 25);
         keyFormat.setCalendar(now);
         String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
         Calendar nearestMinute  = org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);

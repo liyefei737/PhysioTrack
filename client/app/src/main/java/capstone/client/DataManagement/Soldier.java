@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.DataManagement;
 
 /**
  * Created by Grace on 2017-02-04.
