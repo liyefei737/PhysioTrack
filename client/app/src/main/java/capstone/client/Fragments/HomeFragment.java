@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,8 +11,10 @@ import java.util.Map;
 
 import capstone.client.Activities.BottomBarActivity;
 import capstone.client.BackgroundServices.BackgroundUIUpdator;
+import capstone.client.DRDCClient;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
+import capstone.client.R;
 import welfareSM.WelfareStatus;
 
 /**
@@ -23,7 +25,7 @@ import welfareSM.WelfareStatus;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends capstone.client.BaseFragment implements DataObserver {
+public class HomeFragment extends capstone.client.Fragments.BaseFragment implements DataObserver {
 
     private BottomBarActivity bottomBarActivity;
 

@@ -10,4 +10,11 @@
     <color name="hint">#DDDDDD</color>
     <color name="tab_inactive">#686868</color>
 
+    <color name="red">#F50C2B</color>
+    <color name="yellow">#E2FC5B</color>
+    <color name="green">#29BA29</color>
+    <color name="redGraphTint">#F26174</color>
+    <color name="yellowGraphTint">#E6EB94</color>
+    <color name="greenGraphTint">#85C996</color>
+
 </resources>

@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -52,7 +52,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.github.mikephil.charting.charts.LineChart
+        <capstone.client.ViewTools.LineChartWithBackground
             android:id="@+id/skinTempChart"
             android:layout_width="350dp"
             android:layout_height="350dp"

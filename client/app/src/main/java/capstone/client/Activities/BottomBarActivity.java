@@ -26,22 +26,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import capstone.client.BaseFragment;
-import capstone.client.BreathFragment;
-import capstone.client.CoreTempFragment;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
-import capstone.client.EditInfoFragment;
 import capstone.client.DataManagement.FragmentDataManager;
-import capstone.client.HeartFragment;
-import capstone.client.HelpPageFragment;
-import capstone.client.HomeFragment;
-import capstone.client.R;
-import capstone.client.SkinTempFragment;
 import capstone.client.DataManagement.Soldier;
+import capstone.client.Fragments.BaseFragment;
+import capstone.client.Fragments.BreathFragment;
+import capstone.client.Fragments.CoreTempFragment;
+import capstone.client.Fragments.EditInfoFragment;
+import capstone.client.Fragments.HeartFragment;
+import capstone.client.Fragments.HelpPageFragment;
+import capstone.client.Fragments.HomeFragment;
+import capstone.client.Fragments.SkinTempFragment;
+import capstone.client.R;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+
+
 
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation,
         FragNavController.TransactionListener,

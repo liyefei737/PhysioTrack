@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.Soldier;
+import capstone.client.R;
 
 /**
  * A simple {@link Fragment} subclass.

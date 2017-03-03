@@ -1,4 +1,4 @@
-package capstone.client;
+package capstone.client.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 
 import java.util.ArrayList;
@@ -17,10 +16,12 @@ import capstone.client.Activities.BottomBarActivity;
 import capstone.client.BackgroundServices.BackgroundUIUpdator;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
+import capstone.client.R;
+import capstone.client.ViewTools.LineChartWithBackground;
 
 
-public class CoreTempFragment extends capstone.client.BaseFragment implements DataObserver {
-    private LineChart lineChart;
+public class CoreTempFragment extends capstone.client.Fragments.BaseFragment implements DataObserver {
+    private LineChartWithBackground lineChart;
     private BottomBarActivity bottomBarActivity;
     private static float coreMin = 30;
     private static float coreMax = 40;
@@ -64,7 +65,7 @@ public class CoreTempFragment extends capstone.client.BaseFragment implements Da
      */
     @Override
     public void update(Map data) {
-        lineChart = (LineChart) getActivity().findViewById(R.id.coreTempChart);
+        lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.coreTempChart);
         TextView ctNum = (TextView) getActivity().findViewById(R.id.currentCoreTemp);
         float[] coreTemps = (float[]) data.get("coreTemp");
         String latestCT = String.valueOf(coreTemps[0]);
@@ -78,7 +79,8 @@ public class CoreTempFragment extends capstone.client.BaseFragment implements Da
         for (int i = 0; i < arrLength ; i++) {
             entries.add(new Entry(i, coreTemps[arrLength - 1 - i]));
         }
-        ViewUtils.formatUpdateLineChart(getResources(), lineChart, entries, coreMin, coreMax);
+        float [] zoneLimits = {60, 40, 5, 1};
+        LineChartWithBackground.formatUpdateLineChart(getResources(), lineChart, entries, coreMin, coreMax, zoneLimits);
     }
 
     @Override
