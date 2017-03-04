@@ -10,6 +10,7 @@ import android.widget.EditText;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.Soldier;
 import capstone.client.R;
+import capstone.client.ViewTools.EditTextHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,33 +45,11 @@ public class EditInfoFragment extends BaseFragment {
     }
 
     public View setEditFields(Soldier s, View view) {
-        String strID = s.getSoldierID();
-        if (strID != null && !strID.isEmpty()) {
-            EditText id = (EditText) view.findViewById(R.id.etSoldierId);
-            id.setHint(strID);
-            id.setText(strID);
-        }
-
-        int iAge = s.getAge();
-        if (iAge > 0) {
-            EditText age = (EditText) view.findViewById(R.id.etAge);
-            age.setHint(String.valueOf(iAge));
-            age.setText(String.valueOf(iAge));
-        }
-
-        int iWeight = s.getWeight();
-        if (iWeight > 0) {
-            EditText weight = (EditText) view.findViewById(R.id.etWeight);
-            weight.setHint(String.valueOf(iWeight));
-            weight.setText(String.valueOf(iWeight));
-        }
-
-        int iHeight = s.getHeight();
-        if (iHeight > 0) {
-            EditText height = (EditText) view.findViewById(R.id.etHeight);
-            height.setHint(String.valueOf(iHeight));
-            height.setText(String.valueOf(iHeight));
-        }
+        EditText id = (EditText) view.findViewById(R.id.etSoldierId);
+        EditText age = (EditText) view.findViewById(R.id.etAge);
+        EditText weight = (EditText) view.findViewById(R.id.etWeight);
+        EditText height = (EditText) view.findViewById(R.id.etHeight);
+        EditTextHandler.setSoldierFields(s, id, age, weight, height);
 
         return view;
     }

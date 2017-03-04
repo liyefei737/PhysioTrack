@@ -24,6 +24,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import capstone.client.DataManagement.DBManager;
@@ -39,10 +40,10 @@ import capstone.client.Fragments.HelpPageFragment;
 import capstone.client.Fragments.HomeFragment;
 import capstone.client.Fragments.SkinTempFragment;
 import capstone.client.R;
+import capstone.client.ViewTools.EditTextHandler;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-
 
 
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation,
@@ -191,48 +192,41 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         Button cancelbtn = (Button) findViewById(R.id.btCancel);
         savebtn.setVisibility(INVISIBLE);
         cancelbtn.setVisibility(INVISIBLE);
-        EditText id = (EditText) findViewById(R.id.etSoldierId);
-        EditText age = (EditText) findViewById(R.id.etAge);
-        EditText weight = (EditText) findViewById(R.id.etWeight);
-        EditText height = (EditText) findViewById(R.id.etHeight);
 
-        id.setClickable(false);
-        id.setCursorVisible(false);
-        id.setFocusable(false);
-        id.setFocusableInTouchMode(false);
+        List<EditText> etList = new ArrayList<>();
+        etList.add((EditText) findViewById(R.id.etSoldierId));
+        etList.add((EditText) findViewById(R.id.etAge));
+        etList.add((EditText) findViewById(R.id.etWeight));
+        etList.add((EditText) findViewById(R.id.etHeight));
 
-        age.setClickable(false);
-        age.setCursorVisible(false);
-        age.setFocusable(false);
-        age.setFocusableInTouchMode(false);
-
-        weight.setClickable(false);
-        weight.setCursorVisible(false);
-        weight.setFocusable(false);
-        weight.setFocusableInTouchMode(false);
-
-        height.setClickable(false);
-        height.setCursorVisible(false);
-        height.setFocusable(false);
-        height.setFocusableInTouchMode(false);
+        EditTextHandler.disableAndFormat(etList);
+        EditTextHandler.setSoldierFields(dbManager.getSoldierDetails(), etList.get(0), etList.get(1), etList.get(2), etList.get(3));
     }
 
     public void edit_info_save(View view) {
-        Soldier soldier = dbManager.getSoldierDetails();
         final Button btnSave = (Button) findViewById(R.id.btSave);
         final Button cancelbtn = (Button) findViewById(R.id.btCancel);
+        List<EditText> etList = new ArrayList<>();
+
+        Soldier soldier = dbManager.getSoldierDetails();
         Database userDB = dbManager.getDatabase(dbManager.USER_DB);
+
         EditText id = (EditText) findViewById(R.id.etSoldierId);
         final String newId = id.getText().toString();
+        etList.add(id);
 
         EditText age = (EditText) findViewById(R.id.etAge);
         final String newAge = age.getText().toString();
+        etList.add(age);
 
         EditText weight = (EditText) findViewById(R.id.etWeight);
         final String newWeight = weight.getText().toString();
+        etList.add(weight);
 
         EditText height = (EditText) findViewById(R.id.etHeight);
         final String newHeight = height.getText().toString();
+        etList.add(height);
+
         if (soldier != null && newId != soldier.getSoldierID()){
             //delete old doc
             Document doc = userDB.getDocument(soldier.getSoldierID());
@@ -261,6 +255,8 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         } catch (CouchbaseLiteException e) {
 
         }
+
+        EditTextHandler.disableAndFormat(etList);
     }
 
     public void edit_fields(View view) {
@@ -268,31 +264,14 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         Button cancelbtn = (Button) findViewById(R.id.btCancel);
         savebtn.setVisibility(VISIBLE);
         cancelbtn.setVisibility(VISIBLE);
-        EditText id = (EditText) findViewById(R.id.etSoldierId);
-        EditText age = (EditText) findViewById(R.id.etAge);
-        EditText weight = (EditText) findViewById(R.id.etWeight);
-        EditText height = (EditText) findViewById(R.id.etHeight);
 
-        id.setClickable(true);
-        id.setCursorVisible(true);
-        id.setFocusable(true);
-        id.setFocusableInTouchMode(true);
+        List<EditText> etList = new ArrayList<>();
+        etList.add((EditText) findViewById(R.id.etSoldierId));
+        etList.add((EditText) findViewById(R.id.etAge));
+        etList.add((EditText) findViewById(R.id.etWeight));
+        etList.add((EditText) findViewById(R.id.etHeight));
 
-        age.setClickable(true);
-        age.setCursorVisible(true);
-        age.setFocusable(true);
-        age.setFocusableInTouchMode(true);
-
-        weight.setClickable(true);
-        weight.setCursorVisible(true);
-        weight.setFocusable(true);
-        weight.setFocusableInTouchMode(true);
-
-        height.setClickable(true);
-        height.setCursorVisible(true);
-        height.setFocusable(true);
-        height.setFocusableInTouchMode(true);
-
+        EditTextHandler.enableAndFormat(etList);
     }
 
 

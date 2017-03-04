@@ -8,9 +8,12 @@
     <string name="weight_text_edit">Weight</string>
     <string name="height_text_edit">Height</string>
     <string name="name_text_edit">Name</string>
-    <string name="id_text_edit">ID</string>
+    <string name="id_text_edit">Service Number</string>
     <string name="age_text_edit">Age</string>
     <string name="title_top">My Health</string>
     <string name="edit_info_save_btn">Save</string>
     <string name="title_activity_basic">BasicActivity</string>
+    <string name="title_edit_info">Settings</string>
+    <string name="title_help">Help</string>
+
 </resources>

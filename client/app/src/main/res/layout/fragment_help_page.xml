@@ -2,14 +2,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="capstone.client.HomeFragment"
+    tools:context="capstone.client.Fragments.HelpPageFragment"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:layout_gravity="center"
-        android:text="Help Page" />
+        android:layout_height="wrap_content"
+        android:text="@string/title_help"
+        android:textSize="@dimen/title_bar"
+        android:gravity="center"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical" >
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_save_cancel"
+            android:text="Restart Tutorial"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
