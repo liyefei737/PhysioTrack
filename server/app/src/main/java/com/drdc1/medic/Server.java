@@ -58,7 +58,7 @@ public class Server extends NanoHTTPD {
 
         try {
             final JSONObject body = new JSONObject(jsonStr);
-            String soldierID = body.getString("soldierID");
+            String soldierID = body.getString("ID");
 
             if (!connectionlist.containsKey(soldierID)) {
                 //a new id comes in, check if the current connection list has less than 10 soldiers
@@ -67,7 +67,7 @@ public class Server extends NanoHTTPD {
                             "too many soldiers connected");
                 }
 
-                connectionlist.put(body.getString("soldierID"),
+                connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));
                 if (!dataManager.soldierInSystem(soldierID)) {
                     Map<String, Object> infoMap = null;
@@ -113,9 +113,54 @@ public class Server extends NanoHTTPD {
                     };
                     Volley.newRequestQueue(AppContext.getContext()).add(postRequest);
                 }
-            } else if (connectionlist.get(body.getString("soldierID")) !=
+
+                Log.d("sender", "Broadcasting message");
+                Intent intent = new Intent("custom-event-name");
+                // You can also include some extra data.
+//            intent.putExtra("message", "99999");
+                intent.putExtra("message", body.getString("ECG Heart Rate"));
+                LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
+
+                Calendar keyCal = new GregorianCalendar();
+                try {
+                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
+                } catch (Exception e) {
+                    keyCal.set(2017, 02, 25);
+                }
+                Calendar nearestMinute =
+                        org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);
+
+                Database db = dataManager.getSoldierDB(soldierID);
+                Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+
+                doc.update(new Document.DocumentUpdater() {
+                    @Override
+                    public boolean update(UnsavedRevision newRevision) {
+                        Map<String, Object> properties = newRevision.getUserProperties();
+//                    HashMap<String, Object> hM = null;
+                        String hrate = null;
+                        try {
+                            properties.put("timeCreated", body.getString("DateTime"));
+                            properties.put("accSum", body.getString("accSum"));
+                            properties.put("skinTemp", body.getString("Skin_Temp"));
+                            properties.put("coreTemp", body.getString("Core_Temp"));
+                            properties.put("heartRate", body.getString("ECG Heart Rate"));
+                            hrate = body.getString("ECG Heart Rate");
+                            properties.put("breathRate", body.getString("Belt Breathing Rate"));
+                            properties.put("bodyPosition", body.getString("BodyPosition"));
+                            properties.put("motion", body.getString("Motion"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        newRevision.setUserProperties(properties);
+
+                        return true;
+                    }
+                });
+
+            } else if (connectionlist.get(soldierID) !=
                     session.getHeaders().get("http-client-ip")) {
-                connectionlist.put(body.getString("soldierID"),
+                connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));
             } else {
                 Log.d("sender", "Broadcasting message");
