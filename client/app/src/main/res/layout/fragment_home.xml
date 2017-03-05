@@ -27,10 +27,24 @@
         android:layout_gravity="right"
         android:onClick="edit_info"
         android:layout_weight="0"/>
-    <ImageView
-        android:layout_width="278dp"
-        android:layout_height="268dp"
-        android:id="@+id/wellness_status"
-        android:src="@drawable/home_center_green"
-        android:layout_gravity="center_horizontal"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        >
+        <ImageView
+            android:layout_width="278dp"
+            android:layout_height="268dp"
+            android:id="@+id/wellness_status"
+            android:src="@drawable/home_ring"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ringsegmenter" />
+    </RelativeLayout>
 </LinearLayout>

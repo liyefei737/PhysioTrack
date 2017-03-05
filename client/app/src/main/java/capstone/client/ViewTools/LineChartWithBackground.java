@@ -125,8 +125,6 @@ public class LineChartWithBackground extends LineChart{
         xAxis.setAxisLineWidth(axisThickness);
         xAxis.setAxisLineColor(white);
 
-
-
         //format yAxis
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setTextSize(14f); // set the text size
@@ -144,7 +142,6 @@ public class LineChartWithBackground extends LineChart{
             ll.setEnabled(false);
             yAxis.addLimitLine(ll);
         }
-
 
         lineChart.refreshDrawableState();
         lineChart.invalidate();

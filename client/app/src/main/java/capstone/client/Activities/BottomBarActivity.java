@@ -65,13 +65,28 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     private final int INDEX_SKINTEMP = FragNavController.TAB4;
     private final int INDEX_CORETEMP = FragNavController.TAB5;
 
+    private int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
         dbManager = new DBManager(this);
         setContentView(R.layout.activity_bottom_bar);
+        final View view = getWindow().getDecorView();;
+        view.setSystemUiVisibility(uiOptions);
 
+        view.setOnSystemUiVisibilityChangeListener
+                (new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        // Note that system bars will only be "visible" if none of the
+                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                            view.setSystemUiVisibility(uiOptions);
+                        }
+                    }
+                });
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
         mBottomBar.selectTabAtPosition(INDEX_HOME);
 
@@ -121,6 +136,12 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        View view = getWindow().getDecorView();
+        view.setSystemUiVisibility(uiOptions);
+    }
     @Override
     public void onBackPressed() {
         if (!mNavController.isRootFragment()) {

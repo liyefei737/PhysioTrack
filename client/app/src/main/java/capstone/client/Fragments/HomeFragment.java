@@ -1,5 +1,7 @@
 package capstone.client.Fragments;
 
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,12 +12,14 @@ import android.widget.ImageView;
 import java.util.Map;
 
 import capstone.client.Activities.BottomBarActivity;
-import capstone.client.BackgroundServices.BackgroundUIUpdator;
 import capstone.client.DRDCClient;
-import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
 import capstone.client.R;
 import welfareSM.WelfareStatus;
+
+import static capstone.client.R.color.green;
+import static capstone.client.R.color.red;
+import static capstone.client.R.color.yellow;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,12 +50,12 @@ public class HomeFragment extends capstone.client.Fragments.BaseFragment impleme
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
-        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
+        //BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
         WelfareStatus state = ((DRDCClient) getActivity().getApplication()).getLastState();
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ImageView iv = (ImageView) view.findViewById(R.id.wellness_status);
         if (state != null)
-            updateWellnessStatus(state.toString(), iv);
+          updateWellnessStatus(state.toString(), iv);
         return view;
     }
 
@@ -74,20 +78,24 @@ public class HomeFragment extends capstone.client.Fragments.BaseFragment impleme
     }
 
     public void updateWellnessStatus(String state, ImageView wellnessStatus) {
+        int red = getResources().getColor(R.color.red);
+        int yellow = getResources().getColor(R.color.yellow);
+        int green = getResources().getColor(R.color.green);
+        int grey = getResources().getColor(R.color.bb_inActiveBottomBarItemColor);
+        GradientDrawable gd = (GradientDrawable) getResources().getDrawable(R.drawable.home_ring);
         if (state == null){
-            //TODO: GREY HOME SYMBOL
+            gd.setColor(grey);
         }
         else {
             if (state.equals("GREEN")) {
-                wellnessStatus.setImageResource(R.drawable.home_center_green);
+                gd.setColor(green);
             } else if (state.equals("YELLOW")) {
-                wellnessStatus.setImageResource(R.drawable.home_center_yellow);
+                gd.setColor(yellow);
             } else {
-                wellnessStatus.setImageResource(R.drawable.home_center_red);
+                gd.setColor(red);
             }
         }
         wellnessStatus.refreshDrawableState();
-
     }
 
     public void update(Map data){
