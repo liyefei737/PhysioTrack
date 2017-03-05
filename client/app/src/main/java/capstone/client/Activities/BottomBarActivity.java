@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -312,9 +313,20 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void notifyObserver(Map data) {
+        mBottomBar.setBackgroundColor(getApplicationContext().getColor(R.color.colorAccent));
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBottomBar.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
+            }
+        }, 100);
+
         for (DataObserver observer : fragmentlist) {
+
             observer.update(data);
         }
 
@@ -325,7 +337,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onReceive(Context context, Intent intent) {
-            mBottomBar.setBackgroundColor(context.getColor(R.color.colorAccent));
+
             data.put("skinTemp", intent.getFloatArrayExtra("skinTemp"));
             data.put("coreTemp", intent.getFloatArrayExtra("coreTemp"));
             data.put("br", intent.getIntArrayExtra("br"));
