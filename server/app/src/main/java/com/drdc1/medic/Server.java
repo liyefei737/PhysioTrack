@@ -70,13 +70,16 @@ public class Server extends NanoHTTPD {
                 connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));
                 if (!dataManager.soldierInSystem(soldierID)) {
-                    Map<String, Object> infoMap = null;
-                    infoMap.put("name", body.getString("name"));
-                    infoMap.put("age", body.getString("age"));
-                    infoMap.put("height", body.getString("height"));
-                    infoMap.put("weight", body.getString("weight"));
+                    Map<String, Object> soldierInfo = null;
+                    soldierInfo.put("name", body.getString("name"));
+                    soldierInfo.put("age", body.getString("age"));
+                    soldierInfo.put("id", soldierID);
+                    //1 indicates solider is currently being monitored and shows on namelist, 0 means inactive, not shown on namelist
+                    soldierInfo.put("active", 1);
+                    soldierInfo.put("height", body.getString("height"));
+                    soldierInfo.put("weight", body.getString("weight"));
 
-                    dataManager.addSoldier(soldierID, infoMap);
+                    dataManager.addSoldier(soldierID, soldierInfo);
 
                     String url = "http://" + session.getHeaders().get("http-client-ip");
 
@@ -160,13 +163,13 @@ public class Server extends NanoHTTPD {
 
             } else if (connectionlist.get(soldierID) !=
                     session.getHeaders().get("http-client-ip")) {
+               //update ip if ip changes for a soldier
                 connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));
             } else {
+
                 Log.d("sender", "Broadcasting message");
                 Intent intent = new Intent("custom-event-name");
-                // You can also include some extra data.
-//            intent.putExtra("message", "99999");
                 intent.putExtra("message", body.getString("ECG Heart Rate"));
                 LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
