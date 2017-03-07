@@ -1,6 +1,621 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ibHelp"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="640dp"
+            android:background="@android:color/black"
+            android:onClick="callHelp"
+            app:srcCompat="@drawable/ic_help2" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="@drawable/border"
+        android:id="@+id/svTreatment"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/border"
+            android:id="@+id/ll1">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll2">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/ll3">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll4">
+
+                    <TextView
+                        android:text="1. LOCATION (GRID of pick up zone)"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv1"
+                        android:textColor="@color/white"
+                        android:textSize="12dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv4"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textSize="12dp"
+                        android:text="2. CALL SIGN and FREQ" />
+
+                    <TextView
+                        android:text="3. #OF PATIENTS/PRECEDENCE"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv5"
+                        android:textColor="@color/white"
+                        android:textSize="12dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/ll6">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/location"
+                        android:textColor="@color/white"
+                        android:textSize="10dp"
+                        android:layout_weight="1" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/callsign_freq"
+                        android:textColor="@color/white"
+                        android:textSize="10dp"
+                        android:layout_weight="1" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/number_patient"
+                        android:textColor="@color/white"
+                        android:textSize="10dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll5">
+
+                <CheckBox
+                    android:text="URGENT (90 min. Save LLE)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/precedence_urgent"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
+                    android:textSize="10sp" />
+
+                <CheckBox
+                    android:text="PRIORITY (4 hours)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/precedence_priority"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
+                    android:textSize="10sp" />
+
+                <CheckBox
+                    android:text="ROUTINE (24 hours)"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/precedence_routine"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:buttonTint="@color/white"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll7">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll8">
+
+                    <TextView
+                        android:text="4. SPECIAL EQUIPMENT REQ'D"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv6"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/ll9">
+
+                        <CheckBox
+                            android:text="None"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/eqreq_none"
+                            android:layout_weight="1"
+                            android:textSize="10sp"
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
+
+                        <CheckBox
+                            android:text="Hoist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/eqreq_hoist"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Extrication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/eqreq_extrication"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Ventilator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/eqreq_ventilator"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll10">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll11">
+
+                    <TextView
+                        android:text="5. # OF PATIENT TYPE"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv7"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/l12">
+
+                        <CheckBox
+                            android:text="Litter(stretcher)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patienttype_litter"
+                            android:layout_weight="1"
+                            android:textSize="10sp"
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
+
+                        <CheckBox
+                            android:text="Walking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patienttype_walking"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Escorts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patienttype_escort"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll13">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll14">
+
+                    <TextView
+                        android:text="6. SECURITY AT PICK UP ZONE (PZ)"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv8"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/ll15">
+
+                        <CheckBox
+                            android:text="No Enemy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/securityatpickup_noenem"
+                            android:layout_weight="1"
+                            android:textSize="10sp"
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
+
+                        <CheckBox
+                            android:text="Possible Enemy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/securityatpickup_possibileenem"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Enemy in area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/securityatpickup_eneminarea"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Hot PZ-armed escort req'd"
+                            android:layout_width="104dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/securityatpickup_hotpz"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll16">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll17">
+
+                    <TextView
+                        android:text="7. PZ MARKING METHOD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv9"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/ll18">
+
+                        <CheckBox
+                            android:text="Panles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/pzmarking_panles"
+                            android:layout_weight="1"
+                            android:textSize="10sp"
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
+
+                        <CheckBox
+                            android:text="Pyro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/pzmarking_pyro"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Smoke"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/pzmarking_smoke"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Other (Explain)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/pzmarking_other"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp"
+                            android:layout_weight="0.46" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll20">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll21">
+
+                    <TextView
+                        android:text="8. # OF PATIENTS BY NAT/STATUS"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv10"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/ll22">
+
+                        <CheckBox
+                            android:text="Coalition Mil."
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patientnatstatus_coalitionmil"
+                            android:layout_weight="1"
+                            android:textSize="10sp"
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
+
+                        <CheckBox
+                            android:text="Civilian with CF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patientnatstatus_civiliancf"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Non Coalition SF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patientnatstatus_noncoalitionsf"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/ll23">
+                        <CheckBox
+                            android:text="Non-Coalition Civilian"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patientnatstatus_noncoalitioncivil"
+                            android:layout_weight="1"
+                            android:textSize="10sp"
+                            android:buttonTint="@color/white"
+                            android:textColor="@color/white" />
+
+                        <CheckBox
+                            android:text="OP Forces/ PW/ Detainee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patientnatstatus_opforces"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+
+                        <CheckBox
+                            android:text="Child"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/patientnatstatus_child"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll24">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ll25">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/ll26">
+
+                        <TextView
+                            android:text="9. PZ TERRAIN/OBSTACLES"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv11"
+                            android:textColor="@color/white"
+                            android:layout_weight="1"
+                            android:textSize="12dp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:ems="10"
+                            android:id="@+id/et6"
+                            android:textColor="@color/white"
+                            android:textSize="10dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/ll27">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@color/white"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:textColor="@color/black"
+                    android:textSize="10dp"
+                    android:id="@+id/terrainobstacles"
+                    android:hint="Notes:" />
+
+                <Button
+                    android:text="Submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btSubmit"
+                    android:textAlignment="center"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

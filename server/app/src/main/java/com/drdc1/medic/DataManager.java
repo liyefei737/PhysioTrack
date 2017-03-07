@@ -7,10 +7,13 @@ import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.DatabaseOptions;
 import com.couchbase.lite.Document;
+import com.couchbase.lite.Emitter;
 import com.couchbase.lite.Manager;
+import com.couchbase.lite.Mapper;
 import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
+import com.couchbase.lite.View;
 import com.couchbase.lite.android.AndroidContext;
 
 import org.json.JSONArray;
@@ -110,6 +113,39 @@ public class DataManager {
 //            return false;
 //        }
 
+    }
+
+    //get active soldier, active soldier meaning soldiers that are currently being monitored
+
+    /***
+     *
+     * @return HashMap of Soldier name and id that are active in the database
+     */
+    public HashMap<String,String> getActiveSoldier() {
+        HashMap<String,String> activeSoldiers = new HashMap<>();
+        View view = _userInfoDB.getView("active");
+        if (view.getMap() == null) {
+            Mapper mapper = new Mapper() {
+                public void map(Map<String, Object> document, Emitter emitter) {
+                    String isActive = (String)document.get("active");
+                    if ("1".equals(isActive))
+                        emitter.emit(document.get("id"), document);
+                }
+            };
+            view.setMap(mapper, "1.0");
+        }
+        try {
+            QueryEnumerator result = view.createQuery().run();
+            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                QueryRow row = it.next();
+                String id = (String)row.getKey();
+                String name = (String) row.getDocumentProperties().get("name");
+                activeSoldiers.put(name,id);
+            }
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+        }
+        return activeSoldiers;
     }
 
     public boolean removeSoldier(String ID) {
