@@ -108,7 +108,12 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                if (mNavController.getCurrentStack().peek().getClass() == EditInfoFragment.class)
+                Class current = mNavController.getCurrentStack().peek().getClass();
+                if (current == HelpPageFragment.class) {
+                    mNavController.popFragment();
+                    current = mNavController.getCurrentStack().peek().getClass();
+                }
+                if (current == EditInfoFragment.class )
                     mNavController.popFragment();
                 switch (tabId) {
                     case R.id.bb_menu_heart:
@@ -346,6 +351,10 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
             System.out.println(intent.getAction());
             notifyObserver(data);
         }
+    }
+
+    public void onHelpOrSettingsBackPressed(View view){
+        onBackPressed();
     }
 }
 
