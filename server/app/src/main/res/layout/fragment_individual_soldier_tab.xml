@@ -12,26 +12,44 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchbar"
         android:layout_alignParentTop="true">
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="346dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
             android:id="@+id/layoutSearch">
 
 
-            <com.arlib.floatingsearchview.FloatingSearchView
-                android:id="@+id/searchBar"
-                android:layout_width="match_parent"
-                android:layout_height="85dp"
-                app:floatingSearch_close_search_on_keyboard_dismiss="true"
-                app:floatingSearch_leftActionMode="noLeftAction"
-                app:floatingSearch_searchHint="Search..."
-                app:floatingSearch_showSearchKey="false"
-                app:floatingSearch_suggestionsListAnimDuration="250" />
+            <LinearLayout
+                android:layout_width="480dp"
+                android:layout_height="53dp"
+                android:orientation="vertical">
+
+                <com.arlib.floatingsearchview.FloatingSearchView
+                    android:id="@+id/searchBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:floatingSearch_close_search_on_keyboard_dismiss="true"
+                    app:floatingSearch_leftActionMode="noLeftAction"
+                    app:floatingSearch_searchHint="Search..."
+                    app:floatingSearch_showSearchKey="false"
+                    app:floatingSearch_suggestionsListAnimDuration="250">
+
+                </com.arlib.floatingsearchview.FloatingSearchView>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/ibHelp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/black"
+                app:srcCompat="@drawable/ic_help2"
+                android:onClick="callHelp"/>
 
 
         </LinearLayout>
@@ -71,7 +89,7 @@
                         android:paddingBottom="24dp"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:layout_width="64dp"
+                        android:layout_width="124dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="0.03"/>
 

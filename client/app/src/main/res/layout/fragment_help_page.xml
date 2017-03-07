@@ -5,14 +5,29 @@
     tools:context="capstone.client.Fragments.HelpPageFragment"
     android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title_help"
-        android:textSize="@dimen/title_bar"
-        android:gravity="center"
-        android:textColor="@color/white"/>
+        android:layout_height="wrap_content">
 
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/black"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:src="@drawable/back_arrow"
+            android:tint="@color/white"
+            android:onClick="onHelpOrSettingsBackPressed"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_help"
+            android:textSize="@dimen/title_bar"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"

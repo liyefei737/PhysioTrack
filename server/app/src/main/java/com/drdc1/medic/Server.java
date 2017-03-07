@@ -6,6 +6,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -14,6 +15,7 @@ import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.UnsavedRevision;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,18 +75,18 @@ public class Server extends NanoHTTPD {
 
                 connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));
-                if (!dataManagermy.soldierInSystem(soldierID)) {
-                    Map<String, Object> infoMap = null;
-//                    infoMap.put("name", body.getString("name"));
-//                    infoMap.put("age", body.getString("age"));
-//                    infoMap.put("height", body.getString("height"));
-//                    infoMap.put("weight", body.getString("weight"));
-                    infoMap.put("name", "ddfgssdfg");
-                    infoMap.put("age", "33");
-                    infoMap.put("height", "170");
-                    infoMap.put("weight", "43");
 
-                    dataManagermy.addSoldier(soldierID, infoMap);
+                if (!dataManagermy.soldierInSystem(soldierID)) {
+                    Map<String, Object> soldierInfo = null;
+                    soldierInfo.put("name", body.getString("name"));
+                    soldierInfo.put("age", body.getString("age"));
+                    soldierInfo.put("id", soldierID);
+                    //1 indicates solider is currently being monitored and shows on namelist, 0 means inactive, not shown on namelist
+                    soldierInfo.put("active", 1);
+                    soldierInfo.put("height", body.getString("height"));
+                    soldierInfo.put("weight", body.getString("weight"));
+
+                    dataManagermy.addSoldier(soldierID, soldierInfo);
 
                     String url = "http://" + session.getHeaders().get("http-client-ip");
 
@@ -136,7 +138,7 @@ public class Server extends NanoHTTPD {
                     keyCal.set(2017, 02, 25);
                 }
                 Calendar nearestMinute =
-                        org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);
+                        DateUtils.round(keyCal, Calendar.MINUTE);
 
                 Database db = dataManagermy.getSoldierDB(soldierID);
                 Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
@@ -166,18 +168,15 @@ public class Server extends NanoHTTPD {
                     }
                 });
 
-            }
-//            else if (connectionlist.get(soldierID) !=
-//                    session.getHeaders().get("http-client-ip")) {
-//                connectionlist.put(soldierID,
-//                        session.getHeaders().get("http-client-ip"));
-//            }
+            } else if (connectionlist.get(soldierID) !=
+                    session.getHeaders().get("http-client-ip")) {
+               //update ip if ip changes for a soldier
+                connectionlist.put(soldierID,
+                        session.getHeaders().get("http-client-ip"));
+            } else {
 
-            else {
                 Log.d("sender", "Broadcasting message");
                 Intent intent = new Intent("custom-event-name");
-                // You can also include some extra data.
-//            intent.putExtra("message", "99999");
                 intent.putExtra("message", body.getString("ECG Heart Rate"));
                 LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
@@ -188,7 +187,7 @@ public class Server extends NanoHTTPD {
                     keyCal.set(2017, 02, 25);
                 }
                 Calendar nearestMinute =
-                        org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);
+                        DateUtils.round(keyCal, Calendar.MINUTE);
 
                 Database db = dataManagermy.getSoldierDB(soldierID);
                 Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
