@@ -34,7 +34,7 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                 android:id="@+id/ll2">
                     <com.arlib.floatingsearchview.FloatingSearchView
                         android:id="@+id/searchBar"
-                        android:layout_width="500dp"
+                        android:layout_width="480dp"
                         android:layout_height="53dp"
                         app:floatingSearch_close_search_on_keyboard_dismiss="true"
                         app:floatingSearch_leftActionMode="noLeftAction"
@@ -43,13 +43,12 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                         app:floatingSearch_suggestionsListAnimDuration="250">
                     </com.arlib.floatingsearchview.FloatingSearchView>
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     app:srcCompat="@drawable/ic_help2"
                     android:id="@+id/ibHelp"
-                    android:layout_weight="1"
                     android:background="@android:color/black"
-                    android:layout_marginLeft="0dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:onClick="callHelp" />
 
