@@ -43,7 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/searchbar"
-        android:id="@+id/soldierInfo">
+        android:id="@+id/soldierInfo"
+        android:weightSum="1">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -199,17 +200,17 @@
             android:layout_height="100dp"
             android:weightSum="1">
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.drdc1.medic.LineChartWithBackground
                 android:id="@+id/hrrchart"
                 android:layout_width="150dp"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="150dp"
+                android:layout_weight="0.62"/>
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.drdc1.medic.LineChartWithBackground
                 android:id="@+id/resprchart"
                 android:layout_width="141dp"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="155dp"
+                android:layout_weight="0.60"/>
         </LinearLayout>
 
         <LinearLayout
@@ -217,36 +218,39 @@
             android:layout_width="match_parent"
             android:layout_height="79dp"
             android:id="@+id/layoutGraphsBottom"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:layout_weight="1.20">
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.drdc1.medic.LineChartWithBackground
                 android:id="@+id/skinrchart"
                 android:layout_width="150dp"
-                android:layout_height="75dp"
-                />
+                android:layout_height="130dp"
+                android:layout_weight="0.63"/>
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.drdc1.medic.LineChartWithBackground
                 android:id="@+id/ctrchart"
                 android:layout_width="143dp"
-                android:layout_height="match_parent"
+                android:layout_height="126dp"
                 android:layout_weight="0.61"/>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="67dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:id="@+id/layoutButton">
+            android:id="@+id/layoutButton"
+            android:weightSum="1">
 
             <Button
                 android:text="9 Liner Request"
-                android:layout_width="wrap_content"
+                android:layout_width="91dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/btLinerRequest"
                 android:layout_gravity="center"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:layout_weight="0.20"/>
         </LinearLayout>
 
     </LinearLayout>

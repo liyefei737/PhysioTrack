@@ -1,5 +1,6 @@
 package com.drdc1.medic;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -34,16 +35,19 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class Server extends NanoHTTPD {
 
-    static private DataManager dataManager;
+    static private DataManager dataManagermy;
     private static SimpleDateFormat keyFormat = new SimpleDateFormat("02/25/2017 HH:mm:SS.sss");
     static Map connectionlist = new HashMap();
+    private Squad squad;
 
     public Server(int port, DataManager dataManager) {
         super(port);
+        dataManagermy = dataManager;
     }
 
     @Override
     public Response serve(IHTTPSession session) {
+        squad = Squad.getInstance();
         Log.i(this.getClass().getSimpleName(), "request type: " + session.getMethod());
         final Map<String, String> map = new HashMap<>();
         try {
@@ -69,14 +73,18 @@ public class Server extends NanoHTTPD {
 
                 connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));
-                if (!dataManager.soldierInSystem(soldierID)) {
+                if (!dataManagermy.soldierInSystem(soldierID)) {
                     Map<String, Object> infoMap = null;
-                    infoMap.put("name", body.getString("name"));
-                    infoMap.put("age", body.getString("age"));
-                    infoMap.put("height", body.getString("height"));
-                    infoMap.put("weight", body.getString("weight"));
+//                    infoMap.put("name", body.getString("name"));
+//                    infoMap.put("age", body.getString("age"));
+//                    infoMap.put("height", body.getString("height"));
+//                    infoMap.put("weight", body.getString("weight"));
+                    infoMap.put("name", "ddfgssdfg");
+                    infoMap.put("age", "33");
+                    infoMap.put("height", "170");
+                    infoMap.put("weight", "43");
 
-                    dataManager.addSoldier(soldierID, infoMap);
+                    dataManagermy.addSoldier(soldierID, infoMap);
 
                     String url = "http://" + session.getHeaders().get("http-client-ip");
 
@@ -130,7 +138,7 @@ public class Server extends NanoHTTPD {
                 Calendar nearestMinute =
                         org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);
 
-                Database db = dataManager.getSoldierDB(soldierID);
+                Database db = dataManagermy.getSoldierDB(soldierID);
                 Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
 
                 doc.update(new Document.DocumentUpdater() {
@@ -158,11 +166,14 @@ public class Server extends NanoHTTPD {
                     }
                 });
 
-            } else if (connectionlist.get(soldierID) !=
-                    session.getHeaders().get("http-client-ip")) {
-                connectionlist.put(soldierID,
-                        session.getHeaders().get("http-client-ip"));
-            } else {
+            }
+//            else if (connectionlist.get(soldierID) !=
+//                    session.getHeaders().get("http-client-ip")) {
+//                connectionlist.put(soldierID,
+//                        session.getHeaders().get("http-client-ip"));
+//            }
+
+            else {
                 Log.d("sender", "Broadcasting message");
                 Intent intent = new Intent("custom-event-name");
                 // You can also include some extra data.
@@ -179,7 +190,7 @@ public class Server extends NanoHTTPD {
                 Calendar nearestMinute =
                         org.apache.commons.lang3.time.DateUtils.round(keyCal, Calendar.MINUTE);
 
-                Database db = dataManager.getSoldierDB(soldierID);
+                Database db = dataManagermy.getSoldierDB(soldierID);
                 Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
 
                 doc.update(new Document.DocumentUpdater() {

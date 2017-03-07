@@ -40,7 +40,6 @@ public class BackgroundServer extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        _backgroundServer = this;
 
     }
 
