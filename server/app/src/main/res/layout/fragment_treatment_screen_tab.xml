@@ -40,7 +40,7 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                     android:id="@+id/ibHelp"
                     android:layout_weight="1"
                     android:background="@android:color/black"
-                    android:layout_marginLeft="500dp"
+                    android:layout_marginLeft="460dp"
                     android:layout_marginBottom="10dp"
                     android:onClick="callHelp" />
 
@@ -64,7 +64,7 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/tv1"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/inactivetab"
                         android:textSize="16dp"
                         android:layout_marginTop="10dp"
                         android:layout_weight="1" />
@@ -74,17 +74,17 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                         android:layout_height="wrap_content"
                         android:id="@+id/tv4"
                         android:layout_weight="1"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/inactivetab"
                         android:textSize="16dp"
                         android:layout_marginTop="14dp"
                         android:text="2. CALL SIGN and FREQ                              :" />
 
                     <TextView
-                        android:text="3. #OF PATIENTS/PRECEDENCE                 :"
+                        android:text="3. #OF PATIENTS/PRECEDENCE                :"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/tv5"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/inactivetab"
                         android:textSize="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_weight="1" />
@@ -95,6 +95,7 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginTop="10dp"
                     android:id="@+id/ll6">
 
                     <EditText
@@ -104,7 +105,9 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                         android:ems="10"
                         android:id="@+id/location"
                         android:textColor="@color/white"
-                        android:textSize="10dp"
+                        android:background="@drawable/bottomborder"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18dp"
                         android:layout_weight="1" />
 
                     <EditText
@@ -114,7 +117,10 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                         android:ems="10"
                         android:id="@+id/callsign_freq"
                         android:textColor="@color/white"
-                        android:textSize="10dp"
+                        android:background="@drawable/bottomborder"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18dp"
                         android:layout_weight="1" />
 
                     <EditText
@@ -124,7 +130,10 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                         android:ems="10"
                         android:id="@+id/number_patient"
                         android:textColor="@color/white"
-                        android:textSize="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bottomborder"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18dp"
                         android:layout_weight="1" />
                 </LinearLayout>
 
@@ -135,36 +144,35 @@ tools:context="com.drdc1.medic.TreatmentScreenTab">
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/ll5">
-
                 <CheckBox
-                    android:text="URGENT (90 min. Save LLE)"
+                    android:text=" URGENT (90 min. Save LLE)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check"
                     android:id="@+id/precedence_urgent"
                     android:layout_weight="1"
-                    android:textColor="@color/white"
-                    android:buttonTint="@color/white"
-                    android:textSize="10sp" />
+                    android:textColor="@color/inactivetab"
+                    android:textSize="14sp" />
 
                 <CheckBox
-                    android:text="PRIORITY (4 hours)"
+                    android:text=" PRIORITY (4 hours)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/precedence_priority"
+                    android:button="@drawable/check"
                     android:layout_weight="1"
-                    android:textColor="@color/white"
-                    android:buttonTint="@color/white"
-                    android:textSize="10sp" />
+                    android:textColor="@color/inactivetab"
+                    android:textSize="14sp" />
 
                 <CheckBox
-                    android:text="ROUTINE (24 hours)"
+                    android:text=" ROUTINE (24 hours)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/precedence_routine"
                     android:layout_weight="1"
-                    android:textColor="@color/white"
-                    android:buttonTint="@color/white"
-                    android:textSize="10sp" />
+                    android:button="@drawable/check"
+                    android:textColor="@color/inactivetab"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
