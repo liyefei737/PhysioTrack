@@ -17,7 +17,8 @@
         android:layout_marginRight="30dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        app:srcCompat="@drawable/ic_help2" />
+        app:srcCompat="@drawable/ic_help2"
+        android:onClick="callHelp"/>
 
     <ListView
         android:id="@+id/soldierList"
