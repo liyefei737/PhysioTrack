@@ -18,5 +18,8 @@
     <string name="kgs">kgs</string>
     <string name="cm">cm</string>
     <string name="yrs">years</string>
+    <string name="title_activity_setup">SetupActivity</string>
+    <string name="previously_started">startedAlready</string>
+    <string name="update_action">UI_UPDATE</string>
 
 </resources>

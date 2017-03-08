@@ -24,6 +24,7 @@ public class EditTextHandler {
             et.setFocusableInTouchMode(true);
             et.setTextAlignment(rightAlign);
             et.setBackgroundResource(R.drawable.edit_bg);
+            et.setHint("");
 
         }
     }
@@ -36,6 +37,7 @@ public class EditTextHandler {
             et.setFocusableInTouchMode(false);
             et.setTextAlignment(centerAlign);
             et.setBackground(null);
+
         }
     }
 

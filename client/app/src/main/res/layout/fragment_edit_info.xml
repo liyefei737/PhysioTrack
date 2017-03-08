@@ -20,7 +20,8 @@
         android:scaleY="0.75"
         android:src="@drawable/back_arrow"
         android:tint="@color/white"
-        android:onClick="onHelpOrSettingsBackPressed"/>
+        android:onClick="onHelpOrSettingsBackPressed"
+        android:id="@+id/back_arrow"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +32,17 @@
             />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/welcome_Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/black"
+        android:text="Enter your info to get started:"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:visibility="invisible" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +53,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="0dp"
             android:src="@drawable/white_user_2" />
 
         <RelativeLayout
@@ -216,7 +228,7 @@
             android:id="@+id/btCancel"
             android:layout_weight="1"
             android:visibility="invisible"
-            android:onClick="cancel_info"
+            android:onClick="edit_info_cancel"
             android:textColor="@color/black"
             android:background="@drawable/btn_save_cancel"/>
     </LinearLayout>

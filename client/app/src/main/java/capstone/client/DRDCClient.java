@@ -3,6 +3,7 @@ package capstone.client;
 import android.app.Application;
 
 import welfareSM.WelfareStatus;
+import welfareSM.WelfareTracker;
 
 /**
  * Created by Grace on 2017-01-21.
@@ -70,5 +71,15 @@ public class DRDCClient extends Application {
         if (ct != null)
             if (!ct.isEmpty())
                 lastCoreTemp = ct;
+    }
+
+    private WelfareTracker welfareTracker = new WelfareTracker();
+
+    public WelfareTracker getWelfareTracker(){
+        return welfareTracker;
+    }
+
+    public void setWelfareTracker(WelfareTracker wt){
+        welfareTracker = wt;
     }
 }

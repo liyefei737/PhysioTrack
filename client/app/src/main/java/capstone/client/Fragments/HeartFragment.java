@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import capstone.client.BackgroundServices.BackgroundUIUpdator;
+import capstone.client.DRDCClient;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
 import capstone.client.R;
@@ -20,6 +22,7 @@ import capstone.client.ViewTools.LineChartWithBackground;
 
 public class HeartFragment extends capstone.client.Fragments.BaseFragment implements DataObserver {
     private LineChartWithBackground lineChart;
+    private LineData lineData;
     private capstone.client.Activities.BottomBarActivity bottomBarActivity;
     private static float heartMin = 0;
     private static float heartMax = 200;
@@ -41,7 +44,7 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
-        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
         View view = inflater.inflate(R.layout.fragment_heart, container, false);
         return view;
     }
@@ -76,8 +79,13 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
         for (int i = 0; i < arrLength ; i++) {
             entries.add(new Entry(i, heartRates[arrLength - 1 - i]));
         }
-        float [] zoneLimits = {60, 40, 5, 1};
-        LineChartWithBackground.formatUpdateLineChart(getResources(),lineChart, entries, heartMin, heartMax, zoneLimits);
+        boolean frag_create = (boolean)data.get("frag_create");
+        if (frag_create) {
+            List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getHrRangeObj();
+            lineData = lineChart.formatUpdateLineChart(getResources(), entries, lineData, heartMin, heartMax, zoneLimits);
+        }
+        else
+            lineData = lineChart.updateData(entries, lineData);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package welfareSM;
 
 public enum WelfareStatus {
-	GREY, 	//NO INFO
-	RED, 	//BAD
+	GREEN,	//GOOD
 	YELLOW, //MEDIUM
-	GREEN;	//GOOD
+	RED, 	//BAD
+	GREY; 	//NO INFO
 }

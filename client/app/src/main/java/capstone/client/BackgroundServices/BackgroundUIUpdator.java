@@ -22,6 +22,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import capstone.client.DataManagement.DBManager;
+import capstone.client.R;
 
 import static welfareSM.WelfareStatus.GREY;
 
@@ -76,10 +77,10 @@ public class BackgroundUIUpdator extends Service {
     }
 
     public void updateDataAndBroadcast(){
-        updateDataAndBroadcast(dbManager, getApplicationContext());
+        updateDataAndBroadcast(dbManager, getApplicationContext(), false);
     }
 
-    public static void updateDataAndBroadcast(DBManager dbManager, Context context){
+    public static void updateDataAndBroadcast(DBManager dbManager, Context context, boolean from_fragment_create){
         int num_data_pts = 10;
         float [] coreTemp = new float[num_data_pts];
         float [] skinTemp = new float[num_data_pts];
@@ -112,7 +113,11 @@ public class BackgroundUIUpdator extends Service {
 
             }
             Intent i = new Intent();
-            i.setAction("UI_UPDATE");
+            i.setAction(context.getString(R.string.update_action));
+            if (from_fragment_create)
+                i.putExtra("frag_create", true);
+            else
+                i.putExtra("frag_create", false);
             i.putExtra("coreTemp", coreTemp);
             i.putExtra("skinTemp", skinTemp);
             i.putExtra("br", br);

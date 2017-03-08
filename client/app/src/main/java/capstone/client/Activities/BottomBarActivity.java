@@ -13,13 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
-import com.couchbase.lite.CouchbaseLiteException;
-import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.UnsavedRevision;
 import com.ncapdevi.fragnav.FragNavController;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
@@ -27,13 +21,11 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
 import capstone.client.DataManagement.FragmentDataManager;
-import capstone.client.DataManagement.Soldier;
 import capstone.client.Fragments.BaseFragment;
 import capstone.client.Fragments.BreathFragment;
 import capstone.client.Fragments.CoreTempFragment;
@@ -43,10 +35,6 @@ import capstone.client.Fragments.HelpPageFragment;
 import capstone.client.Fragments.HomeFragment;
 import capstone.client.Fragments.SkinTempFragment;
 import capstone.client.R;
-import capstone.client.ViewTools.EditTextHandler;
-
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 
 
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation,
@@ -101,7 +89,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         data = new HashMap();
         fragmentlist = new ArrayList<>();
 
-        IntentFilter UPDATEDATA = new IntentFilter("UI_UPDATE");
+        IntentFilter UPDATEDATA = new IntentFilter(getString(R.string.update_action));
         dataReceiver = new DataReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(dataReceiver, UPDATEDATA);
 
@@ -216,91 +204,16 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         pushFragment(new HelpPageFragment());
     }
 
-    public void cancel_info(View view) {
-        Button savebtn = (Button) findViewById(R.id.btSave);
-        Button cancelbtn = (Button) findViewById(R.id.btCancel);
-        savebtn.setVisibility(INVISIBLE);
-        cancelbtn.setVisibility(INVISIBLE);
-
-        List<EditText> etList = new ArrayList<>();
-        etList.add((EditText) findViewById(R.id.etSoldierId));
-        etList.add((EditText) findViewById(R.id.etAge));
-        etList.add((EditText) findViewById(R.id.etWeight));
-        etList.add((EditText) findViewById(R.id.etHeight));
-
-        EditTextHandler.disableAndFormat(etList);
-        EditTextHandler.setSoldierFields(dbManager.getSoldierDetails(), etList.get(0), etList.get(1), etList.get(2), etList.get(3));
+    public void edit_info_cancel(View view) {
+        EditInfoFragment.edit_info_cancel(this, dbManager);
     }
 
     public void edit_info_save(View view) {
-        final Button btnSave = (Button) findViewById(R.id.btSave);
-        final Button cancelbtn = (Button) findViewById(R.id.btCancel);
-        List<EditText> etList = new ArrayList<>();
-
-        Soldier soldier = dbManager.getSoldierDetails();
-        Database userDB = dbManager.getDatabase(dbManager.USER_DB);
-
-        EditText id = (EditText) findViewById(R.id.etSoldierId);
-        final String newId = id.getText().toString();
-        etList.add(id);
-
-        EditText age = (EditText) findViewById(R.id.etAge);
-        final String newAge = age.getText().toString();
-        etList.add(age);
-
-        EditText weight = (EditText) findViewById(R.id.etWeight);
-        final String newWeight = weight.getText().toString();
-        etList.add(weight);
-
-        EditText height = (EditText) findViewById(R.id.etHeight);
-        final String newHeight = height.getText().toString();
-        etList.add(height);
-
-        if (soldier != null && newId != soldier.getSoldierID()){
-            //delete old doc
-            Document doc = userDB.getDocument(soldier.getSoldierID());
-            try {
-                doc.delete();
-            }catch (CouchbaseLiteException e){
-
-            }
-        }
-        Document doc = userDB.getDocument(newId);
-        try {
-            doc.update(new Document.DocumentUpdater() {
-                @Override
-                public boolean update(UnsavedRevision newRevision) {
-                    Map<String, Object> properties = newRevision.getUserProperties();
-                    properties.put(dbManager.ID_KEY, newId);
-                    properties.put(dbManager.AGE_KEY, newAge);
-                    properties.put(dbManager.WEIGHT_KEY, newWeight);
-                    properties.put(dbManager.HEIGHT_KEY, newHeight);
-                    newRevision.setUserProperties(properties);
-                    btnSave.setVisibility(View.INVISIBLE);
-                    cancelbtn.setVisibility(View.INVISIBLE);
-                    return true;
-                }
-            });
-        } catch (CouchbaseLiteException e) {
-
-        }
-
-        EditTextHandler.disableAndFormat(etList);
+        EditInfoFragment.edit_info_save(view, this, dbManager);
     }
 
     public void edit_fields(View view) {
-        Button savebtn = (Button) findViewById(R.id.btSave);
-        Button cancelbtn = (Button) findViewById(R.id.btCancel);
-        savebtn.setVisibility(VISIBLE);
-        cancelbtn.setVisibility(VISIBLE);
-
-        List<EditText> etList = new ArrayList<>();
-        etList.add((EditText) findViewById(R.id.etSoldierId));
-        etList.add((EditText) findViewById(R.id.etAge));
-        etList.add((EditText) findViewById(R.id.etWeight));
-        etList.add((EditText) findViewById(R.id.etHeight));
-
-        EditTextHandler.enableAndFormat(etList);
+        EditInfoFragment.edit_fields(this);
     }
 
 
@@ -347,6 +260,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
             data.put("coreTemp", intent.getFloatArrayExtra("coreTemp"));
             data.put("br", intent.getIntArrayExtra("br"));
             data.put("hr", intent.getIntArrayExtra("hr"));
+            data.put("frag_create", intent.getBooleanExtra("frag_create", false));
             System.out.println("receiving...");
             System.out.println(intent.getAction());
             notifyObserver(data);
@@ -354,6 +268,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     }
 
     public void onHelpOrSettingsBackPressed(View view){
+        //TODO:if editing and back go to not editing
         onBackPressed();
     }
 }

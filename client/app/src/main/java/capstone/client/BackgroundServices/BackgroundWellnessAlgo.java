@@ -23,7 +23,7 @@ import java.util.TimerTask;
 
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DRDCClient;
-import welfareSM.IndividualWelfareTracker;
+import welfareSM.WelfareTracker;
 import welfareSM.WelfareStatus;
 
 /**
@@ -99,12 +99,12 @@ public class BackgroundWellnessAlgo extends Service {
     }
 
     public void calculateWellness() {
-        IndividualWelfareTracker iwt = new IndividualWelfareTracker();
+        WelfareTracker wt = ((DRDCClient) this.getApplication()).getWelfareTracker();
         Database userDB = dbManager.getDatabase(dbManager.DATA_DB);
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); //hardcode for datasim
         JSONArray last5Minutes = dbManager.QueryLastXMinutes(now, 5);
-        final WelfareStatus nextState = iwt.calculateWelfareStatus(last5Minutes);
+        final WelfareStatus nextState = wt.calculateWelfareStatus(last5Minutes);
         Calendar nearestMinute = org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
         Document saveStateDoc = userDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
         try {

@@ -2,7 +2,6 @@ package welfareSM;
 
 import static welfareSM.WelfareStatus.*;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -10,28 +9,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class IndividualWelfareTracker {
+public class WelfareTracker {
 	private HashMap<String, WelfareStatus> currentStateMap;
 	private HashMap<String, WelfareStatus> prevStateMap;
-	private List<Integer> hrRange, brRange;
-	private List<Float> stRange, ctRange;
+	private WelfareAlgoParams wap;
 	private String OVERALL = "OVERALL";
 	private String HR = "HEART";
 	private String BR = "BREATH";
 	private String ST = "SKIN";
 	private String CT = "CORE";
 	
-	public IndividualWelfareTracker()
+	public WelfareTracker()
 	{
 		initStateMaps();
-		setPhysioParamThresholds(Arrays.asList(30, 40, 70, 100),Arrays.asList(12, 18),
-				Arrays.asList(35.0f, 36.0f,37.8f, 39.0f),Arrays.asList(25.0f, 32.0f,36.0f, 37.0f));
+		wap = new WelfareAlgoParams();
 	}
 	
-	public IndividualWelfareTracker(List<Integer> customHRRange, List<Integer> customBRRange, 
+	public WelfareTracker(List<Integer> customHRRange, List<Integer> customBRRange, 
 			List<Float> customSTRange, List<Float> customCTRange){
 		initStateMaps();
-		setPhysioParamThresholds(customHRRange, customBRRange, customSTRange, customCTRange);
+		wap = new WelfareAlgoParams(customHRRange, 0.25, customBRRange, 0.25, customSTRange, 0.25, customCTRange, 0.25);
+	}
+	
+	public WelfareTracker(List<Integer> customHRRange, double heartWeight, List<Integer> customBRRange, double breathWeight, 
+			List<Float> customSTRange, double skinWeight, List<Float> customCTRange, double coreWeight){
+		initStateMaps();
+		wap = new WelfareAlgoParams(customHRRange, heartWeight, customBRRange, breathWeight, customSTRange, skinWeight, customCTRange, coreWeight);
 	}
 	
 	private void initStateMaps(){
@@ -50,10 +53,12 @@ public class IndividualWelfareTracker {
 	}
 	
 	public void setPhysioParamThresholds(List<Integer> heartRateRange, List<Integer> breathRateRange, List<Float> skinTempRange, List<Float> coreTempRange ){
-		hrRange = heartRateRange;
-		brRange = breathRateRange;
-		stRange = skinTempRange;
-		ctRange = coreTempRange;
+		wap.setPhysioParamThresholds(heartRateRange, breathRateRange, skinTempRange, coreTempRange);
+		
+	}
+	
+	public void setPhysioParamThresholds(WelfareAlgoParams welfareAP){
+		wap = welfareAP;
 	}
 	
 	public WelfareStatus calculateWelfareStatus(JSONArray lastXsecondsData){
@@ -145,6 +150,7 @@ public class IndividualWelfareTracker {
 	
 	public WelfareStatus getHeartStatus(int heartRate){
 		prevStateMap.put(HR, currentStateMap.get(HR));
+		List<Integer> hrRange = wap.getHrRange();
 		WelfareStatus next;
 		if (heartRate <= 0)
 			next = GREY;
@@ -158,8 +164,13 @@ public class IndividualWelfareTracker {
 		return next;
 	}
 	
+	public WelfareStatus getHeartStatus(){
+		return currentStateMap.get(HR);
+	}
+	
 	public WelfareStatus getBreathStatus(int breathRate){
 		prevStateMap.put(BR, currentStateMap.get(BR));
+		List<Integer> brRange = wap.getBrRange();
 		WelfareStatus next;
 		if (breathRate <= 0)
 			next = GREY;
@@ -171,9 +182,13 @@ public class IndividualWelfareTracker {
 		return next;
 	}
 	
+	public WelfareStatus getBreathStatus(){
+		return currentStateMap.get(BR);
+	}
+	
 	public WelfareStatus getSkinStatus(float skinTemp){
-		//possibly include rate of change?
 		prevStateMap.put(ST, currentStateMap.get(ST));
+		List<Float> stRange = wap.getStRange();
 		WelfareStatus next;
 		if (skinTemp <= 0)
 			next = GREY;
@@ -187,9 +202,13 @@ public class IndividualWelfareTracker {
 		return next;
 	}
 	
+	public WelfareStatus getSkinStatus(){
+		return currentStateMap.get(ST);
+	}
+	
 	public WelfareStatus getCoreStatus(float coreTemp){
-		//possibly include rate of change?
 		prevStateMap.put(CT, currentStateMap.get(CT));
+		List<Float> ctRange = wap.getCtRange();
 		WelfareStatus next;
 		if (coreTemp <= 15)
 			next = GREY;
@@ -201,5 +220,15 @@ public class IndividualWelfareTracker {
 			next = GREEN;
 		currentStateMap.put(CT, next);
 		return next;
-	}	
+	}
+	
+	public WelfareStatus getCoreStatus(){
+		return currentStateMap.get(CT);
+	}
+	
+	public WelfareAlgoParams getWAP(){
+		return wap;
+	}
+	
+	
 }

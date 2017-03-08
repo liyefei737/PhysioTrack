@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 import capstone.client.Activities.BottomBarActivity;
 import capstone.client.BackgroundServices.BackgroundUIUpdator;
+import capstone.client.DRDCClient;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
 import capstone.client.R;
@@ -22,6 +24,7 @@ import capstone.client.ViewTools.LineChartWithBackground;
 
 public class BreathFragment extends capstone.client.Fragments.BaseFragment implements DataObserver {
     private LineChartWithBackground lineChart;
+    private LineData lineData;
     private BottomBarActivity bottomBarActivity;
     private static float breathMin = 0;
     private static float breathMax = 70;
@@ -42,7 +45,7 @@ public class BreathFragment extends capstone.client.Fragments.BaseFragment imple
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
-        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
         View view = inflater.inflate(R.layout.fragment_breath, container, false);
         return view;
     }
@@ -79,8 +82,13 @@ public class BreathFragment extends capstone.client.Fragments.BaseFragment imple
         for (int i = 0; i < arrLength ; i++) {
             entries.add(new Entry(i, breathRates[arrLength - 1 - i]));
         }
-        float [] zoneLimits = {60, 40, 5, 1};
-        LineChartWithBackground.formatUpdateLineChart(getResources(),lineChart, entries, breathMin, breathMax, zoneLimits);
+        boolean frag_create = (boolean)data.get("frag_create");
+        if (frag_create) {
+            List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getBrRangeObj();
+            lineData = lineChart.formatUpdateLineChart(getResources(), entries, lineData, breathMin, breathMax, zoneLimits);
+        }
+        else
+            lineData = lineChart.updateData(entries, lineData);
     }
 
     @Override

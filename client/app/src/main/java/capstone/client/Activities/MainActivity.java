@@ -1,7 +1,9 @@
 package capstone.client.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import capstone.client.BackgroundServices.BackgroundDataSim;
@@ -34,13 +36,26 @@ public class MainActivity extends AppCompatActivity {
         wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
         startService(wellnessAlgo);
 
-        Intent mainActivity = new Intent(MainActivity.this, BottomBarActivity.class);
-        startActivity(mainActivity);
-
         Intent uiUpdator = new Intent();
         uiUpdator.setClass(this, BackgroundUIUpdator.class);
         startService(uiUpdator);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean previouslyStarted = prefs.getBoolean(getString(R.string.previously_started), false);
+        if(!previouslyStarted) {
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(getString(R.string.previously_started), Boolean.TRUE);
+            edit.commit();
+            startActivity(new Intent(MainActivity.this, SetupActivity.class));
+        }
+        else
+            startActivity(new Intent(MainActivity.this, BottomBarActivity.class));
+
+        finish();
+
+
     }
+
+
 
 }
