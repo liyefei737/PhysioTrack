@@ -234,14 +234,14 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void notifyObserver(Map data) {
-        mBottomBar.setBackgroundColor(getApplicationContext().getColor(R.color.colorAccent));
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mBottomBar.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
-            }
-        }, 100);
+//        mBottomBar.setBackgroundColor(getApplicationContext().getColor(R.color.colorAccent));
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mBottomBar.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
+//            }
+//        }, 100);
 
         for (DataObserver observer : fragmentlist) {
 

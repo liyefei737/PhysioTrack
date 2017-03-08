@@ -16,6 +16,7 @@ import com.couchbase.lite.QueryRow;
 import com.couchbase.lite.View;
 import com.couchbase.lite.android.AndroidContext;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,6 +26,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import welfareSM.IndividualWelfareTracker;
 
@@ -118,18 +120,18 @@ public class DataManager {
     //get active soldier, active soldier meaning soldiers that are currently being monitored
 
     /***
-     *
      * @return HashMap of Soldier name and id that are active in the database
      */
-    public HashMap<String,String> getActiveSoldier() {
-        HashMap<String,String> activeSoldiers = new HashMap<>();
+    public HashMap<String, String> getActiveSoldier() {
+        HashMap<String, String> activeSoldiers = new HashMap<>();
         View view = _userInfoDB.getView("active");
         if (view.getMap() == null) {
             Mapper mapper = new Mapper() {
                 public void map(Map<String, Object> document, Emitter emitter) {
-                    String isActive = (String)document.get("active");
-                    if ("1".equals(isActive))
+                    String isActive = (String) document.get("active");
+                    if ("1".equals(isActive)) {
                         emitter.emit(document.get("id"), document);
+                    }
                 }
             };
             view.setMap(mapper, "1.0");
@@ -138,9 +140,9 @@ public class DataManager {
             QueryEnumerator result = view.createQuery().run();
             for (Iterator<QueryRow> it = result; it.hasNext(); ) {
                 QueryRow row = it.next();
-                String id = (String)row.getKey();
+                String id = (String) row.getKey();
                 String name = (String) row.getDocumentProperties().get("name");
-                activeSoldiers.put(name,id);
+                activeSoldiers.put(name, id);
             }
         } catch (CouchbaseLiteException e) {
             e.printStackTrace();
@@ -238,6 +240,8 @@ public class DataManager {
 
     public Database getSoldierDB(String ID) {
         if (soldierInSystem(ID)) {
+            Database physioDB = openDatabase(ID);
+            _physioDataDBMap.put(ID, physioDB);
             return _physioDataDBMap.get(ID);
         }
         return null;
@@ -278,28 +282,33 @@ public class DataManager {
     }
 
     public JSONArray QueryLastXMinutes(String ID, Calendar now, int minutes) {
-        JSONArray lastXseconds = new JSONArray();
-        Query query = getSoldierDB(ID).createAllDocumentsQuery();
-        Calendar nearestMinute =
-                org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
-        query.setDescending(true);
-        String startKey = String.valueOf(nearestMinute.getTimeInMillis());
-        String endKey = String.valueOf(nearestMinute.getTimeInMillis() -
-                android.text.format.DateUtils.MINUTE_IN_MILLIS * minutes);
 
+        JSONArray lastXseconds = new JSONArray();
+        Calendar nearestMinute = DateUtils.round(now, Calendar.MINUTE);
         try {
-            query.setEndKey(endKey);
-            query.setStartKey(startKey);
-            QueryEnumerator result = query.run();
-            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
-                QueryRow row = it.next();
-                Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
-                if (tmpMap.size() > 3) {
-                    lastXseconds.put(new JSONObject(tmpMap));
+            Query query = getSoldierDB(ID).createAllDocumentsQuery();
+            query.setDescending(true);
+            String startKey = String.valueOf(nearestMinute.getTimeInMillis());
+            String endKey = String.valueOf(nearestMinute.getTimeInMillis() -
+                    android.text.format.DateUtils.MINUTE_IN_MILLIS * minutes);
+
+            try {
+                query.setEndKey(endKey);
+                query.setStartKey(startKey);
+                QueryEnumerator result = query.run();
+                for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                    QueryRow row = it.next();
+                    Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
+                    if (tmpMap.size() > 3) {
+                        lastXseconds.put(new JSONObject(tmpMap));
+                    }
                 }
+            } catch (CouchbaseLiteException e) {
+                //handle this
             }
-        } catch (CouchbaseLiteException e) {
-            //handle this
+            return lastXseconds;
+        } catch (Exception E) {
+
         }
         return lastXseconds;
     }

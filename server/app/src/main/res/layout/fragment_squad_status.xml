@@ -22,10 +22,10 @@
 
 
     <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@color/black"
-        app:srcCompat="@drawable/ic_help2"
+        app:srcCompat="@drawable/help4"
         android:id="@+id/ibHelp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"

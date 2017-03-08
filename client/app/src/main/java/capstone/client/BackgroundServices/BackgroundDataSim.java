@@ -124,7 +124,7 @@ public class BackgroundDataSim extends Service {
                 });
             }
         };
-        timer.schedule(doDataSimCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
+        timer.schedule(doDataSimCallback, 0, DateUtils.SECOND_IN_MILLIS*3); //execute every minute
 
         // Keep service around "sticky"
         return START_STICKY;

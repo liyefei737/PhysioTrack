@@ -43,12 +43,12 @@
 
             <ImageButton
                 android:id="@+id/ibHelp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:background="@color/black"
-                app:srcCompat="@drawable/ic_help2"
+                app:srcCompat="@drawable/help4"
                 android:onClick="callHelp"/>
 
 
@@ -61,96 +61,90 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/searchbar"
-        android:id="@+id/soldierInfo">
+        android:id="@+id/soldierInfo"
+        android:weightSum="1">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="116dp"
+            android:layout_height="wrap_content"
             android:weightSum="1">
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="183dp"
-                android:layout_height="113dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:weightSum="1"
                 android:layout_weight="1">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:text="Soldier Name :"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:id="@+id/tvSoldierName"
-                        android:paddingBottom="24dp"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:layout_width="124dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="0.03"/>
-
+                        android:textSize="18dp"
+                        android:layout_width="wrap_content"/>
                     <TextView
-                        android:text="TextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="380dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:id="@+id/NameNonEditable"
-                        android:layout_weight="1"/>
-
+                        android:background="@drawable/bottomborder"
+                        android:textSize="18dp"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp">
                     <TextView
-                        android:text="Gender:"
+                        android:text="Gender            :"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:id="@+id/tvGender"
-                        android:paddingBottom="10dp"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:layout_weight="0.05"/>
+                        android:textSize="18dp" />
 
                     <TextView
                         android:text="TextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="380dp"
+                        android:layout_height="wrap_content"
                         android:id="@+id/GenderNonEditable"
-                        android:layout_weight="1"/>
+                        android:background="@drawable/bottomborder"
+                        android:textSize="18dp" />
 
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="107dp"
-                android:layout_height="match_parent"
                 android:id="@+id/layoutGender"
-                >
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Age :"
+                    android:id="@+id/tvAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tvAge"
+                    android:text="Age :"
                     android:textColor="@color/white"
-                    android:layout_marginTop="20dp"
-                    android:textSize="@dimen/fontsize3"
-                    android:textAlignment="center" />
+                    android:textSize="@dimen/fontsize3" />
 
                 <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="54dp"
                     android:id="@+id/AgeNonEditable"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottomborder"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
 
             </LinearLayout>
 
@@ -160,6 +154,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:id="@+id/layoutBody">
 
             <TextView
@@ -170,7 +165,7 @@
                 android:id="@+id/tvBody"
                 android:layout_weight="1.80"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fontsize3"/>
+                android:textSize="18dp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -213,50 +208,50 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/layoutGraphsUpper"
-            android:layout_height="100dp"
             android:weightSum="1">
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.drdc1.medic.LineChartWithBackground
                 android:id="@+id/hrrchart"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                />
+                android:layout_width="140dp"
+                android:layout_height="200dp"
+                android:layout_weight="0.5"/>
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.drdc1.medic.LineChartWithBackground
                 android:id="@+id/resprchart"
-                android:layout_width="141dp"
-                android:layout_height="match_parent"
-                />
+                android:layout_width="140dp"
+                android:layout_height="200dp"
+                android:layout_weight="0.5"/>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="79dp"
+            android:layout_height="wrap_content"
             android:id="@+id/layoutGraphsBottom"
             android:weightSum="1">
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.drdc1.medic.LineChartWithBackground
                 android:id="@+id/skinrchart"
-                android:layout_width="150dp"
-                android:layout_height="75dp"
-                />
+                android:layout_width="140dp"
+                android:layout_height="200dp"
+                android:layout_weight="0.5"/>
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.drdc1.medic.LineChartWithBackground
                 android:id="@+id/ctrchart"
-                android:layout_width="143dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.61"/>
+                android:layout_width="140dp"
+                android:layout_height="200dp"
+                android:layout_weight="0.5"/>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/layoutButton">
+            android:id="@+id/layoutButton"
+            android:weightSum="1">
 
             <Button
                 android:text="9 Liner Request"
@@ -264,7 +259,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btLinerRequest"
                 android:layout_gravity="center"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:layout_weight="0.20"/>
         </LinearLayout>
 
     </LinearLayout>
