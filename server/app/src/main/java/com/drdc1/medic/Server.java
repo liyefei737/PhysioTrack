@@ -38,9 +38,10 @@ import fi.iki.elonen.NanoHTTPD;
 public class Server extends NanoHTTPD {
 
     static private DataManager dataManagermy;
-    private static SimpleDateFormat keyFormat = new SimpleDateFormat("02/25/2017 HH:mm:SS.sss");
+    private static SimpleDateFormat keyFormat = new SimpleDateFormat("02/25/2017 HH:mm:");
     static Map connectionlist = new HashMap();
     private Squad squad;
+    private static String regexSecondsAndMilli = "[0-9]{2}\\.[0-9]{3}";
 
     public Server(int port, DataManager dataManager) {
         super(port);
@@ -77,14 +78,14 @@ public class Server extends NanoHTTPD {
                         session.getHeaders().get("http-client-ip"));
 
                 if (!dataManagermy.soldierInSystem(soldierID)) {
-                    Map<String, Object> soldierInfo = null;
-                    soldierInfo.put("name", body.getString("name"));
-                    soldierInfo.put("age", body.getString("age"));
+                    Map<String, Object> soldierInfo = new HashMap<String, Object>();
+                    soldierInfo.put("name", "djsa");
+                    soldierInfo.put("age", "23");
                     soldierInfo.put("id", soldierID);
                     //1 indicates solider is currently being monitored and shows on namelist, 0 means inactive, not shown on namelist
                     soldierInfo.put("active", 1);
-                    soldierInfo.put("height", body.getString("height"));
-                    soldierInfo.put("weight", body.getString("weight"));
+                    soldierInfo.put("height", "170");
+                    soldierInfo.put("weight", "70");
 
                     dataManagermy.addSoldier(soldierID, soldierInfo);
 
@@ -131,46 +132,57 @@ public class Server extends NanoHTTPD {
                 intent.putExtra("message", body.getString("ECG Heart Rate"));
                 LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
-                Calendar keyCal = new GregorianCalendar();
-                try {
-                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
-                } catch (Exception e) {
-                    keyCal.set(2017, 02, 25);
-                }
+//                Calendar keyCal = new GregorianCalendar();
+//                try {
+//                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
+//                } catch (Exception e) {
+//                    keyCal.set(2017, 02, 25);
+//                }
+//
+//                Calendar nearestMinute =
+//                        DateUtils.round(keyCal, Calendar.MINUTE);
+                Calendar now = new GregorianCalendar();
+                now.set(2017, 02, 25);
+                keyFormat.setCalendar(now);
+                String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
                 Calendar nearestMinute =
-                        DateUtils.round(keyCal, Calendar.MINUTE);
+                        org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
 
                 Database db = dataManagermy.getSoldierDB(soldierID);
-                Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
 
-                doc.update(new Document.DocumentUpdater() {
-                    @Override
-                    public boolean update(UnsavedRevision newRevision) {
-                        Map<String, Object> properties = newRevision.getUserProperties();
-//                    HashMap<String, Object> hM = null;
-                        String hrate = null;
-                        try {
-                            properties.put("timeCreated", body.getString("DateTime"));
-                            properties.put("accSum", body.getString("accSum"));
-                            properties.put("skinTemp", body.getString("Skin_Temp"));
-                            properties.put("coreTemp", body.getString("Core_Temp"));
-                            properties.put("heartRate", body.getString("ECG Heart Rate"));
-                            hrate = body.getString("ECG Heart Rate");
-                            properties.put("breathRate", body.getString("Belt Breathing Rate"));
-                            properties.put("bodyPosition", body.getString("BodyPosition"));
-                            properties.put("motion", body.getString("Motion"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                Document saveStateDoc =
+                        db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+                try {
+                    saveStateDoc.update(new Document.DocumentUpdater() {
+                        @Override
+                        public boolean update(UnsavedRevision newRevision) {
+                            String hrate = null;
+                            try {
+                                Map<String, Object> properties = newRevision.getUserProperties();
+                                properties.put("timeCreated", body.getString("DateTime"));
+                                properties.put("accSum", body.getString("accSum"));
+                                properties.put("skinTemp", body.getString("Skin_Temp"));
+                                properties.put("coreTemp", body.getString("Core_Temp"));
+                                properties.put("heartRate", body.getString("ECG Heart Rate"));
+                                hrate = body.getString("ECG Heart Rate");
+                                properties.put("breathRate", body.getString("Belt Breathing Rate"));
+                                properties.put("bodyPosition", body.getString("BodyPosition"));
+                                properties.put("motion", body.getString("Motion"));
+                                newRevision.setUserProperties(properties);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            return true;
                         }
-                        newRevision.setUserProperties(properties);
-
-                        return true;
-                    }
-                });
+                    });
+                } catch (CouchbaseLiteException e) {
+                    //handle this
+                    e.printStackTrace();
+                }
 
             } else if (connectionlist.get(soldierID) !=
                     session.getHeaders().get("http-client-ip")) {
-               //update ip if ip changes for a soldier
+                //update ip if ip changes for a soldier
                 connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));
             } else {
@@ -180,48 +192,56 @@ public class Server extends NanoHTTPD {
                 intent.putExtra("message", body.getString("ECG Heart Rate"));
                 LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
-                Calendar keyCal = new GregorianCalendar();
-                try {
-                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
-                } catch (Exception e) {
-                    keyCal.set(2017, 02, 25);
-                }
+//                Calendar keyCal = new GregorianCalendar();
+//                try {
+//                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
+//                } catch (Exception e) {
+//                    keyCal.set(2017, 02, 25);
+//                }
+//                Calendar nearestMinute =
+//                        DateUtils.round(keyCal, Calendar.MINUTE);
+
+                Calendar now = new GregorianCalendar();
+                now.set(2017, 02, 25);
+                keyFormat.setCalendar(now);
+                String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
                 Calendar nearestMinute =
-                        DateUtils.round(keyCal, Calendar.MINUTE);
+                        org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
 
                 Database db = dataManagermy.getSoldierDB(soldierID);
-                Document doc = db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
 
-                doc.update(new Document.DocumentUpdater() {
-                    @Override
-                    public boolean update(UnsavedRevision newRevision) {
-                        Map<String, Object> properties = newRevision.getUserProperties();
-//                    HashMap<String, Object> hM = null;
-                        String hrate = null;
-                        try {
-                            properties.put("timeCreated", body.getString("DateTime"));
-                            properties.put("accSum", body.getString("accSum"));
-                            properties.put("skinTemp", body.getString("Skin_Temp"));
-                            properties.put("coreTemp", body.getString("Core_Temp"));
-                            properties.put("heartRate", body.getString("ECG Heart Rate"));
-                            hrate = body.getString("ECG Heart Rate");
-                            properties.put("breathRate", body.getString("Belt Breathing Rate"));
-                            properties.put("bodyPosition", body.getString("BodyPosition"));
-                            properties.put("motion", body.getString("Motion"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                Document saveStateDoc =
+                        db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+                try {
+                    saveStateDoc.update(new Document.DocumentUpdater() {
+                        @Override
+                        public boolean update(UnsavedRevision newRevision) {
+                            String hrate = null;
+                            try {
+                                Map<String, Object> properties = newRevision.getUserProperties();
+                                properties.put("timeCreated", body.getString("DateTime"));
+                                properties.put("accSum", body.getString("accSum"));
+                                properties.put("skinTemp", body.getString("Skin_Temp"));
+                                properties.put("coreTemp", body.getString("Core_Temp"));
+                                properties.put("heartRate", body.getString("ECG Heart Rate"));
+                                hrate = body.getString("ECG Heart Rate");
+                                properties.put("breathRate", body.getString("Belt Breathing Rate"));
+                                properties.put("bodyPosition", body.getString("BodyPosition"));
+                                properties.put("motion", body.getString("Motion"));
+                                newRevision.setUserProperties(properties);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            return true;
                         }
-                        newRevision.setUserProperties(properties);
-
-                        return true;
-                    }
-                });
+                    });
+                } catch (CouchbaseLiteException e) {
+                    e.printStackTrace();
+                }
 
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (CouchbaseLiteException e) {
             e.printStackTrace();
         }
 //        String userName = null;

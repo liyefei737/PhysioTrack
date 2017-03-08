@@ -25,6 +25,9 @@ import java.util.TimerTask;
 
 import com.drdc1.medic.utils.Trie;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import static welfareSM.WelfareStatus.GREY;
 
 /**
@@ -37,7 +40,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     private Squad squad;
     private com.drdc1.medic.LineChartWithBackground hrchart, respchart, skinchart, ctchart;
     private static float chartMin = 0;
-    private static float chartMax = 100;
+    private static float chartMax = 200;
     View rootView;
 
     public IndividualSoldierTab() {
@@ -211,28 +214,29 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         int[] hr = new int[num_data_pts];
         String state = GREY.toString();
         //hardcode for simdata
+
         Calendar date = new GregorianCalendar();
         date.set(2017, 02, 25);
-//        JSONArray last10Minutes = dataManager.QueryLastXMinutes("fjffy", date, 10);
-//        int last10MinutesArrLength = last10Minutes.length();
-//        if (last10MinutesArrLength != 0) {
-//
-//            for (int i = 0; i < Math.min(10, last10MinutesArrLength); i++) {
-//                try {
-//                    JSONObject jsonRow = last10Minutes.getJSONObject(i);
-//                    br[i] = Integer.valueOf(jsonRow.getString("breathRate"));
-//                    hr[i] = Integer.valueOf(jsonRow.getString("heartRate"));
-//                    coreTemp[i] = Float.valueOf(jsonRow.getString("coreTemp"));
-//                    skinTemp[i] = Float.valueOf(jsonRow.getString("skinTemp"));
-//                } catch (Exception e) {
-//                    com.couchbase.lite.util.Log.e("UIUpdator", String.format(" index %d", i));
-//                }
-//            }
-//        }
-//
-//        String latestHR = String.valueOf(hr[0]);
-////        TextView hrText = (TextView) getActivity().findViewById(R.id.currentHeartRate);
-////        updateParam(latestHR, hrText);
+        JSONArray last10Minutes = dataManager.QueryLastXMinutes("fjffy", date, 10);
+        int last10MinutesArrLength = last10Minutes.length();
+        if (last10MinutesArrLength != 0) {
+
+            for (int i = 0; i < Math.min(10, last10MinutesArrLength); i++) {
+                try {
+                    JSONObject jsonRow = last10Minutes.getJSONObject(i);
+                    br[i] = Integer.valueOf(jsonRow.getString("breathRate"));
+                    hr[i] = Integer.valueOf(jsonRow.getString("heartRate"));
+                    coreTemp[i] = Float.valueOf(jsonRow.getString("coreTemp"));
+                    skinTemp[i] = Float.valueOf(jsonRow.getString("skinTemp"));
+                } catch (Exception e) {
+                    com.couchbase.lite.util.Log.e("UIUpdator", String.format(" index %d", i));
+                }
+            }
+        }
+
+        String latestHR = String.valueOf(hr[0]);
+//        TextView hrText = (TextView) getActivity().findViewById(R.id.currentHeartRate);
+//        updateParam(latestHR, hrText);
 
         List<Entry> entries = new ArrayList<Entry>();
         List<Entry> entries2 = new ArrayList<Entry>();
@@ -241,20 +245,20 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
         int arrLength = hr.length;
         for (int i = 0; i < arrLength; i++) {
-            entries.add(new Entry(i, 60f + (float) (Math.random() * ((60 - 40) + 1))));
-//            entries.add(new Entry(i, hr[arrLength - 1 - i]));
+//            entries.add(new Entry(i, 60f + (float) (Math.random() * ((60 - 40) + 1))));
+            entries.add(new Entry(i, hr[arrLength - 1 - i]));
         }
         for (int i = 0; i < arrLength; i++) {
-            entries2.add(new Entry(i, 40f + (float) (Math.random() * ((40 - 30) + 1))));
-//            entries.add(new Entry(i, hr[arrLength - 1 - i]));
+//            entries2.add(new Entry(i, 40f + (float) (Math.random() * ((40 - 30) + 1))));
+            entries2.add(new Entry(i, br[arrLength - 1 - i]));
         }
         for (int i = 0; i < arrLength; i++) {
-            entries3.add(new Entry(i, 70f + (float) (Math.random() * ((70 - 0) + 1))));
-//            entries.add(new Entry(i, hr[arrLength - 1 - i]));
+//            entries3.add(new Entry(i, 70f + (float) (Math.random() * ((70 - 0) + 1))));
+            entries3.add(new Entry(i, skinTemp[arrLength - 1 - i]));
         }
         for (int i = 0; i < arrLength; i++) {
-            entries4.add(new Entry(i, 30f + (float) (Math.random() * ((30 - 10) + 1))));
-//            entries.add(new Entry(i, hr[arrLength - 1 - i]));
+//            entries4.add(new Entry(i, 30f + (float) (Math.random() * ((30 - 10) + 1))));
+            entries4.add(new Entry(i, coreTemp[arrLength - 1 - i]));
         }
         float[] zoneLimits = {60, 40, 5, 1};
         com.drdc1.medic.LineChartWithBackground

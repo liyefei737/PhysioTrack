@@ -124,7 +124,7 @@ public class BackgroundDataSim extends Service {
                 });
             }
         };
-        timer.schedule(doDataSimCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
+        timer.schedule(doDataSimCallback, 0, DateUtils.SECOND_IN_MILLIS*3); //execute every minute
 
         // Keep service around "sticky"
         return START_STICKY;
@@ -166,7 +166,7 @@ public class BackgroundDataSim extends Service {
             jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
 
             //for now hard-coded medic ip and port
-            String MedicURL = "http://192.168.2.34:8080";
+            String MedicURL = "http://192.168.43.13:8080";
             JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
                 new Response.Listener<JSONObject>() {
                     @Override
