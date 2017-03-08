@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import welfareSM.IndividualWelfareTracker;
 
@@ -284,25 +285,30 @@ public class DataManager {
 
         JSONArray lastXseconds = new JSONArray();
         Calendar nearestMinute = DateUtils.round(now, Calendar.MINUTE);
-        Query query = getSoldierDB(ID).createAllDocumentsQuery();
-        query.setDescending(true);
-        String startKey = String.valueOf(nearestMinute.getTimeInMillis());
-        String endKey = String.valueOf(nearestMinute.getTimeInMillis() -
-                android.text.format.DateUtils.MINUTE_IN_MILLIS * minutes);
-
         try {
-            query.setEndKey(endKey);
-            query.setStartKey(startKey);
-            QueryEnumerator result = query.run();
-            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
-                QueryRow row = it.next();
-                Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
-                if (tmpMap.size() > 3) {
-                    lastXseconds.put(new JSONObject(tmpMap));
+            Query query = getSoldierDB(ID).createAllDocumentsQuery();
+            query.setDescending(true);
+            String startKey = String.valueOf(nearestMinute.getTimeInMillis());
+            String endKey = String.valueOf(nearestMinute.getTimeInMillis() -
+                    android.text.format.DateUtils.MINUTE_IN_MILLIS * minutes);
+
+            try {
+                query.setEndKey(endKey);
+                query.setStartKey(startKey);
+                QueryEnumerator result = query.run();
+                for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                    QueryRow row = it.next();
+                    Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
+                    if (tmpMap.size() > 3) {
+                        lastXseconds.put(new JSONObject(tmpMap));
+                    }
                 }
+            } catch (CouchbaseLiteException e) {
+                //handle this
             }
-        } catch (CouchbaseLiteException e) {
-            //handle this
+            return lastXseconds;
+        } catch (Exception E) {
+
         }
         return lastXseconds;
     }
