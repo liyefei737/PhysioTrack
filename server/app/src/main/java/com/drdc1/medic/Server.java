@@ -1,12 +1,10 @@
 package com.drdc1.medic;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -15,7 +13,6 @@ import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.UnsavedRevision;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -180,8 +177,7 @@ public class Server extends NanoHTTPD {
                     e.printStackTrace();
                 }
 
-            } else if (connectionlist.get(soldierID) !=
-                    session.getHeaders().get("http-client-ip")) {
+            } else if (!connectionlist.get(soldierID).equals(session.getHeaders().get("http-client-ip"))) {
                 //update ip if ip changes for a soldier
                 connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));
