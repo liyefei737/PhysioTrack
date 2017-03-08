@@ -88,12 +88,12 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/tvSoldierName"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="18dp"
                         android:layout_width="wrap_content"/>
                     <TextView
-                        android:text="TextView"
                         android:layout_width="380dp"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:id="@+id/NameNonEditable"
                         android:background="@drawable/bottomborder"
                         android:textSize="18dp"
@@ -111,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/tvGender"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18dp" />
 
                     <TextView
                         android:text="TextView"
@@ -165,7 +165,7 @@
                 android:id="@+id/tvBody"
                 android:layout_weight="1.80"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fontsize3"/>
+                android:textSize="18dp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
