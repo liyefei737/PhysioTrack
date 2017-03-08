@@ -22,4 +22,5 @@
     <color name="redGraphTint">#F26174</color>
     <color name="yellowGraphTint">#E6EB94</color>
     <color name="greenGraphTint">#85C996</color>
+    <color name="btnbg">#FFE</color>
 </resources>
