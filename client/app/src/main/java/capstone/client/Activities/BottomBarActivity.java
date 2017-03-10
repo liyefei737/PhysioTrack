@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.ncapdevi.fragnav.FragNavController;
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -36,7 +37,6 @@ import capstone.client.Fragments.HomeFragment;
 import capstone.client.Fragments.SkinTempFragment;
 import capstone.client.R;
 
-
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation,
         FragNavController.TransactionListener,
         FragNavController.RootFragmentListener, FragmentDataManager {
@@ -56,7 +56,8 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     private final int INDEX_SKINTEMP = FragNavController.TAB4;
     private final int INDEX_CORETEMP = FragNavController.TAB5;
 
-    private int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+    private int uiOptions =
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,8 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         setTheme(R.style.AppTheme);
         dbManager = new DBManager(this);
         setContentView(R.layout.activity_bottom_bar);
-        final View view = getWindow().getDecorView();;
+        final View view = getWindow().getDecorView();
+        ;
         view.setSystemUiVisibility(uiOptions);
 
         view.setOnSystemUiVisibilityChangeListener
@@ -82,7 +84,8 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         mBottomBar.selectTabAtPosition(INDEX_HOME);
 
         mNavController =
-                new FragNavController(savedInstanceState, getSupportFragmentManager(), R.id.container, this, 5, INDEX_HOME);
+                new FragNavController(savedInstanceState, getSupportFragmentManager(),
+                        R.id.container, this, 5, INDEX_HOME);
         mNavController.setTransactionListener(this);
 
         //data for all the graphs from background
@@ -101,8 +104,9 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
                     mNavController.popFragment();
                     current = mNavController.getCurrentStack().peek().getClass();
                 }
-                if (current == EditInfoFragment.class )
+                if (current == EditInfoFragment.class) {
                     mNavController.popFragment();
+                }
                 switch (tabId) {
                     case R.id.bb_menu_heart:
                         mNavController.switchTab(INDEX_HEART);
@@ -132,12 +136,42 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
 
     }
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("key");
+            if (message == "HEART") {
+                BottomBarTab hearttab = mBottomBar.getTabWithId(R.id.bb_menu_heart);
+                hearttab.setBadgeCount(1);
+            }
+            if (message == "BREATH") {
+                BottomBarTab breathtab = mBottomBar.getTabWithId(R.id.bb_menu_breath);
+                breathtab.setBadgeCount(1);
+            }
+            if (message == "SKIN") {
+                BottomBarTab skintab = mBottomBar.getTabWithId(R.id.bb_menu_skin_temp);
+                skintab.setBadgeCount(1);
+            }
+            if (message == "CORE") {
+                BottomBarTab coretab = mBottomBar.getTabWithId(R.id.bb_menu_core_temp);
+                coretab.setBadgeCount(1);
+            }
+            // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        }
+    };
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(uiOptions);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, new IntentFilter("yelloworgreen"));
+
     }
+
     @Override
     public void onBackPressed() {
         if (!mNavController.isRootFragment()) {
@@ -216,11 +250,11 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         EditInfoFragment.edit_fields(this);
     }
 
-
     @Override
     public void registerFragment(DataObserver o) {
-        if (!fragmentlist.contains(o))
+        if (!fragmentlist.contains(o)) {
             fragmentlist.add(o);
+        }
     }
 
     @Override
@@ -267,7 +301,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         }
     }
 
-    public void onHelpOrSettingsBackPressed(View view){
+    public void onHelpOrSettingsBackPressed(View view) {
         //TODO:if editing and back go to not editing
         onBackPressed();
     }

@@ -2,6 +2,7 @@ package capstone.client.BackgroundServices;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -17,6 +18,8 @@ import org.json.JSONArray;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -85,7 +88,8 @@ public class BackgroundWellnessAlgo extends Service {
                 });
             }
         };
-        timer.schedule(doWellnessAlgoCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
+        timer.schedule(doWellnessAlgoCallback, 0,
+                DateUtils.MINUTE_IN_MILLIS); //execute every minute
 
         // Keep service around "sticky"
         return START_STICKY;
@@ -104,8 +108,32 @@ public class BackgroundWellnessAlgo extends Service {
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); //hardcode for datasim
         JSONArray last5Minutes = dbManager.QueryLastXMinutes(now, 5);
-        final WelfareStatus nextState = wt.calculateWelfareStatus(last5Minutes);
-        Calendar nearestMinute = org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+        Object[] thearray = wt.calculateWelfareStatus(last5Minutes);
+        final WelfareStatus nextState = (WelfareStatus) thearray[1];
+        HashMap<String, WelfareStatus> hmap = (HashMap<String, WelfareStatus>) thearray[0];
+
+        Iterator it = hmap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            if (pair.getValue() == WelfareStatus.YELLOW || pair.getValue() == WelfareStatus.RED) {
+
+
+                Intent intent = new Intent("yelloworgreen");
+                // You can also include some extra data.
+                intent.putExtra("key", (String) pair.getKey());
+//                Bundle b = new Bundle();
+//                b.putParcelable("Location", l);
+//                intent.putExtra("Location", b);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+
+            }
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+        Calendar nearestMinute =
+                org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
         Document saveStateDoc = userDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
         try {
             saveStateDoc.update(new Document.DocumentUpdater() {
@@ -117,7 +145,7 @@ public class BackgroundWellnessAlgo extends Service {
                     return true;
                 }
             });
-        } catch (CouchbaseLiteException e){
+        } catch (CouchbaseLiteException e) {
             //handle this
         }
         notifyUI(nextState);
