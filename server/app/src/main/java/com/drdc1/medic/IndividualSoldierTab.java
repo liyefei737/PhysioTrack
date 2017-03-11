@@ -167,7 +167,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
                     //it makes sense to do it when loading something in
                     //the background.
                     seachView.showProgress();
-                    List<NameSuggestion> nameSearchSuggestions = getNameIDSearchSuggestions(newQuery);
+                    List<NameSuggestion> nameSearchSuggestions = getNameSearchSuggestions(newQuery);
                     seachView.swapSuggestions(nameSearchSuggestions);
                     seachView.hideProgress();
                 }
@@ -205,7 +205,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
      * @param searchString is the user input in the search box
      * @return a List of Suggestions for the searchString
      */
-    private List<NameSuggestion> getNameIDSearchSuggestions(String searchString) {
+    private List<NameSuggestion> getNameSearchSuggestions(String searchString) {
 
         Trie trie = new Trie();
         for (Soldier s : dataManager.getActiveSoldier()) {
