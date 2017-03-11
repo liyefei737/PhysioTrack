@@ -8,26 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.drdc1.medic.utils.Trie;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-
-import com.arlib.floatingsearchview.FloatingSearchView;
-import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
-
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.drdc1.medic.utils.Trie;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import static welfareSM.WelfareStatus.GREY;
 
@@ -38,8 +35,8 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     private DataManager dataManager = null;
     TextView NameNonEditable, GenderNonEditable, AgeNonEditable;
     private FloatingSearchView seachView;
-    private Squad squad;
     private com.drdc1.medic.LineChartWithBackground hrchart, respchart, skinchart, ctchart;
+    private HashMap<String, String> activeSoldierNameIDMap = new HashMap<>();
     private static float chartMin = 0;
     private static float chartMax = 200;
     View rootView;
@@ -68,7 +65,6 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 //        }
 
         seachView = (FloatingSearchView) rootView.findViewById(R.id.searchBar);
-        squad = Squad.getInstance();
         setupSearchBar();
 
         dataManager = ((AppContext) this.getActivity().getApplication()).getDataManager();
@@ -171,7 +167,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
                     //it makes sense to do it when loading something in
                     //the background.
                     seachView.showProgress();
-                    List<NameSuggestion> nameSearchSuggestions = getNameSearchSuggestions(newQuery);
+                    List<NameSuggestion> nameSearchSuggestions = getNameIDSearchSuggestions(newQuery);
                     seachView.swapSuggestions(nameSearchSuggestions);
                     seachView.hideProgress();
                 }
@@ -180,7 +176,11 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         seachView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
-                System.out.println("hello");
+                //TODO when a user clicked the soldier from the search suggestions, write code here
+                //prints the id of the soldier clicked
+                System.out.println(activeSoldierNameIDMap.get(searchSuggestion.getBody()));
+
+
             }
 
             @Override
@@ -205,11 +205,14 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
      * @param searchString is the user input in the search box
      * @return a List of Suggestions for the searchString
      */
-    private List<NameSuggestion> getNameSearchSuggestions(String searchString) {
+    private List<NameSuggestion> getNameIDSearchSuggestions(String searchString) {
 
         Trie trie = new Trie();
-        for (Soldier s : squad.getMonitoringSoildiersSoildiers()) {
+        for (Soldier s : dataManager.getActiveSoldier()) {
+            String solName = s.getName();
+            String solID = s.getId();
             trie.insert(s.getName());
+            activeSoldierNameIDMap.put(solName, solID);
         }
         List<NameSuggestion> nameSuggestions = new ArrayList<NameSuggestion>();
         for (String name : trie.autoComplete(searchString)) {

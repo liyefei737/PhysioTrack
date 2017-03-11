@@ -78,6 +78,7 @@ public class Server extends NanoHTTPD {
                     Map<String, Object> soldierInfo = new HashMap<String, Object>();
                     soldierInfo.put("name", "djsa");
                     soldierInfo.put("age", "23");
+                    soldierInfo.put("gender", "M");
                     soldierInfo.put("id", soldierID);
                     //1 indicates solider is currently being monitored and shows on namelist, 0 means inactive, not shown on namelist
                     soldierInfo.put("active", 1);

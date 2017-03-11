@@ -22,11 +22,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import welfareSM.IndividualWelfareTracker;
 
@@ -117,21 +117,18 @@ public class DataManager {
 
     }
 
-    //get active soldier, active soldier meaning soldiers that are currently being monitored
-
-    /***
-     * @return HashMap of Soldier name and id that are active in the database
+    /*** query user_info DB for active soldiers
+     * @return ArrayList<Soldier> of Soldiers that are active, with name and id filled from the userinfo db
      */
-    public HashMap<String, String> getActiveSoldier() {
-        HashMap<String, String> activeSoldiers = new HashMap<>();
+    public ArrayList<Soldier> getActiveSoldier() {
+        ArrayList<Soldier> activeSoldiers = new ArrayList<>();
         View view = _userInfoDB.getView("active");
         if (view.getMap() == null) {
             Mapper mapper = new Mapper() {
                 public void map(Map<String, Object> document, Emitter emitter) {
-                    String isActive = (String) document.get("active");
-                    if ("1".equals(isActive)) {
+                    String isActive = String.valueOf(document.get("active"));
+                    if ("1".equals(isActive))
                         emitter.emit(document.get("id"), document);
-                    }
                 }
             };
             view.setMap(mapper, "1.0");
@@ -140,9 +137,11 @@ public class DataManager {
             QueryEnumerator result = view.createQuery().run();
             for (Iterator<QueryRow> it = result; it.hasNext(); ) {
                 QueryRow row = it.next();
-                String id = (String) row.getKey();
-                String name = (String) row.getDocumentProperties().get("name");
-                activeSoldiers.put(name, id);
+                String id = String.valueOf(row.getKey());
+                String name = String.valueOf(row.getDocument().getProperties().get("name"));
+                String gender = String.valueOf(row.getDocument().getProperties().get("gender"));
+                Soldier soldier = new Soldier(name,id,gender);
+                activeSoldiers.add(soldier);
             }
         } catch (CouchbaseLiteException e) {
             e.printStackTrace();
