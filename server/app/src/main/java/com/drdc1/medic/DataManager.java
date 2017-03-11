@@ -281,6 +281,26 @@ public class DataManager {
         return db;
     }
 
+    public HashMap getStaticInfo(String ID) {
+        HashMap hm = new HashMap();
+        try {
+            Query allDocsQuery = _userInfoDB.createAllDocumentsQuery();
+            QueryEnumerator result = allDocsQuery.run();
+            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                QueryRow row = it.next();
+                Document doc = row.getDocument();
+                hm.put("name", doc.getProperty("name"));
+                hm.put("age", doc.getProperty("age"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        hm.put("gender", "Male");
+
+        return hm;
+    }
+
     public JSONArray QueryLastXMinutes(String ID, Calendar now, int minutes) {
 
         JSONArray lastXseconds = new JSONArray();

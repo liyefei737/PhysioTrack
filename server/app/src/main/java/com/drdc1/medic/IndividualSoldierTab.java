@@ -15,6 +15,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -109,6 +110,26 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
             }
         }, 0, 1000);//put here time 1000 milliseconds=1 second
 
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        HashMap hm = dataManager.getStaticInfo("fjffy");
+                        NameNonEditable.setText((CharSequence) hm.get("name"));
+                        GenderNonEditable.setText((CharSequence) hm.get("gender"));
+                        AgeNonEditable.setText((CharSequence) hm.get("age"));
+
+                    }
+                });
+
+            }
+        }, 0, 1000);//put here time 1000 milliseconds=1 second
+
+
         return rootView;
     }
 
@@ -131,6 +152,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     public void onResume() {
 
         super.onResume();
+
 
     }
 
