@@ -3,6 +3,7 @@ package com.drdc1.medic;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
     EditText location, callsign_freq, number_patient, terrainobstacles, pzterrain, mechanisminjury,
             injurysustained, treatmentgiven;
     Button btSubmit;
-    String sendingid;
+    String sendingid = "fjffy";
     int precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus, symptoms;
     private DataManager dataManager = null;
 
@@ -103,12 +104,128 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
 
         btSubmit = (Button) rootView.findViewById(R.id.btSubmit);
 
-//        btSubmit.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) {
-////                Intent myIntent = new Intent(getActivity(), LoginActivity.class);
-////                startActivity(myIntent);    // change to startActivity
-//            }
-//        });
+        btSubmit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+//                Intent myIntent = new Intent(getActivity(), LoginActivity.class);
+//                startActivity(myIntent);    // change to startActivity
+
+                if (precedence_urgent.isChecked()) {
+                    precedence = 0;
+                }
+                if (precedence_priority.isChecked()) {
+                    precedence = 1;
+                }
+                if (precedence_routine.isChecked()) {
+                    precedence = 2;
+                }
+                if (eqreq_none.isChecked()) {
+                    eqreq = 0;
+                }
+                if (eqreq_hoist.isChecked()) {
+                    eqreq = 1;
+                }
+                if (eqreq_extrication.isChecked()) {
+                    eqreq = 2;
+                }
+                if (eqreq_ventilator.isChecked()) {
+                    eqreq = 3;
+                }
+                if (patienttype_litter.isChecked()) {
+                    patienttype = 0;
+                }
+                if (patienttype_walking.isChecked()) {
+                    patienttype = 1;
+                }
+                if (patienttype_escort.isChecked()) {
+                    patienttype = 2;
+                }
+                if (securityatpickup_noenem.isChecked()) {
+                    securityatpickup = 0;
+                }
+                if (securityatpickup_possibileenem.isChecked()) {
+                    securityatpickup = 1;
+                }
+                if (securityatpickup_eneminarea.isChecked()) {
+                    securityatpickup = 2;
+                }
+                if (securityatpickup_hotpz.isChecked()) {
+                    securityatpickup = 3;
+                }
+                if (pzmarking_panles.isChecked()) {
+                    pzmarking = 0;
+                }
+                if (pzmarking_pyro.isChecked()) {
+                    pzmarking = 1;
+                }
+                if (pzmarking_smoke.isChecked()) {
+                    pzmarking = 2;
+                }
+                if (pzmarking_other.isChecked()) {
+                    pzmarking = 3;
+                }
+                if (patientnatstatus_coalitionmil.isChecked()) {
+                    patientnatstatus = 0;
+                }
+                if (patientnatstatus_civiliancf.isChecked()) {
+                    patientnatstatus = 1;
+                }
+                if (patientnatstatus_noncoalitionsf.isChecked()) {
+                    patientnatstatus = 2;
+                }
+                if (patientnatstatus_noncoalitioncivil.isChecked()) {
+                    patientnatstatus = 3;
+                }
+                if (patientnatstatus_opforces.isChecked()) {
+                    patientnatstatus = 4;
+                }
+                if (patientnatstatus_child.isChecked()) {
+                    patientnatstatus = 5;
+                }
+                if (airway.isChecked()) {
+                    symptoms = 0;
+                }
+                if (breathing.isChecked()) {
+                    symptoms = 1;
+                }
+                if (pulserate.isChecked()) {
+                    symptoms = 2;
+                }
+                if (conscious.isChecked()) {
+                    symptoms = 3;
+                }
+
+                Database db = dataManager.getNinelinerDatabase();
+//                Document document = db.createDocument();
+
+                Document document = db.getDocument(sendingid);
+
+                Map<String, Object> treatmentInfo = new HashMap<String, Object>();
+                treatmentInfo.put("id", sendingid);
+//                treatmentInfo.put("_id", sendingid);
+                treatmentInfo.put("precedence", precedence);
+                treatmentInfo.put("eqreq", eqreq);
+                treatmentInfo.put("patienttype", patienttype);
+                treatmentInfo.put("securityatpickup", securityatpickup);
+                treatmentInfo.put("pzmarking", pzmarking);
+                treatmentInfo.put("patientnatstatus", patientnatstatus);
+                treatmentInfo.put("symptoms", symptoms);
+                treatmentInfo.put("location", location.getText().toString());
+                treatmentInfo.put("callsign_freq", callsign_freq.getText().toString());
+                treatmentInfo.put("number_patient", number_patient.getText().toString());
+                treatmentInfo.put("pzterrain", pzterrain.getText().toString());
+                treatmentInfo.put("mechanisminjury", mechanisminjury.getText().toString());
+                treatmentInfo.put("injurysustained", injurysustained.getText().toString());
+                treatmentInfo.put("treatmentgiven", treatmentgiven.getText().toString());
+                treatmentInfo.put("terrainobstacles", terrainobstacles.getText().toString());
+
+                try {
+                    document.putProperties(treatmentInfo);
+                } catch (CouchbaseLiteException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
         // Inflate the layout for this fragment
 
@@ -229,16 +346,21 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
             if ((int) hm.get("symptoms") == 3) {
                 conscious.setChecked(true);
             }
+            pzterrain.setText((String) hm.get("pzterrain"));
 
-            pzterrain.setText((CharSequence) hm.get("pzterrain"));
-            mechanisminjury.setText((CharSequence) hm.get("mechanisminjury"));
-            injurysustained.setText((CharSequence) hm.get("injurysustained"));
-            treatmentgiven.setText((CharSequence) hm.get("treatmentgiven"));
+            mechanisminjury.setText((String) hm.get("mechanisminjury"));
 
-            location.setText((CharSequence) hm.get("location"));
-            callsign_freq.setText((CharSequence) hm.get("callsign_freq"));
-            number_patient.setText((CharSequence) hm.get("number_patient"));
-            terrainobstacles.setText((CharSequence) hm.get("terrainobstacles"));
+            injurysustained.setText((String) hm.get("injurysustained"));
+
+            treatmentgiven.setText((String) hm.get("treatmentgiven"));
+
+            location.setText((String) hm.get("location"));
+
+            callsign_freq.setText((String) hm.get("callsign_freq"));
+
+            number_patient.setText((String) hm.get("number_patient"));
+
+            terrainobstacles.setText((String) hm.get("terrainobstacles"));
 
         }
 
@@ -248,119 +370,5 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        {
-            if (precedence_urgent.isChecked()) {
-                precedence = 0;
-            }
-            if (precedence_priority.isChecked()) {
-                precedence = 1;
-            }
-            if (precedence_routine.isChecked()) {
-                precedence = 2;
-            }
-            if (eqreq_none.isChecked()) {
-                eqreq = 0;
-            }
-            if (eqreq_hoist.isChecked()) {
-                eqreq = 1;
-            }
-            if (eqreq_extrication.isChecked()) {
-                eqreq = 2;
-            }
-            if (eqreq_ventilator.isChecked()) {
-                eqreq = 3;
-            }
-            if (patienttype_litter.isChecked()) {
-                patienttype = 0;
-            }
-            if (patienttype_walking.isChecked()) {
-                patienttype = 1;
-            }
-            if (patienttype_escort.isChecked()) {
-                patienttype = 2;
-            }
-            if (securityatpickup_noenem.isChecked()) {
-                securityatpickup = 0;
-            }
-            if (securityatpickup_possibileenem.isChecked()) {
-                securityatpickup = 1;
-            }
-            if (securityatpickup_eneminarea.isChecked()) {
-                securityatpickup = 2;
-            }
-            if (securityatpickup_hotpz.isChecked()) {
-                securityatpickup = 3;
-            }
-            if (pzmarking_panles.isChecked()) {
-                pzmarking = 0;
-            }
-            if (pzmarking_pyro.isChecked()) {
-                pzmarking = 1;
-            }
-            if (pzmarking_smoke.isChecked()) {
-                pzmarking = 2;
-            }
-            if (pzmarking_other.isChecked()) {
-                pzmarking = 3;
-            }
-            if (patientnatstatus_coalitionmil.isChecked()) {
-                patientnatstatus = 0;
-            }
-            if (patientnatstatus_civiliancf.isChecked()) {
-                patientnatstatus = 1;
-            }
-            if (patientnatstatus_noncoalitionsf.isChecked()) {
-                patientnatstatus = 2;
-            }
-            if (patientnatstatus_noncoalitioncivil.isChecked()) {
-                patientnatstatus = 3;
-            }
-            if (patientnatstatus_opforces.isChecked()) {
-                patientnatstatus = 4;
-            }
-            if (patientnatstatus_child.isChecked()) {
-                patientnatstatus = 5;
-            }
-            if (airway.isChecked()) {
-                symptoms = 0;
-            }
-            if (breathing.isChecked()) {
-                symptoms = 1;
-            }
-            if (pulserate.isChecked()) {
-                symptoms = 2;
-            }
-            if (conscious.isChecked()) {
-                symptoms = 3;
-            }
-
-            Database db = dataManager.getNinelinerDatabase();
-            Document doc = db.getDocument(sendingid);
-
-            Map<String, Object> treatmentInfo = new HashMap<String, Object>();
-            treatmentInfo.put("id", sendingid);
-            treatmentInfo.put("precedence", precedence);
-            treatmentInfo.put("eqreq", eqreq);
-            treatmentInfo.put("patienttype", patienttype);
-            treatmentInfo.put("securityatpickup", securityatpickup);
-            treatmentInfo.put("pzmarking", pzmarking);
-            treatmentInfo.put("patientnatstatus", patientnatstatus);
-            treatmentInfo.put("symptoms", symptoms);
-            treatmentInfo.put("location", location.getText());
-            treatmentInfo.put("callsign_freq", callsign_freq.getText());
-            treatmentInfo.put("number_patient", number_patient.getText());
-            treatmentInfo.put("pzterrain", pzterrain.getText());
-            treatmentInfo.put("mechanisminjury", mechanisminjury.getText());
-            treatmentInfo.put("injurysustained", injurysustained.getText());
-            treatmentInfo.put("treatmentgiven", treatmentgiven.getText());
-            treatmentInfo.put("terrainobstacles", terrainobstacles.getText());
-
-            try {
-                doc.putProperties(treatmentInfo);
-            } catch (CouchbaseLiteException e) {
-                e.printStackTrace();
-            }
-
-        }
     }
 }

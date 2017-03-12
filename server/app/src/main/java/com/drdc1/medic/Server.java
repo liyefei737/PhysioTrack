@@ -13,7 +13,6 @@ import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.UnsavedRevision;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -179,7 +178,8 @@ public class Server extends NanoHTTPD {
                     e.printStackTrace();
                 }
 
-            } else if (!connectionlist.get(soldierID).equals(session.getHeaders().get("http-client-ip"))) {
+            } else if (!connectionlist.get(soldierID)
+                    .equals(session.getHeaders().get("http-client-ip"))) {
                 //update ip if ip changes for a soldier
                 connectionlist.put(soldierID,
                         session.getHeaders().get("http-client-ip"));

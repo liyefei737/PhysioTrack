@@ -44,7 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset,
+                                       int positionOffsetPixels) {
 
             }
 
@@ -169,7 +170,8 @@ public class HomeActivity extends AppCompatActivity {
         wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
         startService(wellnessAlgo);
     }
-    public void callHelp(View v){
+
+    public void callHelp(View v) {
         Intent callhelp = new Intent(HomeActivity.this, HelpActivity.class);
         startActivity(callhelp);
     }

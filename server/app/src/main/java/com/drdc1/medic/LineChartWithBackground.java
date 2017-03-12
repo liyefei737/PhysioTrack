@@ -143,7 +143,6 @@ public class LineChartWithBackground extends LineChart {
 
         lineChart.refreshDrawableState();
 
-
         lineChart.invalidate();
     }
 }

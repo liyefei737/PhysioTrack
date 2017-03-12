@@ -24,8 +24,8 @@ public class BullsEye {
             RelativeLayout.LayoutParams.MATCH_PARENT,
             RelativeLayout.LayoutParams.MATCH_PARENT);
 
-
-    public static void drawBullsEye(Resources resources, RelativeLayout relLayoutBullsEye, int numSoldiers, List<WelfareStatus> statusArray){
+    public static void drawBullsEye(Resources resources, RelativeLayout relLayoutBullsEye,
+                                    int numSoldiers, List<WelfareStatus> statusArray) {
 
         int red = resources.getColor(R.color.bullsEyeRed);
         int yellow = resources.getColor(R.color.bullsEyeYellow);
@@ -34,18 +34,19 @@ public class BullsEye {
         int ringID = R.drawable.ring0;
         Collections.sort(statusArray);
         Collections.reverse(statusArray);
-        for (int i = 0; i < numSoldiers; i++){
+        for (int i = 0; i < numSoldiers; i++) {
             ImageView ringView = new ImageView(getContext());
             ringView.setLayoutParams(imageViewParams);
-            GradientDrawable gd = (GradientDrawable)resources.getDrawable(ringID);
-            if (statusArray.get(i) == RED)
+            GradientDrawable gd = (GradientDrawable) resources.getDrawable(ringID);
+            if (statusArray.get(i) == RED) {
                 gd.setColor(red);
-            else if (statusArray.get(i) == YELLOW)
+            } else if (statusArray.get(i) == YELLOW) {
                 gd.setColor(yellow);
-            else if (statusArray.get(i) == GREEN)
+            } else if (statusArray.get(i) == GREEN) {
                 gd.setColor(green);
-            else
+            } else {
                 gd.setColor(grey);
+            }
             ringView.setImageDrawable(gd);
             relLayoutBullsEye.addView(ringView);
             ringID++;

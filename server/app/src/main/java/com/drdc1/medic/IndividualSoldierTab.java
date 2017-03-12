@@ -35,6 +35,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     private DataManager dataManager = null;
     TextView NameNonEditable, GenderNonEditable, AgeNonEditable;
     private FloatingSearchView seachView;
+    private String solid = "fjffy";
     private com.drdc1.medic.LineChartWithBackground hrchart, respchart, skinchart, ctchart;
     private HashMap<String, String> activeSoldierNameIDMap = new HashMap<>();
     private static float chartMin = 0;
@@ -114,7 +115,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
                     @Override
                     public void run() {
 
-                        HashMap hm = dataManager.getStaticInfo("fjffy");
+                        HashMap hm = dataManager.getStaticInfo(solid);
                         NameNonEditable.setText((CharSequence) hm.get("name"));
                         GenderNonEditable.setText((CharSequence) hm.get("gender"));
                         AgeNonEditable.setText((CharSequence) hm.get("age"));
@@ -124,7 +125,6 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
             }
         }, 0, 1000);//put here time 1000 milliseconds=1 second
-
 
         return rootView;
     }
@@ -148,7 +148,6 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     public void onResume() {
 
         super.onResume();
-
 
     }
 
@@ -178,8 +177,8 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
                 //TODO when a user clicked the soldier from the search suggestions, write code here
                 //prints the id of the soldier clicked
-                System.out.println(activeSoldierNameIDMap.get(searchSuggestion.getBody()));
-
+//                System.out.println(activeSoldierNameIDMap.get(searchSuggestion.getBody()));
+                solid = activeSoldierNameIDMap.get(searchSuggestion.getBody());
 
             }
 
@@ -242,7 +241,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
         Calendar date = new GregorianCalendar();
         date.set(2017, 02, 25);
-        JSONArray last10Minutes = dataManager.QueryLastXMinutes("fjffy", date, 10);
+        JSONArray last10Minutes = dataManager.QueryLastXMinutes(solid, date, 10);
         int last10MinutesArrLength = last10Minutes.length();
         if (last10MinutesArrLength != 0) {
 

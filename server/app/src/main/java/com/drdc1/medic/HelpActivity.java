@@ -8,20 +8,21 @@ import android.widget.ImageButton;
 
 public class HelpActivity extends AppCompatActivity {
     private ImageButton ib;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        ib = (ImageButton)findViewById(R.id.ibBack);
+        ib = (ImageButton) findViewById(R.id.ibBack);
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HelpActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                Intent intent = new Intent(HelpActivity.this, HomeActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
         });
-
 
     }
 }

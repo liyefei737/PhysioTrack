@@ -7,8 +7,9 @@ import java.util.Map.Entry;
 
 /**
  * An open source Trie data structure in aid of autocomplete
+ *
  * @author Marcus McCurdy <marcus.mccurdy@gmail.com>
- * src: https://github.com/vivekn/autocomplete/blob/master/java/src/main/java/com/marcusmccurdy/trie/Trie.java
+ *         src: https://github.com/vivekn/autocomplete/blob/master/java/src/main/java/com/marcusmccurdy/trie/Trie.java
  */
 public class Trie {
 
