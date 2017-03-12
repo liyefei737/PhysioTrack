@@ -42,11 +42,12 @@ public class DBManager {
     public static String DATA_DB = "data";
 
     //property keys for soldier details
-    public String ID_KEY = "id";
-    public String NAME_KEY = "name";
-    public String WEIGHT_KEY = "weight";
-    public String AGE_KEY = "age";
-    public String HEIGHT_KEY = "height";
+    public static String ID_KEY = "id";
+    public static String NAME_KEY = "name";
+    public static String WEIGHT_KEY = "weight";
+    public static String AGE_KEY = "age";
+    public static String HEIGHT_KEY = "height";
+    public static String IP_KEY = "ip";
 
     public DBManager(Context context) {
         _context = context;

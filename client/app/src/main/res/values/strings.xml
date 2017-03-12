@@ -21,5 +21,6 @@
     <string name="title_activity_setup">SetupActivity</string>
     <string name="previously_started">startedAlready</string>
     <string name="update_action">UI_UPDATE</string>
+    <string name="welcome_message"><u>Set up your profile</u></string>
 
 </resources>

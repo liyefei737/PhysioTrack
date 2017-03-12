@@ -62,8 +62,8 @@ public class EditInfoFragment extends BaseFragment {
         EditText age = (EditText) view.findViewById(R.id.etAge);
         EditText weight = (EditText) view.findViewById(R.id.etWeight);
         EditText height = (EditText) view.findViewById(R.id.etHeight);
-        EditTextHandler.setSoldierFields(s, id, age, weight, height);
-
+        EditText ip = (EditText) view.findViewById(R.id.etIP);
+        EditTextHandler.setSoldierFields(s, id, age, weight, height, ip);
         return view;
     }
 
@@ -78,9 +78,10 @@ public class EditInfoFragment extends BaseFragment {
         etList.add((EditText) activity.findViewById(R.id.etAge));
         etList.add((EditText) activity.findViewById(R.id.etWeight));
         etList.add((EditText) activity.findViewById(R.id.etHeight));
+        etList.add((EditText) activity.findViewById(R.id.etIP));
 
         EditTextHandler.disableAndFormat(etList);
-        EditTextHandler.setSoldierFields(dbManager.getSoldierDetails(), etList.get(0), etList.get(1), etList.get(2), etList.get(3));
+        EditTextHandler.setSoldierFields(dbManager.getSoldierDetails(), etList.get(0), etList.get(1), etList.get(2), etList.get(3), etList.get(4));
     }
 
 
@@ -109,6 +110,10 @@ public class EditInfoFragment extends BaseFragment {
         final String newHeight = height.getText().toString();
         etList.add(height);
 
+        EditText ip = (EditText) activity.findViewById(R.id.etIP);
+        final String newIP = ip.getText().toString();
+        etList.add(ip);
+
         if (soldier != null && newId != soldier.getSoldierID()){
             //delete old doc
             Document doc = userDB.getDocument(soldier.getSoldierID());
@@ -125,10 +130,11 @@ public class EditInfoFragment extends BaseFragment {
                 @Override
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties = newRevision.getUserProperties();
-                    properties.put(dbm.ID_KEY, newId);
-                    properties.put(dbm.AGE_KEY, newAge);
-                    properties.put(dbm.WEIGHT_KEY, newWeight);
-                    properties.put(dbm.HEIGHT_KEY, newHeight);
+                    properties.put(DBManager.ID_KEY, newId);
+                    properties.put(DBManager.AGE_KEY, newAge);
+                    properties.put(DBManager.WEIGHT_KEY, newWeight);
+                    properties.put(DBManager.HEIGHT_KEY, newHeight);
+                    properties.put(DBManager.IP_KEY, newIP);
                     newRevision.setUserProperties(properties);
                     btnSave.setVisibility(View.INVISIBLE);
                     cancelbtn.setVisibility(View.INVISIBLE);
@@ -153,6 +159,7 @@ public class EditInfoFragment extends BaseFragment {
         etList.add((EditText) activity.findViewById(R.id.etAge));
         etList.add((EditText) activity.findViewById(R.id.etWeight));
         etList.add((EditText) activity.findViewById(R.id.etHeight));
+        etList.add((EditText) activity.findViewById(R.id.etIP));
 
         EditTextHandler.enableAndFormat(etList);
     }

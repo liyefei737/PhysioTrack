@@ -159,28 +159,32 @@ public class BackgroundDataSim extends Service {
             Soldier soldierDetails = dbManager.getSoldierDetails();
             if (soldierDetails == null)
                 soldierDetails = dbManager.getDefaultSoldier();
-            JSONObject jsonObjForRequest = lastRow;
-            jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
 
             //for now hard-coded medic ip and port
-            String MedicURL = "http://100.65.170.14:8080";
-            JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            VolleyLog.v("Response:%n %s", response.toString(4));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+            String MedicURL = soldierDetails.getMedicIP();
+            if (MedicURL != null) {
+                MedicURL = MedicURL + ":8080";
+                JSONObject jsonObjForRequest = lastRow;
+                jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
+
+                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    VolleyLog.v("Response:%n %s", response.toString(4));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // VolleyLog.e("Error: ", error.getStackTrace());
                     }
                 });
                 rQueue.add(jsonRequest);
+            }
 
                 //save to DB
                 Document doc = dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));

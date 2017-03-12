@@ -152,21 +152,22 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
             if (message == "HEART") {
                 BottomBarTab hearttab = mBottomBar.getTabWithId(R.id.bb_menu_heart);
                 hearttab.setBadgeBackgroundColor(badgeColor);
-                hearttab.setBadgeCount(1);
+                hearttab.setBadgeText("!");
             }
             if (message == "BREATH") {
                 BottomBarTab breathtab = mBottomBar.getTabWithId(R.id.bb_menu_breath);
-                breathtab.setBadgeCount(1);
+                breathtab.setBadgeText("!");
                 breathtab.setBadgeBackgroundColor(badgeColor);
             }
             if (message == "SKIN") {
                 BottomBarTab skintab = mBottomBar.getTabWithId(R.id.bb_menu_skin_temp);
-                skintab.setBadgeCount(1);
+                skintab.setBadgeText("!");
                 skintab.setBadgeBackgroundColor(badgeColor);
+
             }
             if (message == "CORE") {
                 BottomBarTab coretab = mBottomBar.getTabWithId(R.id.bb_menu_core_temp);
-                coretab.setBadgeCount(1);
+                coretab.setBadgeText("!");
                 coretab.setBadgeBackgroundColor(badgeColor);
             }
             // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();

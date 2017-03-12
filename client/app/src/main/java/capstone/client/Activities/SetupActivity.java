@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 
 import capstone.client.DataManagement.DBManager;
 import capstone.client.Fragments.EditInfoFragment;
@@ -37,8 +38,16 @@ public class SetupActivity extends AppCompatActivity {
     public void edit_fields(View view){
         EditInfoFragment.edit_fields(this);
         findViewById(R.id.btCancel).setVisibility(View.GONE);
-        findViewById(R.id.back_arrow).setVisibility(View.GONE);
-        findViewById(R.id.helpButton).setVisibility(View.GONE);
+        findViewById(R.id.back_arrow).setVisibility(View.INVISIBLE);
+        findViewById(R.id.helpButton).setVisibility(View.INVISIBLE);
+        findViewById(R.id.edit_data).setVisibility(View.INVISIBLE);
+        findViewById(R.id.editInfoTitle).setVisibility(View.INVISIBLE);
+        findViewById(R.id.edit_user_image).setVisibility(View.INVISIBLE);
+        ((EditText)findViewById(R.id.etSoldierId)).setHint("SoldierID");
+        ((EditText)findViewById(R.id.etAge)).setHint("Age");
+        ((EditText)findViewById(R.id.etWeight)).setHint("Weight");
+        ((EditText)findViewById(R.id.etHeight)).setHint("Height");
+        ((EditText)findViewById(R.id.etIP)).setHint("Medic IP");
     }
 
     public void edit_info_save(View view){

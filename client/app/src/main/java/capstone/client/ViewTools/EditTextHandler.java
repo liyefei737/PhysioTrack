@@ -41,7 +41,7 @@ public class EditTextHandler {
         }
     }
 
-    public static void setSoldierFields(Soldier s, EditText id, EditText age, EditText weight, EditText height) {
+    public static void setSoldierFields(Soldier s, EditText id, EditText age, EditText weight, EditText height, EditText ip) {
         String strID = s.getSoldierID();
         if (strID != null && !strID.isEmpty()) {
             id.setHint(strID);
@@ -64,6 +64,12 @@ public class EditTextHandler {
         if (iHeight > 0) {
             height.setHint(String.valueOf(iHeight));
             height.setText(String.valueOf(iHeight));
+        }
+
+        String strIP = s.getMedicIP();
+        if (strIP != null) {
+            ip.setHint(strIP);
+            ip.setText(strIP);
         }
 
     }

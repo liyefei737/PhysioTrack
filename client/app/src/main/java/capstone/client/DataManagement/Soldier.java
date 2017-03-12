@@ -10,6 +10,7 @@ public class Soldier {
     private int age;
     private int weight;
     private int height;
+    private String medicIP;
 
     public Soldier() {
         soldierID = "";
@@ -66,4 +67,8 @@ public class Soldier {
     public void setHeight(int newHeight) {
         height = newHeight;
     }
+
+    public String getMedicIP(){return medicIP;}
+
+    public void setMedicIP(String ip) { medicIP = ip;}
 }

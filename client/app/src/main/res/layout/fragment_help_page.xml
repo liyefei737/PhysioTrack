@@ -35,6 +35,22 @@
         android:gravity="center|bottom"
         android:orientation="vertical" >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Credit"
+            android:textSize="@dimen/title_bar"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Icon made by http://simpleicon.com/ from www.flaticon.com "
+            android:textSize="@dimen/title_bar"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+
 
         <Button
             android:layout_width="wrap_content"
