@@ -2,10 +2,12 @@ package com.drdc1.medic;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -38,6 +40,8 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     private String solid = "fjffy";
     private com.drdc1.medic.LineChartWithBackground hrchart, respchart, skinchart, ctchart;
     private HashMap<String, String> activeSoldierNameIDMap = new HashMap<>();
+    Button btLinerRequest;
+
     private static float chartMin = 0;
     private static float chartMax = 200;
     View rootView;
@@ -76,7 +80,25 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         NameNonEditable = (TextView) rootView.findViewById(R.id.NameNonEditable);
         GenderNonEditable = (TextView) rootView.findViewById(R.id.GenderNonEditable);
         AgeNonEditable = (TextView) rootView.findViewById(R.id.AgeNonEditable);
+        btLinerRequest = (Button) rootView.findViewById(R.id.btLinerRequest);
 
+        btLinerRequest.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                Bundle bundl = new Bundle();
+                bundl.putString("theid", solid);
+
+                TreatmentScreenTab dv = new TreatmentScreenTab();
+                dv.setArguments(bundl);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(((ViewGroup) getView().getParent()).getId(), dv);
+                ft.show(getFragmentManager()
+                        .findFragmentById(((ViewGroup) getView().getParent()).getId()));
+                ft.addToBackStack(null);
+                ft.commit();
+
+            }
+        });
         //End of OnClick Links
 //            NameEditable.setText("thistest");
 //            GenderEditable.setText("thistest1");
