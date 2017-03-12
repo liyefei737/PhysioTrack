@@ -2,7 +2,6 @@ package capstone.client.Fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import static android.view.View.VISIBLE;
  * create an instance of this fragment.
  */
 public class EditInfoFragment extends BaseFragment {
+
 
     public static EditInfoFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -91,7 +91,7 @@ public class EditInfoFragment extends BaseFragment {
         List<EditText> etList = new ArrayList<>();
 
         Soldier soldier = dbManager.getSoldierDetails();
-        Database userDB = dbManager.getDatabase(dbManager.USER_DB);
+        Database userDB = dbManager.getDatabase(DBManager.USER_DB);
 
         EditText id = (EditText) activity.findViewById(R.id.etSoldierId);
         final String newId = id.getText().toString();

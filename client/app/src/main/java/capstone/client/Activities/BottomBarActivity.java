@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 
 import com.ncapdevi.fragnav.FragNavController;
 import com.roughike.bottombar.BottomBar;
@@ -141,21 +141,33 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("key");
+            String color = intent.getStringExtra("color");
+            int badgeColor;
+            if (color.equals("RED"))
+                badgeColor = getResources().getColor(R.color.red);
+            else if (color.equals("YELLOW"))
+                badgeColor = getResources().getColor(R.color.yellow);
+            else badgeColor = 0;
+
             if (message == "HEART") {
                 BottomBarTab hearttab = mBottomBar.getTabWithId(R.id.bb_menu_heart);
+                hearttab.setBadgeBackgroundColor(badgeColor);
                 hearttab.setBadgeCount(1);
             }
             if (message == "BREATH") {
                 BottomBarTab breathtab = mBottomBar.getTabWithId(R.id.bb_menu_breath);
                 breathtab.setBadgeCount(1);
+                breathtab.setBadgeBackgroundColor(badgeColor);
             }
             if (message == "SKIN") {
                 BottomBarTab skintab = mBottomBar.getTabWithId(R.id.bb_menu_skin_temp);
                 skintab.setBadgeCount(1);
+                skintab.setBadgeBackgroundColor(badgeColor);
             }
             if (message == "CORE") {
                 BottomBarTab coretab = mBottomBar.getTabWithId(R.id.bb_menu_core_temp);
                 coretab.setBadgeCount(1);
+                coretab.setBadgeBackgroundColor(badgeColor);
             }
             // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         }
@@ -302,8 +314,12 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     }
 
     public void onHelpOrSettingsBackPressed(View view) {
-        //TODO:if editing and back go to not editing
-        onBackPressed();
+        if (mNavController.getCurrentFrag().getClass() == EditInfoFragment.class && ((EditText) findViewById(R.id.etSoldierId)).isCursorVisible() ) {
+            EditInfoFragment.edit_info_cancel(this, dbManager);
+        }
+        else {
+            onBackPressed();
+        }
     }
 }
 

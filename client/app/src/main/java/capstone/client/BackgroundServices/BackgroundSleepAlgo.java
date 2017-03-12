@@ -101,7 +101,7 @@ public class BackgroundSleepAlgo extends Service {
     }
 
     private void run_sleep_algo() {
-        Database dataDB = dbManager.getDatabase(dbManager.DATA_DB);
+        Database dataDB = dbManager.getDatabase(DBManager.DATA_DB);
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); //hardcode for datasim
         JSONArray last9Minutes = dbManager.QueryLastXMinutes(now, 9);

@@ -2,7 +2,6 @@ package capstone.client.BackgroundServices;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -40,7 +39,6 @@ public class BackgroundWellnessAlgo extends Service {
     static final String STATUS_UPDATE = "STATUS_UPDATE";
     static private BackgroundWellnessAlgo _BackgroundWellnessAlgo = null;
     private DBManager dbManager = null;
-    private LocalBroadcastManager broadcaster = null;
 
     //singleton to to pass an instance of BackgroundWellnessAlgo
     static public BackgroundWellnessAlgo get_BackgroundWellnessAlgo() {
@@ -56,7 +54,6 @@ public class BackgroundWellnessAlgo extends Service {
     public void onCreate() {
         super.onCreate();
         _BackgroundWellnessAlgo = this;
-        broadcaster = LocalBroadcastManager.getInstance(this);
 
         // An Android handler thread internally operates on a looper.
         mHandlerThread = new HandlerThread("WellnessAlgoService.HandlerThread");
@@ -104,7 +101,7 @@ public class BackgroundWellnessAlgo extends Service {
 
     public void calculateWellness() {
         WelfareTracker wt = ((DRDCClient) this.getApplication()).getWelfareTracker();
-        Database userDB = dbManager.getDatabase(dbManager.DATA_DB);
+        Database userDB = dbManager.getDatabase(DBManager.DATA_DB);
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); //hardcode for datasim
         JSONArray last5Minutes = dbManager.QueryLastXMinutes(now, 5);
@@ -121,6 +118,8 @@ public class BackgroundWellnessAlgo extends Service {
                 Intent intent = new Intent("yelloworgreen");
                 // You can also include some extra data.
                 intent.putExtra("key", (String) pair.getKey());
+                String status = ((WelfareStatus) pair.getValue()).toString();
+                intent.putExtra("color", status);
 //                Bundle b = new Bundle();
 //                b.putParcelable("Location", l);
 //                intent.putExtra("Location", b);

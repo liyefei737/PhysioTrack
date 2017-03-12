@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateUtils;
 
 import com.android.volley.RequestQueue;
@@ -63,7 +62,6 @@ public class BackgroundDataSim extends Service {
     static private BackgroundDataSim _backgroundDataSim = null;
     private DBManager dbManager = null;
     private Database dataDB = null;
-    private LocalBroadcastManager broadcaster = null;
     //Volley is a easy to use http lib
     private RequestQueue rQueue = null;
 
@@ -92,7 +90,6 @@ public class BackgroundDataSim extends Service {
         super.onCreate();
         _backgroundDataSim = this;
         rQueue = Volley.newRequestQueue(this);
-        broadcaster = LocalBroadcastManager.getInstance(this);
         // An Android handler thread internally operates on a looper.
         mHandlerThread = new HandlerThread("DataSimService.HandlerThread");
         mHandlerThread.start();
@@ -109,7 +106,7 @@ public class BackgroundDataSim extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         dbManager = new DBManager(this);
-        dataDB = dbManager.getDatabase(dbManager.DATA_DB);
+        dataDB = dbManager.getDatabase(DBManager.DATA_DB);
         Timer timer = new Timer();
         TimerTask doDataSimCallback = new TimerTask() {
             @Override
@@ -166,7 +163,7 @@ public class BackgroundDataSim extends Service {
             jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
 
             //for now hard-coded medic ip and port
-            String MedicURL = "http://192.168.43.13:8080";
+            String MedicURL = "http://100.65.170.14:8080";
             JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
                 new Response.Listener<JSONObject>() {
                     @Override
