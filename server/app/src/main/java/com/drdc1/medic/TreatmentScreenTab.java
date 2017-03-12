@@ -14,8 +14,13 @@ import android.widget.TextView;
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
+import com.couchbase.lite.Query;
+import com.couchbase.lite.QueryEnumerator;
+import com.couchbase.lite.QueryRow;
 import com.couchbase.lite.UnsavedRevision;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -28,11 +33,13 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
             securityatpickup_eneminarea, securityatpickup_hotpz, pzmarking_panles, pzmarking_pyro,
             pzmarking_smoke, pzmarking_other, patientnatstatus_coalitionmil,
             patientnatstatus_civiliancf, patientnatstatus_noncoalitionsf,
-            patientnatstatus_noncoalitioncivil, patientnatstatus_opforces, patientnatstatus_child;
-    EditText location, callsign_freq, number_patient, terrainobstacles;
+            patientnatstatus_noncoalitioncivil, patientnatstatus_opforces, patientnatstatus_child,
+            airway, breathing, pulserate, conscious;
+    EditText location, callsign_freq, number_patient, terrainobstacles, pzterrain, mechanisminjury,
+            injurysustained, treatmentgiven;
     Button btSubmit;
     String sendingid;
-    int precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus;
+    int precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus, symptoms;
     private DataManager dataManager = null;
 
     public TreatmentScreenTab() {
@@ -78,6 +85,17 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
         patientnatstatus_opforces =
                 (CheckBox) rootView.findViewById(R.id.patientnatstatus_opforces);
         patientnatstatus_child = (CheckBox) rootView.findViewById(R.id.patientnatstatus_child);
+
+        airway = (CheckBox) rootView.findViewById(R.id.airway);
+        breathing = (CheckBox) rootView.findViewById(R.id.breathing);
+        pulserate = (CheckBox) rootView.findViewById(R.id.pulserate);
+        conscious = (CheckBox) rootView.findViewById(R.id.conscious);
+
+        pzterrain = (EditText) rootView.findViewById(R.id.pzterrain);
+        mechanisminjury = (EditText) rootView.findViewById(R.id.mechanisminjury);
+        injurysustained = (EditText) rootView.findViewById(R.id.injurysustained);
+        treatmentgiven = (EditText) rootView.findViewById(R.id.treatmentgiven);
+
         location = (EditText) rootView.findViewById(R.id.location);
         callsign_freq = (EditText) rootView.findViewById(R.id.callsign_freq);
         number_patient = (EditText) rootView.findViewById(R.id.number_patient);
@@ -93,6 +111,137 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
 //        });
 
         // Inflate the layout for this fragment
+
+        Database db = dataManager.getNinelinerDatabase();
+        if (db.getExistingDocument(sendingid) != null) {
+
+            HashMap hm = new HashMap();
+            try {
+                Query allDocsQuery = db.createAllDocumentsQuery();
+                QueryEnumerator result = allDocsQuery.run();
+                for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                    QueryRow row = it.next();
+                    Document doc = row.getDocument();
+                    if (doc.getProperty("id").equals(sendingid)) {
+                        hm.put("precedence", doc.getProperty("precedence"));
+                        hm.put("eqreq", doc.getProperty("eqreq"));
+                        hm.put("patienttype", doc.getProperty("patienttype"));
+                        hm.put("securityatpickup", doc.getProperty("securityatpickup"));
+                        hm.put("pzmarking", doc.getProperty("pzmarking"));
+                        hm.put("patientnatstatus", doc.getProperty("patientnatstatus"));
+                        hm.put("symptoms", doc.getProperty("symptoms"));
+                        hm.put("location", doc.getProperty("location"));
+                        hm.put("callsign_freq", doc.getProperty("callsign_freq"));
+                        hm.put("number_patient", doc.getProperty("number_patient"));
+                        hm.put("pzterrain", doc.getProperty("pzterrain"));
+                        hm.put("mechanisminjury", doc.getProperty("mechanisminjury"));
+                        hm.put("injurysustained", doc.getProperty("injurysustained"));
+                        hm.put("treatmentgiven", doc.getProperty("treatmentgiven"));
+                        hm.put("terrainobstacles", doc.getProperty("terrainobstacles"));
+
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if ((int) hm.get("precedence") == 0) {
+                precedence_urgent.setChecked(true);
+            }
+            if ((int) hm.get("precedence") == 1) {
+                precedence_priority.setChecked(true);
+            }
+            if ((int) hm.get("precedence") == 2) {
+                precedence_routine.setChecked(true);
+            }
+            if ((int) hm.get("eqreq") == 0) {
+                eqreq_none.setChecked(true);
+            }
+            if ((int) hm.get("eqreq") == 1) {
+                eqreq_hoist.setChecked(true);
+            }
+            if ((int) hm.get("eqreq") == 2) {
+                eqreq_extrication.setChecked(true);
+            }
+            if ((int) hm.get("eqreq") == 3) {
+                eqreq_ventilator.setChecked(true);
+            }
+            if ((int) hm.get("patienttype") == 0) {
+                patienttype_litter.setChecked(true);
+            }
+            if ((int) hm.get("patienttype") == 1) {
+                patienttype_walking.setChecked(true);
+            }
+            if ((int) hm.get("patienttype") == 2) {
+                patienttype_escort.setChecked(true);
+            }
+            if ((int) hm.get("securityatpickup") == 0) {
+                securityatpickup_noenem.setChecked(true);
+            }
+            if ((int) hm.get("securityatpickup") == 1) {
+                securityatpickup_possibileenem.setChecked(true);
+            }
+            if ((int) hm.get("securityatpickup") == 2) {
+                securityatpickup_eneminarea.setChecked(true);
+            }
+            if ((int) hm.get("securityatpickup") == 3) {
+                securityatpickup_hotpz.setChecked(true);
+            }
+            if ((int) hm.get("pzmarking") == 0) {
+                pzmarking_panles.setChecked(true);
+            }
+            if ((int) hm.get("pzmarking") == 1) {
+                pzmarking_pyro.setChecked(true);
+            }
+            if ((int) hm.get("pzmarking") == 2) {
+                pzmarking_smoke.setChecked(true);
+            }
+            if ((int) hm.get("pzmarking") == 3) {
+                pzmarking_other.setChecked(true);
+            }
+            if ((int) hm.get("patientnatstatus") == 0) {
+                patientnatstatus_coalitionmil.setChecked(true);
+            }
+            if ((int) hm.get("patientnatstatus") == 1) {
+                patientnatstatus_civiliancf.setChecked(true);
+            }
+            if ((int) hm.get("patientnatstatus") == 2) {
+                patientnatstatus_noncoalitionsf.setChecked(true);
+            }
+            if ((int) hm.get("patientnatstatus") == 3) {
+                patientnatstatus_noncoalitioncivil.setChecked(true);
+            }
+            if ((int) hm.get("patientnatstatus") == 4) {
+                patientnatstatus_opforces.setChecked(true);
+            }
+            if ((int) hm.get("patientnatstatus") == 5) {
+                patientnatstatus_child.setChecked(true);
+            }
+            if ((int) hm.get("symptoms") == 0) {
+                airway.setChecked(true);
+            }
+            if ((int) hm.get("symptoms") == 1) {
+                breathing.setChecked(true);
+            }
+            if ((int) hm.get("symptoms") == 2) {
+                pulserate.setChecked(true);
+            }
+            if ((int) hm.get("symptoms") == 3) {
+                conscious.setChecked(true);
+            }
+
+            pzterrain.setText((CharSequence) hm.get("pzterrain"));
+            mechanisminjury.setText((CharSequence) hm.get("mechanisminjury"));
+            injurysustained.setText((CharSequence) hm.get("injurysustained"));
+            treatmentgiven.setText((CharSequence) hm.get("treatmentgiven"));
+
+            location.setText((CharSequence) hm.get("location"));
+            callsign_freq.setText((CharSequence) hm.get("callsign_freq"));
+            number_patient.setText((CharSequence) hm.get("number_patient"));
+            terrainobstacles.setText((CharSequence) hm.get("terrainobstacles"));
+
+        }
+
         return rootView;
 
     }
@@ -172,33 +321,46 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
             if (patientnatstatus_child.isChecked()) {
                 patientnatstatus = 5;
             }
+            if (airway.isChecked()) {
+                symptoms = 0;
+            }
+            if (breathing.isChecked()) {
+                symptoms = 1;
+            }
+            if (pulserate.isChecked()) {
+                symptoms = 2;
+            }
+            if (conscious.isChecked()) {
+                symptoms = 3;
+            }
 
             Database db = dataManager.getNinelinerDatabase();
             Document doc = db.getDocument(sendingid);
 
-            try {
-                doc.update(new Document.DocumentUpdater() {
-                    @Override
-                    public boolean update(UnsavedRevision newRevision) {
-                        Map<String, Object> properties = newRevision.getUserProperties();
-                        properties.put("precedence", precedence);
-                        properties.put("eqreq", eqreq);
-                        properties.put("patienttype", patienttype);
-                        properties.put("securityatpickup", securityatpickup);
-                        properties.put("pzmarking", pzmarking);
-                        properties.put("patientnatstatus", patientnatstatus);
-                        properties.put("location", location.getText());
-                        properties.put("callsign_freq", callsign_freq.getText());
-                        properties.put("number_patient", number_patient.getText());
-                        properties.put("terrainobstacles", terrainobstacles.getText());
+            Map<String, Object> treatmentInfo = new HashMap<String, Object>();
+            treatmentInfo.put("id", sendingid);
+            treatmentInfo.put("precedence", precedence);
+            treatmentInfo.put("eqreq", eqreq);
+            treatmentInfo.put("patienttype", patienttype);
+            treatmentInfo.put("securityatpickup", securityatpickup);
+            treatmentInfo.put("pzmarking", pzmarking);
+            treatmentInfo.put("patientnatstatus", patientnatstatus);
+            treatmentInfo.put("symptoms", symptoms);
+            treatmentInfo.put("location", location.getText());
+            treatmentInfo.put("callsign_freq", callsign_freq.getText());
+            treatmentInfo.put("number_patient", number_patient.getText());
+            treatmentInfo.put("pzterrain", pzterrain.getText());
+            treatmentInfo.put("mechanisminjury", mechanisminjury.getText());
+            treatmentInfo.put("injurysustained", injurysustained.getText());
+            treatmentInfo.put("treatmentgiven", treatmentgiven.getText());
+            treatmentInfo.put("terrainobstacles", terrainobstacles.getText());
 
-                        newRevision.setUserProperties(properties);
-                        return true;
-                    }
-                });
+            try {
+                doc.putProperties(treatmentInfo);
             } catch (CouchbaseLiteException e) {
                 e.printStackTrace();
             }
+
         }
     }
 }
