@@ -139,7 +139,8 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
                         HashMap hm = dataManager.getStaticInfo(solid);
                         NameNonEditable.setText((CharSequence) hm.get("name"));
-                        GenderNonEditable.setText((CharSequence) hm.get("gender"));
+//                        GenderNonEditable.setText((CharSequence) hm.get("gender"));
+                        GenderNonEditable.setText("Male");
                         AgeNonEditable.setText((CharSequence) hm.get("age"));
 
                     }
