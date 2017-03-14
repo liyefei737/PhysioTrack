@@ -70,8 +70,9 @@
             <EditText
                 android:id="@+id/etSoldierId"
                 android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal|center"
                 android:background="@null"
                 android:clickable="false"
@@ -91,8 +92,8 @@
 
             <ImageButton
                 android:id="@+id/edit_data"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignTop="@+id/etSoldierId"
                 android:layout_marginLeft="12dp"
                 android:layout_marginStart="12dp"
@@ -110,7 +111,7 @@
             <EditText
                 android:id="@+id/etAge"
                 android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -145,7 +146,7 @@
             <EditText
                 android:id="@+id/etWeight"
                 android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -179,7 +180,7 @@
             <EditText
                 android:id="@+id/etHeight"
                 android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -212,7 +213,7 @@
             <EditText
                 android:id="@+id/etIP"
                 android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_weight="1"
@@ -222,7 +223,7 @@
                 android:ems="10"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:hint="@string/height_text_edit"
+                android:hint="@string/ip_text_edit"
                 android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -235,7 +236,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
         <Button

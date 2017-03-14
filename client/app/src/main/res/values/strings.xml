@@ -8,6 +8,7 @@
     <string name="weight_text_edit">Weight</string>
     <string name="height_text_edit">Height</string>
     <string name="name_text_edit">Name</string>
+    <string name="ip_text_edit">Medic IP</string>
     <string name="id_text_edit">Service Number</string>
     <string name="age_text_edit">Age</string>
     <string name="title_top">My Health</string>
