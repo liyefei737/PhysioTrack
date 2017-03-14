@@ -1,5 +1,6 @@
 package capstone.client.Fragments;
 
+import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,12 @@ import capstone.client.DRDCClient;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
 import capstone.client.R;
+import capstone.client.ViewTools.StateColourUtils;
 import welfareSM.WelfareStatus;
+
+import static capstone.client.R.color.green;
+import static capstone.client.R.color.red;
+import static capstone.client.R.color.yellow;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,24 +82,9 @@ public class HomeFragment extends capstone.client.Fragments.BaseFragment impleme
     }
 
     public void updateWellnessStatus(String state, ImageView wellnessStatus) {
-        int red = getResources().getColor(R.color.red);
-        int yellow = getResources().getColor(R.color.yellow);
-        int green = getResources().getColor(R.color.green);
-        int grey = getResources().getColor(R.color.bb_inActiveBottomBarItemColor);
         GradientDrawable gd = (GradientDrawable) wellnessStatus.getDrawable();
-        if (state == null){
-            gd.setColor(grey);
-        }
-        else {
-            if (state.equals("GREEN")) {
-                gd.setColor(green);
-            } else if (state.equals("YELLOW")) {
-                gd.setColor(yellow);
-            } else {
-                gd.setColor(red);
-            }
-        }
 
+        gd.setColor(StateColourUtils.StringStateToColour(state, getResources()));
         gd.invalidateSelf();
         wellnessStatus.invalidate();
         wellnessStatus.postInvalidate();

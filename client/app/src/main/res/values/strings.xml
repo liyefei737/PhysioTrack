@@ -2,18 +2,14 @@
     <string name="app_name">MyHealth</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_bottom_bar">BottomBarActivity</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="weight_text_edit">Weight</string>
     <string name="height_text_edit">Height</string>
-    <string name="name_text_edit">Name</string>
     <string name="ip_text_edit">Medic IP</string>
     <string name="id_text_edit">Service Number</string>
     <string name="age_text_edit">Age</string>
     <string name="title_top">My Health</string>
     <string name="edit_info_save_btn">Save</string>
-    <string name="title_activity_basic">BasicActivity</string>
     <string name="title_edit_info">Settings</string>
     <string name="title_help">Help</string>
     <string name="kgs">kgs</string>
@@ -23,5 +19,50 @@
     <string name="previously_started">startedAlready</string>
     <string name="update_action">UI_UPDATE</string>
     <string name="welcome_message"><u>Set up your profile</u></string>
+
+    <string name="tab_colour_update">TAB_UPDATE</string>
+
+    <string name="edit_cancel">Cancel</string>
+
+    <string name="graph_title">Historical Data</string>
+    <string name="graph_xAxis">Minutes</string>
+    <string name="graph_breath_yAxis">Breathing Rate (Per Minute)</string>
+    <string name="graph_core_yAxis">Core Temperature (Celsius)</string>
+    <string name="graph_heart_yAxis">Heart Rate (BPM)</string>
+    <string name="graph_skin_yAxis">Skin Temp (Celsius)</string>
+    
+    <string name="help_tutorial_restart">Restart Tutorial</string>
+    
+    <string name="help_question_icons">1. What do the icons mean?</string>
+    <string name="help_question_icons_heart">Heart rate</string>
+    <string name="help_question_icons_core">Core temperature</string>
+    <string name="help_question_icons_breath">Breathing rate</string>
+    <string name="help_question_icons_skin">Skin temperature</string>
+    <string name="help_question_icons_home">Home</string>
+    <string name="help_question_icons_settings">Settings</string>
+
+    <string name="help_question_status">2. How do I know my overall health status?</string>
+    <string name="help_question_status_expl">Overall health status is represented by the icon on the home screen:</string>
+    <string name="help_question_status_good">Good</string>
+    <string name="help_question_status_inter">Intermediate</string>
+    <string name="help_question_status_crit">Critical</string>
+    <string name="help_question_status_unknown">Unknown</string>
+    
+    <string name="help_question_menu">3. How do I know what\'s affecting my status?</string>
+    <string name="help_question_menu_expl">When any of the 4 physiological measures are outside acceptable ranges their status will show in the menu bar.</string>
+    <string name="help_question_menu_example">In the below example, the heart rate has gone into the red zone, and the breathing rate into the yellow zone.</string>
+
+    <string name="help_question_graph">4. Graph Interpretation</string>
+    <string name="help_question_graph_expl">The graphs show the past 10 minutes of data, and have 3ets of ranges (green, yellow, and red) that correspond to the normal, intermediate, and critical ranges for that measure.</string>
+    <string name="help_question_graph_example">The graphs show the past 10 minutes of data, and have 3ets of ranges (green, yellow, and red) that correspond to the normal, intermediate, and critical ranges for that measure.</string>
+
+
+    <string name="help_question_change">5. How do I edit my profile?</string>
+    <string name="help_question_change_gear">Tap on the gear icon in the top right corner of every screen of the app.</string>
+    <string name="help_question_change_pen">Tap on the pen icon on the right side of the page.</string>
+    <string name="help_question_change_edit">Edit your info</string>
+    <string name="help_question_change_save">Tap on the save button to save your changes or cancel to discard them.</string>
+
+
 
 </resources>

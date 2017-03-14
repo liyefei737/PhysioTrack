@@ -4,5 +4,5 @@
     android:innerRadius="75dp"
     android:thickness="30dp"
     android:useLevel="false">
-    <solid android:color="@color/red"/>
+    <solid android:color="@color/bb_inActiveBottomBarItemColor"/>
 </shape>

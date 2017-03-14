@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -36,6 +37,7 @@ import capstone.client.Fragments.HelpPageFragment;
 import capstone.client.Fragments.HomeFragment;
 import capstone.client.Fragments.SkinTempFragment;
 import capstone.client.R;
+import capstone.client.ViewTools.StateColourUtils;
 
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation,
         FragNavController.TransactionListener,
@@ -140,37 +142,34 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
-            String message = intent.getStringExtra("key");
-            String color = intent.getStringExtra("color");
-            int badgeColor;
-            if (color.equals("RED"))
-                badgeColor = getResources().getColor(R.color.red);
-            else if (color.equals("YELLOW"))
-                badgeColor = getResources().getColor(R.color.yellow);
-            else badgeColor = 0;
 
-            if (message == "HEART") {
+            String hr = intent.getStringExtra("HEART");
+            String br = intent.getStringExtra("BREATH");
+            String ct = intent.getStringExtra("CORE");
+            String st = intent.getStringExtra("SKIN");
+            Resources res = getResources();
+            if (hr != null){
                 BottomBarTab hearttab = mBottomBar.getTabWithId(R.id.bb_menu_heart);
-                hearttab.setBadgeBackgroundColor(badgeColor);
+                hearttab.setBadgeBackgroundColor(StateColourUtils.StringStateToColour(hr, res));
                 hearttab.setBadgeText("!");
             }
-            if (message == "BREATH") {
+            if (br != null) {
                 BottomBarTab breathtab = mBottomBar.getTabWithId(R.id.bb_menu_breath);
                 breathtab.setBadgeText("!");
-                breathtab.setBadgeBackgroundColor(badgeColor);
+                breathtab.setBadgeBackgroundColor(StateColourUtils.StringStateToColour(br, res));
             }
-            if (message == "SKIN") {
+            if (st != null) {
                 BottomBarTab skintab = mBottomBar.getTabWithId(R.id.bb_menu_skin_temp);
                 skintab.setBadgeText("!");
-                skintab.setBadgeBackgroundColor(badgeColor);
+                skintab.setBadgeBackgroundColor(StateColourUtils.StringStateToColour(st, res));
 
             }
-            if (message == "CORE") {
+            if (ct != null) {
                 BottomBarTab coretab = mBottomBar.getTabWithId(R.id.bb_menu_core_temp);
                 coretab.setBadgeText("!");
-                coretab.setBadgeBackgroundColor(badgeColor);
+                coretab.setBadgeBackgroundColor(StateColourUtils.StringStateToColour(ct, res));
             }
-            // Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
         }
     };
 
@@ -181,7 +180,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         view.setSystemUiVisibility(uiOptions);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
-                mMessageReceiver, new IntentFilter("yelloworgreen"));
+                mMessageReceiver, new IntentFilter("@string/tab_colour_update"));
 
     }
 
@@ -308,7 +307,6 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
             data.put("br", intent.getIntArrayExtra("br"));
             data.put("hr", intent.getIntArrayExtra("hr"));
             data.put("state", intent.getStringExtra("state"));
-            System.out.println("receiving...");
             System.out.println(intent.getAction());
             notifyObserver(data);
         }

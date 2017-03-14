@@ -23,10 +23,10 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import capstone.client.DataManagement.DBManager;
 import capstone.client.DRDCClient;
-import welfareSM.WelfareTracker;
+import capstone.client.DataManagement.DBManager;
 import welfareSM.WelfareStatus;
+import welfareSM.WelfareTracker;
 
 /**
  * Background Thread for computing the wellness algorithm
@@ -105,50 +105,48 @@ public class BackgroundWellnessAlgo extends Service {
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); //hardcode for datasim
         JSONArray last5Minutes = dbManager.QueryLastXMinutes(now, 5);
-        Object[] thearray = wt.calculateWelfareStatus(last5Minutes);
-        final WelfareStatus nextState = (WelfareStatus) thearray[1];
-        HashMap<String, WelfareStatus> hmap = (HashMap<String, WelfareStatus>) thearray[0];
 
-        Iterator it = hmap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            if (pair.getValue() == WelfareStatus.YELLOW || pair.getValue() == WelfareStatus.RED) {
+        if (last5Minutes.length() != 0) {
+            Object[] thearray = wt.calculateWelfareStatus(last5Minutes);
+            final WelfareStatus nextState = (WelfareStatus) thearray[1];
+            HashMap<String, WelfareStatus> hmap = (HashMap<String, WelfareStatus>) thearray[0];
 
+            if (hmap.containsValue(WelfareStatus.RED) || hmap.containsValue(WelfareStatus.YELLOW)) {
+                Iterator it = hmap.entrySet().iterator();
 
-                Intent intent = new Intent("yelloworgreen");
-                // You can also include some extra data.
-                intent.putExtra("key", (String) pair.getKey());
-                String status = ((WelfareStatus) pair.getValue()).toString();
-                intent.putExtra("color", status);
-//                Bundle b = new Bundle();
-//                b.putParcelable("Location", l);
-//                intent.putExtra("Location", b);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                Intent intent = new Intent("@string/tab_colour_update");
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (pair.getValue() == WelfareStatus.YELLOW || pair.getValue() == WelfareStatus.RED) {
 
-
-            }
-            System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-
-        Calendar nearestMinute =
-                org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
-        Document saveStateDoc = userDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-        try {
-            saveStateDoc.update(new Document.DocumentUpdater() {
-                @Override
-                public boolean update(UnsavedRevision newRevision) {
-                    Map<String, Object> properties = newRevision.getUserProperties();
-                    properties.put("state", nextState);
-                    newRevision.setUserProperties(properties);
-                    return true;
+                        // You can also include some extra data.
+                        intent.putExtra((String) pair.getKey(), pair.getValue().toString());
+                    }
+                    System.out.println(pair.getKey() + " = " + pair.getValue());
+                    it.remove(); // avoids a ConcurrentModificationException
                 }
-            });
-        } catch (CouchbaseLiteException e) {
-            //handle this
-        }
-        notifyUI(nextState);
-        ((DRDCClient) this.getApplication()).setLastState(nextState);
 
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            }
+
+            Calendar nearestMinute =
+                    org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+            Document saveStateDoc = userDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+            try {
+                saveStateDoc.update(new Document.DocumentUpdater() {
+                    @Override
+                    public boolean update(UnsavedRevision newRevision) {
+                        Map<String, Object> properties = newRevision.getUserProperties();
+                        properties.put("state", nextState);
+                        newRevision.setUserProperties(properties);
+                        return true;
+                    }
+                });
+            } catch (CouchbaseLiteException e) {
+                //handle this
+            }
+            notifyUI(nextState);
+            ((DRDCClient) this.getApplication()).setLastState(nextState);
+        }
     }
 }

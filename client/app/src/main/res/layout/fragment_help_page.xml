@@ -38,9 +38,9 @@
         android:layout_margin="10dp"
         android:background="@drawable/btn_save_cancel"
         android:padding="10dp"
-        android:text="Restart Tutorial"
+        android:text="@string/help_tutorial_restart"
         android:textColor="@color/black"
-        android:textSize="10sp" />
+        android:textSize="12sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -48,7 +48,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="1"
             android:gravity="center|bottom"
             android:orientation="vertical" >
 
@@ -56,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="1. What do the icons mean?"
+                android:text="@string/help_question_icons"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
@@ -65,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:layout_marginBottom="30dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -74,62 +74,38 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_menu_heart"
-                            android:tint="@color/white" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:text="@string/help_question_icons_heart"
+                        android:drawableLeft="@drawable/ic_menu_heart"
+                        android:drawableTint="@color/white"
+                        android:gravity="center_vertical"
+                        android:drawablePadding="5dp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
-                            android:text="Heart rate" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_menu_core_temp"
-                            android:tint="@color/white" />
+                            android:text="@string/help_question_icons_core"
+                            android:drawableLeft="@drawable/ic_menu_core_temp"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:drawableTint="@color/white"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
-                            android:text="Core Temperature" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_menu_home"
-                            android:tint="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="10dp"
-                            android:text="Home" />
-                    </LinearLayout>
+                            android:text="@string/help_question_icons_home"
+                            android:drawableLeft="@drawable/ic_menu_home"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:drawableTint="@color/white"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -139,61 +115,37 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_menu_breath"
-                            android:tint="@color/white" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="10dp"
+                            android:text="@string/help_question_icons_breath"
+                            android:drawableLeft="@drawable/ic_menu_breath"
+                            android:drawableTint="@color/white"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
-                            android:text="Breathing rate" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_menu_skin_temp"
-                            android:tint="@color/white" />
+                            android:text="@string/help_question_icons_skin"
+                            android:drawableLeft="@drawable/ic_menu_skin_temp"
+                            android:drawableTint="@color/white"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
-                            android:text="Skin Temperature" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/setting_large" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="10dp"
-                            android:text="Settings" />
-                    </LinearLayout>
+                            android:text="@string/help_question_icons_settings"
+                            android:drawableLeft="@drawable/setting_small"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -203,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="2. How do I know my overall health status?"
+                android:text="@string/help_question_status"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
@@ -218,12 +170,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Overall health status is represented by the icon on the home screen:" />
+                    android:text="@string/help_question_status_expl" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -239,7 +192,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Good"
+                            android:text="@string/help_question_status_good"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -258,7 +211,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Intermediate"
+                            android:text="@string/help_question_status_inter"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -276,7 +229,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Critical"
+                            android:text="@string/help_question_status_crit"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -294,7 +247,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Unknown"
+                            android:text="@string/help_question_status_unknown"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -307,7 +260,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="3. How do I know what's affecting my status?"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -322,13 +275,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="When any of the 4 physiological measures are outside acceptable ranges their status will show in the menu bar." />
+                    android:text="@string/help_question_menu_expl" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="In the below example, the heart rate has gone into the red zone, and the breathing rate into the yellow zone." />
+                    android:text="@string/help_question_menu_example" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -342,7 +295,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="4. Graph Interpretation"
+                android:text="@string/help_question_graph"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -357,17 +310,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="The graphs show the past 10 minutes of data, and have 3ets of ranges (green, yellow, and red) that correspond to the normal, intermediate, and critical ranges for that measure." />
+                    android:text="@string/help_question_graph_expl" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="For example, in the graph below, heart rate is critical when above 100 BPM or below 40 BPM, normal from 40 - 70 BPM, and intermediate otherwise. ." />
+                    android:text="@string/help_question_graph_example" />
 
                 <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:src="@drawable/help_graph" />
@@ -379,7 +332,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text=" 5. How do I change my profile?"
+                android:text="@string/help_question_change"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
@@ -390,73 +343,58 @@
                 android:layout_marginBottom="30dp"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.75"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/setting_large"
+                    android:text="@string/help_question_change_gear" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.75"
-                        android:text="Tap on the gear icon in the top right corner of every screen of the app." />
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/setting_large" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.75"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/ic_edit_2"
+                    android:text="@string/help_question_change_pen" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.75"
-                        android:text="Tap on the pen icon on the right side of the page." />
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edit_2" />
-                </LinearLayout>
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toStartOf="@+id/imageView2"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:layout_weight="0.75"
-                            android:text="Edit your info" />
+                            android:text="@string/help_question_change_edit" />
 
                         <TextView
                             android:id="@+id/textView5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:layout_weight="0.75"
-                            android:text="Tap on the save button to save your changes or cancel to discard them." />
+                            android:text="@string/help_question_change_save" />
                     </LinearLayout>
 
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5"
+                        android:id="@+id/imageView2"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_alignParentRight="true"
                         android:src="@drawable/help_save" />
 
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
 
 
