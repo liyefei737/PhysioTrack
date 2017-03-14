@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -54,6 +55,12 @@ public class NameList extends Fragment implements DataObserver {
         skinTmpHeader.setOnClickListener(new ClickToSort());
         TextView core_tmp_header = (TextView) rootView.findViewById(R.id.core_tmp_header);
         core_tmp_header.setOnClickListener(new ClickToSort());
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO When item clicked, write code here
+                String soldierID = ((Soldier)listView.getAdapter().getItem(position)).getId();
+            }
+        });
 
         return rootView;
     }
