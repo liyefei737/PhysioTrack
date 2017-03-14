@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="10dp"
-        android:background="@drawable/btn_save_cancel"
+        android:background="@drawable/edit_btn_save_cancel"
         android:padding="10dp"
         android:text="@string/help_tutorial_restart"
         android:textColor="@color/black"
@@ -80,7 +80,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_margin="10dp"
                         android:text="@string/help_question_icons_heart"
-                        android:drawableLeft="@drawable/ic_menu_heart"
+                        android:drawableLeft="@drawable/menu_heart"
                         android:drawableTint="@color/white"
                         android:gravity="center_vertical"
                         android:drawablePadding="5dp"/>
@@ -91,7 +91,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
                             android:text="@string/help_question_icons_core"
-                            android:drawableLeft="@drawable/ic_menu_core_temp"
+                            android:drawableLeft="@drawable/menu_core_temp"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:drawableTint="@color/white"/>
@@ -102,7 +102,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
                             android:text="@string/help_question_icons_home"
-                            android:drawableLeft="@drawable/ic_menu_home"
+                            android:drawableLeft="@drawable/menu_home"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:drawableTint="@color/white"/>
@@ -121,7 +121,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
                             android:text="@string/help_question_icons_breath"
-                            android:drawableLeft="@drawable/ic_menu_breath"
+                            android:drawableLeft="@drawable/menu_breath"
                             android:drawableTint="@color/white"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"/>
@@ -132,7 +132,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
                             android:text="@string/help_question_icons_skin"
-                            android:drawableLeft="@drawable/ic_menu_skin_temp"
+                            android:drawableLeft="@drawable/menu_skin_temp"
                             android:drawableTint="@color/white"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"/>
@@ -358,7 +358,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="0.75"
                     android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/ic_edit_2"
+                    android:drawableRight="@drawable/edit_pen"
                     android:text="@string/help_question_change_pen" />
 
 

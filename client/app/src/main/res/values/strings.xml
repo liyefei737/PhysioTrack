@@ -3,26 +3,25 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_bottom_bar">BottomBarActivity</string>
+    <string name="title_top">My Health</string>
+    <string name="title_activity_setup">SetupActivity</string>
+    <string name="previously_started">startedAlready</string>
+    <string name="welcome_message"><u>Set up your profile</u></string>
+
+    <string name="tab_colour_update">TAB_UPDATE</string>
+    <string name="update_action">UI_UPDATE</string>
+
+    <string name="title_edit_info">Settings</string>
+    <string name="edit_info_save_btn">Save</string>
+    <string name="edit_cancel">Cancel</string>
     <string name="weight_text_edit">Weight</string>
     <string name="height_text_edit">Height</string>
     <string name="ip_text_edit">Medic IP</string>
     <string name="id_text_edit">Service Number</string>
     <string name="age_text_edit">Age</string>
-    <string name="title_top">My Health</string>
-    <string name="edit_info_save_btn">Save</string>
-    <string name="title_edit_info">Settings</string>
-    <string name="title_help">Help</string>
     <string name="kgs">kgs</string>
     <string name="cm">cm</string>
     <string name="yrs">years</string>
-    <string name="title_activity_setup">SetupActivity</string>
-    <string name="previously_started">startedAlready</string>
-    <string name="update_action">UI_UPDATE</string>
-    <string name="welcome_message"><u>Set up your profile</u></string>
-
-    <string name="tab_colour_update">TAB_UPDATE</string>
-
-    <string name="edit_cancel">Cancel</string>
 
     <string name="graph_title">Historical Data</string>
     <string name="graph_xAxis">Minutes</string>
@@ -30,7 +29,9 @@
     <string name="graph_core_yAxis">Core Temperature (Celsius)</string>
     <string name="graph_heart_yAxis">Heart Rate (BPM)</string>
     <string name="graph_skin_yAxis">Skin Temp (Celsius)</string>
-    
+
+
+    <string name="title_help">Help</string>
     <string name="help_tutorial_restart">Restart Tutorial</string>
     
     <string name="help_question_icons">1. What do the icons mean?</string>

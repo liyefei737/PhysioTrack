@@ -37,7 +37,7 @@
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/clipboard"
+            android:src="@drawable/home_clipboard"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
         <ImageView
@@ -53,6 +53,6 @@
             android:layout_height="210dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ringsegmenter" />
+            android:src="@drawable/home_ring_segmenter" />
     </RelativeLayout>
 </LinearLayout>

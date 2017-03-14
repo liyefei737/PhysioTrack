@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_menu_breath"
+            android:src="@drawable/menu_breath"
             android:tint="@color/white"
             android:layout_weight="0"
             android:layout_marginStart="5dp"
