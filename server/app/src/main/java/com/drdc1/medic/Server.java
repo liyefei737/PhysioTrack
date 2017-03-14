@@ -37,7 +37,6 @@ public class Server extends NanoHTTPD {
     static private DataManager dataManagermy;
     private static SimpleDateFormat keyFormat = new SimpleDateFormat("02/25/2017 HH:mm:");
     static Map connectionlist = new HashMap();
-    private Squad squad;
     private static String regexSecondsAndMilli = "[0-9]{2}\\.[0-9]{3}";
 
     public Server(int port, DataManager dataManager) {
@@ -47,7 +46,6 @@ public class Server extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
-        squad = Squad.getInstance();
         Log.i(this.getClass().getSimpleName(), "request type: " + session.getMethod());
         final Map<String, String> map = new HashMap<>();
         try {
@@ -59,11 +57,16 @@ public class Server extends NanoHTTPD {
         }
 
         final String jsonStr = map.get("postData");
-
+        final JSONObject body;
         try {
-            final JSONObject body = new JSONObject(jsonStr);
-            Intent i = buildPDAMessageIntent(body);
-            LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(i);
+            body = new JSONObject(jsonStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
+                    "Invalid JSON Format");
+
+        }
+        try {
             String soldierID = body.getString("ID");
 
             if (!connectionlist.containsKey(soldierID)) {
@@ -78,9 +81,23 @@ public class Server extends NanoHTTPD {
 
                 if (!dataManagermy.soldierInSystem(soldierID)) {
                     Map<String, Object> soldierInfo = new HashMap<String, Object>();
-                    soldierInfo.put("name", "djsa");
-                    soldierInfo.put("age", "23");
-                    soldierInfo.put("gender", "M");
+                    String[] requiredNewSoldierFields = {
+                            "name",
+                            "age",
+                            "gender",
+                            "ID",
+                            "height",
+                            "weight"
+                    };
+                    for (String requiredField: requiredNewSoldierFields) {
+                        if (!body.has(requiredField)) {
+                            return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
+                                    "Missing Required Fields for adding a new soldier");
+                        }
+                    }
+                    soldierInfo.put("name", body.getString("name"));
+                    soldierInfo.put("age", body.getString("age"));
+                    soldierInfo.put("gender", body.getString("gender"));
                     soldierInfo.put("id", soldierID);
                     //1 indicates solider is currently being monitored and shows on namelist, 0 means inactive, not shown on namelist
                     soldierInfo.put("active", 1);
@@ -242,16 +259,11 @@ public class Server extends NanoHTTPD {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        String userName = null;
-//        Map<String, String> parms = session.getParms();
-//        if (parms.get("username") == null) {
-//            userName = "anonymous";
-//        } else {
-//            userName = parms.get("username");
-//        }
 
         dbWrite();
 
+        Intent i = buildPDAMessageIntent(body);
+        LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(i);
         //put userName into the db
         // Map<String, Object> properties = new HashMap<String, Object>();
         // properties.put("username", userName);
@@ -264,21 +276,26 @@ public class Server extends NanoHTTPD {
         return newFixedLengthResponse(Response.Status.OK, "text/plain", "success");
     }
 
-    private Intent buildPDAMessageIntent(JSONObject jsonObject) throws JSONException {
+    private Intent buildPDAMessageIntent(JSONObject jsonObject) {
         //TODO this defines the format of the request
         Intent intent = new Intent("PDAMessage");
-        intent.putExtra("ID",jsonObject.getString("ID"));
-        intent.putExtra("name",jsonObject.getString("name"));
-//        intent.putExtra("age",jsonObject.getString("age"));
-//        intent.putExtra("height",jsonObject.getString("height"));
-//        intent.putExtra("weight",jsonObject.getString("weight"));
-        intent.putExtra("overall",jsonObject.getString("overall"));
-        intent.putExtra("bodypos",jsonObject.getString("bodypos"));
-        intent.putExtra("hr",jsonObject.getString("hr"));
-        intent.putExtra("br",jsonObject.getString("br"));
-        intent.putExtra("skinTmp",jsonObject.getString("skinTmp"));
-        intent.putExtra("coreTmp",jsonObject.getString("coreTmp"));
+        try {
+            intent.putExtra("name", jsonObject.getString("name"));
+            intent.putExtra("ID", jsonObject.getString("ID"));
+            intent.putExtra("age", jsonObject.getString("age"));
+            intent.putExtra("height", jsonObject.getString("height"));
+            intent.putExtra("weight", jsonObject.getString("weight"));
+            intent.putExtra("overall", jsonObject.getString("overall"));
+            intent.putExtra("bodypos", jsonObject.getString("bodypos"));
+            intent.putExtra("hr", jsonObject.getString("hr"));
+            intent.putExtra("br", jsonObject.getString("br"));
+            intent.putExtra("skinTmp", jsonObject.getString("skinTmp"));
+            intent.putExtra("coreTmp", jsonObject.getString("coreTmp"));
 //        intent.putExtra("fatigue",jsonObject.getString("fatigue"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return intent;
     }
 
