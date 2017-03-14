@@ -54,6 +54,13 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
 
         View rootView =
                 inflater.inflate(R.layout.fragment_treatment_screen_tab, container, false);
+        Bundle bundle = getArguments();
+
+        //here is your list array
+        if (bundle != null) {
+            sendingid = bundle.getString("theid");
+
+        }
 
         precedence_urgent = (CheckBox) rootView.findViewById(R.id.precedence_urgent);
         precedence_priority = (CheckBox) rootView.findViewById(R.id.precedence_priority);

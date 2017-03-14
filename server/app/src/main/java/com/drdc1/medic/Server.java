@@ -62,6 +62,8 @@ public class Server extends NanoHTTPD {
 
         try {
             final JSONObject body = new JSONObject(jsonStr);
+            Intent i = buildPDAMessageIntent(body);
+            LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(i);
             String soldierID = body.getString("ID");
 
             if (!connectionlist.containsKey(soldierID)) {
@@ -125,8 +127,6 @@ public class Server extends NanoHTTPD {
 
                 Log.d("sender", "Broadcasting message");
                 Intent intent = new Intent("custom-event-name");
-                // You can also include some extra data.
-//            intent.putExtra("message", "99999");
                 intent.putExtra("message", body.getString("ECG Heart Rate"));
                 LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
@@ -262,6 +262,24 @@ public class Server extends NanoHTTPD {
 //            e.printStackTrace();
 //        }
         return newFixedLengthResponse(Response.Status.OK, "text/plain", "success");
+    }
+
+    private Intent buildPDAMessageIntent(JSONObject jsonObject) throws JSONException {
+        //TODO this defines the format of the request
+        Intent intent = new Intent("PDAMessage");
+        intent.putExtra("ID",jsonObject.getString("ID"));
+        intent.putExtra("name",jsonObject.getString("name"));
+//        intent.putExtra("age",jsonObject.getString("age"));
+//        intent.putExtra("height",jsonObject.getString("height"));
+//        intent.putExtra("weight",jsonObject.getString("weight"));
+        intent.putExtra("overall",jsonObject.getString("overall"));
+        intent.putExtra("bodypos",jsonObject.getString("bodypos"));
+        intent.putExtra("hr",jsonObject.getString("hr"));
+        intent.putExtra("br",jsonObject.getString("br"));
+        intent.putExtra("skinTmp",jsonObject.getString("skinTmp"));
+        intent.putExtra("coreTmp",jsonObject.getString("coreTmp"));
+//        intent.putExtra("fatigue",jsonObject.getString("fatigue"));
+        return intent;
     }
 
     void dbWrite() {

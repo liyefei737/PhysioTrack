@@ -1,13 +1,19 @@
 package com.drdc1.medic;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,12 +21,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 // This is the home page of the tab application.
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements FragmentDataManager {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private DataReceiver dataReceiver;
+    private ArrayList<DataObserver> fragmentlist;
+    static private HashMap data; //one data shared by all fragments
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -38,6 +50,13 @@ public class HomeActivity extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        //register intent filter for LocalBroadbast Manager
+        IntentFilter PDAMESSAGE = new IntentFilter("PDAMessage");
+        dataReceiver = new DataReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(dataReceiver, PDAMESSAGE);
+        data = new HashMap();
+        fragmentlist = new ArrayList<>();
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -71,6 +90,46 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void registerFragment(DataObserver o) {
+        if (!fragmentlist.contains(o))
+            fragmentlist.add(o);
+    }
+
+    @Override
+    public void unregisterFragment(DataObserver o) {
+        if (fragmentlist.contains(o)) {
+            int observerIndex = fragmentlist.indexOf(o);
+            fragmentlist.remove(observerIndex);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void notifyObserver(Map data) {
+        for (DataObserver observer : fragmentlist) {
+            observer.update(data);
+        }
+
+    }
+
+    class DataReceiver extends BroadcastReceiver {
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            data.put("bodypos", intent.getStringExtra("bodypos"));
+            data.put("overall", intent.getStringExtra("overall"));
+            data.put("coreTemp", intent.getStringExtra("coreTmp"));
+            data.put("skinTemp", intent.getStringExtra("skinTmp"));
+            data.put("br", intent.getStringExtra("br"));
+            data.put("hr", intent.getStringExtra("hr"));
+            data.put("ID",intent.getStringExtra("ID"));
+            data.put("name",intent.getStringExtra("name"));
+            notifyObserver(data);
+        }
     }
 
     /**

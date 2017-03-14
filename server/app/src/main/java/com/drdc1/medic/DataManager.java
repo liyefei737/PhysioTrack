@@ -117,9 +117,7 @@ public class DataManager {
 
     }
 
-    /***
-     * query user_info DB for active soldiers
-     *
+    /*** query user_info DB for active soldiers
      * @return ArrayList<Soldier> of Soldiers that are active, with name and id filled from the userinfo db
      */
     public ArrayList<Soldier> getActiveSoldier() {
@@ -129,9 +127,8 @@ public class DataManager {
             Mapper mapper = new Mapper() {
                 public void map(Map<String, Object> document, Emitter emitter) {
                     String isActive = String.valueOf(document.get("active"));
-                    if ("1".equals(isActive)) {
+                    if ("1".equals(isActive))
                         emitter.emit(document.get("id"), document);
-                    }
                 }
             };
             view.setMap(mapper, "1.0");
@@ -142,8 +139,7 @@ public class DataManager {
                 QueryRow row = it.next();
                 String id = String.valueOf(row.getKey());
                 String name = String.valueOf(row.getDocument().getProperties().get("name"));
-                String gender = String.valueOf(row.getDocument().getProperties().get("gender"));
-                Soldier soldier = new Soldier(name, id, gender);
+                Soldier soldier = new Soldier(name,id);
                 activeSoldiers.add(soldier);
             }
         } catch (CouchbaseLiteException e) {

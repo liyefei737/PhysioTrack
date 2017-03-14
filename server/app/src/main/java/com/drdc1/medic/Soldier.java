@@ -1,25 +1,20 @@
 package com.drdc1.medic;
 
-import java.util.List;
+import com.drdc1.medic.utils.HelperMethods;
+
+import java.util.Map;
 
 /**
- * Represents a soldier
+ * a soldier
  */
 
 public class Soldier {
     private String name;
     private String id;
     private String gender;
-    private String bodyOrientation;
 
-    private int overallWellnessIndex;
-
-    // I used List for now, I am thinking List<Integer> will work well with graphes. If not, change it to whatever type that works well..
-    private List<Integer> heartRate;
-    private List<Integer> breathingRate;
-    private List<Integer> skinTmp;
-    private List<Integer> coreTmp;
-    private int fatigueLevel;
+    private Map<String, Object> cuurentPhysioData = null;
+    private Map<String, Object> lastPhysioData = null;
 
     public Soldier(String name, String id, String gender) {
         this.name = name;
@@ -27,9 +22,14 @@ public class Soldier {
         this.gender = gender;
     }
 
+    public Soldier(String name, String soldierID) {
+        this.name = name;
+        this.id = soldierID;
+    }
+
+
     /*********************
      * getters & setters
-     * Free free to reorder them
      **********************/
     public String getName() {
         return name;
@@ -55,31 +55,57 @@ public class Soldier {
         this.gender = gender;
     }
 
+    public Map<String, Object> getPhysioData() {
+        return cuurentPhysioData;
+    }
+
+    public void setPhysioData(Map<String, Object> physioData) {
+        lastPhysioData = HelperMethods.deepCopy((Map) cuurentPhysioData);
+
+        cuurentPhysioData = HelperMethods.deepCopy((Map) physioData);
+    }
+
     public String getBodyOrientation() {
-        return bodyOrientation;
+        return (String) (cuurentPhysioData == null ? "" : cuurentPhysioData.get("bodypos"));
     }
 
-    public void setBodyOrientation(String bodyOrientation) {
-        this.bodyOrientation = bodyOrientation;
+    public String getOverallStatus() {
+        return (String) (cuurentPhysioData == null ? "" : cuurentPhysioData.get("overall"));
     }
 
-    public List<Integer> getHeartRate() {
-        return heartRate;
+    public String getHeartRate() {
+        return (String) (cuurentPhysioData == null ? "" : cuurentPhysioData.get("hr"));
     }
 
-    public List<Integer> getBreathingRate() {
-        return breathingRate;
+    public String getLastHeartRate() {
+        return (String) (lastPhysioData == null ? "" : lastPhysioData.get("hr"));
     }
 
-    public List<Integer> getSkinTmp() {
-        return skinTmp;
+    public String getBreathingRate() {
+        return (String) (cuurentPhysioData == null ? "" : cuurentPhysioData.get("br"));
     }
 
-    public List<Integer> getCoreTmp() {
-        return coreTmp;
+    public String getLastBreathingRate() {
+        return (String) (lastPhysioData == null ? "" : lastPhysioData.get("br"));
     }
 
-    public int getFatigueLevel() {
-        return fatigueLevel;
+    public String getSkinTmp() {
+        return (String) (cuurentPhysioData == null ? "" : cuurentPhysioData.get("skinTemp"));
     }
+
+    public String getLastSkinTmp() {
+        return (String) (lastPhysioData == null ? "" : lastPhysioData.get("skinTemp"));
+    }
+
+    public String getCoreTmp() {
+        return (String) (cuurentPhysioData == null ? "" : cuurentPhysioData.get("coreTemp"));
+    }
+
+    public String getLastCoreTmp() {
+        return (String) (lastPhysioData == null ? "" : lastPhysioData.get("coreTemp"));
+    }
+
+//    public int getFatigueLevel() {
+//        return fatigueLevel;
+//    }
 }
