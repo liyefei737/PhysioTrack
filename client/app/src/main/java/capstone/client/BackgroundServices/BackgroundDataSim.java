@@ -163,10 +163,13 @@ public class BackgroundDataSim extends Service {
             //for now hard-coded medic ip and port
             String MedicURL = soldierDetails.getMedicIP();
             if (MedicURL != null) {
-                MedicURL = MedicURL + ":8080";
+                MedicURL = "http://" + MedicURL + ":8080";
                 JSONObject jsonObjForRequest = lastRow;
                 jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
-
+                jsonObjForRequest.put("Name", soldierDetails.getSoldierName());
+                jsonObjForRequest.put("Age", soldierDetails.getAge());
+                jsonObjForRequest.put("Weight", soldierDetails.getWeight());
+                jsonObjForRequest.put("Height", soldierDetails.getHeight());
                 JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -180,6 +183,7 @@ public class BackgroundDataSim extends Service {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                         // VolleyLog.e("Error: ", error.getStackTrace());
                     }
                 });

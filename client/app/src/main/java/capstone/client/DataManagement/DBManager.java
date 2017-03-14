@@ -20,7 +20,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -109,8 +108,8 @@ public class DBManager {
             query.setEndKey(endKey);
             query.setStartKey(startKey);
             QueryEnumerator result = query.run();
-            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
-                QueryRow row = it.next();
+            for (; result.hasNext(); ) {
+                QueryRow row = result.next();
                 Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
                 if (tmpMap.size() > 3)
                     lastXseconds.put(new JSONObject(tmpMap));
@@ -127,8 +126,7 @@ public class DBManager {
         now.set(2017,02,25);
         Calendar nearestMinute = DateUtils.round(now, Calendar.MINUTE);
         Document doc = _dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-        JSONObject jObj = new JSONObject(doc.getProperties());
-        return jObj;
+        return new JSONObject(doc.getProperties());
     }
 
     public JSONObject getDataRowAtTime(Calendar time)
@@ -136,8 +134,7 @@ public class DBManager {
         Calendar nearestMinute = DateUtils.round(time, Calendar.MINUTE);
         nearestMinute.set(2017, 02, 25);
         Document doc = _dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-        JSONObject jObj = new JSONObject((doc.getProperties()));
-        return jObj;
+        return new JSONObject((doc.getProperties()));
     }
 
     public Soldier getSoldierDetails() {
@@ -155,18 +152,15 @@ public class DBManager {
             int age = Integer.valueOf((String)tmpMap.get(AGE_KEY));
             int weight = Integer.valueOf((String)tmpMap.get(WEIGHT_KEY));
             int height = Integer.valueOf((String) tmpMap.get(HEIGHT_KEY));
-            Soldier s = new Soldier(id, name, age, weight, height);
-            return s;
+            String ip = (String) tmpMap.get(IP_KEY);
+            return new Soldier(id, name, age, weight, height, ip);
         } catch (Exception e) {
             return null;
         }
     }
 
     public Soldier getDefaultSoldier() {
-        return new Soldier("ID", "name", -1, -1, -1);
+        return new Soldier("ID", "name", -1, -1, -1, "127.0.0.1");
     }
 
-    public void setSoldierDetails(Soldier soldier) {
-
-    }
 }

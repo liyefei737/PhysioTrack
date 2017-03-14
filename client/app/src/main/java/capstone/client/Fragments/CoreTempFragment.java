@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +23,8 @@ import capstone.client.ViewTools.LineChartWithBackground;
 
 
 public class CoreTempFragment extends capstone.client.Fragments.BaseFragment implements DataObserver {
-    private LineChartWithBackground lineChart;
-    private LineData lineData;
-    private LineDataSet dataset1;
+
     private BottomBarActivity bottomBarActivity;
-    private static float coreMin = 25;
-    private static float coreMax = 40;
 
     public static CoreTempFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -49,8 +44,7 @@ public class CoreTempFragment extends capstone.client.Fragments.BaseFragment imp
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
         BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
-        View view = inflater.inflate(R.layout.fragment_core_temp, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_core_temp, container, false);
     }
 
     @Override
@@ -70,7 +64,7 @@ public class CoreTempFragment extends capstone.client.Fragments.BaseFragment imp
      */
     @Override
     public void update(Map data) {
-        lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.coreTempChart);
+        LineChartWithBackground lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.coreTempChart);
         TextView ctNum = (TextView) getActivity().findViewById(R.id.currentCoreTemp);
         float[] coreTemps = (float[]) data.get("coreTemp");
         String latestCT = String.valueOf(coreTemps[0]);
@@ -86,7 +80,9 @@ public class CoreTempFragment extends capstone.client.Fragments.BaseFragment imp
         }
 
         List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getCtRangeObj();
-        lineData = lineChart.formatUpdateLineChart(getResources(), entries, coreMin, coreMax, zoneLimits);
+        float coreMax = 40;
+        float coreMin = 25;
+        LineData lineData = lineChart.formatUpdateLineChart(getResources(), entries, coreMin, coreMax, zoneLimits);
         lineChart.postInvalidate();
     }
 

@@ -43,15 +43,16 @@ public class SetupActivity extends AppCompatActivity {
         findViewById(R.id.edit_data).setVisibility(View.INVISIBLE);
         findViewById(R.id.editInfoTitle).setVisibility(View.INVISIBLE);
         findViewById(R.id.edit_user_image).setVisibility(View.INVISIBLE);
-        ((EditText)findViewById(R.id.etSoldierId)).setHint("SoldierID");
-        ((EditText)findViewById(R.id.etAge)).setHint("Age");
-        ((EditText)findViewById(R.id.etWeight)).setHint("Weight");
-        ((EditText)findViewById(R.id.etHeight)).setHint("Height");
-        ((EditText)findViewById(R.id.etIP)).setHint("Medic IP");
+        ((EditText)findViewById(R.id.etSoldierId)).setHint(R.string.id_text_edit);
+        ((EditText)findViewById(R.id.etAge)).setHint(R.string.age_text_edit);
+        ((EditText)findViewById(R.id.etWeight)).setHint(R.string.weight_text_edit);
+        ((EditText)findViewById(R.id.etHeight)).setHint(R.string.height_text_edit);
+        ((EditText)findViewById(R.id.etIP)).setHint(R.string.ip_text_edit);
+        ((EditText)findViewById(R.id.etSoldierName)).setHint(R.string.name_text_edit);
     }
 
     public void edit_info_save(View view){
-        EditInfoFragment.edit_info_save(view, this, dbManager);
+        EditInfoFragment.edit_info_save(this, dbManager);
         Intent startApp = new Intent(SetupActivity.this, BottomBarActivity.class);
         startActivity(startApp);
         finish();

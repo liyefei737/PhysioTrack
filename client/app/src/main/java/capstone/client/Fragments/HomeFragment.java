@@ -1,6 +1,5 @@
 package capstone.client.Fragments;
 
-import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,17 +12,12 @@ import java.util.Map;
 
 import capstone.client.Activities.BottomBarActivity;
 import capstone.client.BackgroundServices.BackgroundUIUpdator;
-import capstone.client.BackgroundServices.BackgroundWellnessAlgo;
 import capstone.client.DRDCClient;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.DataObserver;
 import capstone.client.R;
 import capstone.client.ViewTools.StateColourUtils;
 import welfareSM.WelfareStatus;
-
-import static capstone.client.R.color.green;
-import static capstone.client.R.color.red;
-import static capstone.client.R.color.yellow;
 
 /**
  * A simple {@link Fragment} subclass.

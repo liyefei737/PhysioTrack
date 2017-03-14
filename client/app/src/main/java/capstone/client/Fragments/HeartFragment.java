@@ -21,11 +21,7 @@ import capstone.client.R;
 import capstone.client.ViewTools.LineChartWithBackground;
 
 public class HeartFragment extends capstone.client.Fragments.BaseFragment implements DataObserver {
-    private LineChartWithBackground lineChart;
-    private LineData lineData;
     private capstone.client.Activities.BottomBarActivity bottomBarActivity;
-    private static float heartMin = 0;
-    private static float heartMax = 200;
 
     public static HeartFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -45,8 +41,7 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
         BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
-        View view = inflater.inflate(R.layout.fragment_heart, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_heart, container, false);
     }
 
 
@@ -67,7 +62,7 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
      */
     @Override
     public void update(Map data) {
-        lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.heartChart);
+        LineChartWithBackground lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.heartChart);
         int[] heartRates = (int[]) data.get("hr");
         String latestHR = String.valueOf(heartRates[0]);
         TextView hrText = (TextView) getActivity().findViewById(R.id.currentHeartRate);
@@ -81,7 +76,9 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
         }
 
         List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getHrRangeObj();
-        lineData = lineChart.formatUpdateLineChart(getResources(), entries, heartMin, heartMax, zoneLimits);
+        float heartMax = 200;
+        float heartMin = 0;
+        LineData lineData = lineChart.formatUpdateLineChart(getResources(), entries, heartMin, heartMax, zoneLimits);
         lineChart.postInvalidate();
     }
 

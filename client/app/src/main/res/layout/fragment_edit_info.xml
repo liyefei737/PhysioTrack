@@ -61,6 +61,7 @@
                 android:layout_height="87dp"
                 android:layout_marginTop="0dp"
                 android:src="@drawable/edit_user" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -102,6 +103,36 @@
                 android:backgroundTint="@color/bg"
                 android:onClick="edit_fields"
                 app:srcCompat="@drawable/edit_pen" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etSoldierName"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal|center"
+                android:background="@null"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:ems="10"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center_horizontal|center"
+                android:hint="@string/name_text_edit"
+                android:inputType="textNoSuggestions"
+                android:longClickable="true"
+                android:selectAllOnFocus="true"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/hint"
+                android:textCursorDrawable="@null" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -112,7 +143,6 @@
                 android:id="@+id/etAge"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:background="@null"
                 android:clickable="false"
@@ -126,7 +156,10 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/hint"
                 android:textCursorDrawable="@null"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:layout_alignBaseline="@+id/textView6"
+                android:layout_alignBottom="@+id/textView6"
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -135,7 +168,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="157dp"
                 android:ems="10"
-                android:text="@string/yrs" />
+                android:text="@string/yrs"
+                android:id="@+id/textView6" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -220,7 +254,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/ip_text_edit"
-                android:inputType="number"
+                android:inputType="text|numberDecimal"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="@color/hint"
@@ -270,15 +304,15 @@
         android:gravity="right">
 
         <ImageButton
-            android:layout_gravity="right|bottom"
-            app:srcCompat="@drawable/edit_help"
             android:id="@+id/helpButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/black"
             android:onClick="callHelpPage"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp" />
+            app:srcCompat="@drawable/edit_help" />
     </LinearLayout>
 
 

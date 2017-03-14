@@ -13,8 +13,6 @@ import capstone.client.R;
  */
 
 public class EditTextHandler {
-    private static int rightAlign = View.TEXT_ALIGNMENT_TEXT_START;
-    private static int centerAlign = View.TEXT_ALIGNMENT_CENTER;
 
     public static void enableAndFormat(List<EditText> etList){
         for (EditText et : etList) {
@@ -22,7 +20,7 @@ public class EditTextHandler {
             et.setCursorVisible(true);
             et.setFocusable(true);
             et.setFocusableInTouchMode(true);
-            et.setTextAlignment(rightAlign);
+            et.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             et.setBackgroundResource(R.drawable.edit_et_bg);
             et.setHint("");
 
@@ -35,13 +33,13 @@ public class EditTextHandler {
             et.setCursorVisible(false);
             et.setFocusable(false);
             et.setFocusableInTouchMode(false);
-            et.setTextAlignment(centerAlign);
+            et.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             et.setBackground(null);
 
         }
     }
 
-    public static void setSoldierFields(Soldier s, EditText id, EditText age, EditText weight, EditText height, EditText ip) {
+    public static void setSoldierFields(Soldier s, EditText id, EditText name, EditText age, EditText weight, EditText height, EditText ip) {
         String strID = s.getSoldierID();
         if (strID != null && !strID.isEmpty()) {
             id.setHint(strID);
@@ -71,6 +69,14 @@ public class EditTextHandler {
             ip.setHint(strIP);
             ip.setText(strIP);
         }
+
+        String strName = s.getSoldierName();
+        if (strName != null) {
+            name.setHint(strName);
+            name.setText(strName);
+        }
+
+
 
     }
 }

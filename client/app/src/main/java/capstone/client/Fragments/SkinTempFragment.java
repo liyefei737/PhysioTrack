@@ -22,11 +22,7 @@ import capstone.client.R;
 import capstone.client.ViewTools.LineChartWithBackground;
 
 public class SkinTempFragment extends capstone.client.Fragments.BaseFragment implements DataObserver {
-    private LineChartWithBackground lineChart;
-    private LineData lineData;
     private BottomBarActivity bottomBarActivity;
-    private static float skinMin = 25;
-    private static float skinMax = 40;
 
     public static SkinTempFragment newInstance(int instance) {
         Bundle args = new Bundle();
@@ -46,8 +42,7 @@ public class SkinTempFragment extends capstone.client.Fragments.BaseFragment imp
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
         BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
-        View view = inflater.inflate(R.layout.fragment_skin_temp, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_skin_temp, container, false);
     }
 
 
@@ -68,7 +63,7 @@ public class SkinTempFragment extends capstone.client.Fragments.BaseFragment imp
      */
     @Override
     public void update(Map data) {
-        lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.skinTempChart);
+        LineChartWithBackground lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.skinTempChart);
         TextView st = (TextView) getActivity().findViewById(R.id.currentSkinTemp);
         float[] skinTemps = (float[]) data.get("skinTemp");
         String latestST = String.valueOf(skinTemps[0]);
@@ -84,7 +79,9 @@ public class SkinTempFragment extends capstone.client.Fragments.BaseFragment imp
         }
 
         List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getStRangeObj();
-        lineData = lineChart.formatUpdateLineChart(getResources(), entries, skinMin, skinMax, zoneLimits);
+        float skinMax = 40;
+        float skinMin = 25;
+        LineData lineData = lineChart.formatUpdateLineChart(getResources(), entries, skinMin, skinMax, zoneLimits);
         lineChart.postInvalidate();
     }
 

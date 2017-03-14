@@ -25,11 +25,12 @@ import static capstone.client.R.color.black;
  */
 
 public class LineChartWithBackground extends LineChart{
-    private static float axisThickness = 4f;
 
     protected Paint mRedZone;
     protected Paint mYellowZone;
     protected Paint mGreenZone;
+
+    float[] pts = new float[8];
 
     public LineChartWithBackground(Context context) {
         super(context);
@@ -66,9 +67,7 @@ public class LineChartWithBackground extends LineChart{
         setNoDataText("");
         List<LimitLine> limitLines = mAxisLeft.getLimitLines();
         int numLimLines = limitLines.size();
-        if (limitLines != null && numLimLines != 0 && (numLimLines == 2 || numLimLines == 4)) {
-
-            float[] pts = new float[limitLines.size()*2];
+        if ( numLimLines == 2 || numLimLines == 4) {
 
             for (int i = 0; i < numLimLines; i++){
                 pts[2*i+1] = limitLines.get(i).getLimit();
@@ -135,6 +134,7 @@ public class LineChartWithBackground extends LineChart{
         xAxis.setTextColor(white);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
+        float axisThickness = 4f;
         xAxis.setAxisLineWidth(axisThickness);
         xAxis.setAxisLineColor(white);
 
@@ -167,9 +167,5 @@ public class LineChartWithBackground extends LineChart{
         refreshDrawableState();
         invalidate();
         return lineData;
-    }
-
-    public void updateZones(List<Object> zoneLimits){
-
     }
 }

@@ -20,12 +20,13 @@ public class Soldier {
         height = -1;
     }
 
-    public Soldier(String strId, String strName, int iAge, int iWeight, int iHeight) {
+    public Soldier(String strId, String strName, int iAge, int iWeight, int iHeight, String ip) {
         soldierID = strId;
         name = strName;
         age = iAge;
         weight = iWeight;
         height = iHeight;
+        medicIP = ip;
     }
 
     public String getSoldierID() {

@@ -63,7 +63,8 @@ public class EditInfoFragment extends BaseFragment {
         EditText weight = (EditText) view.findViewById(R.id.etWeight);
         EditText height = (EditText) view.findViewById(R.id.etHeight);
         EditText ip = (EditText) view.findViewById(R.id.etIP);
-        EditTextHandler.setSoldierFields(s, id, age, weight, height, ip);
+        EditText name = (EditText) view.findViewById(R.id.etSoldierName);
+        EditTextHandler.setSoldierFields(s, id, name, age, weight, height, ip);
         return view;
     }
 
@@ -75,18 +76,19 @@ public class EditInfoFragment extends BaseFragment {
 
         List<EditText> etList = new ArrayList<>();
         etList.add((EditText) activity.findViewById(R.id.etSoldierId));
+        etList.add((EditText) activity.findViewById(R.id.etSoldierName));
         etList.add((EditText) activity.findViewById(R.id.etAge));
         etList.add((EditText) activity.findViewById(R.id.etWeight));
         etList.add((EditText) activity.findViewById(R.id.etHeight));
         etList.add((EditText) activity.findViewById(R.id.etIP));
 
         EditTextHandler.disableAndFormat(etList);
-        EditTextHandler.setSoldierFields(dbManager.getSoldierDetails(), etList.get(0), etList.get(1), etList.get(2), etList.get(3), etList.get(4));
+        EditTextHandler.setSoldierFields(dbManager.getSoldierDetails(), etList.get(0), etList.get(1), etList.get(2), etList.get(3), etList.get(4), etList.get(5));
     }
 
 
     //static click handlers for activities to use
-    public static void edit_info_save(View view, Activity activity, DBManager dbManager){
+    public static void edit_info_save(Activity activity, DBManager dbManager){
         final Button btnSave = (Button) activity.findViewById(R.id.btSave);
         final Button cancelbtn = (Button) activity.findViewById(R.id.btCancel);
         List<EditText> etList = new ArrayList<>();
@@ -114,7 +116,11 @@ public class EditInfoFragment extends BaseFragment {
         final String newIP = ip.getText().toString();
         etList.add(ip);
 
-        if (soldier != null && newId != soldier.getSoldierID()){
+        EditText name = (EditText) activity.findViewById(R.id.etSoldierName);
+        final String newName = name.getText().toString();
+        etList.add(name);
+
+        if (soldier != null && !newId.equals(soldier.getSoldierID())){
             //delete old doc
             Document doc = userDB.getDocument(soldier.getSoldierID());
             try {
@@ -123,7 +129,6 @@ public class EditInfoFragment extends BaseFragment {
 
             }
         }
-        final DBManager dbm = dbManager;
         Document doc = userDB.getDocument(newId);
         try {
             doc.update(new Document.DocumentUpdater() {
@@ -131,6 +136,7 @@ public class EditInfoFragment extends BaseFragment {
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties = newRevision.getUserProperties();
                     properties.put(DBManager.ID_KEY, newId);
+                    properties.put(DBManager.NAME_KEY, newName);
                     properties.put(DBManager.AGE_KEY, newAge);
                     properties.put(DBManager.WEIGHT_KEY, newWeight);
                     properties.put(DBManager.HEIGHT_KEY, newHeight);
@@ -160,6 +166,7 @@ public class EditInfoFragment extends BaseFragment {
         etList.add((EditText) activity.findViewById(R.id.etWeight));
         etList.add((EditText) activity.findViewById(R.id.etHeight));
         etList.add((EditText) activity.findViewById(R.id.etIP));
+        etList.add((EditText) activity.findViewById(R.id.etSoldierName));
 
         EditTextHandler.enableAndFormat(etList);
     }

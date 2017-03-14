@@ -23,11 +23,8 @@ import capstone.client.ViewTools.LineChartWithBackground;
 
 
 public class BreathFragment extends capstone.client.Fragments.BaseFragment implements DataObserver {
-    private LineChartWithBackground lineChart;
-    private LineData lineData;
     private BottomBarActivity bottomBarActivity;
-    private static float breathMin = 0;
-    private static float breathMax = 70;
+
     public static BreathFragment newInstance(int instance) {
         Bundle args = new Bundle();
         args.putInt("argsInstance", instance);
@@ -46,8 +43,7 @@ public class BreathFragment extends capstone.client.Fragments.BaseFragment imple
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
         BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
-        View view = inflater.inflate(R.layout.fragment_breath, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_breath, container, false);
     }
 
 
@@ -68,7 +64,7 @@ public class BreathFragment extends capstone.client.Fragments.BaseFragment imple
      */
     @Override
     public void update(Map data) {
-        lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.breathChart);
+        LineChartWithBackground lineChart = (LineChartWithBackground) getActivity().findViewById(R.id.breathChart);
         TextView brNum = (TextView) getActivity().findViewById(R.id.currentBreathRate);
         int[] breathRates = (int[]) data.get("br");
         String latestBR = String.valueOf(breathRates[0]);
@@ -84,7 +80,9 @@ public class BreathFragment extends capstone.client.Fragments.BaseFragment imple
         }
 
         List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getBrRangeObj();
-        lineData = lineChart.formatUpdateLineChart(getResources(), entries, breathMin, breathMax, zoneLimits);
+        float breathMax = 70;
+        float breathMin = 0;
+        LineData lineData = lineChart.formatUpdateLineChart(getResources(), entries, breathMin, breathMax, zoneLimits);
         lineChart.postInvalidate();
     }
 

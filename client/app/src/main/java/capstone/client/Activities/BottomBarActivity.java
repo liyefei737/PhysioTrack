@@ -68,7 +68,6 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         dbManager = new DBManager(this);
         setContentView(R.layout.activity_bottom_bar);
         final View view = getWindow().getDecorView();
-        ;
         view.setSystemUiVisibility(uiOptions);
 
         view.setOnSystemUiVisibilityChangeListener
@@ -201,7 +200,6 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         }
     }
 
-    @Override
     public void pushFragment(Fragment fragment) {
         if (mNavController != null) {
             mNavController.pushFragment(fragment);
@@ -255,7 +253,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
     }
 
     public void edit_info_save(View view) {
-        EditInfoFragment.edit_info_save(view, this, dbManager);
+        EditInfoFragment.edit_info_save(this, dbManager);
     }
 
     public void edit_fields(View view) {
