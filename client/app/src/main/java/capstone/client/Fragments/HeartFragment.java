@@ -79,13 +79,10 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
         for (int i = 0; i < arrLength ; i++) {
             entries.add(new Entry(i, heartRates[arrLength - 1 - i]));
         }
-        boolean frag_create = (boolean)data.get("frag_create");
-        if (frag_create) {
-            List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getHrRangeObj();
-            lineData = lineChart.formatUpdateLineChart(getResources(), entries, lineData, heartMin, heartMax, zoneLimits);
-        }
-        else
-            lineData = lineChart.updateData(entries, lineData);
+
+        List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getHrRangeObj();
+        lineData = lineChart.formatUpdateLineChart(getResources(), entries, heartMin, heartMax, zoneLimits);
+        lineChart.postInvalidate();
     }
 
     @Override

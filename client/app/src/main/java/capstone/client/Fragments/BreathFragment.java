@@ -82,13 +82,10 @@ public class BreathFragment extends capstone.client.Fragments.BaseFragment imple
         for (int i = 0; i < arrLength ; i++) {
             entries.add(new Entry(i, breathRates[arrLength - 1 - i]));
         }
-        boolean frag_create = (boolean)data.get("frag_create");
-        if (frag_create) {
-            List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getBrRangeObj();
-            lineData = lineChart.formatUpdateLineChart(getResources(), entries, lineData, breathMin, breathMax, zoneLimits);
-        }
-        else
-            lineData = lineChart.updateData(entries, lineData);
+
+        List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getBrRangeObj();
+        lineData = lineChart.formatUpdateLineChart(getResources(), entries, breathMin, breathMax, zoneLimits);
+        lineChart.postInvalidate();
     }
 
     @Override

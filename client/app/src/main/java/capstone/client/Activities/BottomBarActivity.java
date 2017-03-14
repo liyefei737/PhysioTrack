@@ -307,7 +307,7 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
             data.put("coreTemp", intent.getFloatArrayExtra("coreTemp"));
             data.put("br", intent.getIntArrayExtra("br"));
             data.put("hr", intent.getIntArrayExtra("hr"));
-            data.put("frag_create", intent.getBooleanExtra("frag_create", false));
+            data.put("state", intent.getStringExtra("state"));
             System.out.println("receiving...");
             System.out.println(intent.getAction());
             notifyObserver(data);

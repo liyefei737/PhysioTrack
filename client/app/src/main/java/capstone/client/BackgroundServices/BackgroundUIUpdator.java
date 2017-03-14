@@ -114,10 +114,6 @@ public class BackgroundUIUpdator extends Service {
             }
             Intent i = new Intent();
             i.setAction(context.getString(R.string.update_action));
-            if (from_fragment_create)
-                i.putExtra("frag_create", true);
-            else
-                i.putExtra("frag_create", false);
             i.putExtra("coreTemp", coreTemp);
             i.putExtra("skinTemp", skinTemp);
             i.putExtra("br", br);

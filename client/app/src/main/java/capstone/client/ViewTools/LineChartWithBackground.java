@@ -19,9 +19,6 @@ import java.util.List;
 import capstone.client.R;
 
 import static capstone.client.R.color.black;
-import static capstone.client.R.color.graphLine;
-import static capstone.client.R.color.light_grey;
-import static capstone.client.R.color.white;
 
 /**
  * Created by Grace on 2017-02-18.
@@ -96,7 +93,7 @@ public class LineChartWithBackground extends LineChart{
         super.onDraw(canvas);
     }
 
-    public LineData formatUpdateLineChart(Resources resources, List<Entry> entries, LineData lineData,
+    public LineData formatUpdateLineChart(Resources resources, List<Entry> entries,
                                              float yMin, float yMax, List<Object> zoneLimits){
         //get colours
         int white = resources.getColor(R.color.white);
@@ -105,21 +102,27 @@ public class LineChartWithBackground extends LineChart{
         LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
 
         dataSet.setCircleColor(black);
-
-        dataSet.setDrawCircleHole(false);
+        dataSet.setCircleRadius(4f);
+        dataSet.setCircleHoleRadius(3f);
+        dataSet.setDrawCircleHole(true);
+        dataSet.setCircleColorHole(white);
         dataSet.setHighlightEnabled(false);
-        dataSet.setLineWidth(3f);
-        dataSet.setColor(light_grey, 255);
+        dataSet.setColor(black, 255);
         dataSet.setDrawValues(false);
 
         //format chart
-        lineData = new LineData(dataSet);
+        LineData lineData = new LineData(dataSet);
         setData(lineData);
         setDrawBorders(false);
         setDrawGridBackground(false);
         getLegend().setEnabled(false);
         getDescription().setEnabled(false);
         setNoDataText("");
+
+        setPinchZoom(false);
+        setTouchEnabled(false);
+        setScaleEnabled(false);
+        setExtraBottomOffset(10f);
 
         //get rid of extra axes
         getAxisRight().setDrawGridLines(false);
@@ -164,22 +167,6 @@ public class LineChartWithBackground extends LineChart{
         refreshDrawableState();
         invalidate();
         return lineData;
-    }
-
-    public LineData updateData(List<Entry> entries, LineData data){
-        LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-        dataSet.setColor(graphLine);
-        dataSet.setHighlightEnabled(false);
-        dataSet.setCircleColor(white);
-        dataSet.setCircleColorHole(graphLine);
-        dataSet.setDrawValues(false);
-        data.removeDataSet(0);
-        data.addDataSet(dataSet);
-
-        data.notifyDataChanged(); // NOTIFIES THE DATA OBJECT
-        notifyDataSetChanged(); // let the chart know it's data changed
-        invalidate(); // refresh
-        return data;
     }
 
     public void updateZones(List<Object> zoneLimits){

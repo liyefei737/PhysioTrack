@@ -82,13 +82,10 @@ public class SkinTempFragment extends capstone.client.Fragments.BaseFragment imp
         for (int i = 0; i < arrLength ; i++) {
             entries.add(new Entry(i, skinTemps[arrLength - 1 - i]));
         }
-        boolean frag_create = (boolean)data.get("frag_create");
-        if (frag_create) {
-            List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getStRangeObj();
-            lineData = lineChart.formatUpdateLineChart(getResources(), entries, lineData, skinMin, skinMax, zoneLimits);
-        }
-        else
-            lineData = lineChart.updateData(entries, lineData);
+
+        List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getStRangeObj();
+        lineData = lineChart.formatUpdateLineChart(getResources(), entries, skinMin, skinMax, zoneLimits);
+        lineChart.postInvalidate();
     }
 
     @Override
