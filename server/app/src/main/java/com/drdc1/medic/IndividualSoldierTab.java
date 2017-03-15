@@ -62,12 +62,12 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         rootView =
                 inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
 
-//        Bundle bundle = this.getArguments();
-//        if(bundle != null){
-//            String IDpassed = bundle.getString("id");
-//            // handle code for id from namelist here.
-//
-//        }
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String IDpassed = bundle.getString("id");
+            // handle code for id from namelist here.
+
+        }
 
         seachView = (FloatingSearchView) rootView.findViewById(R.id.searchBar);
         setupSearchBar();
@@ -116,15 +116,19 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                            update();
 
-                        update();
+                        }
+                    });
 
-                    }
-                });
+                } else {
+
+                }
 
             }
         }, 0, 1000);//put here time 1000 milliseconds=1 second
@@ -132,19 +136,20 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        HashMap hm = dataManager.getStaticInfo(solid);
-                        NameNonEditable.setText((CharSequence) hm.get("name"));
+                            HashMap hm = dataManager.getStaticInfo(solid);
+                            NameNonEditable.setText((CharSequence) hm.get("name"));
 //                        GenderNonEditable.setText((CharSequence) hm.get("gender"));
-                        GenderNonEditable.setText("Male");
-                        AgeNonEditable.setText((CharSequence) hm.get("age"));
+                            GenderNonEditable.setText("Male");
+                            AgeNonEditable.setText((CharSequence) hm.get("age"));
 
-                    }
-                });
+                        }
+                    });
+                }
 
             }
         }, 0, 1000);//put here time 1000 milliseconds=1 second

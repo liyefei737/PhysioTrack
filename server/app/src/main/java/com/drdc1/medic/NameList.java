@@ -58,7 +58,7 @@ public class NameList extends Fragment implements DataObserver {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO When item clicked, write code here
-                String soldierID = ((Soldier)listView.getAdapter().getItem(position)).getId();
+                String soldierID = ((Soldier) listView.getAdapter().getItem(position)).getId();
             }
         });
 
@@ -83,18 +83,22 @@ public class NameList extends Fragment implements DataObserver {
         super.onDestroyView();
     }
 
-    private void setFragmentTransition(String id) {
-        Bundle bundle = new Bundle();
-        bundle.putString("id", id); // Put anything what you want
+    private class setFragmentTransition implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            String id = (String) ((TextView) v).getText();
 
-        IndividualSoldierTab fragment2 = new IndividualSoldierTab();
-        fragment2.setArguments(bundle);
+            Bundle bundle = new Bundle();
+            bundle.putString("id", id); // Put anything what you want
 
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, fragment2)
-                .commit();
+            IndividualSoldierTab fragment2 = new IndividualSoldierTab();
+            fragment2.setArguments(bundle);
 
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, fragment2)
+                    .commit();
+        }
     }
 
     @Override
@@ -118,13 +122,15 @@ public class NameList extends Fragment implements DataObserver {
     }
 
     private void addListHeader(ListView lv) {
-        View headerView = LayoutInflater.from(getContext()).inflate(R.layout.list_header, lv, false);
+        View headerView =
+                LayoutInflater.from(getContext()).inflate(R.layout.list_header, lv, false);
         lv.addHeaderView(headerView);
     }
 
     private class SoldierListAdapter extends ArrayAdapter<Soldier> {
         private final ArrayList<Soldier> soldiers;
-        private String sortedBy = ""; // the soldier list is only sorted by 1 attribute at a time. don't overthink about stable sorting
+        private String sortedBy = "";
+                // the soldier list is only sorted by 1 attribute at a time. don't overthink about stable sorting
 
         public SoldierListAdapter(Context context, ArrayList<Soldier> soldiers) {
             super(context, R.layout.list_item, soldiers);
@@ -184,6 +190,8 @@ public class NameList extends Fragment implements DataObserver {
                         .inflate(R.layout.list_item, parent, false);
             }
             TextView name = (TextView) v.findViewById(R.id.name);
+            name.setOnClickListener(new setFragmentTransition());
+
             name.setText(soldier.getName());
 
             ImageView overall = (ImageView) v.findViewById(R.id.overal_status);
@@ -379,7 +387,8 @@ public class NameList extends Fragment implements DataObserver {
         @Override
         public int compare(Soldier s1, Soldier s2) {
             return Integer.valueOf(s1.getBreathingRate().equals("") ? "0" : s1.getBreathingRate())
-                    .compareTo(Integer.valueOf(s2.getBreathingRate().equals("") ? "0" : s2.getBreathingRate()));
+                    .compareTo(Integer.valueOf(
+                            s2.getBreathingRate().equals("") ? "0" : s2.getBreathingRate()));
         }
     }
 
