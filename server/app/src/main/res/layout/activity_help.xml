@@ -57,7 +57,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TableRow
             android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Bad (lb)" />
+                    android:text="30 -" />
 
                 <TextView
                     android:id="@+id/tv25"
@@ -182,7 +182,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Inter (lb)" />
+                    android:text="30-40" />
 
                 <TextView
                     android:id="@+id/tv26"
@@ -193,7 +193,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Good" />
+                    android:text="40-70" />
 
                 <TextView
                     android:id="@+id/tv27"
@@ -204,7 +204,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Inter (ub)" />
+                    android:text="70 - 100" />
                 <TextView
                     android:id="@+id/tv28"
                     android:layout_width="94dp"
@@ -214,7 +214,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Bad (ub)" />
+                    android:text="100 +" />
 
             </LinearLayout>
         </TableRow>
@@ -250,7 +250,7 @@
                 android:background="@drawable/border2"
                 android:textSize="18dp"
                 android:gravity="center"
-                android:text="Bad (lb)" />
+                android:text="No Info" />
 
             <TextView
                 android:id="@+id/tv31"
@@ -261,7 +261,7 @@
                 android:background="@drawable/border2"
                 android:textSize="18dp"
                 android:gravity="center"
-                android:text="Inter (lb)" />
+                android:text="12 -" />
 
             <TextView
                 android:id="@+id/tv32"
@@ -272,7 +272,7 @@
                 android:background="@drawable/border2"
                 android:textSize="18dp"
                 android:gravity="center"
-                android:text="Good" />
+                android:text="12 - 18" />
 
             <TextView
                 android:id="@+id/tv233"
@@ -283,7 +283,7 @@
                 android:background="@drawable/border2"
                 android:textSize="18dp"
                 android:gravity="center"
-                android:text="Inter (ub)" />
+                android:text="18 +" />
             <TextView
                 android:id="@+id/tv34"
                 android:layout_width="94dp"
@@ -293,7 +293,7 @@
                 android:background="@drawable/border2"
                 android:textSize="18dp"
                 android:gravity="center"
-                android:text="Bad (ub)" />
+                android:text="No Info" />
 
         </LinearLayout>
         </TableRow>
@@ -330,7 +330,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Bad (lb)" />
+                    android:text="35.0 -" />
 
                 <TextView
                     android:id="@+id/tv37"
@@ -341,7 +341,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Inter (lb)" />
+                    android:text="35.1 - 36.0" />
 
                 <TextView
                     android:id="@+id/tv38"
@@ -352,7 +352,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Good" />
+                    android:text="36.1 - 37.8" />
 
                 <TextView
                     android:id="@+id/tv39"
@@ -363,7 +363,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Inter (ub)" />
+                    android:text="37.9 - 39.0" />
                 <TextView
                     android:id="@+id/tv40"
                     android:layout_width="94dp"
@@ -373,7 +373,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Bad (ub)" />
+                    android:text="39 +" />
 
             </LinearLayout>
         </TableRow>
@@ -409,7 +409,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Bad (lb)" />
+                    android:text="25.0 - " />
 
                 <TextView
                     android:id="@+id/tv43"
@@ -420,7 +420,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Inter (lb)" />
+                    android:text="25.0 - 32.0" />
 
                 <TextView
                     android:id="@+id/tv44"
@@ -431,7 +431,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Good" />
+                    android:text="32.1 - 36.0" />
 
                 <TextView
                     android:id="@+id/tv45"
@@ -442,7 +442,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Inter (ub)" />
+                    android:text="36.0 - 37.0" />
                 <TextView
                     android:id="@+id/tv46"
                     android:layout_width="94dp"
@@ -452,10 +452,31 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Bad (ub)" />
+                    android:text="37 +" />
 
             </LinearLayout>
         </TableRow>
     </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bthelp1"
+            android:layout_width="100dp"
+            android:layout_marginLeft="352dp"
+            android:layout_height="match_parent"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/bthelp2"
+            android:layout_width="100dp"
+            android:layout_marginLeft="30dp"
+            android:layout_height="match_parent"
+            android:text="Save" />
+    </LinearLayout>
 
 </LinearLayout>
