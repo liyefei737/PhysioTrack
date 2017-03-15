@@ -15,13 +15,17 @@ import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import welfareSM.WelfareStatus;
+
+import static android.content.Intent.getIntent;
 
 /**
  * Background Thread for computing the wellness algorithm
@@ -33,6 +37,11 @@ public class BackgroundWellnessAlgo extends Service {
 
     static final String DB_UPDATE = "DB_UPDATE";
     static private BackgroundWellnessAlgo _BackgroundWellnessAlgo = null;
+    static private List<Integer> hrRange;
+    static private List<Integer> brRange;
+    static private List<Float> stRange;
+    static private List<Float> ctRange;
+
     private DataManager dataManager = null;
     private LocalBroadcastManager broadcaster = null;
 
@@ -68,6 +77,14 @@ public class BackgroundWellnessAlgo extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent.getExtras() != null) {
+            hrRange = (List<Integer>) intent.getExtras().getParcelable("hrRange");
+            brRange = (List<Integer>) intent.getExtras().getParcelable("brRange");
+            stRange = (List<Float>) intent.getExtras().getParcelable("stRange");
+            ctRange = (List<Float>) intent.getExtras().getParcelable("ctRange");
+
+        }
+
         Timer timer = new Timer();
         TimerTask doWellnessAlgoCallback = new TimerTask() {
             @Override
@@ -75,6 +92,7 @@ public class BackgroundWellnessAlgo extends Service {
                 mServiceHandler.post(new Runnable() {
                     public void run() {
                         try {
+
                             calculateWellness();
                         } catch (Exception e) {
                         }
@@ -109,6 +127,11 @@ public class BackgroundWellnessAlgo extends Service {
                 Database userDB = entry.getValue();
 
                 lastMinute = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
+
+                if (hrRange != null) {
+                    dataManager.getWellnessTracker(entry.getKey())
+                            .setPhysioParamThresholds(hrRange, brRange, stRange, ctRange);
+                }
 
                 final WelfareStatus nextState = dataManager.getWellnessTracker(entry.getKey())
                         .calculateWelfareStatus(lastMinute);

@@ -92,7 +92,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Bad (lb)" />
+                    android:text="Inter-" />
 
                 <TextView
                     android:id="@+id/tv19"
@@ -103,7 +103,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Inter (lb)" />
+                    android:text="Good" />
 
                 <TextView
                     android:id="@+id/tv20"
@@ -114,7 +114,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Good" />
+                    android:text="Inter+" />
 
                 <TextView
                     android:id="@+id/tv21"
@@ -125,17 +125,7 @@
                     android:background="@drawable/border2"
                     android:textSize="18dp"
                     android:gravity="center"
-                    android:text="Inter (ub)" />
-                <TextView
-                    android:id="@+id/tv22"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Bad (ub)" />
+                    android:text="Bad" />
             </LinearLayout>
         </TableRow>
 
@@ -163,103 +153,44 @@
                     android:text="Heart Rate" />
 
                 <EditText
-                    android:id="@+id/et10"
+                    android:id="@+id/hrate0"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="30 -" />
+                    android:text="30" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv24"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="30 -" />-->
                 <EditText
-                    android:id="@+id/et11"
+                    android:id="@+id/hrate1"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="30 - 40" />
+                    android:text="40" />
 
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv25"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="30-40" />-->
                 <EditText
-                    android:id="@+id/et12"
+                    android:id="@+id/hrate2"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="40 - 70" />
+                    android:text="70" />
 
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv26"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="40-70" />-->
                 <EditText
-                    android:id="@+id/et13"
+                    android:id="@+id/hrate3"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="70 - 100" />
+                    android:text="100" />
 
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv27"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="70 - 100" />-->
-                <EditText
-                    android:id="@+id/et14"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="100 +" />
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tv28"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="100 +" />-->
 
             </LinearLayout>
         </TableRow>
@@ -288,7 +219,7 @@
                 android:text="Respiration Rate" />
 
             <EditText
-                android:id="@+id/et15"
+                android:id="@+id/rrate0"
                 android:layout_width="94dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -297,18 +228,8 @@
                 android:text="No info" />
 
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv30"-->
-                <!--android:layout_width="94dp"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:background="@drawable/border2"-->
-                <!--android:textSize="18dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="No Info" />-->
             <EditText
-                android:id="@+id/et16"
+                android:id="@+id/rrate1"
                 android:layout_width="94dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -317,18 +238,8 @@
                 android:text="12 -" />
 
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv31"-->
-                <!--android:layout_width="94dp"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:background="@drawable/border2"-->
-                <!--android:textSize="18dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="12 -" />-->
             <EditText
-                android:id="@+id/et17"
+                android:id="@+id/rrate2"
                 android:layout_width="94dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -337,18 +248,8 @@
                 android:text="12 - 18" />
 
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv32"-->
-                <!--android:layout_width="94dp"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:background="@drawable/border2"-->
-                <!--android:textSize="18dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="12 - 18" />-->
             <EditText
-                android:id="@+id/et18"
+                android:id="@+id/rrate3"
                 android:layout_width="94dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -357,35 +258,6 @@
                 android:text="18 +" />
 
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv233"-->
-                <!--android:layout_width="94dp"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:background="@drawable/border2"-->
-                <!--android:textSize="18dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="18 +" />-->
-            <EditText
-                android:id="@+id/et19"
-                android:layout_width="94dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="no info" />
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv34"-->
-                <!--android:layout_width="94dp"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:background="@drawable/border2"-->
-                <!--android:textSize="18dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="No Info" />-->
 
         </LinearLayout>
         </TableRow>
@@ -413,7 +285,7 @@
                     android:gravity="center"
                     android:text="Core Temp" />
                 <EditText
-                    android:id="@+id/et20"
+                    android:id="@+id/ct0"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -421,18 +293,8 @@
                     android:inputType="textPersonName"
                     android:text="35.0 -" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv36"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="35.0 -" />-->
                 <EditText
-                    android:id="@+id/et21"
+                    android:id="@+id/ct1"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -441,18 +303,8 @@
                     android:text="35.1 - 36.0" />
 
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv37"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="35.1 - 36.0" />-->
                 <EditText
-                    android:id="@+id/et22"
+                    android:id="@+id/ct2"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -460,18 +312,8 @@
                     android:inputType="textPersonName"
                     android:text="36.1 - 37.8" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv38"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="36.1 - 37.8" />-->
                 <EditText
-                    android:id="@+id/et23"
+                    android:id="@+id/ct3"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -479,34 +321,6 @@
                     android:inputType="textPersonName"
                     android:text="37.9 - 39.0" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv39"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="37.9 - 39.0" />-->
-                <EditText
-                    android:id="@+id/et24"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="30 +" />
-                <!--<TextView-->
-                    <!--android:id="@+id/tv40"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="39 +" />-->
 
             </LinearLayout>
         </TableRow>
@@ -533,7 +347,7 @@
                     android:gravity="center"
                     android:text="Skin Temp" />
                 <EditText
-                    android:id="@+id/et25"
+                    android:id="@+id/st0"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -541,18 +355,8 @@
                     android:inputType="textPersonName"
                     android:text="25.0 -" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv42"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="25.0 - " />-->
                 <EditText
-                    android:id="@+id/et26"
+                    android:id="@+id/st1"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -560,18 +364,8 @@
                     android:inputType="textPersonName"
                     android:text="25.0 - 32.0" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv43"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="25.0 - 32.0" />-->
                 <EditText
-                    android:id="@+id/et27"
+                    android:id="@+id/st2"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -579,18 +373,8 @@
                     android:inputType="textPersonName"
                     android:text="32.1 - 36.0" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv44"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="32.1 - 36.0" />-->
                 <EditText
-                    android:id="@+id/et28"
+                    android:id="@+id/st3"
                     android:layout_width="94dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -598,34 +382,6 @@
                     android:inputType="textPersonName"
                     android:text="36.0 - 37.0" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv45"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="36.0 - 37.0" />-->
-                <EditText
-                    android:id="@+id/et29"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="37 +" />
-                <!--<TextView-->
-                    <!--android:id="@+id/tv46"-->
-                    <!--android:layout_width="94dp"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:background="@drawable/border2"-->
-                    <!--android:textSize="18dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="37 +" />-->
 
             </LinearLayout>
         </TableRow>
@@ -638,14 +394,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/bthelp1"
+            android:id="@+id/cancel"
             android:layout_width="100dp"
             android:layout_marginLeft="352dp"
             android:layout_height="match_parent"
             android:text="Cancel" />
 
         <Button
-            android:id="@+id/bthelp2"
+            android:id="@+id/save"
             android:layout_width="100dp"
             android:layout_marginLeft="30dp"
             android:layout_height="match_parent"

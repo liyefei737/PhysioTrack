@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +32,7 @@ public class NameList extends Fragment implements DataObserver {
     public NameList() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +61,7 @@ public class NameList extends Fragment implements DataObserver {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO When item clicked, write code here
                 String soldierID = ((Soldier) listView.getAdapter().getItem(position)).getId();
+                new setFragmentTransition();
             }
         });
 
@@ -130,7 +133,7 @@ public class NameList extends Fragment implements DataObserver {
     private class SoldierListAdapter extends ArrayAdapter<Soldier> {
         private final ArrayList<Soldier> soldiers;
         private String sortedBy = "";
-                // the soldier list is only sorted by 1 attribute at a time. don't overthink about stable sorting
+        // the soldier list is only sorted by 1 attribute at a time. don't overthink about stable sorting
 
         public SoldierListAdapter(Context context, ArrayList<Soldier> soldiers) {
             super(context, R.layout.list_item, soldiers);
@@ -190,7 +193,7 @@ public class NameList extends Fragment implements DataObserver {
                         .inflate(R.layout.list_item, parent, false);
             }
             TextView name = (TextView) v.findViewById(R.id.name);
-            name.setOnClickListener(new setFragmentTransition());
+//            name.setOnClickListener(new setFragmentTransition());
 
             name.setText(soldier.getName());
 
