@@ -16,6 +16,7 @@ import com.couchbase.lite.UnsavedRevision;
 import org.json.JSONArray;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.Timer;
@@ -23,7 +24,7 @@ import java.util.TimerTask;
 
 import capstone.client.DataManagement.DBManager;
 import sleepS.DateStatePair;
-import sleepS.sleepStatus;
+import sleepS.SleepAlgo;
 
 /**
  * Background algorithm thread
@@ -104,11 +105,12 @@ public class BackgroundSleepAlgo extends Service {
         Database dataDB = dbManager.getDatabase(DBManager.DATA_DB);
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); //hardcode for datasim
-        JSONArray last9Minutes = dbManager.QueryLastXMinutes(now, 9);
-        if (last9Minutes.length() == 9){
-            final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(last9Minutes);
+        JSONArray last7Minutes = dbManager.QueryLastXMinutes(now, 7);
+        if (last7Minutes.length() == 7){
+            final DateStatePair sleepResult = SleepAlgo.CalculateSleepStatus(last7Minutes);
             if (sleepResult.getDate() != null) {
-                long docID = org.apache.commons.lang3.time.DateUtils.round(sleepResult.getDate(), Calendar.MINUTE).getTime();
+                Date temp = org.apache.commons.lang3.time.DateUtils.round(sleepResult.getDate(), Calendar.MINUTE);
+                long docID = temp.getTime();
                 Document saveStateDoc = dataDB.getDocument(String.valueOf(docID));
                 try {
                     saveStateDoc.update(new Document.DocumentUpdater() {

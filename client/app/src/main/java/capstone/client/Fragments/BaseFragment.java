@@ -11,20 +11,10 @@ import android.view.ViewGroup;
 import capstone.client.R;
 
 public class BaseFragment extends Fragment {
-    public static final String ARGS_INSTANCE = "capstone.client.argsInstance";
-
     FragmentNavigation mFragmentNavigation;
-    int mInt = 0;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Bundle args = getArguments();
-        if (args != null) {
-            mInt = args.getInt(ARGS_INSTANCE);
-        }
-
         this.onCreate();
     }
 
@@ -32,19 +22,8 @@ public class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
@@ -56,7 +35,6 @@ public class BaseFragment extends Fragment {
     }
 
     public interface FragmentNavigation {
-        public void pushFragment(Fragment fragment);
     }
 
 }
