@@ -33,7 +33,6 @@ public class NameList extends Fragment implements DataObserver {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,8 +59,18 @@ public class NameList extends Fragment implements DataObserver {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO When item clicked, write code here
-                String soldierID = ((Soldier) listView.getAdapter().getItem(position)).getId();
-                new setFragmentTransition();
+                String idsol = ((Soldier) listView.getAdapter().getItem(position)).getId();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("id", idsol); // Put anything what you want
+
+                IndividualSoldierTab fragment2 = new IndividualSoldierTab();
+                fragment2.setArguments(bundle);
+
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment2)
+                        .commit();
             }
         });
 
@@ -84,24 +93,6 @@ public class NameList extends Fragment implements DataObserver {
     public void onDestroyView() {
         homeActivity.unregisterFragment(this);
         super.onDestroyView();
-    }
-
-    private class setFragmentTransition implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            String id = (String) ((TextView) v).getText();
-
-            Bundle bundle = new Bundle();
-            bundle.putString("id", id); // Put anything what you want
-
-            IndividualSoldierTab fragment2 = new IndividualSoldierTab();
-            fragment2.setArguments(bundle);
-
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, fragment2)
-                    .commit();
-        }
     }
 
     @Override

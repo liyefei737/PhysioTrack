@@ -77,11 +77,14 @@ public class BackgroundWellnessAlgo extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getExtras() != null) {
-            hrRange = (List<Integer>) intent.getExtras().getParcelable("hrRange");
-            brRange = (List<Integer>) intent.getExtras().getParcelable("brRange");
-            stRange = (List<Float>) intent.getExtras().getParcelable("stRange");
-            ctRange = (List<Float>) intent.getExtras().getParcelable("ctRange");
+        if (intent != null) {
+            if (intent.getExtras() != null) {
+                hrRange = (List<Integer>) intent.getExtras().getParcelable("hrRange");
+                brRange = (List<Integer>) intent.getExtras().getParcelable("brRange");
+                stRange = (List<Float>) intent.getExtras().getParcelable("stRange");
+                ctRange = (List<Float>) intent.getExtras().getParcelable("ctRange");
+
+            }
 
         }
 
