@@ -1,5 +1,7 @@
 package com.drdc1.medic;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -59,18 +61,30 @@ public class NameList extends Fragment implements DataObserver {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO When item clicked, write code here
-                String idsol = ((Soldier) listView.getAdapter().getItem(position)).getId();
+                String idsol = null;
+                if (((Soldier) listView.getAdapter().getItem(position)) != null) {
+                    idsol = ((Soldier) listView.getAdapter().getItem(position)).getId();
+
+                }
+
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getFragmentManager().beginTransaction();
 
                 Bundle bundle = new Bundle();
-                bundle.putString("id", idsol); // Put anything what you want
+                if (idsol != null){
+                    bundle.putString("id", idsol); // Put anything what you want
+
+                }
 
                 IndividualSoldierTab fragment2 = new IndividualSoldierTab();
                 fragment2.setArguments(bundle);
 
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, fragment2)
-                        .commit();
+                fragmentTransaction.add(android.R.id.content, fragment2, "login").commit();
+
+//                getFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.container, fragment2)
+//                        .commit();
             }
         });
 

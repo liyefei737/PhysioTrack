@@ -85,17 +85,23 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         btLinerRequest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getFragmentManager().beginTransaction();
+
                 Bundle bundl = new Bundle();
                 bundl.putString("theid", solid);
 
                 TreatmentScreenTab dv = new TreatmentScreenTab();
                 dv.setArguments(bundl);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(((ViewGroup) getView().getParent()).getId(), dv);
-                ft.show(getFragmentManager()
-                        .findFragmentById(((ViewGroup) getView().getParent()).getId()));
-                ft.addToBackStack(null);
-                ft.commit();
+
+                fragmentTransaction.add(android.R.id.content, dv, "logintest").commit();
+
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.replace(((ViewGroup) getView().getParent()).getId(), dv);
+//                ft.show(getFragmentManager()
+//                        .findFragmentById(((ViewGroup) getView().getParent()).getId()));
+//                ft.addToBackStack(null);
+//                ft.commit();
 
             }
         });
