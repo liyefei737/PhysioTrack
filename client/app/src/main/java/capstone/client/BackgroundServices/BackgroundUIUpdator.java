@@ -107,7 +107,7 @@ public class BackgroundUIUpdator extends Service {
                 }
             }
             try {
-                JSONObject firstRow = last10Minutes.getJSONObject(0);
+                JSONObject firstRow = last10Minutes.getJSONObject(last10Minutes.length() - 2);
                 state = firstRow.getString("state");
             } catch (JSONException e){
 

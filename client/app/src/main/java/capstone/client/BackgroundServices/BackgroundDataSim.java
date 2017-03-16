@@ -166,10 +166,17 @@ public class BackgroundDataSim extends Service {
                 MedicURL = "http://" + MedicURL + ":8080";
                 JSONObject jsonObjForRequest = lastRow;
                 jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
-                jsonObjForRequest.put("Name", soldierDetails.getSoldierName());
-                jsonObjForRequest.put("Age", soldierDetails.getAge());
-                jsonObjForRequest.put("Weight", soldierDetails.getWeight());
-                jsonObjForRequest.put("Height", soldierDetails.getHeight());
+                jsonObjForRequest.put("name", soldierDetails.getSoldierName());
+                jsonObjForRequest.put("age", soldierDetails.getAge());
+                jsonObjForRequest.put("weight", soldierDetails.getWeight());
+                jsonObjForRequest.put("height", soldierDetails.getHeight());
+                //jsonObjForRequest.put("overall", "YELLOW");
+                //jsonObjForRequest.put("hr", "32");
+                //jsonObjForRequest.put("br", "32");
+                //jsonObjForRequest.put("coreTmp", "32");
+                //jsonObjForRequest.put("skinTmp", "32");
+                //jsonObjForRequest.put("bodyPos", "RIGHT");
+                //JSONObject j = new JSONObject("{\"ID\":\"aaa\",\"name\":\"aaaaa\",\"age\":\"12\",\"height\":\"170\",\"weight\":\"170\",\"overall\":\"YELLOW\",\"hr\":\"25\",\"br\":\"2\",\"coreTmp\":\"111\",\"skinTmp\":\"25\",\"bodypos\":\"RIGHT\"}");
                 JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -184,7 +191,7 @@ public class BackgroundDataSim extends Service {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        // VolleyLog.e("Error: ", error.getStackTrace());
+                        VolleyLog.e("Error: ", error.getStackTrace());
                     }
                 });
                 rQueue.add(jsonRequest);
