@@ -1,5 +1,7 @@
 package com.drdc1.medic;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,7 +61,30 @@ public class NameList extends Fragment implements DataObserver {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO When item clicked, write code here
-                String soldierID = ((Soldier) listView.getAdapter().getItem(position)).getId();
+                String idsol = null;
+                if (((Soldier) listView.getAdapter().getItem(position)) != null) {
+                    idsol = ((Soldier) listView.getAdapter().getItem(position)).getId();
+
+                }
+
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getFragmentManager().beginTransaction();
+
+                Bundle bundle = new Bundle();
+                if (idsol != null){
+                    bundle.putString("id", idsol); // Put anything what you want
+
+                }
+
+                IndividualSoldierTab fragment2 = new IndividualSoldierTab();
+                fragment2.setArguments(bundle);
+
+                fragmentTransaction.add(android.R.id.content, fragment2, "login").commit();
+
+//                getFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.container, fragment2)
+//                        .commit();
             }
         });
 
@@ -81,24 +107,6 @@ public class NameList extends Fragment implements DataObserver {
     public void onDestroyView() {
         homeActivity.unregisterFragment(this);
         super.onDestroyView();
-    }
-
-    private class setFragmentTransition implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            String id = (String) ((TextView) v).getText();
-
-            Bundle bundle = new Bundle();
-            bundle.putString("id", id); // Put anything what you want
-
-            IndividualSoldierTab fragment2 = new IndividualSoldierTab();
-            fragment2.setArguments(bundle);
-
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, fragment2)
-                    .commit();
-        }
     }
 
     @Override
@@ -130,7 +138,7 @@ public class NameList extends Fragment implements DataObserver {
     private class SoldierListAdapter extends ArrayAdapter<Soldier> {
         private final ArrayList<Soldier> soldiers;
         private String sortedBy = "";
-                // the soldier list is only sorted by 1 attribute at a time. don't overthink about stable sorting
+        // the soldier list is only sorted by 1 attribute at a time. don't overthink about stable sorting
 
         public SoldierListAdapter(Context context, ArrayList<Soldier> soldiers) {
             super(context, R.layout.list_item, soldiers);
@@ -190,7 +198,7 @@ public class NameList extends Fragment implements DataObserver {
                         .inflate(R.layout.list_item, parent, false);
             }
             TextView name = (TextView) v.findViewById(R.id.name);
-            name.setOnClickListener(new setFragmentTransition());
+//            name.setOnClickListener(new setFragmentTransition());
 
             name.setText(soldier.getName());
 
