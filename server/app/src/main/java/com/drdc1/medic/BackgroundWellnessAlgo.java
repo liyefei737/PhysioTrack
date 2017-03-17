@@ -15,7 +15,6 @@ import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -24,8 +23,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import welfareSM.WelfareStatus;
-
-import static android.content.Intent.getIntent;
 
 /**
  * Background Thread for computing the wellness algorithm
@@ -130,14 +127,8 @@ public class BackgroundWellnessAlgo extends Service {
                 Database userDB = entry.getValue();
 
                 lastMinute = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
-
-                if (hrRange != null) {
-                    dataManager.getWellnessTracker(entry.getKey())
-                            .setPhysioParamThresholds(hrRange, brRange, stRange, ctRange);
-                }
-
-                final WelfareStatus nextState = dataManager.getWellnessTracker(entry.getKey())
-                        .calculateWelfareStatus(lastMinute);
+                Object [] statusResults = dataManager.getWellnessTracker(entry.getKey()).calculateWelfareStatus(lastMinute);
+                final WelfareStatus nextState = (WelfareStatus) statusResults[0];
 
                 Document saveStateDoc = userDB.getDocument(entry.getKey());
                 try {

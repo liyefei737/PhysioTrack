@@ -28,7 +28,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import welfareSM.IndividualWelfareTracker;
+import welfareSM.WelfareAlgoParams;
+import welfareSM.WelfareTracker;
 
 /**
  * Created by Grace on 2017-01-31.
@@ -43,7 +44,9 @@ public class DataManager {
     private Database _userInfoDB = null;
     //docIDs: soldierIDs, properties of each doc: name, age, height, weight
     private Database _nineLinerDB = null;
-    private Map<String, IndividualWelfareTracker> _wellnessInfoMap = null;
+    //
+    private WelfareAlgoParams _welfareAlgoParams;
+    private Map<String, WelfareTracker> _wellnessInfoMap = null;
     private Context _context = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("02/25/2017 HH:mm:ss.");
 
@@ -53,7 +56,8 @@ public class DataManager {
         _userInfoDB = openDatabase("staticinfo");
         _physioDataDBMap = new HashMap<String, Database>();
         _nineLinerDB = openDatabase("nineliner");
-        _wellnessInfoMap = new HashMap<String, IndividualWelfareTracker>();
+        _wellnessInfoMap = new HashMap<String, WelfareTracker>();
+        _welfareAlgoParams = new WelfareAlgoParams();
         if (_userInfoDB == null) {
             Log.e(TAG, " Failed to open user info Database");
         }
@@ -96,7 +100,7 @@ public class DataManager {
         Database physioDB = openDatabase(ID);
         _physioDataDBMap.put(ID, physioDB);
 
-        IndividualWelfareTracker iwt = new IndividualWelfareTracker();
+        WelfareTracker iwt = new WelfareTracker();
         _wellnessInfoMap.put(ID, iwt);
         return true;
 
@@ -245,14 +249,14 @@ public class DataManager {
         return null;
     }
 
-    public IndividualWelfareTracker getWellnessTracker(String ID) {
+    public WelfareTracker getWellnessTracker(String ID) {
         if (soldierInSystem(ID)) {
             return _wellnessInfoMap.get(ID);
         }
         return null;
     }
 
-    public void saveWellnessTracker(String ID, IndividualWelfareTracker iwt) {
+    public void saveWellnessTracker(String ID, WelfareTracker iwt) {
         if (soldierInSystem(ID)) {
             _wellnessInfoMap.put(ID, iwt);
         }
@@ -331,5 +335,9 @@ public class DataManager {
 
         }
         return lastXseconds;
+    }
+
+    public WelfareAlgoParams get_welfareAlgoParams(){
+        return _welfareAlgoParams;
     }
 }

@@ -22,7 +22,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import sleepS.DateStatePair;
-import sleepS.sleepStatus;
+import sleepS.SleepAlgo;
 
 /**
  * Background algorithm thread
@@ -108,7 +108,7 @@ public class BackgroundSleepAlgo extends Service {
             for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
                 Database userDB = entry.getValue();
                 last9Minutes = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
-                final DateStatePair sleepResult = sleepStatus.CalculateSleepStatus(last9Minutes);
+                final DateStatePair sleepResult = SleepAlgo.CalculateSleepStatus(last9Minutes);
                 if (sleepResult.getDate() != null) {
                     Document saveStateDoc = userDB.getDocument(sleepResult.getDate());
                     try {

@@ -1,18 +1,17 @@
 package com.drdc1.medic;
 
 import android.content.res.Resources;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.drdc1.medic.BullsEye.BullsEyeDrawTask;
+import com.drdc1.medic.BullsEye.BullsEyeInfo;
+
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import welfareSM.WelfareStatus;
 
@@ -51,11 +50,14 @@ public class SquadStatus extends Fragment {
             WelfareStatus[] statusArray =
                     {RED, GREEN, YELLOW, YELLOW, GREEN, RED, YELLOW, RED, YELLOW, GREEN};
             Resources resources = getActivity().getResources();
-            BullsEye.drawBullsEye(resources, relLayoutOverall, numSoldiers,
-                    Arrays.asList(statusArray));
-//            BullsEye.drawBullsEye(resources, relLayoutCore, numSoldiers, Arrays.asList(statusArray));
-//            BullsEye.drawBullsEye(resources, relLayoutFatigue, numSoldiers, Arrays.asList(statusArray));
-//            BullsEye.drawBullsEye(resources, relLayoutSkin, numSoldiers, Arrays.asList(statusArray));
+            BullsEyeDrawTask bullsEyeTask0 = new BullsEyeDrawTask(resources, numSoldiers);
+            BullsEyeDrawTask bullsEyeTask1 = new BullsEyeDrawTask(resources, numSoldiers);
+            BullsEyeDrawTask bullsEyeTask2 = new BullsEyeDrawTask(resources, numSoldiers);
+            BullsEyeDrawTask bullsEyeTask3 = new BullsEyeDrawTask(resources, numSoldiers);
+            bullsEyeTask0.execute(new BullsEyeInfo(relLayoutOverall, false, Arrays.asList(statusArray)));
+            bullsEyeTask1.execute(new BullsEyeInfo(relLayoutCore, true, Arrays.asList(statusArray)));
+            bullsEyeTask2.execute(new BullsEyeInfo(relLayoutFatigue, true, Arrays.asList(statusArray)));
+            bullsEyeTask3.execute(new BullsEyeInfo(relLayoutSkin, true, Arrays.asList(statusArray)));
         }
         return view;
     }

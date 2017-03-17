@@ -1,5 +1,6 @@
 package com.drdc1.medic;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -27,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import welfareSM.WelfareAlgoParams;
 
 import static welfareSM.WelfareStatus.GREY;
 
@@ -318,19 +321,14 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 //            entries4.add(new Entry(i, 30f + (float) (Math.random() * ((30 - 10) + 1))));
             entries4.add(new Entry(i, coreTemp[arrLength - 1 - i]));
         }
-        float[] zoneLimits = {60, 40, 5, 1};
-        com.drdc1.medic.LineChartWithBackground
-                .formatUpdateLineChart(getResources(), hrchart, entries, chartMin, chartMax,
-                        zoneLimits);
-        com.drdc1.medic.LineChartWithBackground
-                .formatUpdateLineChart(getResources(), respchart, entries2, chartMin, chartMax,
-                        zoneLimits);
-        com.drdc1.medic.LineChartWithBackground
-                .formatUpdateLineChart(getResources(), skinchart, entries3, chartMin, chartMax,
-                        zoneLimits);
-        com.drdc1.medic.LineChartWithBackground
-                .formatUpdateLineChart(getResources(), ctchart, entries4, chartMin, chartMax,
-                        zoneLimits);
+
+        Resources res = getResources();
+        WelfareAlgoParams wap = dataManager.get_welfareAlgoParams();
+        hrchart.formatUpdateLineChart(res, entries, 0, 200, wap.getHrRangeObj());
+        respchart.formatUpdateLineChart(res, entries, 0, 70, wap.getBrRangeObj());
+        skinchart.formatUpdateLineChart(res, entries, 25, 40, wap.getStRangeObj());
+        ctchart.formatUpdateLineChart(res, entries, 25, 40, wap.getCtRangeObj());
+
     }
 
     @Override

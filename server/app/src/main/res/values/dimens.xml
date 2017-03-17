@@ -7,4 +7,8 @@
     <dimen name="fontsize">10dp</dimen>
     <dimen name="fontsize2">12dp</dimen>
     <dimen name="fontsize3">20dp</dimen>
+    <dimen name="small_ring_radius">100dp</dimen>
+    <dimen name="small_ring_thickness">10dp</dimen>
+    <dimen name="large_ring_radius">145dp</dimen>
+    <dimen name="large_ring_thickness">15dp</dimen>
 </resources>

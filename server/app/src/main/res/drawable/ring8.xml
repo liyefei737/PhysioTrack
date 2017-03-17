@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape= "ring"
     android:innerRadius="25dp"
-    android:thickness="15dp"
+    android:thickness="@dimen/large_ring_thickness"
     android:useLevel="false">
     <solid android:color="@color/bullsEyeYellow"/>
     <stroke android:color="@color/black"

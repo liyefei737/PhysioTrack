@@ -1,10 +1,13 @@
-package com.drdc1.medic;
+package com.drdc1.medic.BullsEye;
 
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.drdc1.medic.R;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,18 +23,30 @@ import static welfareSM.WelfareStatus.YELLOW;
  */
 
 public class BullsEye {
-    private static RelativeLayout.LayoutParams imageViewParams = new RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.MATCH_PARENT);
 
-    public static void drawBullsEye(Resources resources, RelativeLayout relLayoutBullsEye,
-                                    int numSoldiers, List<WelfareStatus> statusArray) {
+    public static List<ImageView> drawBullsEye(Resources resources, int numSoldiers, List<WelfareStatus> statusArray, boolean small) {
 
         int red = resources.getColor(R.color.bullsEyeRed);
         int yellow = resources.getColor(R.color.bullsEyeYellow);
         int green = resources.getColor(R.color.bullsEyeGreen);
         int grey = resources.getColor(R.color.grey);
-        int ringID = R.drawable.ring0;
+        int ringID = 0;
+        List<ImageView> finalDrawables = new ArrayList<>();
+        RelativeLayout.LayoutParams imageViewParams;
+
+        int size;
+        if (small) {
+            ringID = R.drawable.small_ring0;
+            size = (int)(2*resources.getDimension(R.dimen.small_ring_radius) + 2*resources.getDimension(R.dimen.small_ring_thickness));
+        }
+        else {
+            ringID = R.drawable.ring0;
+            size = (int)(2*resources.getDimension(R.dimen.large_ring_radius) + 2*resources.getDimension(R.dimen.large_ring_thickness));
+        }
+
+        imageViewParams = new RelativeLayout.LayoutParams(size, size);
+        imageViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+
         Collections.sort(statusArray);
         Collections.reverse(statusArray);
         for (int i = 0; i < numSoldiers; i++) {
@@ -47,9 +62,12 @@ public class BullsEye {
             } else {
                 gd.setColor(grey);
             }
+            ringView.setLayoutParams(imageViewParams);
             ringView.setImageDrawable(gd);
-            relLayoutBullsEye.addView(ringView);
+
+            finalDrawables.add(ringView);
             ringID++;
         }
+        return finalDrawables;
     }
 }
