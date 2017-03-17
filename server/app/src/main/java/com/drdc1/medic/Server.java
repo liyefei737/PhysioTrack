@@ -46,234 +46,236 @@ public class Server extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
-        Log.i(this.getClass().getSimpleName(), "request type: " + session.getMethod());
-        final Map<String, String> map = new HashMap<>();
         try {
-            session.parseBody(map);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ResponseException e) {
-            e.printStackTrace();
-        }
-
-        final String jsonStr = map.get("postData");
-        final JSONObject body;
-        try {
-            body = new JSONObject(jsonStr);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
-                    "Invalid JSON Format");
-
-        }
-        try {
-            String soldierID = body.getString("ID");
-
-            if (!connectionlist.containsKey(soldierID)) {
-                //a new id comes in, check if the current connection list has less than 10 soldiers
-                if (connectionlist.size() >= 10) {
-                    return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
-                            "too many soldiers connected");
-                }
-
-                connectionlist.put(soldierID,
-                        session.getHeaders().get("http-client-ip"));
-
-                if (!dataManagermy.soldierInSystem(soldierID)) {
-                    Map<String, Object> soldierInfo = new HashMap<String, Object>();
-                    String[] requiredNewSoldierFields = {
-                            "name",
-                            "age",
-                            "gender",
-                            "ID",
-                            "height",
-                            "weight"
-                    };
-                    for (String requiredField: requiredNewSoldierFields) {
-                        if (!body.has(requiredField)) {
-                            return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
-                                    "Missing Required Fields for adding a new soldier");
-                        }
-                    }
-                    soldierInfo.put("name", body.getString("name"));
-                    soldierInfo.put("age", body.getString("age"));
-                    soldierInfo.put("gender", body.getString("gender"));
-                    soldierInfo.put("id", soldierID);
-                    //1 indicates solider is currently being monitored and shows on namelist, 0 means inactive, not shown on namelist
-                    soldierInfo.put("active", 1);
-                    soldierInfo.put("height", "170");
-                    soldierInfo.put("weight", "70");
-
-                    dataManagermy.addSoldier(soldierID, soldierInfo);
-
-                    String url = "http://" + session.getHeaders().get("http-client-ip");
-
-                    StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                            new com.android.volley.Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-//                                    try {
-//                                        JSONObject jsonResponse =
-//                                                new JSONObject(response).getJSONObject("form");
-//                                        String site = jsonResponse.getString("site"),
-//                                                network = jsonResponse.getString("network");
-//                                        System.out
-//                                                .println("Site: " + site + "\nNetwork: " + network);
-//                                    } catch (JSONException e) {
-//                                        e.printStackTrace();
-//                                    }
-                                }
-                            },
-                            new com.android.volley.Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    error.printStackTrace();
-                                }
-                            }
-                    ) {
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<>();
-                            // the POST parameters:
-                            params.put("handshake", "1");
-                            return params;
-                        }
-                    };
-                    Volley.newRequestQueue(AppContext.getContext()).add(postRequest);
-                }
-
-                Log.d("sender", "Broadcasting message");
-                Intent intent = new Intent("custom-event-name");
-                intent.putExtra("message", body.getString("ECG Heart Rate"));
-                LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
-
-//                Calendar keyCal = new GregorianCalendar();
-//                try {
-//                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
-//                } catch (Exception e) {
-//                    keyCal.set(2017, 02, 25);
-//                }
-//
-//                Calendar nearestMinute =
-//                        DateUtils.round(keyCal, Calendar.MINUTE);
-                Calendar now = new GregorianCalendar();
-                now.set(2017, 02, 25);
-                keyFormat.setCalendar(now);
-                String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
-                Calendar nearestMinute =
-                        org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
-
-                Database db = dataManagermy.getSoldierDB(soldierID);
-
-                Document saveStateDoc =
-                        db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-                try {
-                    saveStateDoc.update(new Document.DocumentUpdater() {
-                        @Override
-                        public boolean update(UnsavedRevision newRevision) {
-                            String hrate = null;
-                            try {
-                                Map<String, Object> properties = newRevision.getUserProperties();
-                                properties.put("timeCreated", body.getString("DateTime"));
-                                properties.put("accSum", body.getString("accSum"));
-                                properties.put("skinTemp", body.getString("Skin_Temp"));
-                                properties.put("coreTemp", body.getString("Core_Temp"));
-                                properties.put("heartRate", body.getString("ECG Heart Rate"));
-                                hrate = body.getString("ECG Heart Rate");
-                                properties.put("breathRate", body.getString("Belt Breathing Rate"));
-                                properties.put("bodyPosition", body.getString("BodyPosition"));
-                                properties.put("motion", body.getString("Motion"));
-                                newRevision.setUserProperties(properties);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            return true;
-                        }
-                    });
-                } catch (CouchbaseLiteException e) {
-                    //handle this
-                    e.printStackTrace();
-                }
-
-            } else if (!connectionlist.get(soldierID)
-                    .equals(session.getHeaders().get("http-client-ip"))) {
-                //update ip if ip changes for a soldier
-                connectionlist.put(soldierID,
-                        session.getHeaders().get("http-client-ip"));
-            } else {
-
-                Log.d("sender", "Broadcasting message");
-                Intent intent = new Intent("custom-event-name");
-                intent.putExtra("message", body.getString("ECG Heart Rate"));
-                LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
-
-//                Calendar keyCal = new GregorianCalendar();
-//                try {
-//                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
-//                } catch (Exception e) {
-//                    keyCal.set(2017, 02, 25);
-//                }
-//                Calendar nearestMinute =
-//                        DateUtils.round(keyCal, Calendar.MINUTE);
-
-                Calendar now = new GregorianCalendar();
-                now.set(2017, 02, 25);
-                keyFormat.setCalendar(now);
-                String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
-                Calendar nearestMinute =
-                        org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
-
-                Database db = dataManagermy.getSoldierDB(soldierID);
-
-                Document saveStateDoc =
-                        db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-                try {
-                    saveStateDoc.update(new Document.DocumentUpdater() {
-                        @Override
-                        public boolean update(UnsavedRevision newRevision) {
-                            String hrate = null;
-                            try {
-                                Map<String, Object> properties = newRevision.getUserProperties();
-                                properties.put("timeCreated", body.getString("DateTime"));
-                                properties.put("accSum", body.getString("accSum"));
-                                properties.put("skinTemp", body.getString("Skin_Temp"));
-                                properties.put("coreTemp", body.getString("Core_Temp"));
-                                properties.put("heartRate", body.getString("ECG Heart Rate"));
-                                hrate = body.getString("ECG Heart Rate");
-                                properties.put("breathRate", body.getString("Belt Breathing Rate"));
-                                properties.put("bodyPosition", body.getString("BodyPosition"));
-                                properties.put("motion", body.getString("Motion"));
-                                newRevision.setUserProperties(properties);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            return true;
-                        }
-                    });
-                } catch (CouchbaseLiteException e) {
-                    e.printStackTrace();
-                }
-
+            Log.i(this.getClass().getSimpleName(), "request type: " + session.getMethod());
+            final Map<String, String> map = new HashMap<>();
+            try {
+                session.parseBody(map);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ResponseException e) {
+                e.printStackTrace();
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+            final String jsonStr = map.get("postData");
+            final JSONObject body;
+            try {
+                body = new JSONObject(jsonStr);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
+                                              "Invalid JSON Format");
+
+            }
+            try {
+                String soldierID = body.getString("ID");
+
+                if (!connectionlist.containsKey(soldierID)) {
+                    //a new id comes in, check if the current connection list has less than 10 soldiers
+                    if (connectionlist.size() >= 10) {
+                        return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
+                                                      "too many soldiers connected");
+                    }
+
+                    connectionlist.put(soldierID,
+                                       session.getHeaders().get("http-client-ip"));
+
+                    if (!dataManagermy.soldierInSystem(soldierID)) {
+                        Map<String, Object> soldierInfo = new HashMap<String, Object>();
+                        String[] requiredNewSoldierFields = {
+                                "name",
+                                "age",
+                                "gender",
+                                "ID",
+                                "height",
+                                "weight"
+                        };
+                        for (String requiredField: requiredNewSoldierFields) {
+                            if (!body.has(requiredField)) {
+                                return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
+                                                              "Missing Required Fields for adding a new soldier");
+                            }
+                        }
+                        soldierInfo.put("name", body.getString("name"));
+                        soldierInfo.put("age", body.getString("age"));
+                        soldierInfo.put("gender", body.getString("gender"));
+                        soldierInfo.put("id", soldierID);
+                        //1 indicates solider is currently being monitored and shows on namelist, 0 means inactive, not shown on namelist
+                        soldierInfo.put("active", 1);
+                        soldierInfo.put("height", "170");
+                        soldierInfo.put("weight", "70");
+                        dataManagermy.addSoldier(soldierID, soldierInfo);
+
+                        String url = "http://" + session.getHeaders().get("http-client-ip");
+
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                                                                      new com.android.volley.Response.Listener<String>() {
+                                                                          @Override
+                                                                          public void onResponse(String response) {
+                                                                              //                                    try {
+                                                                              //                                        JSONObject jsonResponse =
+                                                                              //                                                new JSONObject(response).getJSONObject("form");
+                                                                              //                                        String site = jsonResponse.getString("site"),
+                                                                              //                                                network = jsonResponse.getString("network");
+                                                                              //                                        System.out
+                                                                              //                                                .println("Site: " + site + "\nNetwork: " + network);
+                                                                              //                                    } catch (JSONException e) {
+                                                                              //                                        e.printStackTrace();
+                                                                              //                                    }
+                                                                          }
+                                                                      },
+                                                                      new com.android.volley.Response.ErrorListener() {
+                                                                          @Override
+                                                                          public void onErrorResponse(VolleyError error) {
+                                                                              error.printStackTrace();
+                                                                          }
+                                                                      }
+                        ) {
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<>();
+                                // the POST parameters:
+                                params.put("handshake", "1");
+                                return params;
+                            }
+                        };
+                        Volley.newRequestQueue(AppContext.getContext()).add(postRequest);
+                    }
+
+                    Log.d("sender", "Broadcasting message");
+                    Intent intent = new Intent("custom-event-name");
+                    intent.putExtra("message", body.getString("ECG Heart Rate"));
+                    LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
+
+                    //                Calendar keyCal = new GregorianCalendar();
+                    //                try {
+                    //                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
+                    //                } catch (Exception e) {
+                    //                    keyCal.set(2017, 02, 25);
+                    //                }
+                    //
+                    //                Calendar nearestMinute =
+                    //                        DateUtils.round(keyCal, Calendar.MINUTE);
+                    Calendar now = new GregorianCalendar();
+                    now.set(2017, 02, 25);
+                    keyFormat.setCalendar(now);
+                    String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
+                    Calendar nearestMinute =
+                            org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+
+                    Database db = dataManagermy.getSoldierDB(soldierID);
+
+                    Document saveStateDoc =
+                            db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+                    try {
+                        saveStateDoc.update(new Document.DocumentUpdater() {
+                            @Override
+                            public boolean update(UnsavedRevision newRevision) {
+                                String hrate = null;
+                                try {
+                                    Map<String, Object> properties = newRevision.getUserProperties();
+                                    properties.put("timeCreated", body.getString("DateTime"));
+                                    properties.put("accSum", body.getString("accSum"));
+                                    properties.put("skinTemp", body.getString("Skin_Temp"));
+                                    properties.put("coreTemp", body.getString("Core_Temp"));
+                                    properties.put("heartRate", body.getString("ECG Heart Rate"));
+                                    hrate = body.getString("ECG Heart Rate");
+                                    properties.put("breathRate", body.getString("Belt Breathing Rate"));
+                                    properties.put("bodyPosition", body.getString("BodyPosition"));
+                                    properties.put("motion", body.getString("Motion"));
+                                    newRevision.setUserProperties(properties);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                return true;
+                            }
+                        });
+                    } catch (CouchbaseLiteException e) {
+                        //handle this
+                        e.printStackTrace();
+                    }
+
+                } else if (!connectionlist.get(soldierID)
+                                          .equals(session.getHeaders().get("http-client-ip"))) {
+                    //update ip if ip changes for a soldier
+                    connectionlist.put(soldierID,
+                                       session.getHeaders().get("http-client-ip"));
+                } else {
+
+                    Log.d("sender", "Broadcasting message");
+                    Intent intent = new Intent("custom-event-name");
+                    intent.putExtra("message", body.getString("ECG Heart Rate"));
+                    LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
+
+                    //                Calendar keyCal = new GregorianCalendar();
+                    //                try {
+                    //                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
+                    //                } catch (Exception e) {
+                    //                    keyCal.set(2017, 02, 25);
+                    //                }
+                    //                Calendar nearestMinute =
+                    //                        DateUtils.round(keyCal, Calendar.MINUTE);
+
+                    Calendar now = new GregorianCalendar();
+                    now.set(2017, 02, 25);
+                    keyFormat.setCalendar(now);
+                    String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
+                    Calendar nearestMinute =
+                            org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+
+                    Database db = dataManagermy.getSoldierDB(soldierID);
+                    Document saveStateDoc =
+                            db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+                    try {
+                        saveStateDoc.update(new Document.DocumentUpdater() {
+                            @Override
+                            public boolean update(UnsavedRevision newRevision) {
+                                String hrate = null;
+                                try {
+                                    Map<String, Object> properties = newRevision.getUserProperties();
+                                    properties.put("timeCreated", body.getString("DateTime"));
+                                    properties.put("accSum", body.getString("accSum"));
+                                    properties.put("skinTemp", body.getString("Skin_Temp"));
+                                    properties.put("coreTemp", body.getString("Core_Temp"));
+                                    properties.put("heartRate", body.getString("ECG Heart Rate"));
+                                    hrate = body.getString("ECG Heart Rate");
+                                    properties.put("breathRate", body.getString("Belt Breathing Rate"));
+                                    properties.put("bodyPosition", body.getString("BodyPosition"));
+                                    properties.put("motion", body.getString("Motion"));
+                                    newRevision.setUserProperties(properties);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                return true;
+                            }
+                        });
+                    } catch (CouchbaseLiteException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            dbWrite();
+
+            Intent i = buildPDAMessageIntent(body);
+            LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(i);
+            //put userName into the db
+            // Map<String, Object> properties = new HashMap<String, Object>();
+            // properties.put("username", userName);
+
+            //        try {
+            //            document.putProperties(properties);
+            //        } catch (CouchbaseLiteException e) {
+            //            e.printStackTrace();
+            //        }
+            return newFixedLengthResponse(Response.Status.OK, "text/plain", "success");
+        } catch (Exception e) {
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "test/plain", e.getClass().getName() + ": " + e.getMessage());
         }
 
-        dbWrite();
-
-        Intent i = buildPDAMessageIntent(body);
-        LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(i);
-        //put userName into the db
-        // Map<String, Object> properties = new HashMap<String, Object>();
-        // properties.put("username", userName);
-
-//        try {
-//            document.putProperties(properties);
-//        } catch (CouchbaseLiteException e) {
-//            e.printStackTrace();
-//        }
-        return newFixedLengthResponse(Response.Status.OK, "text/plain", "success");
     }
 
     private Intent buildPDAMessageIntent(JSONObject jsonObject) {
@@ -289,8 +291,8 @@ public class Server extends NanoHTTPD {
             intent.putExtra("bodypos", jsonObject.getString("bodypos"));
             intent.putExtra("hr", jsonObject.getString("hr"));
             intent.putExtra("br", jsonObject.getString("br"));
-            intent.putExtra("skinTmp", jsonObject.getString("skinTmp"));
-            intent.putExtra("coreTmp", jsonObject.getString("coreTmp"));
+            intent.putExtra("skinTemp", jsonObject.getString("skinTemp"));
+            intent.putExtra("coreTemp", jsonObject.getString("coreTemp"));
 //        intent.putExtra("fatigue",jsonObject.getString("fatigue"));
         } catch (JSONException e) {
             e.printStackTrace();

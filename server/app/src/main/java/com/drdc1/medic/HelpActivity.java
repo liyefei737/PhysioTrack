@@ -115,7 +115,7 @@ public class HelpActivity extends AppCompatActivity {
 
 //                BackgroundWellnessAlgo bgalgo = new BackgroundWellnessAlgo();
 //                bgalgo.setPhysioParamThresh(hrRange, brRange, stRange, ctRange);
-
+                back();
             }
         });
 
@@ -123,11 +123,17 @@ public class HelpActivity extends AppCompatActivity {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HelpActivity.this, HomeActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+                back();
             }
+
+
         });
 
+    }
+
+    private void back() {
+        Intent intent = new Intent(HelpActivity.this, HomeActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 }

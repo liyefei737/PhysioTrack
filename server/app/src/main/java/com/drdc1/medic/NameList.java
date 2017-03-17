@@ -60,34 +60,12 @@ public class NameList extends Fragment implements DataObserver {
         core_tmp_header.setOnClickListener(new ClickToSort());
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO When item clicked, write code here
-                String idsol = null;
-                if (((Soldier) listView.getAdapter().getItem(position)) != null) {
-                    idsol = ((Soldier) listView.getAdapter().getItem(position)).getId();
-
+                if (position > 0) {
+                    ((HomeActivity) getActivity())
+                            .onSelectSoldierByName(adapter.getItem(position - 1).getId());
                 }
-
-                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                        getFragmentManager().beginTransaction();
-
-                Bundle bundle = new Bundle();
-                if (idsol != null){
-                    bundle.putString("id", idsol); // Put anything what you want
-
-                }
-
-                IndividualSoldierTab fragment2 = new IndividualSoldierTab();
-                fragment2.setArguments(bundle);
-
-                fragmentTransaction.add(android.R.id.content, fragment2, "login").commit();
-
-//                getFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.container, fragment2)
-//                        .commit();
             }
         });
-
         return rootView;
     }
 
@@ -238,7 +216,7 @@ public class NameList extends Fragment implements DataObserver {
             }
             String currentHR = soldier.getHeartRate();
             String lastHR = soldier.getLastHeartRate();
-            if (!currentHR.equals("")) {
+            if (currentHR != null && !currentHR.equals("")) {
                 TextView heartRate = (TextView) v.findViewById(R.id.hr_text);
                 ImageView arrow = (ImageView) v.findViewById(R.id.hr_img);
                 if (!lastHR.equals("")) {
@@ -258,7 +236,7 @@ public class NameList extends Fragment implements DataObserver {
             //TODO replace image for down_arrow color not right
             String currentBR = soldier.getBreathingRate();
             String lastBR = soldier.getLastBreathingRate();
-            if (!currentBR.equals("")) {
+            if (currentBR != null && !currentBR.equals("")) {
                 TextView breathingRate = (TextView) v.findViewById(R.id.br_text);
                 ImageView arrow = (ImageView) v.findViewById(R.id.br_img);
                 if (!lastBR.equals("")) {
@@ -278,7 +256,7 @@ public class NameList extends Fragment implements DataObserver {
 
             String currentCoreTmp = soldier.getCoreTmp();
             String lastCoreTmp = soldier.getLastCoreTmp();
-            if (!currentCoreTmp.equals("")) {
+            if (currentCoreTmp != null && !currentCoreTmp.equals("")) {
                 TextView coreTmp = (TextView) v.findViewById(R.id.core_tmp_text);
                 ImageView arrow = (ImageView) v.findViewById(R.id.core_tmp_img);
                 if (!lastCoreTmp.equals("")) {
@@ -298,7 +276,7 @@ public class NameList extends Fragment implements DataObserver {
 
             String currentSkinTmp = soldier.getSkinTmp();
             String lastSkinTmp = soldier.getLastSkinTmp();
-            if (!currentSkinTmp.equals("")) {
+            if (currentSkinTmp != null && !currentSkinTmp.equals("")) {
                 TextView skinTmp = (TextView) v.findViewById(R.id.skin_tmp_text);
                 ImageView arrow = (ImageView) v.findViewById(R.id.skin_tmp_img);
                 if (!lastSkinTmp.equals("")) {

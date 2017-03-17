@@ -33,11 +33,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     private DataReceiver dataReceiver;
     private ArrayList<DataObserver> fragmentlist;
     static private HashMap data; //one data shared by all fragments
-
+    private String solderId;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private String individualSolderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,8 +123,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         public void onReceive(Context context, Intent intent) {
             data.put("bodypos", intent.getStringExtra("bodypos"));
             data.put("overall", intent.getStringExtra("overall"));
-            data.put("coreTemp", intent.getStringExtra("coreTmp"));
-            data.put("skinTemp", intent.getStringExtra("skinTmp"));
+            data.put("coreTemp", intent.getStringExtra("coreTemp"));
+            data.put("skinTemp", intent.getStringExtra("skinTemp"));
             data.put("br", intent.getStringExtra("br"));
             data.put("hr", intent.getStringExtra("hr"));
             data.put("ID",intent.getStringExtra("ID"));
@@ -233,5 +234,28 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     public void callHelp(View v) {
         Intent callhelp = new Intent(HomeActivity.this, HelpActivity.class);
         startActivity(callhelp);
+    }
+
+    public void onSelectSoldierByName(String id) {
+        this.solderId = id;
+        mViewPager.setCurrentItem(2, true);
+    }
+
+    public String popSoldierId() {
+        String result = solderId;
+        solderId = null;
+        return result;
+    }
+
+
+    public void onSelectIndividualSoldier(String id) {
+        this.individualSolderId = id;
+        mViewPager.setCurrentItem(3, true);
+    }
+
+    public String popIndividualSoldierId() {
+        String result = individualSolderId;
+        individualSolderId = null;
+        return result;
     }
 }

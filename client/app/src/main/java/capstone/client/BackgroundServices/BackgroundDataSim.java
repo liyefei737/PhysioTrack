@@ -34,6 +34,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -121,12 +122,11 @@ public class BackgroundDataSim extends Service {
                 });
             }
         };
-        timer.schedule(doDataSimCallback, 0, DateUtils.SECOND_IN_MILLIS*3); //execute every minute
+        timer.schedule(doDataSimCallback, 0, DateUtils.SECOND_IN_MILLIS * 3); //execute every minute
 
         // Keep service around "sticky"
         return START_STICKY;
     }
-
 
     private void dataSim() {
         String responseStr;
@@ -136,13 +136,14 @@ public class BackgroundDataSim extends Service {
         now.set(2017, 02, 25);
         keyFormat.setCalendar(now);
         String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
-        Calendar nearestMinute  = org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+        Calendar nearestMinute =
+                org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
         //get one minute worth of data
         responseStr = doRemoteQuery(phpRequestScriptURL, dateID);
         try {
             JSONArray minuteData = new JSONArray(responseStr);
             //iterate through minute data to sum up acceleration
-            for (int i = 0; i < minuteData.length(); i++ ){
+            for (int i = 0; i < minuteData.length(); i++) {
                 accSum += getAccelerationMagnitude(minuteData.getJSONObject(i));
             }
 
@@ -157,70 +158,106 @@ public class BackgroundDataSim extends Service {
 
             //put ID on http request
             Soldier soldierDetails = dbManager.getSoldierDetails();
-            if (soldierDetails == null)
+            if (soldierDetails == null) {
                 soldierDetails = dbManager.getDefaultSoldier();
+            }
 
             //for now hard-coded medic ip and port
-            String MedicURL = soldierDetails.getMedicIP();
+//            String MedicURL = soldierDetails.getMedicIP();
+            String MedicURL = "192.168.2.10";
+
             if (MedicURL != null) {
                 MedicURL = "http://" + MedicURL + ":8080";
                 JSONObject jsonObjForRequest = lastRow;
                 jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
-                jsonObjForRequest.put("name", soldierDetails.getSoldierName());
+                jsonObjForRequest.put("name", "testing");
                 jsonObjForRequest.put("age", soldierDetails.getAge());
                 jsonObjForRequest.put("weight", soldierDetails.getWeight());
                 jsonObjForRequest.put("height", soldierDetails.getHeight());
-                //jsonObjForRequest.put("overall", "YELLOW");
-                //jsonObjForRequest.put("hr", "32");
-                //jsonObjForRequest.put("br", "32");
-                //jsonObjForRequest.put("coreTmp", "32");
-                //jsonObjForRequest.put("skinTmp", "32");
-                //jsonObjForRequest.put("bodyPos", "RIGHT");
-                //JSONObject j = new JSONObject("{\"ID\":\"aaa\",\"name\":\"aaaaa\",\"age\":\"12\",\"height\":\"170\",\"weight\":\"170\",\"overall\":\"YELLOW\",\"hr\":\"25\",\"br\":\"2\",\"coreTmp\":\"111\",\"skinTmp\":\"25\",\"bodypos\":\"RIGHT\"}");
-                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    VolleyLog.v("Response:%n %s", response.toString(4));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                jsonObjForRequest.put("overall", "YELLOW");
+                jsonObjForRequest.put("hr", "32");
+                jsonObjForRequest.put("br", "32");
+                jsonObjForRequest.put("coreTmp", "32");
+                jsonObjForRequest.put("skinTmp", "32");
+                jsonObjForRequest.put("bodyPos", "RIGHT");
+//                JSONObject j = new JSONObject("{\"ID\":\"aaa\",\"name\":\"aaaaa\",\"age\":\"12\",\"height\":\"170\",\"weight\":\"170\",\"overall\":\"YELLOW\",\"hr\":\"25\",\"br\":\"2\",\"coreTmp\":\"111\",\"skinTmp\":\"25\",\"bodypos\":\"RIGHT\"}");
 
-                        VolleyLog.e("Error: ", error.getStackTrace());
-                    }
-                });
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("ID", soldierDetails.getSoldierID());
+                params.put("name", "testing");
+                params.put("age", String.valueOf(soldierDetails.getAge()));
+                params.put("weight", String.valueOf(soldierDetails.getWeight()));
+                params.put("height", String.valueOf(soldierDetails.getHeight()));
+                params.put("overall", "YELLOW");
+                params.put("hr", "32");
+                params.put("br", "32");
+                params.put("coreTemp", "32");
+                params.put("skinTemp", "32");
+                params.put("bodypos", "RIGHT");
+
+
+                JsonObjectRequest jsonRequest =
+                        new JsonObjectRequest(MedicURL, new JSONObject(params),
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        try {
+                                            VolleyLog.v("Response:%n %s", response.toString(4));
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                VolleyLog.e("Error: ", error.getMessage());
+                            }
+                        });
+
+//                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
+//                        new Response.Listener<JSONObject>() {
+//                            @Override
+//                            public void onResponse(JSONObject response) {
+//                                try {
+//                                    VolleyLog.v("Response:%n %s", response.toString(4));
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                        VolleyLog.e("Error: ", error.getStackTrace());
+//                    }
+//                });
                 rQueue.add(jsonRequest);
             }
 
-                //save to DB
-                Document doc = dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-                final JSONObject JSONrow = lastRow;
-                doc.update(new Document.DocumentUpdater() {
-                    @Override
-                    public boolean update(UnsavedRevision newRevision) {
-                        Map<String, Object> properties = newRevision.getUserProperties();
-                        try {
-                            properties.put("timeCreated", JSONrow.getString("DateTime"));
-                            properties.put("accSum", JSONrow.getString("accSum"));
-                            properties.put("skinTemp", JSONrow.getString("Skin_Temp"));
-                            properties.put("coreTemp", JSONrow.getString("Core_Temp"));
-                            properties.put("heartRate", JSONrow.getString("ECG Heart Rate"));
-                            properties.put("breathRate", JSONrow.getString("Belt Breathing Rate"));
-                            properties.put("bodyPosition", JSONrow.getString("BodyPosition"));
-                            properties.put("motion", JSONrow.getString("Motion"));
-                        } catch (JSONException e) {
-                            //
-                        }
-
-                        newRevision.setUserProperties(properties);
-                        return true;
+            //save to DB
+            Document doc = dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
+            final JSONObject JSONrow = lastRow;
+            doc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    try {
+                        properties.put("timeCreated", JSONrow.getString("DateTime"));
+                        properties.put("accSum", JSONrow.getString("accSum"));
+                        properties.put("skinTemp", JSONrow.getString("Skin_Temp"));
+                        properties.put("coreTemp", JSONrow.getString("Core_Temp"));
+                        properties.put("heartRate", JSONrow.getString("ECG Heart Rate"));
+                        properties.put("breathRate", JSONrow.getString("Belt Breathing Rate"));
+                        properties.put("bodyPosition", JSONrow.getString("BodyPosition"));
+                        properties.put("motion", JSONrow.getString("Motion"));
+                    } catch (JSONException e) {
+                        //
                     }
-                });
+
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -230,7 +267,7 @@ public class BackgroundDataSim extends Service {
 
     private String doRemoteQuery(String phpRequestURL, String id) {
 
-        URL url=null;
+        URL url = null;
         HttpURLConnection conn = null;
         try {
             url = new URL(phpRequestURL);
@@ -299,17 +336,17 @@ public class BackgroundDataSim extends Service {
         }
     }
 
-    public double getAccelerationMagnitude(JSONObject dataObj){
+    public double getAccelerationMagnitude(JSONObject dataObj) {
         double accX = 0, accY = 0, accZ = 0;
         try {
             accX = Double.valueOf(dataObj.getString("AccX"));
             accY = Double.valueOf(dataObj.getString("AccY"));
             accZ = Double.valueOf(dataObj.getString("AccZ"));
 
-        } catch (JSONException e){
+        } catch (JSONException e) {
 
         }
-        return Math.sqrt(accX*accX + accY * accY + accZ*accZ);
+        return Math.sqrt(accX * accX + accY * accY + accZ * accZ);
     }
 }
 

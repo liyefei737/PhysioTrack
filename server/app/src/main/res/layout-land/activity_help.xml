@@ -642,14 +642,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/bthelp1"
+            android:id="@+id/cancel"
             android:layout_width="100dp"
             android:layout_marginLeft="352dp"
             android:layout_height="match_parent"
             android:text="Cancel" />
 
         <Button
-            android:id="@+id/bthelp2"
+            android:id="@+id/save"
             android:layout_width="100dp"
             android:layout_marginLeft="30dp"
             android:layout_height="match_parent"

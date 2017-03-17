@@ -65,10 +65,9 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         rootView =
                 inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            String IDpassed = bundle.getString("id");
-            // handle code for id from namelist here.
+        String IDpassed = ((HomeActivity) getActivity()).popSoldierId();
+        if (IDpassed != null) {
+            //TODO: handle code for id from namelist here.
 
         }
 
@@ -84,34 +83,11 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         GenderNonEditable = (TextView) rootView.findViewById(R.id.GenderNonEditable);
         AgeNonEditable = (TextView) rootView.findViewById(R.id.AgeNonEditable);
         btLinerRequest = (Button) rootView.findViewById(R.id.btLinerRequest);
-
         btLinerRequest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-
-                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                        getFragmentManager().beginTransaction();
-
-                Bundle bundl = new Bundle();
-                bundl.putString("theid", solid);
-
-                TreatmentScreenTab dv = new TreatmentScreenTab();
-                dv.setArguments(bundl);
-
-                fragmentTransaction.add(android.R.id.content, dv, "logintest").commit();
-
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.replace(((ViewGroup) getView().getParent()).getId(), dv);
-//                ft.show(getFragmentManager()
-//                        .findFragmentById(((ViewGroup) getView().getParent()).getId()));
-//                ft.addToBackStack(null);
-//                ft.commit();
-
+                ((HomeActivity) getActivity()).onSelectIndividualSoldier(solid);
             }
         });
-        //End of OnClick Links
-//            NameEditable.setText("thistest");
-//            GenderEditable.setText("thistest1");
-//            AgeEditable.setText("thistest2");
 
         hrchart = (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.hrrchart);
         respchart =
