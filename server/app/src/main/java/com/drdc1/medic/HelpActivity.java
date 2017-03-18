@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+import com.drdc1.medic.utils.HelperMethods;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /*
+TODO: use enum for this :)
 red
 0
 yellow
@@ -31,8 +35,8 @@ public class HelpActivity extends AppCompatActivity {
             st0, st1, st2, st3;
     Integer hrate0i, hrate1i, hrate2i, hrate3i, rrate0i, rrate1i, rrate2i, rrate3i;
     Float ct0i, ct1i, ct2i, ct3i, st0i, st1i, st2i, st3i;
-    private List<Integer> hrRange = new ArrayList<Integer>();
-    private List<Integer> brRange = new ArrayList<Integer>();
+    private ArrayList<Integer> hrRange = new ArrayList<Integer>();
+    private ArrayList<Integer> brRange = new ArrayList<Integer>();
     private List<Float> stRange = new ArrayList<Float>();
     private List<Float> ctRange = new ArrayList<Float>();
 
@@ -72,22 +76,27 @@ public class HelpActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hrate0i = Integer.valueOf(hrate0.getText().toString());
-                hrate1i = Integer.valueOf(hrate1.getText().toString());
-                hrate2i = Integer.valueOf(hrate2.getText().toString());
-                hrate3i = Integer.valueOf(hrate3.getText().toString());
-                rrate0i = Integer.valueOf(rrate0.getText().toString());
-                rrate1i = Integer.valueOf(rrate1.getText().toString());
-                rrate2i = Integer.valueOf(rrate2.getText().toString());
-                rrate3i = Integer.valueOf(rrate3.getText().toString());
-                ct0i = Float.valueOf(ct0.getText().toString());
-                ct1i = Float.valueOf(ct1.getText().toString());
-                ct2i = Float.valueOf(ct2.getText().toString());
-                ct3i = Float.valueOf(ct3.getText().toString());
-                st0i = Float.valueOf(st0.getText().toString());
-                st1i = Float.valueOf(st1.getText().toString());
-                st2i = Float.valueOf(st2.getText().toString());
-                st3i = Float.valueOf(st3.getText().toString());
+                try {
+                    hrate0i = Integer.valueOf(hrate0.getText().toString());
+                    hrate1i = Integer.valueOf(hrate1.getText().toString());
+                    hrate2i = Integer.valueOf(hrate2.getText().toString());
+                    hrate3i = Integer.valueOf(hrate3.getText().toString());
+                    rrate0i = Integer.valueOf(rrate0.getText().toString());
+                    rrate1i = Integer.valueOf(rrate1.getText().toString());
+                    rrate2i = Integer.valueOf(rrate2.getText().toString());
+                    rrate3i = Integer.valueOf(rrate3.getText().toString());
+                    ct0i = Float.valueOf(ct0.getText().toString());
+                    ct1i = Float.valueOf(ct1.getText().toString());
+                    ct2i = Float.valueOf(ct2.getText().toString());
+                    ct3i = Float.valueOf(ct3.getText().toString());
+                    st0i = Float.valueOf(st0.getText().toString());
+                    st1i = Float.valueOf(st1.getText().toString());
+                    st2i = Float.valueOf(st2.getText().toString());
+                    st3i = Float.valueOf(st3.getText().toString());
+                } catch (NumberFormatException e) {
+                    Toast.makeText(HelpActivity.this, R.string.warning_number_expected, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 hrRange.add(hrate0i);
                 hrRange.add(hrate1i);
                 hrRange.add(hrate2i);
@@ -107,10 +116,10 @@ public class HelpActivity extends AppCompatActivity {
 
                 Intent wellnessAlgo = new Intent();
                 wellnessAlgo.setClass(HelpActivity.this, BackgroundWellnessAlgo.class);
-                wellnessAlgo.putExtra("hrRange", (Parcelable) hrRange);
-                wellnessAlgo.putExtra("brRange", (Parcelable) brRange);
-                wellnessAlgo.putExtra("stRange", (Parcelable) stRange);
-                wellnessAlgo.putExtra("ctRange", (Parcelable) ctRange);
+                wellnessAlgo.putIntegerArrayListExtra("hrRange", hrRange);
+                wellnessAlgo.putIntegerArrayListExtra("brRange", brRange);
+                wellnessAlgo.putExtra("stRange", HelperMethods.toFloatArray(stRange));
+                wellnessAlgo.putExtra("ctRange", HelperMethods.toFloatArray(ctRange));
                 startService(wellnessAlgo);
 
 //                BackgroundWellnessAlgo bgalgo = new BackgroundWellnessAlgo();
@@ -118,7 +127,6 @@ public class HelpActivity extends AppCompatActivity {
                 back();
             }
         });
-
         ib = (ImageButton) findViewById(R.id.ibBack);
         ib.setOnClickListener(new View.OnClickListener() {
             @Override

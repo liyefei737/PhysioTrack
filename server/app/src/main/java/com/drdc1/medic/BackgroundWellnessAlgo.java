@@ -12,8 +12,11 @@ import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.UnsavedRevision;
+import com.drdc1.medic.utils.HelperMethods;
 
 import org.json.JSONArray;
+
+import welfareSM.WelfareStatus;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -21,8 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import welfareSM.WelfareStatus;
 
 /**
  * Background Thread for computing the wellness algorithm
@@ -76,13 +77,14 @@ public class BackgroundWellnessAlgo extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             if (intent.getExtras() != null) {
-                hrRange = (List<Integer>) intent.getExtras().getParcelable("hrRange");
-                brRange = (List<Integer>) intent.getExtras().getParcelable("brRange");
-                stRange = (List<Float>) intent.getExtras().getParcelable("stRange");
-                ctRange = (List<Float>) intent.getExtras().getParcelable("ctRange");
+                hrRange = intent.getExtras().getIntegerArrayList("hrRange");
+                brRange = intent.getExtras().getIntegerArrayList("brRange");
+                stRange =
+                        HelperMethods.arrayToFloatList(intent.getExtras().getFloatArray("stRange"));
+                ctRange =
+                        HelperMethods.arrayToFloatList(intent.getExtras().getFloatArray("ctRange"));
 
             }
-
         }
 
         Timer timer = new Timer();
@@ -127,9 +129,15 @@ public class BackgroundWellnessAlgo extends Service {
                 Database userDB = entry.getValue();
 
                 lastMinute = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
-                Object [] statusResults = dataManager.getWellnessTracker(entry.getKey()).calculateWelfareStatus(lastMinute);
-                final WelfareStatus nextState = (WelfareStatus) statusResults[0];
 
+                if (hrRange != null) {
+                    dataManager.getWellnessTracker(entry.getKey())
+                            .setPhysioParamThresholds(hrRange, brRange, stRange, ctRange);
+                }
+
+                Object[] statusResults = dataManager.getWellnessTracker(entry.getKey())
+                        .calculateWelfareStatus(lastMinute);
+                final WelfareStatus nextState = (WelfareStatus) statusResults[0];
                 Document saveStateDoc = userDB.getDocument(entry.getKey());
                 try {
                     saveStateDoc.update(new Document.DocumentUpdater() {
