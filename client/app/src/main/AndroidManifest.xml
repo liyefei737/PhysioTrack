@@ -32,11 +32,6 @@
             android:exported="false"
             android:stopWithTask="false" />
         <service
-            android:name=".BackgroundServices.BackgroundSleepAlgo"
-            android:enabled="true"
-            android:exported="false"
-            android:stopWithTask="false" />
-        <service
             android:name=".BackgroundServices.BackgroundWellnessAlgo"
             android:enabled="true"
             android:exported="false"

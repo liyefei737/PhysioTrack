@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import capstone.client.BackgroundServices.BackgroundDataSim;
-import capstone.client.BackgroundServices.BackgroundSleepAlgo;
 import capstone.client.BackgroundServices.BackgroundUIUpdator;
 import capstone.client.BackgroundServices.BackgroundWellnessAlgo;
 import capstone.client.R;
@@ -27,10 +26,6 @@ public class MainActivity extends AppCompatActivity {
         Intent dataSim = new Intent();
         dataSim.setClass(this, BackgroundDataSim.class);
         startService(dataSim);
-
-        Intent sleepAlgo = new Intent();
-        sleepAlgo.setClass(this, BackgroundSleepAlgo.class);
-        startService(sleepAlgo);
 
         Intent wellnessAlgo = new Intent();
         wellnessAlgo.setClass(this, BackgroundWellnessAlgo.class);
