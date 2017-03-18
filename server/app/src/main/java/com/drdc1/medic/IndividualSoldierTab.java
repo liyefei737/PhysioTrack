@@ -65,12 +65,6 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         rootView =
                 inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
 
-        String IDpassed = ((HomeActivity) getActivity()).popSoldierId();
-        if (IDpassed != null) {
-            //TODO: handle code for id from namelist here.
-            solid = IDpassed;
-
-        }
 
         seachView = (FloatingSearchView) rootView.findViewById(R.id.searchBar);
         setupSearchBar();
@@ -126,6 +120,12 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            String IDpassed = ((HomeActivity) getActivity()).popSoldierId();
+                            if (IDpassed != null) {
+                                //TODO: handle code for id from namelist here.
+                                solid = IDpassed;
+
+                            }
 
                             HashMap hm = dataManager.getStaticInfo(solid);
                             NameNonEditable.setText((CharSequence) hm.get("name"));

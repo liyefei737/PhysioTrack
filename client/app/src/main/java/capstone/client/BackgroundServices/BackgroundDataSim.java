@@ -164,7 +164,7 @@ public class BackgroundDataSim extends Service {
 
             //for now hard-coded medic ip and port
 //            String MedicURL = soldierDetails.getMedicIP();
-            String MedicURL = "192.168.2.10";
+            String MedicURL = "100.65.70.202";
 
             if (MedicURL != null) {
                 MedicURL = "http://" + MedicURL + ":8080";

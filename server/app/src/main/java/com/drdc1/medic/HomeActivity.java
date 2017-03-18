@@ -232,7 +232,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     }
 
     public void callHelp(View v) {
-        Intent callhelp = new Intent(HomeActivity.this, SquadStatusHelp.class);
+        Intent callhelp = new Intent(HomeActivity.this, HelpActivity.class);
         startActivity(callhelp);
     }
 
@@ -244,8 +244,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     }
 
     public String popSoldierId() {
-        String result = solderId;
-        solderId = null;
+        String result = this.solderId;
+//        solderId = null;
         return result;
     }
 
