@@ -271,8 +271,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="30" />
+                            android:hint="30 - 40"
+                            android:inputType="textPersonName" />
 
                         <EditText
                             android:id="@+id/hrate1"
@@ -280,8 +280,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="40" />
+                            android:hint="40 - 70"
+                            android:inputType="textPersonName" />
 
 
                         <EditText
@@ -290,8 +290,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="70" />
+                            android:hint="70 - 100"
+                            android:inputType="textPersonName" />
 
 
                         <EditText
@@ -300,8 +300,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="100" />
+                            android:hint="+ 100"
+                            android:inputType="textPersonName" />
 
 
                     </LinearLayout>
@@ -337,8 +337,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="No info" />
+                            android:hint="- 12"
+                            android:inputType="textPersonName" />
 
 
                         <EditText
@@ -347,8 +347,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="12 -" />
+                            android:hint="12 - 18"
+                            android:inputType="textPersonName" />
 
 
                         <EditText
@@ -357,8 +357,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="12 - 18" />
+                            android:hint=" 18"
+                            android:inputType="textPersonName" />
 
 
                         <EditText
@@ -367,8 +367,7 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="18 +" />
+                            android:inputType="textPersonName" />
 
 
                     </LinearLayout>
@@ -404,8 +403,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="35.0 -" />
+                            android:hint="35.1 - 36.0"
+                            android:inputType="textPersonName" />
 
                         <EditText
                             android:id="@+id/ct1"
@@ -413,8 +412,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="35.1 - 36.0" />
+                            android:hint="36.1 - 37.8"
+                            android:inputType="textPersonName" />
 
 
                         <EditText
@@ -423,8 +422,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="36.1 - 37.8" />
+                            android:hint="37.9 - 39.0"
+                            android:inputType="textPersonName" />
 
                         <EditText
                             android:id="@+id/ct3"
@@ -432,8 +431,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="37.9 - 39.0" />
+                            android:hint="+ 39.0"
+                            android:inputType="textPersonName" />
 
 
                     </LinearLayout>
@@ -469,8 +468,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="25.0 -" />
+                            android:hint="25.0 - 32.0"
+                            android:inputType="textPersonName" />
 
                         <EditText
                             android:id="@+id/st1"
@@ -478,8 +477,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="25.0 - 32.0" />
+                            android:hint="32.1 - 36.0"
+                            android:inputType="textPersonName" />
 
                         <EditText
                             android:id="@+id/st2"
@@ -487,8 +486,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="32.1 - 36.0" />
+                            android:hint="36.0 - 37.0"
+                            android:inputType="textPersonName" />
 
                         <EditText
                             android:id="@+id/st3"
@@ -496,8 +495,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="36.0 - 37.0" />
+                            android:hint="+ 37.0"
+                            android:inputType="textPersonName" />
 
 
                     </LinearLayout>
@@ -516,14 +515,35 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="320dp"
-                    android:text="Cancel" />
+                    android:text="Cancel"
+                    android:visibility="invisible" />
 
                 <Button
                     android:id="@+id/save"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
-                    android:text="Save" />
+                    android:text="Save"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-50dp"
+                android:id="@+id/ll56"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="400dp"
+                    android:background="@color/bg"
+                    android:text="Change ranges"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:visibility="visible" />
             </LinearLayout>
 
             <LinearLayout
