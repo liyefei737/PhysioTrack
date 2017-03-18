@@ -56,6 +56,7 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
                 inflater.inflate(R.layout.fragment_treatment_screen_tab, container, false);
         String IDpassed = ((HomeActivity) getActivity()).popIndividualSoldierId();
         if (IDpassed != null) {
+            sendingid = IDpassed;
             //TODO: handle code for id from namelist here.
         }
 

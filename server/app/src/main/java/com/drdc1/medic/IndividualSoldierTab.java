@@ -68,6 +68,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         String IDpassed = ((HomeActivity) getActivity()).popSoldierId();
         if (IDpassed != null) {
             //TODO: handle code for id from namelist here.
+            solid = IDpassed;
 
         }
 
