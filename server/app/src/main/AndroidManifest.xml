@@ -25,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".BackgroundServer"
             android:enabled="true"
@@ -40,7 +41,9 @@
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
-        <activity android:name=".HelpActivity"/>
+
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".SquadStatusHelp"></activity>
     </application>
 
 </manifest>

@@ -232,9 +232,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     }
 
     public void callHelp(View v) {
-        Intent callhelp = new Intent(HomeActivity.this, HelpActivity.class);
+        Intent callhelp = new Intent(HomeActivity.this, SquadStatusHelp.class);
         startActivity(callhelp);
     }
+
+
 
     public void onSelectSoldierByName(String id) {
         this.solderId = id;
