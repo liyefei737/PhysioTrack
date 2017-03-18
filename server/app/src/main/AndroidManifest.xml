@@ -43,7 +43,6 @@
             android:stopWithTask="false" />
 
         <activity android:name=".HelpActivity" />
-        <activity android:name=".SquadStatusHelp"></activity>
     </application>
 
 </manifest>

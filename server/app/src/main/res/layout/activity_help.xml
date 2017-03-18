@@ -10,36 +10,35 @@
     tools:context="com.drdc1.medic.HelpActivity">
 
     <LinearLayout
+        android:id="@+id/ll43"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/ll43"
-        >
+        android:orientation="horizontal">
 
         <ImageButton
-            app:srcCompat="@drawable/backarrow"
-            android:background="@color/black"
             android:id="@+id/ibBack"
-            android:layout_weight="0.07"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
-            android:layout_width="20dp" />
+            android:layout_weight="0.07"
+            android:background="@color/black"
+            app:srcCompat="@drawable/backarrow" />
 
         <TextView
-            android:text="Help Page"
+            android:id="@+id/tvHelpHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvHelpHeader"
-            android:textSize="30dp"
-            android:textAlignment="center"
             android:layout_marginRight="130dp"
+            android:layout_weight="0.14"
+            android:text="Help Page"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:layout_weight="0.14" />
+            android:textSize="30dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll44"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ll44"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -47,365 +46,550 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_marginLeft="20dp"
-            android:textSize="18dp"
-            android:gravity="left"
             android:layout_weight="1"
-            android:text="FAQ" />
+            android:gravity="left"
+            android:text="FAQ"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
     </LinearLayout>
 
-    <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/ll45"
-                android:layout_marginTop="20dp"
-                android:background="@color/grey"
-                android:layout_marginLeft="16dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv17"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Parameters" />
-
-                <TextView
-                    android:id="@+id/tv18"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Inter-" />
-
-                <TextView
-                    android:id="@+id/tv19"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Good" />
-
-                <TextView
-                    android:id="@+id/tv20"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Inter+" />
-
-                <TextView
-                    android:id="@+id/tv21"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Bad" />
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/ll46"
-                android:layout_marginTop="10dp"
-                android:background="@color/grey"
-                android:layout_marginLeft="16dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tv23"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Heart Rate" />
-
-                <EditText
-                    android:id="@+id/hrate0"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="30" />
-
-                <EditText
-                    android:id="@+id/hrate1"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="40" />
-
-
-                <EditText
-                    android:id="@+id/hrate2"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="70" />
-
-
-                <EditText
-                    android:id="@+id/hrate3"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="100" />
-
-
-
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/ll47"
-            android:layout_marginTop="10dp"
-            android:background="@color/grey"
-            android:layout_marginLeft="16dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ll50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/tv30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:text="1. Health staus color indicators"
+                    android:textColor="@color/inactivetab"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll52"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="60dp"
+                        android:background="@color/green"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="Good"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="60dp"
+                        android:background="@color/yellow"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="Intermediate"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="60dp"
+                        android:background="@color/red"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="Bad"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/inactivetab"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18dp"
+                    android:text="2. Ranges for the physiological parameters" />
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="40dp">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/ll45"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/grey"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv17"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:gravity="left"
+                            android:text="Parameters"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/tv18"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:gravity="center"
+                            android:text="Inter-"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/tv19"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:gravity="center"
+                            android:text="Good"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/tv20"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:gravity="center"
+                            android:text="Inter+"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/tv21"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:gravity="center"
+                            android:text="Bad"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/ll46"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/grey"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv23"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:gravity="left"
+                            android:text="Heart Rate"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <EditText
+                            android:id="@+id/hrate0"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="30" />
+
+                        <EditText
+                            android:id="@+id/hrate1"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="40" />
+
+
+                        <EditText
+                            android:id="@+id/hrate2"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="70" />
+
+
+                        <EditText
+                            android:id="@+id/hrate3"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="100" />
+
+
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/ll47"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/grey"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv29"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:text="Respiration Rate"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <EditText
+                            android:id="@+id/rrate0"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="No info" />
+
+
+                        <EditText
+                            android:id="@+id/rrate1"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="12 -" />
+
+
+                        <EditText
+                            android:id="@+id/rrate2"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="12 - 18" />
+
+
+                        <EditText
+                            android:id="@+id/rrate3"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="18 +" />
+
+
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/ll48"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/grey"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv35"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:gravity="left"
+                            android:text="Core Temp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <EditText
+                            android:id="@+id/ct0"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="35.0 -" />
+
+                        <EditText
+                            android:id="@+id/ct1"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="35.1 - 36.0" />
+
+
+                        <EditText
+                            android:id="@+id/ct2"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="36.1 - 37.8" />
+
+                        <EditText
+                            android:id="@+id/ct3"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="37.9 - 39.0" />
+
+
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/ll49"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/grey"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv41"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/border2"
+                            android:gravity="left"
+                            android:text="Skin Temp"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <EditText
+                            android:id="@+id/st0"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="25.0 -" />
+
+                        <EditText
+                            android:id="@+id/st1"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="25.0 - 32.0" />
+
+                        <EditText
+                            android:id="@+id/st2"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="32.1 - 36.0" />
+
+                        <EditText
+                            android:id="@+id/st3"
+                            android:layout_width="94dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="36.0 - 37.0" />
+
+
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:id="@+id/ll53"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="320dp"
+                    android:text="Cancel" />
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:text="Save" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:id="@+id/ll54"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/tv36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/inactivetab"
+                    android:textSize="18dp"
+                    android:text="3. Trends in the physiological parameters" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/ll55"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_weight="1"
+                    android:text="The arrows beside the numerical data show the parameter changes with respect to the historical data (good, intermediate and bad ) rather than a numerical increase and decrease. This comparison enables the user to tell if the soldier's health status is deteriorating or improving."
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv29"
-                android:layout_width="94dp"
-                android:layout_height="50dp"
+                android:id="@+id/tv38"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:textColor="@color/black"
-                android:background="@drawable/border2"
+                android:text="4. Graph Interpretation"
+                android:textColor="@color/inactivetab"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/tv39"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="40dp"
+                android:textColor="@color/white"
                 android:textSize="18dp"
-                android:layout_gravity="center"
-                android:text="Respiration Rate" />
-
-            <EditText
-                android:id="@+id/rrate0"
-                android:layout_width="94dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="No info" />
-
-
-            <EditText
-                android:id="@+id/rrate1"
-                android:layout_width="94dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="12 -" />
-
-
-            <EditText
-                android:id="@+id/rrate2"
-                android:layout_width="94dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="12 - 18" />
-
-
-            <EditText
-                android:id="@+id/rrate3"
-                android:layout_width="94dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="18 +" />
-
-
-
+                android:text="The graphs show the past 10 minutes of data, and have 3 sets of ranges (green, yellow, and red) that correspond to the normal, intermediate, and critical (bad) ranges for that measure." />
         </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/ll48"
-                android:layout_marginTop="10dp"
-                android:background="@color/grey"
-                android:layout_marginLeft="16dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tv35"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Core Temp" />
-                <EditText
-                    android:id="@+id/ct0"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="35.0 -" />
-
-                <EditText
-                    android:id="@+id/ct1"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="35.1 - 36.0" />
-
-
-                <EditText
-                    android:id="@+id/ct2"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="36.1 - 37.8" />
-
-                <EditText
-                    android:id="@+id/ct3"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="37.9 - 39.0" />
-
-
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/ll49"
-                android:layout_marginTop="10dp"
-                android:background="@color/grey"
-                android:layout_marginLeft="16dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tv41"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:background="@drawable/border2"
-                    android:textSize="18dp"
-                    android:gravity="center"
-                    android:text="Skin Temp" />
-                <EditText
-                    android:id="@+id/st0"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="25.0 -" />
-
-                <EditText
-                    android:id="@+id/st1"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="25.0 - 32.0" />
-
-                <EditText
-                    android:id="@+id/st2"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="32.1 - 36.0" />
-
-                <EditText
-                    android:id="@+id/st3"
-                    android:layout_width="94dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="36.0 - 37.0" />
-
-
-            </LinearLayout>
-        </TableRow>
-    </TableLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="100dp"
-            android:layout_marginLeft="352dp"
-            android:layout_height="match_parent"
-            android:text="Cancel" />
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="100dp"
-            android:layout_marginLeft="30dp"
-            android:layout_height="match_parent"
-            android:text="Save" />
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
