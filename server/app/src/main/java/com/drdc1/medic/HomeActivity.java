@@ -244,8 +244,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     }
 
     public String popSoldierId() {
-        String result = solderId;
-        solderId = null;
+        String result = this.solderId;
+//        solderId = null;
         return result;
     }
 
