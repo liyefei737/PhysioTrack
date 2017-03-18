@@ -41,7 +41,7 @@
             android:id="@+id/layoutwrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -65,7 +65,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="0dp"
                         android:layout_marginStart="120dp"
-                        android:layout_marginTop="-40dp">
+                        android:layout_marginTop="-50dp">
 
 
                     </RelativeLayout>
@@ -89,7 +89,7 @@
                             android:id="@+id/tvFatiqueLevel"
                             android:layout_width="220dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
+                            android:layout_marginLeft="0dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:gravity="center"
@@ -101,7 +101,7 @@
                             android:id="@+id/tvSkinTemp"
                             android:layout_width="220dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="40dp"
+                            android:layout_marginLeft="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Skin Temp"
@@ -121,25 +121,22 @@
                 <RelativeLayout
                     android:id="@+id/bullsEyeCoreTemp"
                     android:layout_width="220dp"
-                    android:layout_height="match_parent">
-
-
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp">
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/bullsEyeFatigue"
                     android:layout_width="220dp"
-                    android:layout_height="match_parent">
-
-
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="60dp">
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/bullsEyeSkinTemp"
                     android:layout_width="220dp"
-                    android:layout_height="match_parent">
-
-
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="60dp">
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

@@ -31,6 +31,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:id="@+id/ll2">
                 <ImageButton
                     android:layout_width="40dp"
@@ -38,7 +39,6 @@
                     app:srcCompat="@drawable/help4"
                     android:id="@+id/ibHelp"
                     android:background="@android:color/black"
-                    android:layout_marginLeft="490dp"
                     android:onClick="callHelp" />
 
             </LinearLayout>

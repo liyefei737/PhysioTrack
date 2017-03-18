@@ -18,13 +18,13 @@
         android:layout_alignParentTop="true">
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="64dp"
             android:id="@+id/layoutSearch">
 
 
             <LinearLayout
-                android:layout_width="480dp"
+                android:layout_width="760dp"
                 android:layout_height="53dp"
                 android:orientation="vertical">
 
@@ -73,15 +73,13 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:weightSum="1">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -89,7 +87,7 @@
                             android:id="@+id/tvSoldierName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Soldier Name :"
+                            android:text="Soldier Name         :"
                             android:textColor="@color/white"
                             android:textSize="18dp" />
 
@@ -103,7 +101,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:orientation="horizontal">
@@ -112,7 +110,7 @@
                             android:id="@+id/tvGender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Gender            :"
+                            android:text="Gender                    :"
                             android:textColor="@color/white"
                             android:textSize="18dp" />
 
@@ -131,6 +129,7 @@
                     android:id="@+id/layoutGender"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -166,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1.80"
-                    android:text="Body Orientation :"
+                    android:text="Body Orientation  :"
                     android:textColor="@color/white"
                     android:textSize="18dp" />
 
