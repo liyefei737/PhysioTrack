@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:text="1. Health staus color indicators"
+                    android:text="1. Health status color indicators"
                     android:textColor="@color/inactivetab"
                     android:textSize="18dp" />
             </LinearLayout>
