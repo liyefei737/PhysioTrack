@@ -144,7 +144,7 @@ public class Server extends NanoHTTPD {
 
                     Log.d("sender", "Broadcasting message");
                     Intent intent = new Intent("custom-event-name");
-                    intent.putExtra("message", body.getString("ECG Heart Rate"));
+                    intent.putExtra("message", body.getString("hr"));
                     LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
                     //                Calendar keyCal = new GregorianCalendar();
@@ -176,13 +176,12 @@ public class Server extends NanoHTTPD {
                                     Map<String, Object> properties = newRevision.getUserProperties();
                                     properties.put("timeCreated", body.getString("DateTime"));
                                     properties.put("accSum", body.getString("accSum"));
-                                    properties.put("skinTemp", body.getString("Skin_Temp"));
-                                    properties.put("coreTemp", body.getString("Core_Temp"));
-                                    properties.put("heartRate", body.getString("ECG Heart Rate"));
-                                    hrate = body.getString("ECG Heart Rate");
-                                    properties.put("breathRate", body.getString("Belt Breathing Rate"));
-                                    properties.put("bodyPosition", body.getString("BodyPosition"));
-                                    properties.put("motion", body.getString("Motion"));
+                                    properties.put("skinTemp", body.getString("skinTemp"));
+                                    properties.put("coreTemp", body.getString("coreTemp"));
+                                    properties.put("hr", body.getString("hr"));
+                                    properties.put("br", body.getString("br"));
+                                    properties.put("bodypos", body.getString("bodypos"));
+                                    properties.put("motion", body.getString("motion"));
                                     newRevision.setUserProperties(properties);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -204,7 +203,7 @@ public class Server extends NanoHTTPD {
 
                     Log.d("sender", "Broadcasting message");
                     Intent intent = new Intent("custom-event-name");
-                    intent.putExtra("message", body.getString("ECG Heart Rate"));
+                    intent.putExtra("message", body.getString("hr"));
                     LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
                     //                Calendar keyCal = new GregorianCalendar();
@@ -235,13 +234,12 @@ public class Server extends NanoHTTPD {
                                     Map<String, Object> properties = newRevision.getUserProperties();
                                     properties.put("timeCreated", body.getString("DateTime"));
                                     properties.put("accSum", body.getString("accSum"));
-                                    properties.put("skinTemp", body.getString("Skin_Temp"));
-                                    properties.put("coreTemp", body.getString("Core_Temp"));
-                                    properties.put("heartRate", body.getString("ECG Heart Rate"));
-                                    hrate = body.getString("ECG Heart Rate");
-                                    properties.put("breathRate", body.getString("Belt Breathing Rate"));
-                                    properties.put("bodyPosition", body.getString("BodyPosition"));
-                                    properties.put("motion", body.getString("Motion"));
+                                    properties.put("skinTemp", body.getString("skinTemp"));
+                                    properties.put("coreTemp", body.getString("coreTemp"));
+                                    properties.put("hr", body.getString("hr"));
+                                    properties.put("br", body.getString("br"));
+                                    properties.put("bodyPos", body.getString("bodyPos"));
+                                    properties.put("motion", body.getString("motion"));
                                     newRevision.setUserProperties(properties);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
