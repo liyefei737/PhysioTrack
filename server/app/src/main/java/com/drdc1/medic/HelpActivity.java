@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,7 @@ red
 
 public class HelpActivity extends AppCompatActivity {
     private ImageButton ib;
-    Button cancel, save;
+    Button cancel, save, btEdit;
     EditText hrate0, hrate1, hrate2, hrate3, rrate0, rrate1, rrate2, rrate3, ct0, ct1, ct2, ct3,
             st0, st1, st2, st3;
     Integer hrate0i, hrate1i, hrate2i, hrate3i, rrate0i, rrate1i, rrate2i, rrate3i;
@@ -62,13 +63,51 @@ public class HelpActivity extends AppCompatActivity {
         st2 = (EditText) findViewById(R.id.st2);
         st3 = (EditText) findViewById(R.id.st3);
 
+        hrate0.setEnabled(false);
+        hrate1.setEnabled(false);
+        hrate2.setEnabled(false);
+        hrate3.setEnabled(false);
+        rrate0.setEnabled(false);
+        rrate1.setEnabled(false);
+        rrate2.setEnabled(false);
+        rrate3.setEnabled(false);
+        ct0.setEnabled(false);
+        ct1.setEnabled(false);
+        ct2.setEnabled(false);
+        ct3.setEnabled(false);
+        st0.setEnabled(false);
+        st1.setEnabled(false);
+        st2.setEnabled(false);
+        st3.setEnabled(false);
+
+
         cancel = (Button) findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HelpActivity.this, HomeActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+//                Intent intent = new Intent(HelpActivity.this, HomeActivity.class)
+//                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                startActivity(intent);
+                cancel.setVisibility(View.INVISIBLE);
+                save.setVisibility(View.INVISIBLE);
+                btEdit.setVisibility(View.VISIBLE);
+
+                hrate0.setEnabled(false);
+                hrate1.setEnabled(false);
+                hrate2.setEnabled(false);
+                hrate3.setEnabled(false);
+                rrate0.setEnabled(false);
+                rrate1.setEnabled(false);
+                rrate2.setEnabled(false);
+                rrate3.setEnabled(false);
+                ct0.setEnabled(false);
+                ct1.setEnabled(false);
+                ct2.setEnabled(false);
+                ct3.setEnabled(false);
+                st0.setEnabled(false);
+                st1.setEnabled(false);
+                st2.setEnabled(false);
+                st3.setEnabled(false);
             }
         });
 
@@ -126,6 +165,7 @@ public class HelpActivity extends AppCompatActivity {
 //                bgalgo.setPhysioParamThresh(hrRange, brRange, stRange, ctRange);
                 back();
             }
+
         });
         ib = (ImageButton) findViewById(R.id.ibBack);
         ib.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +177,32 @@ public class HelpActivity extends AppCompatActivity {
 
         });
 
+        btEdit =(Button)findViewById(R.id.btEdit);
+        btEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                save.setVisibility(View.VISIBLE);
+                cancel.setVisibility(View.VISIBLE);
+                btEdit.setVisibility(View.INVISIBLE);
+                hrate0.setEnabled(true);
+                hrate1.setEnabled(true);
+                hrate2.setEnabled(true);
+                hrate3.setEnabled(true);
+                rrate0.setEnabled(true);
+                rrate1.setEnabled(true);
+                rrate2.setEnabled(true);
+                rrate3.setEnabled(true);
+                ct0.setEnabled(true);
+                ct1.setEnabled(true);
+                ct2.setEnabled(true);
+                ct3.setEnabled(true);
+                st0.setEnabled(true);
+                st1.setEnabled(true);
+                st2.setEnabled(true);
+                st3.setEnabled(true);
+            }
+        });
+
     }
 
     private void back() {
@@ -144,4 +210,5 @@ public class HelpActivity extends AppCompatActivity {
                 .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
+
 }
