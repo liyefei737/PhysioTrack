@@ -166,6 +166,10 @@ public class WelfareTracker {
 		return algoValues;
 	}
 
+	
+	public WelfareStatus getOverallStatus(){
+		return currentStateMap.get(OVERALL)
+	}
 	public WelfareStatus getHeartStatus(int heartRate) {
 		prevStateMap.put(HR, currentStateMap.get(HR));
 		List<Integer> hrRange = wap.getHrRange();

@@ -11,14 +11,14 @@ import capstone.client.BackgroundServices.BackgroundUIUpdator;
 import capstone.client.BackgroundServices.BackgroundWellnessAlgo;
 import capstone.client.R;
 
-public class MainActivity extends AppCompatActivity {
+public class EntryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_entry);
         /***
          * starting background threads
          */
@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(getString(R.string.previously_started), Boolean.TRUE);
             edit.apply();
-            startActivity(new Intent(MainActivity.this, SetupActivity.class));
+            startActivity(new Intent(EntryActivity.this, SetupActivity.class));
         }
         else
-            startActivity(new Intent(MainActivity.this, BottomBarActivity.class));
+            startActivity(new Intent(EntryActivity.this, BottomBarActivity.class));
 
         finish();
 

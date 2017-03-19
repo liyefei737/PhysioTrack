@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.EntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
