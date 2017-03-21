@@ -11,4 +11,7 @@
     <dimen name="small_ring_thickness">10dp</dimen>
     <dimen name="large_ring_radius">145dp</dimen>
     <dimen name="large_ring_thickness">15dp</dimen>
+    <dimen name="bull_eyes_small_radius">84dp</dimen>
+    <dimen name="bull_eyes_small_thickness">8dp</dimen>
+
 </resources>

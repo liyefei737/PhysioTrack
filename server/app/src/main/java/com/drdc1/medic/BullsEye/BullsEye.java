@@ -37,7 +37,7 @@ public class BullsEye {
         int size;
         if (small) {
             ringID = R.drawable.small_ring0;
-            size = (int)(2*resources.getDimension(R.dimen.small_ring_radius) + 2*resources.getDimension(R.dimen.small_ring_thickness));
+            size = (int)(2*resources.getDimension(R.dimen.bull_eyes_small_radius) + 2*resources.getDimension(R.dimen.bull_eyes_small_thickness));
         }
         else {
             ringID = R.drawable.ring0;
