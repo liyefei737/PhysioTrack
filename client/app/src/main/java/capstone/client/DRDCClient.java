@@ -25,61 +25,10 @@ public class DRDCClient extends Application {
         lastState = state;
     }
 
-    private String lastHeartRate = "--";
-
-    public String getLastHeartRate() {
-        return lastHeartRate;
-    }
-
-    public void setLastHeartRate(String hr) {
-        if (hr != null)
-            if (!hr.isEmpty())
-                lastHeartRate = hr;
-    }
-
-    private String lastBreathingRate = "--";
-
-    public String getLastBreathingRate() {
-        return lastBreathingRate;
-    }
-
-    public void setLastBreathingRate(String br) {
-        if (br != null)
-            if (!br.isEmpty())
-                lastBreathingRate = br;
-    }
-
-    private String lastSkinTemp = "--";
-
-    public String getLastSkinTemp() {
-        return lastSkinTemp;
-    }
-
-    public void setLastSkinTemp(String st) {
-        if (st != null)
-            if (!st.isEmpty())
-                lastSkinTemp = st;
-    }
-
-    private String lastCoreTemp = "--";
-
-    public String getLastCoreTemp() {
-        return lastCoreTemp;
-    }
-
-    public void setLastCoreTemp(String ct) {
-        if (ct != null)
-            if (!ct.isEmpty())
-                lastCoreTemp = ct;
-    }
-
     private WelfareTracker welfareTracker = new WelfareTracker();
 
     public WelfareTracker getWelfareTracker(){
         return welfareTracker;
     }
 
-    public void setWelfareTracker(WelfareTracker wt){
-        welfareTracker = wt;
-    }
 }

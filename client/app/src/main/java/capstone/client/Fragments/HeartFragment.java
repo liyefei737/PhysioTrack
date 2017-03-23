@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
-        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
         return inflater.inflate(R.layout.fragment_heart, container, false);
     }
 
@@ -68,7 +67,7 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
         TextView hrText = (TextView) getActivity().findViewById(R.id.currentHeartRate);
         updateParam(latestHR, hrText);
 
-        List<Entry> entries = new ArrayList<Entry>();
+        List<Entry> entries = new ArrayList<>();
 
         int arrLength = heartRates.length;
         for (int i = 0; i < arrLength ; i++) {
@@ -78,7 +77,7 @@ public class HeartFragment extends capstone.client.Fragments.BaseFragment implem
         List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getHrRangeObj();
         float heartMax = 200;
         float heartMin = 0;
-        LineData lineData = lineChart.formatUpdateLineChart(getResources(), entries, heartMin, heartMax, zoneLimits);
+        lineChart.formatUpdateLineChart(getResources(), entries, heartMin, heartMax, zoneLimits);
         lineChart.postInvalidate();
     }
 

@@ -42,11 +42,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/welcome_Message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/black"
                 android:text="@string/welcome_message"
@@ -64,6 +65,27 @@
 
         </RelativeLayout>
 
+        <EditText
+            android:id="@+id/editSimServerURL"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal|center"
+            android:background="@null"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center_horizontal|center"
+            android:hint="@string/url_text_edit"
+            android:inputType="textUri"
+            android:longClickable="true"
+            android:selectAllOnFocus="true"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/hint"
+            android:textCursorDrawable="@null"
+            />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

@@ -12,13 +12,16 @@ import welfareSM.WelfareStatus;
 public class StateColourUtils {
 
     public static int StringStateToColour(String state, Resources resources){
-        if (state.equals("RED"))
-            return resources.getColor(R.color.red);
-        else if (state.equals("YELLOW"))
-            return resources.getColor(R.color.yellow);
-        else if (state.equals("GREEN"))
-            return resources.getColor(R.color.green);
-        else return resources.getColor(R.color.bb_inActiveBottomBarItemColor);
+        switch (state) {
+            case "RED":
+                return resources.getColor(R.color.red);
+            case "YELLOW":
+                return resources.getColor(R.color.yellow);
+            case "GREEN":
+                return resources.getColor(R.color.green);
+            default:
+                return resources.getColor(R.color.bb_inActiveBottomBarItemColor);
+        }
 
     }
 

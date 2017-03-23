@@ -14,6 +14,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.ncapdevi.fragnav.FragNavController;
 import com.roughike.bottombar.BottomBar;
@@ -38,6 +39,8 @@ import capstone.client.Fragments.HomeFragment;
 import capstone.client.Fragments.SkinTempFragment;
 import capstone.client.R;
 import capstone.client.ViewTools.StateColourUtils;
+
+import static java.util.regex.Pattern.matches;
 
 public class BottomBarActivity extends AppCompatActivity implements BaseFragment.FragmentNavigation,
         FragNavController.TransactionListener,
@@ -142,11 +145,19 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
 
+            String overall = intent.getStringExtra("OVERALL");
             String hr = intent.getStringExtra("HEART");
             String br = intent.getStringExtra("BREATH");
             String ct = intent.getStringExtra("CORE");
             String st = intent.getStringExtra("SKIN");
             Resources res = getResources();
+
+            if (overall != null){
+                if (mNavController.getCurrentFrag().getClass() == HomeFragment.class ) {
+                    ((HomeFragment) mNavController.getCurrentFrag()).updateWellnessStatus(overall,
+                            ((ImageView) findViewById(R.id.wellness_status)));
+                }
+            }
             if (hr != null){
                 BottomBarTab hearttab = mBottomBar.getTabWithId(R.id.bb_menu_heart);
                 hearttab.setBadgeBackgroundColor(StateColourUtils.StringStateToColour(hr, res));
@@ -316,6 +327,25 @@ public class BottomBarActivity extends AppCompatActivity implements BaseFragment
         }
         else {
             onBackPressed();
+        }
+    }
+
+    public void onEditSimURL(View view) {
+        EditText et = (EditText) findViewById(R.id.editSimServerURL);
+        String newURL = et.getText().toString();
+        ImageView check = (ImageView) findViewById(R.id.simURLCheckmark);
+        check.setVisibility(View.VISIBLE);
+        //check for http*://*.php
+        if (matches("^http(s)?:\\/\\/.*.php$", newURL)) {
+            dbManager.updatePHPURL(newURL);
+            et.setCursorVisible(false);
+            et.setHint(newURL);
+            check.setImageDrawable(getResources().getDrawable(R.drawable.checkmark));
+            check.setVisibility(View.VISIBLE);
+        }
+        else{
+            check.setImageDrawable(getResources().getDrawable(R.drawable.xmark));
+            check.setVisibility(View.VISIBLE);
         }
     }
 }

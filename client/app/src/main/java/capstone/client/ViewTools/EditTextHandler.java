@@ -23,7 +23,6 @@ public class EditTextHandler {
             et.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             et.setBackgroundResource(R.drawable.edit_et_bg);
             et.setHint("");
-
         }
     }
 
@@ -41,7 +40,7 @@ public class EditTextHandler {
 
     public static void setSoldierFields(Soldier s, EditText id, EditText name, EditText age, EditText weight, EditText height, EditText ip) {
         String strID = s.getSoldierID();
-        if (strID != null && !strID.isEmpty()) {
+        if (!strID.isEmpty()) {
             id.setHint(strID);
             id.setText(strID);
         }
@@ -51,30 +50,41 @@ public class EditTextHandler {
             age.setHint(String.valueOf(iAge));
             age.setText(String.valueOf(iAge));
         }
+        else{
+            age.setHint(R.string.age_text_edit);
+        }
 
         int iWeight = s.getWeight();
         if (iWeight > 0) {
             weight.setHint(String.valueOf(iWeight));
             weight.setText(String.valueOf(iWeight));
         }
+        else
+            weight.setHint(R.string.weight_text_edit);
 
         int iHeight = s.getHeight();
         if (iHeight > 0) {
             height.setHint(String.valueOf(iHeight));
             height.setText(String.valueOf(iHeight));
         }
+        else
+            height.setHint(R.string.height_text_edit);
 
         String strIP = s.getMedicIP();
-        if (strIP != null) {
+        if (!strIP.isEmpty()) {
             ip.setHint(strIP);
             ip.setText(strIP);
         }
+        else
+            ip.setHint(R.string.ip_text_edit);
 
         String strName = s.getSoldierName();
-        if (strName != null) {
+        if (!strName.isEmpty()) {
             name.setHint(strName);
             name.setText(strName);
         }
+        else
+            name.setHint(R.string.name_text_edit);
 
 
 

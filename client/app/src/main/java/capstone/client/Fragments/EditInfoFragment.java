@@ -8,15 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.couchbase.lite.CouchbaseLiteException;
-import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.UnsavedRevision;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import capstone.client.Activities.BottomBarActivity;
+import capstone.client.Activities.SetupActivity;
 import capstone.client.DataManagement.DBManager;
 import capstone.client.DataManagement.Soldier;
 import capstone.client.R;
@@ -47,12 +43,19 @@ public class EditInfoFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        DBManager dbManager = new DBManager(getActivity());
+        Activity act = getActivity();
+        DBManager dbManager = new DBManager(act);
         Soldier soldier = dbManager.getSoldierDetails();
         View view = inflater.inflate(R.layout.fragment_edit_info, container, false);
-        if (soldier != null) {
+        if (!(soldier == null) ){
             view = setEditFields(soldier, view);
         }
+        if (act.getClass() == BottomBarActivity.class){
+            View et = view.findViewById(R.id.editSimServerURL);
+            if (et != null)
+                et.setVisibility(View.GONE);
+        }
+
         return view;
 
     }
@@ -88,16 +91,16 @@ public class EditInfoFragment extends BaseFragment {
 
 
     //static click handlers for activities to use
-    public static void edit_info_save(Activity activity, DBManager dbManager){
+    public static boolean edit_info_save(Activity activity, DBManager dbManager){
+        List<EditText> etList = new ArrayList<>();
         final Button btnSave = (Button) activity.findViewById(R.id.btSave);
         final Button cancelbtn = (Button) activity.findViewById(R.id.btCancel);
-        List<EditText> etList = new ArrayList<>();
-
         Soldier soldier = dbManager.getSoldierDetails();
-        Database userDB = dbManager.getDatabase(DBManager.USER_DB);
 
         EditText id = (EditText) activity.findViewById(R.id.etSoldierId);
         final String newId = id.getText().toString();
+        if (newId.equals(""))
+            return false;
         etList.add(id);
 
         EditText age = (EditText) activity.findViewById(R.id.etAge);
@@ -120,38 +123,32 @@ public class EditInfoFragment extends BaseFragment {
         final String newName = name.getText().toString();
         etList.add(name);
 
-        if (soldier != null && !newId.equals(soldier.getSoldierID())){
-            //delete old doc
-            Document doc = userDB.getDocument(soldier.getSoldierID());
-            try {
-                doc.delete();
-            }catch (CouchbaseLiteException e){
 
-            }
-        }
-        Document doc = userDB.getDocument(newId);
         try {
-            doc.update(new Document.DocumentUpdater() {
-                @Override
-                public boolean update(UnsavedRevision newRevision) {
-                    Map<String, Object> properties = newRevision.getUserProperties();
-                    properties.put(DBManager.ID_KEY, newId);
-                    properties.put(DBManager.NAME_KEY, newName);
-                    properties.put(DBManager.AGE_KEY, newAge);
-                    properties.put(DBManager.WEIGHT_KEY, newWeight);
-                    properties.put(DBManager.HEIGHT_KEY, newHeight);
-                    properties.put(DBManager.IP_KEY, newIP);
-                    newRevision.setUserProperties(properties);
-                    btnSave.setVisibility(View.INVISIBLE);
-                    cancelbtn.setVisibility(View.INVISIBLE);
-                    return true;
-                }
-            });
-        } catch (CouchbaseLiteException e) {
+            if (soldier == null) {
+                dbManager.updateSoldier(newId, newName, newAge, newWeight, newHeight, newIP);
+            }
+            else {
+                if ( !newId.equals(soldier.getSoldierID()))
+                    //delete old doc
+                    dbManager.deleteSoldier(soldier.getSoldierID());
+                dbManager.newSoldier(newId, newName, newAge, newWeight, newHeight, newIP);
+            }
 
+            String newURL;
+            EditText url = (EditText) activity.findViewById(R.id.editSimServerURL);
+            if (url != null) {
+                newURL = url.getText().toString();
+                if (!newURL.equals(""))
+                    dbManager.updatePHPURL(newURL);
+            }
+            EditTextHandler.disableAndFormat(etList);
+        } catch (Exception e) {
+            return false;
         }
-
-        EditTextHandler.disableAndFormat(etList);
+        btnSave.setVisibility(View.INVISIBLE);
+        cancelbtn.setVisibility(View.INVISIBLE);
+        return true;
     }
 
     public static void edit_fields(Activity activity){
@@ -161,6 +158,8 @@ public class EditInfoFragment extends BaseFragment {
         cancelbtn.setVisibility(VISIBLE);
 
         List<EditText> etList = new ArrayList<>();
+        if (activity.getClass() == SetupActivity.class)
+            etList.add((EditText) activity.findViewById(R.id.editSimServerURL));
         etList.add((EditText) activity.findViewById(R.id.etSoldierId));
         etList.add((EditText) activity.findViewById(R.id.etAge));
         etList.add((EditText) activity.findViewById(R.id.etWeight));

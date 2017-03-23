@@ -15,8 +15,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +32,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,7 +65,7 @@ public class BackgroundDataSim extends Service {
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
 
-    private static String phpRequestScriptURL = "http://atmacausa.com/ReadRequestMinute.php";
+    private static String phpRequestScriptURL; //= "http://atmacausa.com/ReadRequestMinute.php";
     private static SimpleDateFormat keyFormat = new SimpleDateFormat("02/25/2017 HH:mm:");
     private static String regexSecondsAndMilli = "[0-9]{2}\\.[0-9]{3}";
 
@@ -138,7 +134,16 @@ public class BackgroundDataSim extends Service {
         String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
         Calendar nearestMinute =
                 org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
+
+        //put ID on http request
+        Soldier soldierDetails = dbManager.getSoldierDetails();
+        if (soldierDetails == null) {
+            soldierDetails = dbManager.getDefaultSoldier();
+        }
+
         //get one minute worth of data
+        if (phpRequestScriptURL == null || phpRequestScriptURL.equals(""))
+            phpRequestScriptURL = soldierDetails.getPhpURL();
         responseStr = doRemoteQuery(phpRequestScriptURL, dateID);
         try {
             JSONArray minuteData = new JSONArray(responseStr);
@@ -156,48 +161,20 @@ public class BackgroundDataSim extends Service {
             lastRow.remove("AccZ");
             lastRow.put("accSum", accSum);
 
-            //put ID on http request
-            Soldier soldierDetails = dbManager.getSoldierDetails();
-            if (soldierDetails == null) {
-                soldierDetails = dbManager.getDefaultSoldier();
-            }
 
-            //for now hard-coded medic ip and port
-//            String MedicURL = soldierDetails.getMedicIP();
-            String MedicURL = "100.65.70.202";
+            String MedicURL = soldierDetails.getMedicIP();
 
             if (MedicURL != null) {
                 MedicURL = "http://" + MedicURL + ":8080";
-                JSONObject jsonObjForRequest = lastRow;
-                jsonObjForRequest.put("ID", soldierDetails.getSoldierID());
-                jsonObjForRequest.put("name", "testing");
-                jsonObjForRequest.put("age", soldierDetails.getAge());
-                jsonObjForRequest.put("weight", soldierDetails.getWeight());
-                jsonObjForRequest.put("height", soldierDetails.getHeight());
-                jsonObjForRequest.put("overall", "YELLOW");
-                jsonObjForRequest.put("hr", "32");
-                jsonObjForRequest.put("br", "32");
-                jsonObjForRequest.put("coreTmp", "32");
-                jsonObjForRequest.put("skinTmp", "32");
-                jsonObjForRequest.put("bodyPos", "RIGHT");
-//                JSONObject j = new JSONObject("{\"ID\":\"aaa\",\"name\":\"aaaaa\",\"age\":\"12\",\"height\":\"170\",\"weight\":\"170\",\"overall\":\"YELLOW\",\"hr\":\"25\",\"br\":\"2\",\"coreTmp\":\"111\",\"skinTmp\":\"25\",\"bodypos\":\"RIGHT\"}");
-
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("ID", soldierDetails.getSoldierID());
-                params.put("name", "testing");
-                params.put("age", String.valueOf(soldierDetails.getAge()));
-                params.put("weight", String.valueOf(soldierDetails.getWeight()));
-                params.put("height", String.valueOf(soldierDetails.getHeight()));
-                params.put("overall", "YELLOW");
-                params.put("hr", "32");
-                params.put("br", "32");
-                params.put("coreTemp", "32");
-                params.put("skinTemp", "32");
-                params.put("bodypos", "RIGHT");
-
+                lastRow.put("ID", soldierDetails.getSoldierID());
+                lastRow.put("name", soldierDetails.getSoldierName());
+                lastRow.put("age", soldierDetails.getAge());
+                lastRow.put("weight", soldierDetails.getWeight());
+                lastRow.put("height", soldierDetails.getHeight());
+                lastRow.put("accSum", accSum);
 
                 JsonObjectRequest jsonRequest =
-                        new JsonObjectRequest(MedicURL, new JSONObject(params),
+                        new JsonObjectRequest(MedicURL, lastRow,
                                 new Response.Listener<JSONObject>() {
                                     @Override
                                     public void onResponse(JSONObject response) {
@@ -213,52 +190,11 @@ public class BackgroundDataSim extends Service {
                                 VolleyLog.e("Error: ", error.getMessage());
                             }
                         });
-
-//                JsonObjectRequest jsonRequest = new JsonObjectRequest(MedicURL, jsonObjForRequest,
-//                        new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    VolleyLog.v("Response:%n %s", response.toString(4));
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                        VolleyLog.e("Error: ", error.getStackTrace());
-//                    }
-//                });
                 rQueue.add(jsonRequest);
             }
 
             //save to DB
-            Document doc = dataDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-            final JSONObject JSONrow = lastRow;
-            doc.update(new Document.DocumentUpdater() {
-                @Override
-                public boolean update(UnsavedRevision newRevision) {
-                    Map<String, Object> properties = newRevision.getUserProperties();
-                    try {
-                        properties.put("timeCreated", JSONrow.getString("DateTime"));
-                        properties.put("accSum", JSONrow.getString("accSum"));
-                        properties.put("skinTemp", JSONrow.getString("Skin_Temp"));
-                        properties.put("coreTemp", JSONrow.getString("Core_Temp"));
-                        properties.put("heartRate", JSONrow.getString("ECG Heart Rate"));
-                        properties.put("breathRate", JSONrow.getString("Belt Breathing Rate"));
-                        properties.put("bodyPosition", JSONrow.getString("BodyPosition"));
-                        properties.put("motion", JSONrow.getString("Motion"));
-                    } catch (JSONException e) {
-                        //
-                    }
-
-                    newRevision.setUserProperties(properties);
-                    return true;
-                }
-            });
-
+            dbManager.addRow(lastRow, String.valueOf(nearestMinute.getTimeInMillis()));
         } catch (Exception e) {
             e.printStackTrace();
         }

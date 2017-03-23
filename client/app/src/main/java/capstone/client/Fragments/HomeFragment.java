@@ -48,7 +48,7 @@ public class HomeFragment extends capstone.client.Fragments.BaseFragment impleme
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
-        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
         WelfareStatus state = ((DRDCClient) getActivity().getApplication()).getLastState();
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ImageView iv = (ImageView) view.findViewById(R.id.wellness_status);

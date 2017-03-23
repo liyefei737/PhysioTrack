@@ -8,10 +8,7 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateUtils;
 
-import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.UnsavedRevision;
 
 import org.json.JSONArray;
 
@@ -104,10 +101,10 @@ public class BackgroundWellnessAlgo extends Service {
         Database userDB = dbManager.getDatabase(DBManager.DATA_DB);
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); //hardcode for datasim
-        JSONArray last5Minutes = dbManager.QueryLastXMinutes(now, 5);
+        JSONArray last10Minutes = dbManager.QueryLastXMinutes(now, 10);
 
-        if (last5Minutes.length() != 0) {
-            Object[] thearray = wt.calculateWelfareStatus(last5Minutes);
+        if (last10Minutes.length() != 0) {
+            Object[] thearray = wt.calculateWelfareStatus(last10Minutes);
             final WelfareStatus nextState = (WelfareStatus) thearray[1];
             HashMap<String, WelfareStatus> hmap = (HashMap<String, WelfareStatus>) thearray[0];
 
@@ -131,20 +128,7 @@ public class BackgroundWellnessAlgo extends Service {
 
             Calendar nearestMinute =
                     org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
-            Document saveStateDoc = userDB.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-            try {
-                saveStateDoc.update(new Document.DocumentUpdater() {
-                    @Override
-                    public boolean update(UnsavedRevision newRevision) {
-                        Map<String, Object> properties = newRevision.getUserProperties();
-                        properties.put("state", nextState);
-                        newRevision.setUserProperties(properties);
-                        return true;
-                    }
-                });
-            } catch (CouchbaseLiteException e) {
-                //handle this
-            }
+           dbManager.updateRowState(String.valueOf(nearestMinute.getTimeInMillis()), nextState);
             notifyUI(nextState);
             ((DRDCClient) this.getApplication()).setLastState(nextState);
         }

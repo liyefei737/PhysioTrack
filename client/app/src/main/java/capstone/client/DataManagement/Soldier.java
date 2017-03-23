@@ -12,21 +12,34 @@ public class Soldier {
     private int height;
     private String medicIP;
 
+    public String getPhpURL() {
+        return phpURL;
+    }
+
+    public void setPhpURL(String phpURL) {
+        this.phpURL = phpURL;
+    }
+
+    private String phpURL;
+
     public Soldier() {
         soldierID = "";
         name = "";
         age = -1;
         weight = -1;
         height = -1;
+        medicIP = "";
+        phpURL = "";
     }
 
-    public Soldier(String strId, String strName, int iAge, int iWeight, int iHeight, String ip) {
+    public Soldier(String strId, String strName, int iAge, int iWeight, int iHeight, String ip, String php){
         soldierID = strId;
         name = strName;
         age = iAge;
         weight = iWeight;
         height = iHeight;
         medicIP = ip;
+        phpURL = php;
     }
 
     public String getSoldierID() {

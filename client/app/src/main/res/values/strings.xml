@@ -20,6 +20,7 @@
     <string name="id_text_edit">Service Number</string>
     <string name="name_text_edit">Name</string>
     <string name="age_text_edit">Age</string>
+    <string name="url_text_edit">Simulation URL</string>
     <string name="kgs">kgs</string>
     <string name="cm">cm</string>
     <string name="yrs">years</string>
@@ -30,7 +31,8 @@
     <string name="graph_core_yAxis">Core Temperature (Celsius)</string>
     <string name="graph_heart_yAxis">Heart Rate (BPM)</string>
     <string name="graph_skin_yAxis">Skin Temp (Celsius)</string>
-
+    <string name="graph_bpm">BPM</string>
+    <string name="graph_celsius">\u00B0C</string>
 
     <string name="title_help">Help</string>
     <string name="help_tutorial_restart">Restart Tutorial</string>

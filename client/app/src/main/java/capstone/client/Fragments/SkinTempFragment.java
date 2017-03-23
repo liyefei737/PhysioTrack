@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class SkinTempFragment extends capstone.client.Fragments.BaseFragment imp
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
-        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
         return inflater.inflate(R.layout.fragment_skin_temp, container, false);
     }
 
@@ -69,7 +68,7 @@ public class SkinTempFragment extends capstone.client.Fragments.BaseFragment imp
         String latestST = String.valueOf(skinTemps[0]);
         updateParam(latestST, st);
 
-        List<Entry> entries = new ArrayList<Entry>();
+        List<Entry> entries = new ArrayList<>();
 
         int arrLength = skinTemps.length;
         //X values need to be sorted or line chart throws exception
@@ -81,7 +80,7 @@ public class SkinTempFragment extends capstone.client.Fragments.BaseFragment imp
         List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getStRangeObj();
         float skinMax = 40;
         float skinMin = 25;
-        LineData lineData = lineChart.formatUpdateLineChart(getResources(), entries, skinMin, skinMax, zoneLimits);
+        lineChart.formatUpdateLineChart(getResources(), entries, skinMin, skinMax, zoneLimits);
         lineChart.postInvalidate();
     }
 

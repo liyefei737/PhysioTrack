@@ -11,16 +11,20 @@ import com.couchbase.lite.Manager;
 import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
+import com.couchbase.lite.UnsavedRevision;
 import com.couchbase.lite.android.AndroidContext;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
+
+import welfareSM.WelfareStatus;
 
 /**
  * Each User has its own database for its simulated data
@@ -47,6 +51,7 @@ public class DBManager {
     public static String AGE_KEY = "age";
     public static String HEIGHT_KEY = "height";
     public static String IP_KEY = "ip";
+    public static String PHP_URL_KEY="php";
 
     public DBManager(Context context) {
         _context = context;
@@ -149,18 +154,154 @@ public class DBManager {
             Map<String, Object> tmpMap = result.getRow(0).getDocument().getProperties();
             String id = (String) tmpMap.get(ID_KEY);
             String name = (String) tmpMap.get(NAME_KEY);
-            int age = Integer.valueOf((String)tmpMap.get(AGE_KEY));
-            int weight = Integer.valueOf((String)tmpMap.get(WEIGHT_KEY));
-            int height = Integer.valueOf((String) tmpMap.get(HEIGHT_KEY));
+            String age = (String)tmpMap.get(AGE_KEY);
+            String weight = (String)tmpMap.get(WEIGHT_KEY);
+            String height = (String) tmpMap.get(HEIGHT_KEY);
             String ip = (String) tmpMap.get(IP_KEY);
-            return new Soldier(id, name, age, weight, height, ip);
+            String url = (String) tmpMap.get(PHP_URL_KEY);
+
+            int iAge = -1, iWeight = -1, iHeight = -1;
+            if (!age.equals(""))
+                iAge = Integer.valueOf(age);
+            if (!weight.equals(""))
+                iWeight = Integer.valueOf(weight);
+            if(!height.equals(""))
+                iHeight = Integer.valueOf(height);
+            return new Soldier(id, name, iAge, iWeight, iHeight, ip, url);
         } catch (Exception e) {
             return null;
         }
     }
 
     public Soldier getDefaultSoldier() {
-        return new Soldier("ID", "name", -1, -1, -1, "127.0.0.1");
+        return new Soldier("ID", "name", -1, -1, -1, "127.0.0.1", "");
+    }
+
+    public void updateSoldier(String id, String newName, String newAge, String newWeight, String newHeight, String newIP ){
+        Document doc = _userDB.getDocument(id);
+        try {
+            doc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    properties.put(DBManager.ID_KEY, id);
+                    properties.put(DBManager.NAME_KEY, newName);
+                    properties.put(DBManager.AGE_KEY, newAge);
+                    properties.put(DBManager.WEIGHT_KEY, newWeight);
+                    properties.put(DBManager.HEIGHT_KEY, newHeight);
+                    properties.put(DBManager.IP_KEY, newIP);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        } catch (CouchbaseLiteException e) {
+
+        }
+
+    }
+
+    public void updatePHPURL(String phpURL){
+        Document doc = _userDB.getDocument(getSoldierDetails().getSoldierID());
+        if (doc != null) {
+            try {
+                doc.update(new Document.DocumentUpdater() {
+                    @Override
+                    public boolean update(UnsavedRevision newRevision) {
+                        Map<String, Object> properties = newRevision.getUserProperties();
+                        properties.put(DBManager.PHP_URL_KEY, phpURL);
+                        newRevision.setUserProperties(properties);
+                        return true;
+                    }
+                });
+            } catch (CouchbaseLiteException e) {
+
+            }
+        }
+
+    }
+
+    public String getPHPURL(){
+        Soldier s = getSoldierDetails();
+        if (s!= null)
+            return s.getPhpURL();
+        else return "";
+    }
+
+    public void deleteSoldier(String id){
+        Document doc = _userDB.getDocument(id);
+        try {
+            doc.delete();
+        }catch (CouchbaseLiteException e){
+
+        }
+    }
+
+    public void addRow(JSONObject JSONrow, String id){
+        Document doc = _dataDB.getDocument(id);
+        try {
+            doc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    try {
+                        properties.put("timeCreated", JSONrow.getString("DateTime"));
+                        properties.put("skinTemp", JSONrow.getString("Skin_Temp"));
+                        properties.put("coreTemp", JSONrow.getString("Core_Temp"));
+                        properties.put("heartRate", JSONrow.getString("ECG Heart Rate"));
+                        properties.put("breathRate", JSONrow.getString("Belt Breathing Rate"));
+                    } catch (JSONException e) {
+                        //
+                    }
+
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        }
+        catch (CouchbaseLiteException e){
+
+        }
+
+    }
+
+    public void updateRowState(String id, WelfareStatus nextState){
+        Document saveStateDoc = _userDB.getDocument(id);
+        try {
+            saveStateDoc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    properties.put("state", nextState);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        } catch (CouchbaseLiteException e) {
+            //handle this
+        }
+    }
+
+    public void newSoldier(String id, String newName, String newAge, String newWeight, String newHeight, String newIP ){
+        Document doc = _userDB.getDocument(id);
+        try {
+            doc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    properties.put(DBManager.ID_KEY, id);
+                    properties.put(DBManager.NAME_KEY, newName);
+                    properties.put(DBManager.AGE_KEY, newAge);
+                    properties.put(DBManager.WEIGHT_KEY, newWeight);
+                    properties.put(DBManager.HEIGHT_KEY, newHeight);
+                    properties.put(DBManager.IP_KEY, newIP);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        } catch (CouchbaseLiteException e) {
+
+        }
+
     }
 
 }

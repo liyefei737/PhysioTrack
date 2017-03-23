@@ -77,10 +77,10 @@ public class BackgroundUIUpdator extends Service {
     }
 
     public void updateDataAndBroadcast(){
-        updateDataAndBroadcast(dbManager, getApplicationContext(), false);
+        updateDataAndBroadcast(dbManager, getApplicationContext());
     }
 
-    public static void updateDataAndBroadcast(DBManager dbManager, Context context, boolean from_fragment_create){
+    public static void updateDataAndBroadcast(DBManager dbManager, Context context){
         int num_data_pts = 10;
         float [] coreTemp = new float[num_data_pts];
         float [] skinTemp = new float[num_data_pts];

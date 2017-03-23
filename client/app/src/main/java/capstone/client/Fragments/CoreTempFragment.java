@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class CoreTempFragment extends capstone.client.Fragments.BaseFragment imp
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bottomBarActivity.registerFragment(this);
-        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext(), true);
+        BackgroundUIUpdator.updateDataAndBroadcast(new DBManager(getContext()), getContext());
         return inflater.inflate(R.layout.fragment_core_temp, container, false);
     }
 
@@ -70,7 +69,7 @@ public class CoreTempFragment extends capstone.client.Fragments.BaseFragment imp
         String latestCT = String.valueOf(coreTemps[0]);
         updateParam(latestCT, ctNum);
 
-        List<Entry> entries = new ArrayList<Entry>();
+        List<Entry> entries = new ArrayList<>();
 
         int arrLength = coreTemps.length;
         //X values need to be sorted or line chart throws exception
@@ -82,7 +81,7 @@ public class CoreTempFragment extends capstone.client.Fragments.BaseFragment imp
         List<Object> zoneLimits = ((DRDCClient) getActivity().getApplication()).getWelfareTracker().getWAP().getCtRangeObj();
         float coreMax = 40;
         float coreMin = 25;
-        LineData lineData = lineChart.formatUpdateLineChart(getResources(), entries, coreMin, coreMax, zoneLimits);
+        lineChart.formatUpdateLineChart(getResources(), entries, coreMin, coreMax, zoneLimits);
         lineChart.postInvalidate();
     }
 

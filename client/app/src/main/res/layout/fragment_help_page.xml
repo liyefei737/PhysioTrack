@@ -397,8 +397,46 @@
                 </RelativeLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/editSimServerURL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="true"
+                        android:hint="@string/url_text_edit"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        android:inputType="textUri"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/checkmark"
+                        android:visibility="visible"
+                        android:id="@+id/simURLCheckmark"/>
+                </RelativeLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:onClick="onEditSimURL"
+                    android:text="Save simulation URL" />
+            </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 
 
