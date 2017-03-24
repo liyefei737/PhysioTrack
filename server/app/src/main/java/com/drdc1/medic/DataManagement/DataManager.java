@@ -310,8 +310,6 @@ public class DataManager {
             e.printStackTrace();
         }
 
-        hm.put("gender", "Male");
-
         return hm;
     }
 
@@ -439,6 +437,46 @@ public class DataManager {
             });
         } catch (Exception e) {
             //handle this
+        }
+    }
+
+
+    public void save9Liner(String sendingid, final int precedence, final int eqreq, final int patienttype, final int securityatpickup, final int pzmarking,
+                           final int patientnatstatus, final int symptoms, final String location, final String callsign_freq, final String number_patient,
+                           final String pzterrain, final String mechanisminjury, final String injurysustained, final String treatmentgiven,
+                           final String terrainobstacles){
+
+        Database db = getNinelinerDatabase();
+
+        Document document = db.getDocument(sendingid);
+        try {
+            document.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> treatmentInfo = newRevision.getUserProperties();
+                    treatmentInfo.put("precedence", precedence);
+                    treatmentInfo.put("eqreq", eqreq);
+                    treatmentInfo.put("patienttype", patienttype);
+                    treatmentInfo.put("securityatpickup", securityatpickup);
+                    treatmentInfo.put("pzmarking", pzmarking);
+                    treatmentInfo.put("patientnatstatus", patientnatstatus);
+                    treatmentInfo.put("symptoms", symptoms);
+                    treatmentInfo.put("location", location);
+                    treatmentInfo.put("callsign_freq", callsign_freq);
+                    treatmentInfo.put("number_patient", number_patient);
+                    treatmentInfo.put("pzterrain", pzterrain);
+                    treatmentInfo.put("mechanisminjury", mechanisminjury);
+                    treatmentInfo.put("injurysustained", injurysustained);
+                    treatmentInfo.put("treatmentgiven", treatmentgiven);
+                    treatmentInfo.put("terrainobstacles", terrainobstacles);
+
+                    newRevision.setUserProperties(treatmentInfo);
+                    return true;
+                }
+
+            });
+        }catch (Exception e){
+
         }
     }
 }

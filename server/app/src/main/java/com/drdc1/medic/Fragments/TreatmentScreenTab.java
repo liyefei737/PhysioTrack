@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.Query;
@@ -22,7 +21,6 @@ import com.drdc1.medic.R;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +37,7 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
     EditText location, callsign_freq, number_patient, terrainobstacles, pzterrain, mechanisminjury,
             injurysustained, treatmentgiven;
     Button btSubmit;
-    String sendingid = "fjffy";
+    String sendingid;
     int precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus, symptoms;
     private DataManager dataManager = null;
 
@@ -199,35 +197,12 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
                     symptoms = 3;
                 }
 
-                Database db = dataManager.getNinelinerDatabase();
-//                Document document = db.createDocument();
 
-                Document document = db.getDocument(sendingid);
+                dataManager.save9Liner(sendingid, precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus,
+                        symptoms, location.getText().toString(),callsign_freq.getText().toString(), number_patient.getText().toString(),
+                        pzterrain.getText().toString(), mechanisminjury.getText().toString(), injurysustained.getText().toString(),
+                        treatmentgiven.getText().toString(), terrainobstacles.getText().toString());
 
-                Map<String, Object> treatmentInfo = new HashMap<String, Object>();
-                treatmentInfo.put("id", sendingid);
-//                treatmentInfo.put("_id", sendingid);
-                treatmentInfo.put("precedence", precedence);
-                treatmentInfo.put("eqreq", eqreq);
-                treatmentInfo.put("patienttype", patienttype);
-                treatmentInfo.put("securityatpickup", securityatpickup);
-                treatmentInfo.put("pzmarking", pzmarking);
-                treatmentInfo.put("patientnatstatus", patientnatstatus);
-                treatmentInfo.put("symptoms", symptoms);
-                treatmentInfo.put("location", location.getText().toString());
-                treatmentInfo.put("callsign_freq", callsign_freq.getText().toString());
-                treatmentInfo.put("number_patient", number_patient.getText().toString());
-                treatmentInfo.put("pzterrain", pzterrain.getText().toString());
-                treatmentInfo.put("mechanisminjury", mechanisminjury.getText().toString());
-                treatmentInfo.put("injurysustained", injurysustained.getText().toString());
-                treatmentInfo.put("treatmentgiven", treatmentgiven.getText().toString());
-                treatmentInfo.put("terrainobstacles", terrainobstacles.getText().toString());
-
-                try {
-                    document.putProperties(treatmentInfo);
-                } catch (CouchbaseLiteException e) {
-                    e.printStackTrace();
-                }
 
             }
         });

@@ -44,9 +44,9 @@ import static welfareSM.WelfareStatus.GREY;
  */
 public class IndividualSoldierTab extends Fragment implements OnChartValueSelectedListener {
     private DataManager dataManager = null;
-    TextView NameNonEditable, GenderNonEditable, AgeNonEditable;
+    TextView NameNonEditable, AgeNonEditable;
     private FloatingSearchView seachView;
-    private String solid = "fjffy";
+    private String solid;
     private LineChartWithBackground hrchart, respchart, skinchart, ctchart;
     private HashMap<String, String> activeSoldierNameIDMap = new HashMap<>();
     Button btLinerRequest;
@@ -81,7 +81,6 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
         // Setup Button Links to new activity
         NameNonEditable = (TextView) rootView.findViewById(R.id.NameNonEditable);
-        GenderNonEditable = (TextView) rootView.findViewById(R.id.GenderNonEditable);
         AgeNonEditable = (TextView) rootView.findViewById(R.id.AgeNonEditable);
         btLinerRequest = (Button) rootView.findViewById(R.id.btLinerRequest);
         btLinerRequest.setOnClickListener(new View.OnClickListener() {
@@ -135,8 +134,6 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
                             HashMap hm = dataManager.getStaticInfo(solid);
                             NameNonEditable.setText((CharSequence) hm.get("name"));
-//                        GenderNonEditable.setText((CharSequence) hm.get("gender"));
-                            GenderNonEditable.setText("Male");
                             AgeNonEditable.setText((CharSequence) hm.get("age"));
 
                         }
@@ -329,7 +326,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
 /***
  * TODO SearchBar and Invidual soldier page
- * 1. when a user select a soldier, show/populates the fields i.e. Name, gender, body orentation graphs
+ * 1. when a user select a soldier, show/populates the fields i.e. Name, body orentation graphs
  * 2. graphes need to be updatable
  * 3. a better UI for the searchbar
  */

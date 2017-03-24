@@ -11,20 +11,13 @@ import java.util.Map;
 public class Soldier {
     private String name;
     private String id;
-    private String gender;
 
     private Map<String, Object> cuurentPhysioData = null;
     private Map<String, Object> lastPhysioData = null;
 
-    public Soldier(String name, String id, String gender) {
+    public Soldier(String name, String id) {
         this.name = name;
         this.id = id;
-        this.gender = gender;
-    }
-
-    public Soldier(String name, String soldierID) {
-        this.name = name;
-        this.id = soldierID;
     }
 
 
