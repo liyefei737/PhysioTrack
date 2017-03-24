@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/black"
-    tools:context="com.drdc1.medic.IndividualSoldierTab">
+    tools:context="com.drdc1.medic.Fragments.IndividualSoldierTab">
 
     <LinearLayout
         android:orientation="vertical"
@@ -214,13 +214,13 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.drdc1.medic.LineChartWithBackground
+                <com.drdc1.medic.ViewUtils.LineChartWithBackground
                     android:id="@+id/hrrchart"
                     android:layout_width="140dp"
                     android:layout_height="200dp"
                     android:layout_weight="0.5" />
 
-                <com.drdc1.medic.LineChartWithBackground
+                <com.drdc1.medic.ViewUtils.LineChartWithBackground
                     android:id="@+id/resprchart"
                     android:layout_width="140dp"
                     android:layout_height="200dp"
@@ -234,13 +234,13 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.drdc1.medic.LineChartWithBackground
+                <com.drdc1.medic.ViewUtils.LineChartWithBackground
                     android:id="@+id/skinrchart"
                     android:layout_width="140dp"
                     android:layout_height="200dp"
                     android:layout_weight="0.5" />
 
-                <com.drdc1.medic.LineChartWithBackground
+                <com.drdc1.medic.ViewUtils.LineChartWithBackground
                     android:id="@+id/ctrchart"
                     android:layout_width="140dp"
                     android:layout_height="200dp"

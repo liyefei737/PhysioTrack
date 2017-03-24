@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activities.HomeActivity"
             android:label="@string/titleText"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,22 +27,22 @@
         </activity>
 
         <service
-            android:name=".BackgroundServer"
+            android:name=".BackgroundServices.BackgroundServer"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
         <service
-            android:name=".BackgroundSleepAlgo"
+            android:name=".BackgroundServices.BackgroundSleepAlgo"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
         <service
-            android:name=".BackgroundWellnessAlgo"
+            android:name=".BackgroundServices.BackgroundWellnessAlgo"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
 
-        <activity android:name=".HelpActivity" />
+        <activity android:name=".Activities.HelpActivity" />
     </application>
 
 </manifest>

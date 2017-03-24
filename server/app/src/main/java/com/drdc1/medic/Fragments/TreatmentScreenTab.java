@@ -1,16 +1,13 @@
-package com.drdc1.medic;
+package com.drdc1.medic.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
@@ -18,7 +15,10 @@ import com.couchbase.lite.Document;
 import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
-import com.couchbase.lite.UnsavedRevision;
+import com.drdc1.medic.Activities.HomeActivity;
+import com.drdc1.medic.AppContext;
+import com.drdc1.medic.DataManagement.DataManager;
+import com.drdc1.medic.R;
 
 import java.util.HashMap;
 import java.util.Iterator;

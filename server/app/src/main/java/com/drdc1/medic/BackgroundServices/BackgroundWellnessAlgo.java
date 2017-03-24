@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.BackgroundServices;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,15 +8,13 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateUtils;
 
-import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.UnsavedRevision;
-import com.drdc1.medic.utils.HelperMethods;
+import com.drdc1.medic.AppContext;
+import com.drdc1.medic.DataManagement.DataManager;
+import com.drdc1.medic.DataStructUtils.HelperMethods;
 
 import org.json.JSONArray;
-
-import welfareSM.WelfareStatus;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -24,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import welfareSM.WelfareStatus;
+import welfareSM.WelfareTracker;
 
 /**
  * Background Thread for computing the wellness algorithm
@@ -126,32 +127,27 @@ public class BackgroundWellnessAlgo extends Service {
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
         if (physioDataMap != null) {
             for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
-                Database userDB = entry.getValue();
+                String id = entry.getKey();
+                WelfareTracker wt = dataManager.getWellnessTracker(id);
+                lastMinute = dataManager.QueryLastXMinutes(id, now, numMinutes);
 
-                lastMinute = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
+                if (wt == null){
+                    wt = new WelfareTracker();;
+                }
 
                 if (hrRange != null) {
-                    dataManager.getWellnessTracker(entry.getKey())
-                            .setPhysioParamThresholds(hrRange, brRange, stRange, ctRange);
+                    wt.setPhysioParamThresholds(hrRange, brRange, stRange, ctRange);
                 }
 
-                Object[] statusResults = dataManager.getWellnessTracker(entry.getKey())
-                        .calculateWelfareStatus(lastMinute);
-                final WelfareStatus nextState = (WelfareStatus) statusResults[0];
-                Document saveStateDoc = userDB.getDocument(entry.getKey());
+                Object[] statusResults = wt.calculateWelfareStatus(lastMinute);
+                WelfareStatus nextState = (WelfareStatus) statusResults[1];
                 try {
-                    saveStateDoc.update(new Document.DocumentUpdater() {
-                        @Override
-                        public boolean update(UnsavedRevision newRevision) {
-                            Map<String, Object> properties = newRevision.getUserProperties();
-                            properties.put("state", nextState);
-                            newRevision.setUserProperties(properties);
-                            return true;
-                        }
-                    });
-                } catch (CouchbaseLiteException e) {
-                    //handle this
+                    dataManager.updateState(id, ((JSONObject) lastMinute.get(0)).getString("_id"), nextState);
                 }
+                catch (Exception e){
+
+                }
+                dataManager.saveWellnessTracker(id, wt);
 
             }
         }

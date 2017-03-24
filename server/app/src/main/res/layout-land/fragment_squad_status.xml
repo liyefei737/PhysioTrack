@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/black"
-    tools:context="com.drdc1.medic.HomeActivity$PlaceholderFragment">
+    tools:context="com.drdc1.medic.Activities.HomeActivity$PlaceholderFragment">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -1,8 +1,9 @@
 package com.drdc1.medic;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
+
+import com.drdc1.medic.DataManagement.DataManager;
 
 /**
  * Created by ub on 2/14/17.

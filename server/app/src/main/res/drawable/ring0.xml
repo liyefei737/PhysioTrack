@@ -4,7 +4,7 @@
     android:innerRadius="@dimen/large_ring_radius"
     android:thickness="@dimen/large_ring_thickness"
     android:useLevel="false">
-    <solid android:color="@color/bullsEyeYellow"/>
+    <solid android:color="@color/gray_active_icon"/>
     <stroke android:color="@color/black"
         android:width="1dp"/>
 

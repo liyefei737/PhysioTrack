@@ -1,7 +1,5 @@
-package com.drdc1.medic;
+package com.drdc1.medic.Fragments;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,10 +14,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.drdc1.medic.Activities.HomeActivity;
+import com.drdc1.medic.AppContext;
+import com.drdc1.medic.DataManagement.DataManager;
+import com.drdc1.medic.DataManagement.DataObserver;
+import com.drdc1.medic.R;
+import com.drdc1.medic.DataManagement.Soldier;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,7 +48,7 @@ public class NameList extends Fragment implements DataObserver {
         final ListView listView = (ListView) rootView.findViewById(R.id.soldierList);
         addListHeader(listView);
         DataManager dbManager = ((AppContext) getActivity().getApplication()).getDataManager();
-        soldiers = dbManager.getActiveSoldier();
+        soldiers = dbManager.getActiveSoldiers();
         adapter = new SoldierListAdapter(getContext(), soldiers);
         listView.setAdapter(adapter);
 
@@ -181,18 +185,21 @@ public class NameList extends Fragment implements DataObserver {
             name.setText(soldier.getName());
 
             ImageView overall = (ImageView) v.findViewById(R.id.overal_status);
-            switch (soldier.getOverallStatus()) {
-                case "RED":
-                    overall.setImageResource(R.drawable.red);
-                    break;
-                case "GREEN":
-                    overall.setImageResource(R.drawable.green);
-                    break;
-                case "YELLOW":
-                    overall.setImageResource(R.drawable.yellow);
-                    break;
-                default:
-                    break;
+            String status = soldier.getOverallStatus();
+            if (!status.isEmpty()){
+                switch (status) {
+                    case "RED":
+                        overall.setImageResource(R.drawable.red);
+                        break;
+                    case "GREEN":
+                        overall.setImageResource(R.drawable.green);
+                        break;
+                    case "YELLOW":
+                        overall.setImageResource(R.drawable.yellow);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             if (soldier.getBodyOrientation() != null && !soldier.getBodyOrientation().isEmpty()) {

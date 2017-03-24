@@ -1,9 +1,8 @@
-package com.drdc1.medic;
+package com.drdc1.medic.Fragments;
 
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,14 @@ import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
-import com.drdc1.medic.utils.Trie;
+import com.drdc1.medic.Activities.HomeActivity;
+import com.drdc1.medic.AppContext;
+import com.drdc1.medic.DataManagement.DataManager;
+import com.drdc1.medic.ViewUtils.NameSuggestion;
+import com.drdc1.medic.R;
+import com.drdc1.medic.DataManagement.Soldier;
+import com.drdc1.medic.ViewUtils.LineChartWithBackground;
+import com.drdc1.medic.DataStructUtils.Trie;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -41,7 +47,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     TextView NameNonEditable, GenderNonEditable, AgeNonEditable;
     private FloatingSearchView seachView;
     private String solid = "fjffy";
-    private com.drdc1.medic.LineChartWithBackground hrchart, respchart, skinchart, ctchart;
+    private LineChartWithBackground hrchart, respchart, skinchart, ctchart;
     private HashMap<String, String> activeSoldierNameIDMap = new HashMap<>();
     Button btLinerRequest;
 
@@ -84,12 +90,12 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
             }
         });
 
-        hrchart = (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.hrrchart);
+        hrchart = (LineChartWithBackground) rootView.findViewById(R.id.hrrchart);
         respchart =
-                (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.resprchart);
+                (LineChartWithBackground) rootView.findViewById(R.id.resprchart);
         skinchart =
-                (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.skinrchart);
-        ctchart = (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.ctrchart);
+                (LineChartWithBackground) rootView.findViewById(R.id.skinrchart);
+        ctchart = (LineChartWithBackground) rootView.findViewById(R.id.ctrchart);
 
         // Inflate the layout for this fragment
 
@@ -221,7 +227,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
     private List<NameSuggestion> getNameSearchSuggestions(String searchString) {
 
         Trie trie = new Trie();
-        for (Soldier s : dataManager.getActiveSoldier()) {
+        for (Soldier s : dataManager.getActiveSoldiers()) {
             String solName = s.getName();
             String solID = s.getId();
             trie.insert(s.getName());
@@ -238,12 +244,12 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 //     * @param data is the heart rate data received from the background. Currently its type is int array.
 //     */
     public void update() {
-        hrchart = (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.hrrchart);
+        hrchart = (LineChartWithBackground) rootView.findViewById(R.id.hrrchart);
         respchart =
-                (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.resprchart);
+                (LineChartWithBackground) rootView.findViewById(R.id.resprchart);
         skinchart =
-                (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.skinrchart);
-        ctchart = (com.drdc1.medic.LineChartWithBackground) rootView.findViewById(R.id.ctrchart);
+                (LineChartWithBackground) rootView.findViewById(R.id.skinrchart);
+        ctchart = (LineChartWithBackground) rootView.findViewById(R.id.ctrchart);
 
         int num_data_pts = 10;
         float[] coreTemp = new float[num_data_pts];

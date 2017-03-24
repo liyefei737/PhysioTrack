@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="com.drdc1.medic.HelpActivity">
+    tools:context="com.drdc1.medic.Activities.HelpActivity">
 
     <LinearLayout
         android:id="@+id/ll43"

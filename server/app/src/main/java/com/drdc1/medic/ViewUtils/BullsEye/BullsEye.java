@@ -1,4 +1,4 @@
-package com.drdc1.medic.BullsEye;
+package com.drdc1.medic.ViewUtils.BullsEye;
 
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;

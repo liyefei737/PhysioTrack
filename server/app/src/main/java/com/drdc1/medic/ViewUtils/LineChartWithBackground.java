@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.ViewUtils;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 
+import com.drdc1.medic.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;

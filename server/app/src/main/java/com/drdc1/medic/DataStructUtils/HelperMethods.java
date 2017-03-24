@@ -1,4 +1,4 @@
-package com.drdc1.medic.utils;
+package com.drdc1.medic.DataStructUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

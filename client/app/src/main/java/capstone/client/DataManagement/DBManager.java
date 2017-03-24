@@ -265,7 +265,7 @@ public class DBManager {
     }
 
     public void updateRowState(String id, WelfareStatus nextState){
-        Document saveStateDoc = _userDB.getDocument(id);
+        Document saveStateDoc = _dataDB.getDocument(id);
         try {
             saveStateDoc.update(new Document.DocumentUpdater() {
                 @Override

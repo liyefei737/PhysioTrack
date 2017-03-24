@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.ViewUtils;
 
 import android.os.Parcel;
 

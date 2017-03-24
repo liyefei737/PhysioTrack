@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.Fragments;
 
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -8,16 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.drdc1.medic.BullsEye.BullsEyeDrawTask;
-import com.drdc1.medic.BullsEye.BullsEyeInfo;
+import com.drdc1.medic.Activities.HomeActivity;
+import com.drdc1.medic.AppContext;
+import com.drdc1.medic.ViewUtils.BullsEyeUtils.BullsEyeDrawTask;
+import com.drdc1.medic.ViewUtils.BullsEyeUtils.BullsEyeInfo;
+import com.drdc1.medic.DataManagement.DataManager;
+import com.drdc1.medic.R;
 
-import java.util.Arrays;
+import java.util.List;
 
 import welfareSM.WelfareStatus;
-
-import static welfareSM.WelfareStatus.GREEN;
-import static welfareSM.WelfareStatus.RED;
-import static welfareSM.WelfareStatus.YELLOW;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,8 +27,9 @@ import static welfareSM.WelfareStatus.YELLOW;
  * Use the {@link SquadStatus#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SquadStatus extends Fragment {
+public class SquadStatus extends Fragment{
     private DataManager dbManager;
+    HomeActivity homeActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class SquadStatus extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        int numSoldiers = 10;//= dbManager.getNumSoldiers();
+        int numSoldiers = dbManager.getActiveSoldiers().size();
         View view = inflater.inflate(R.layout.fragment_squad_status, container, false);
         RelativeLayout relLayoutOverall =
                 (RelativeLayout) view.findViewById(R.id.bullsEyeOverallHealth);
@@ -47,17 +48,18 @@ public class SquadStatus extends Fragment {
         RelativeLayout relLayoutFatigue = (RelativeLayout) view.findViewById(R.id.bullsEyeFatigue);
         RelativeLayout relLayoutSkin = (RelativeLayout) view.findViewById(R.id.bullsEyeSkinTemp);
         if (numSoldiers != 0) {
-            WelfareStatus[] statusArray =
-                    {RED, GREEN, YELLOW, YELLOW, GREEN, RED, YELLOW, RED, YELLOW, GREEN};
+            List<WelfareStatus> statusList = dbManager.getOverallSquadStatusList();
+            if (statusList.size() != numSoldiers)
+                numSoldiers = statusList.size();
             Resources resources = getActivity().getResources();
             BullsEyeDrawTask bullsEyeTask0 = new BullsEyeDrawTask(resources, numSoldiers);
             BullsEyeDrawTask bullsEyeTask1 = new BullsEyeDrawTask(resources, numSoldiers);
             BullsEyeDrawTask bullsEyeTask2 = new BullsEyeDrawTask(resources, numSoldiers);
             BullsEyeDrawTask bullsEyeTask3 = new BullsEyeDrawTask(resources, numSoldiers);
-            bullsEyeTask0.execute(new BullsEyeInfo(relLayoutOverall, false, Arrays.asList(statusArray)));
-            bullsEyeTask1.execute(new BullsEyeInfo(relLayoutCore, true, Arrays.asList(statusArray)));
-            bullsEyeTask2.execute(new BullsEyeInfo(relLayoutFatigue, true, Arrays.asList(statusArray)));
-            bullsEyeTask3.execute(new BullsEyeInfo(relLayoutSkin, true, Arrays.asList(statusArray)));
+            bullsEyeTask0.execute(new BullsEyeInfo(relLayoutOverall, false, statusList));
+            bullsEyeTask1.execute(new BullsEyeInfo(relLayoutCore, true, dbManager.getSquadCoreStatusList()));
+            bullsEyeTask2.execute(new BullsEyeInfo(relLayoutFatigue, true, dbManager.getSquadSkinStatusList()));
+            bullsEyeTask3.execute(new BullsEyeInfo(relLayoutSkin, true, statusList));
         }
         return view;
     }

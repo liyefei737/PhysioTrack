@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="com.drdc1.medic.NameList">
+    tools:context="com.drdc1.medic.Fragments.NameList">
 
 
     <ImageButton

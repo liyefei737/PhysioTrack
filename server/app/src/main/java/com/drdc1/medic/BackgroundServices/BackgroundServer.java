@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.BackgroundServices;
 
 import android.app.Service;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.couchbase.lite.Manager;
+import com.drdc1.medic.AppContext;
+import com.drdc1.medic.DataManagement.DataManager;
 
 import java.io.IOException;
 import java.util.Map;

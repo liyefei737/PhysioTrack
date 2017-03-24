@@ -1,4 +1,6 @@
-package com.drdc1.medic;
+package com.drdc1.medic.DataManagement;
+
+import com.drdc1.medic.DataManagement.DataObserver;
 
 import java.util.Map;
 

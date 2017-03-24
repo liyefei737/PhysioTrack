@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.BackgroundServices;
 
 import android.app.Service;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.UnsavedRevision;
+import com.drdc1.medic.AppContext;
+import com.drdc1.medic.DataManagement.DataManager;
 
 import org.json.JSONArray;
 

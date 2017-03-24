@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.Activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,6 +21,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.drdc1.medic.BackgroundServices.BackgroundServer;
+import com.drdc1.medic.BackgroundServices.BackgroundSleepAlgo;
+import com.drdc1.medic.BackgroundServices.BackgroundWellnessAlgo;
+import com.drdc1.medic.DataManagement.DataObserver;
+import com.drdc1.medic.DataManagement.FragmentDataManager;
+import com.drdc1.medic.Fragments.IndividualSoldierTab;
+import com.drdc1.medic.Fragments.NameList;
+import com.drdc1.medic.R;
+import com.drdc1.medic.Fragments.SquadStatus;
+import com.drdc1.medic.Fragments.TreatmentScreenTab;
 
 import java.util.ArrayList;
 import java.util.HashMap;

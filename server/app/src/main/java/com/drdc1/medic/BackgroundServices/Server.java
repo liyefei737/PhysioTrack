@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.BackgroundServices;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -8,10 +8,8 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.couchbase.lite.CouchbaseLiteException;
-import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.UnsavedRevision;
+import com.drdc1.medic.AppContext;
+import com.drdc1.medic.DataManagement.DataManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +35,31 @@ public class Server extends NanoHTTPD {
     static private DataManager dataManagermy;
     private static SimpleDateFormat keyFormat = new SimpleDateFormat("02/25/2017 HH:mm:");
     static Map connectionlist = new HashMap();
-    private static String regexSecondsAndMilli = "[0-9]{2}\\.[0-9]{3}";
+    private static String PDA_IN_BODYPOS = "BodyPosition";
+    private static String PDA_IN_MOTION = "Motion";
+    private static String PDA_IN_HR = "ECG Heart Rate";
+    private static String PDA_IN_BR = "Belt Breathing Rate";
+    private static String PDA_IN_SKIN = "Skin_Temp";
+    private static String PDA_IN_CORE = "Core_Temp";
+    private static String PDA_IN_TIMESTAMP = "DateTime";
+    private static String PDA_IN_ID = "ID";
+    private static String PDA_IN_NAME = "name";
+    private static String PDA_IN_AGE = "age";
+    private static String PDA_IN_WEIGHT = "weight";
+    private static String PDA_IN_HEIGHT = "height";
+    private static String PDA_IN_ACC = "accSum";
+
+
+
+    private static String[] requiredNewSoldierFields = {
+            PDA_IN_TIMESTAMP,
+            PDA_IN_ID,
+            PDA_IN_NAME,
+            PDA_IN_AGE,
+            PDA_IN_WEIGHT,
+            PDA_IN_HEIGHT
+    };
+
 
     public Server(int port, DataManager dataManager) {
         super(port);
@@ -82,28 +104,20 @@ public class Server extends NanoHTTPD {
 
                     if (!dataManagermy.soldierInSystem(soldierID)) {
                         Map<String, Object> soldierInfo = new HashMap<String, Object>();
-                        String[] requiredNewSoldierFields = {
-                                "name",
-                                "age",
-                                "gender",
-                                "ID",
-                                "height",
-                                "weight"
-                        };
+
                         for (String requiredField: requiredNewSoldierFields) {
                             if (!body.has(requiredField)) {
                                 return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain",
                                                               "Missing Required Fields for adding a new soldier");
                             }
                         }
-                        soldierInfo.put("name", body.getString("name"));
-                        soldierInfo.put("age", body.getString("age"));
-                        soldierInfo.put("gender", body.getString("gender"));
+                        soldierInfo.put("name", body.getString(PDA_IN_NAME));
+                        soldierInfo.put("age", body.getString(PDA_IN_AGE));
                         soldierInfo.put("id", soldierID);
                         //1 indicates solider is currently being monitored and shows on namelist, 0 means inactive, not shown on namelist
                         soldierInfo.put("active", 1);
-                        soldierInfo.put("height", "170");
-                        soldierInfo.put("weight", "70");
+                        soldierInfo.put("height", body.getInt(PDA_IN_HEIGHT));
+                        soldierInfo.put("weight", body.getInt(PDA_IN_WEIGHT));
                         dataManagermy.addSoldier(soldierID, soldierInfo);
 
                         String url = "http://" + session.getHeaders().get("http-client-ip");
@@ -144,55 +158,18 @@ public class Server extends NanoHTTPD {
 
                     Log.d("sender", "Broadcasting message");
                     Intent intent = new Intent("custom-event-name");
-                    intent.putExtra("message", body.getString("hr"));
+                    intent.putExtra("message", body.getString(PDA_IN_HR));
                     LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
 
-                    //                Calendar keyCal = new GregorianCalendar();
-                    //                try {
-                    //                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
-                    //                } catch (Exception e) {
-                    //                    keyCal.set(2017, 02, 25);
-                    //                }
-                    //
-                    //                Calendar nearestMinute =
-                    //                        DateUtils.round(keyCal, Calendar.MINUTE);
                     Calendar now = new GregorianCalendar();
                     now.set(2017, 02, 25);
                     keyFormat.setCalendar(now);
-                    String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
                     Calendar nearestMinute =
                             org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
 
-                    Database db = dataManagermy.getSoldierDB(soldierID);
+                    dataManagermy.updateData(soldierID, String.valueOf(nearestMinute.getTimeInMillis()), body.getString(PDA_IN_TIMESTAMP), body.getString(PDA_IN_ACC),
+                            body.getString(PDA_IN_SKIN), body.getString(PDA_IN_CORE), body.getString(PDA_IN_HR), body.getString(PDA_IN_BR), body.getString(PDA_IN_BODYPOS), body.getString(PDA_IN_MOTION));
 
-                    Document saveStateDoc =
-                            db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-                    try {
-                        saveStateDoc.update(new Document.DocumentUpdater() {
-                            @Override
-                            public boolean update(UnsavedRevision newRevision) {
-                                String hrate = null;
-                                try {
-                                    Map<String, Object> properties = newRevision.getUserProperties();
-                                    properties.put("timeCreated", body.getString("DateTime"));
-                                    properties.put("accSum", body.getString("accSum"));
-                                    properties.put("skinTemp", body.getString("skinTemp"));
-                                    properties.put("coreTemp", body.getString("coreTemp"));
-                                    properties.put("hr", body.getString("hr"));
-                                    properties.put("br", body.getString("br"));
-                                    properties.put("bodypos", body.getString("bodypos"));
-                                    properties.put("motion", body.getString("motion"));
-                                    newRevision.setUserProperties(properties);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                return true;
-                            }
-                        });
-                    } catch (CouchbaseLiteException e) {
-                        //handle this
-                        e.printStackTrace();
-                    }
 
                 } else if (!connectionlist.get(soldierID)
                                           .equals(session.getHeaders().get("http-client-ip"))) {
@@ -203,53 +180,16 @@ public class Server extends NanoHTTPD {
 
                     Log.d("sender", "Broadcasting message");
                     Intent intent = new Intent("custom-event-name");
-                    intent.putExtra("message", body.getString("hr"));
+                    intent.putExtra("message", body.getString("ECG Heart Rate"));
                     LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(intent);
-
-                    //                Calendar keyCal = new GregorianCalendar();
-                    //                try {
-                    //                    keyCal.setTime(keyFormat.parse(body.getString("DateTime")));
-                    //                } catch (Exception e) {
-                    //                    keyCal.set(2017, 02, 25);
-                    //                }
-                    //                Calendar nearestMinute =
-                    //                        DateUtils.round(keyCal, Calendar.MINUTE);
 
                     Calendar now = new GregorianCalendar();
                     now.set(2017, 02, 25);
                     keyFormat.setCalendar(now);
-                    String dateID = keyFormat.format(now.getTime()) + regexSecondsAndMilli;
                     Calendar nearestMinute =
                             org.apache.commons.lang3.time.DateUtils.round(now, Calendar.MINUTE);
-
-                    Database db = dataManagermy.getSoldierDB(soldierID);
-                    Document saveStateDoc =
-                            db.getDocument(String.valueOf(nearestMinute.getTimeInMillis()));
-                    try {
-                        saveStateDoc.update(new Document.DocumentUpdater() {
-                            @Override
-                            public boolean update(UnsavedRevision newRevision) {
-                                String hrate = null;
-                                try {
-                                    Map<String, Object> properties = newRevision.getUserProperties();
-                                    properties.put("timeCreated", body.getString("DateTime"));
-                                    properties.put("accSum", body.getString("accSum"));
-                                    properties.put("skinTemp", body.getString("skinTemp"));
-                                    properties.put("coreTemp", body.getString("coreTemp"));
-                                    properties.put("hr", body.getString("hr"));
-                                    properties.put("br", body.getString("br"));
-                                    properties.put("bodyPos", body.getString("bodyPos"));
-                                    properties.put("motion", body.getString("motion"));
-                                    newRevision.setUserProperties(properties);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                return true;
-                            }
-                        });
-                    } catch (CouchbaseLiteException e) {
-                        e.printStackTrace();
-                    }
+                    dataManagermy.updateData(soldierID, String.valueOf(nearestMinute.getTimeInMillis()), body.getString(PDA_IN_TIMESTAMP), body.getString(PDA_IN_ACC),
+                    body.getString(PDA_IN_SKIN), body.getString(PDA_IN_CORE), body.getString(PDA_IN_HR), body.getString(PDA_IN_BR), body.getString(PDA_IN_BODYPOS), body.getString(PDA_IN_MOTION));
 
                 }
 
@@ -260,15 +200,6 @@ public class Server extends NanoHTTPD {
 
             Intent i = buildPDAMessageIntent(body);
             LocalBroadcastManager.getInstance(AppContext.getContext()).sendBroadcast(i);
-            //put userName into the db
-            // Map<String, Object> properties = new HashMap<String, Object>();
-            // properties.put("username", userName);
-
-            //        try {
-            //            document.putProperties(properties);
-            //        } catch (CouchbaseLiteException e) {
-            //            e.printStackTrace();
-            //        }
             return newFixedLengthResponse(Response.Status.OK, "text/plain", "success");
         } catch (Exception e) {
             return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "test/plain", e.getClass().getName() + ": " + e.getMessage());
@@ -280,18 +211,16 @@ public class Server extends NanoHTTPD {
         //TODO this defines the format of the request
         Intent intent = new Intent("PDAMessage");
         try {
-            intent.putExtra("name", jsonObject.getString("name"));
-            intent.putExtra("ID", jsonObject.getString("ID"));
-            intent.putExtra("age", jsonObject.getString("age"));
-            intent.putExtra("height", jsonObject.getString("height"));
-            intent.putExtra("weight", jsonObject.getString("weight"));
-            intent.putExtra("overall", jsonObject.getString("overall"));
-            intent.putExtra("bodypos", jsonObject.getString("bodypos"));
-            intent.putExtra("hr", jsonObject.getString("hr"));
-            intent.putExtra("br", jsonObject.getString("br"));
-            intent.putExtra("skinTemp", jsonObject.getString("skinTemp"));
-            intent.putExtra("coreTemp", jsonObject.getString("coreTemp"));
-//        intent.putExtra("fatigue",jsonObject.getString("fatigue"));
+            intent.putExtra("name", jsonObject.getString(PDA_IN_NAME));
+            intent.putExtra("ID", jsonObject.getString(PDA_IN_ID));
+            intent.putExtra("age", jsonObject.getString(PDA_IN_AGE));
+            intent.putExtra("height", jsonObject.getString(PDA_IN_HEIGHT));
+            intent.putExtra("weight", jsonObject.getString(PDA_IN_WEIGHT));
+            intent.putExtra("bodypos", jsonObject.getString(PDA_IN_BODYPOS));
+            intent.putExtra("hr", jsonObject.getString(PDA_IN_HR));
+            intent.putExtra("br", jsonObject.getString(PDA_IN_BR));
+            intent.putExtra("skinTemp", jsonObject.getString(PDA_IN_SKIN));
+            intent.putExtra("coreTemp", jsonObject.getString(PDA_IN_CORE));
         } catch (JSONException e) {
             e.printStackTrace();
         }

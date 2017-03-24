@@ -49,7 +49,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile 'com.github.arimorty:floatingsearchview:2.0.3'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
     testCompile 'junit:junit:4.12'
     debugCompile 'im.dino:dbinspector:3.4.0@aar'
 }

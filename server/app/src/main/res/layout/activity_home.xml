@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.drdc1.medic.HomeActivity">
+    tools:context="com.drdc1.medic.Activities.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

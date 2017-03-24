@@ -1,6 +1,6 @@
-package com.drdc1.medic;
+package com.drdc1.medic.DataManagement;
 
-import com.drdc1.medic.utils.HelperMethods;
+import com.drdc1.medic.DataStructUtils.HelperMethods;
 
 import java.util.Map;
 
@@ -45,14 +45,6 @@ public class Soldier {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public Map<String, Object> getPhysioData() {

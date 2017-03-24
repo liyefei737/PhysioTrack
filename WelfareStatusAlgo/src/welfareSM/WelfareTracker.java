@@ -80,6 +80,7 @@ public class WelfareTracker {
 
 		WelfareStatus nextState;
 		int numValidParams = 4 - Collections.frequency(currentStateMap.values(), GREY);
+		if (currentStateMap.get(OVERALL) == GREY) numValidParams ++;
 		if (numValidParams == 0) {
 			nextState = GREY;
 		} else {
@@ -168,7 +169,7 @@ public class WelfareTracker {
 
 	
 	public WelfareStatus getOverallStatus(){
-		return currentStateMap.get(OVERALL)
+		return currentStateMap.get(OVERALL);
 	}
 	public WelfareStatus getHeartStatus(int heartRate) {
 		prevStateMap.put(HR, currentStateMap.get(HR));

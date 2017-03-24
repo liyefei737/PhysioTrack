@@ -1,4 +1,4 @@
-package com.drdc1.medic;
+package com.drdc1.medic.DataManagement;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,6 +13,7 @@ import com.couchbase.lite.Mapper;
 import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryRow;
+import com.couchbase.lite.UnsavedRevision;
 import com.couchbase.lite.View;
 import com.couchbase.lite.android.AndroidContext;
 
@@ -21,14 +22,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import welfareSM.WelfareAlgoParams;
+import welfareSM.WelfareStatus;
 import welfareSM.WelfareTracker;
 
 /**
@@ -48,7 +50,15 @@ public class DataManager {
     private WelfareAlgoParams _welfareAlgoParams;
     private Map<String, WelfareTracker> _wellnessInfoMap = null;
     private Context _context = null;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("02/25/2017 HH:mm:ss.");
+
+    public static String FIELD_HR = "heartRate";
+    public static String FIELD_BR = "breathRate";
+    public static String FIELD_SKIN = "skinTemp";
+    public static String FIELD_CORE = "coreTemp";
+    public static String FIELD_ACC = "accSum";
+    public static String FIELD_TIMESTAMP = "DateTime";
+    public static String FIELD_MOTION = "motion";
+    public static String FIELD_BODYPOS = "bodyPos";
 
     public DataManager(
             Context context) {   //won't init physioDataDBMap b/c we don't know how many soldiers we have
@@ -124,7 +134,7 @@ public class DataManager {
     /*** query user_info DB for active soldiers
      * @return ArrayList<Soldier> of Soldiers that are active, with name and id filled from the userinfo db
      */
-    public ArrayList<Soldier> getActiveSoldier() {
+    public ArrayList<Soldier> getActiveSoldiers() {
         ArrayList<Soldier> activeSoldiers = new ArrayList<>();
         View view = _userInfoDB.getView("active");
         if (view.getMap() == null) {
@@ -339,5 +349,96 @@ public class DataManager {
 
     public WelfareAlgoParams get_welfareAlgoParams(){
         return _welfareAlgoParams;
+    }
+
+    public List<WelfareStatus> getOverallSquadStatusList(){
+        List<WelfareStatus> squadList = new ArrayList<>();
+        Iterator it = _wellnessInfoMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            WelfareTracker wt = (WelfareTracker) pair.getValue();
+            squadList.add(wt.getOverallStatus());
+
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return squadList;
+    }
+
+    public List<WelfareStatus> getSquadSkinStatusList(){
+        List<WelfareStatus> squadList = new ArrayList<>();
+        Iterator it = _wellnessInfoMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            WelfareTracker wt = (WelfareTracker) pair.getValue();
+            squadList.add(wt.getSkinStatus());
+
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return squadList;
+    }
+
+    public List<WelfareStatus> getSquadCoreStatusList(){
+        List<WelfareStatus> squadList = new ArrayList<>();
+        Iterator it = _wellnessInfoMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            WelfareTracker wt = (WelfareTracker) pair.getValue();
+            squadList.add(wt.getCoreStatus());
+
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return squadList;
+    }
+
+
+    public void updateData(String id, String milliTime, final String timeStamp, final String acc, final String skin, final String core, final String hr,
+                           final String br, final String body, final String motion){
+        Database db = getSoldierDB(id);
+        Document saveStateDoc =
+                db.getDocument(milliTime);
+        try {
+            saveStateDoc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    try {
+                        Map<String, Object> properties = newRevision.getUserProperties();
+                        properties.put(FIELD_TIMESTAMP, timeStamp);
+                        properties.put(FIELD_ACC, acc);
+                        properties.put(FIELD_SKIN, skin);
+                        properties.put(FIELD_CORE, core);
+                        properties.put(FIELD_HR, hr);
+                        properties.put(FIELD_BR, br);
+                        properties.put(FIELD_BODYPOS, body);
+                        properties.put(FIELD_MOTION, motion);
+                        newRevision.setUserProperties(properties);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+            });
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void updateState(String soldierID, String docID, final WelfareStatus nextState){
+        try {
+            Database db = getSoldierDB(soldierID);
+            Document saveStateDoc = db.getDocument(docID);
+
+            saveStateDoc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    properties.put("state", nextState);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        } catch (Exception e) {
+            //handle this
+        }
     }
 }

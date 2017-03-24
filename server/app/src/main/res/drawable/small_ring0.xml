@@ -4,7 +4,7 @@
     android:innerRadius="@dimen/bull_eyes_small_radius"
     android:thickness="@dimen/bull_eyes_small_thickness"
     android:useLevel="false">
-    <solid android:color="@color/bullsEyeYellow"/>
+    <solid android:color="@color/gray_active_icon"/>
     <stroke android:color="@color/black"
         android:width="1dp"/>
 
