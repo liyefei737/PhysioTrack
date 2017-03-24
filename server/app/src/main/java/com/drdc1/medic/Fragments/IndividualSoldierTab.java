@@ -286,19 +286,9 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
         int arrLength = hr.length;
         for (int i = 0; i < arrLength; i++) {
-//            entries.add(new Entry(i, 60f + (float) (Math.random() * ((60 - 40) + 1))));
             entries.add(new Entry(i, hr[arrLength - 1 - i]));
-        }
-        for (int i = 0; i < arrLength; i++) {
-//            entries2.add(new Entry(i, 40f + (float) (Math.random() * ((40 - 30) + 1))));
             entries2.add(new Entry(i, br[arrLength - 1 - i]));
-        }
-        for (int i = 0; i < arrLength; i++) {
-//            entries3.add(new Entry(i, 70f + (float) (Math.random() * ((70 - 0) + 1))));
             entries3.add(new Entry(i, skinTemp[arrLength - 1 - i]));
-        }
-        for (int i = 0; i < arrLength; i++) {
-//            entries4.add(new Entry(i, 30f + (float) (Math.random() * ((30 - 10) + 1))));
             entries4.add(new Entry(i, coreTemp[arrLength - 1 - i]));
         }
 
