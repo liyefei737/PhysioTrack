@@ -186,7 +186,7 @@ public class NameList extends Fragment implements DataObserver {
 
             ImageView overall = (ImageView) v.findViewById(R.id.overal_status);
             String status = soldier.getOverallStatus();
-            if (!status.isEmpty()){
+            if (status != null && (!status.isEmpty())){
                 switch (status) {
                     case "RED":
                         overall.setImageResource(R.drawable.red);
@@ -267,10 +267,10 @@ public class NameList extends Fragment implements DataObserver {
                 TextView coreTmp = (TextView) v.findViewById(R.id.core_tmp_text);
                 ImageView arrow = (ImageView) v.findViewById(R.id.core_tmp_img);
                 if (!lastCoreTmp.equals("")) {
-                    if (Integer.parseInt(currentCoreTmp) > Integer.parseInt(lastCoreTmp)) {
+                    if (Float.parseFloat(currentCoreTmp) > Float.parseFloat(lastCoreTmp)) {
                         arrow.setImageResource(R.drawable.up_arrow);
                         coreTmp.setTextColor(Color.RED);
-                    } else if (Integer.parseInt(currentCoreTmp) < Integer.parseInt(lastCoreTmp)) {
+                    } else if (Float.parseFloat(currentCoreTmp) < Float.parseFloat(lastCoreTmp)) {
                         arrow.setImageResource(R.drawable.down_arrow);
                         coreTmp.setTextColor(Color.YELLOW);
                     } else {
@@ -287,10 +287,10 @@ public class NameList extends Fragment implements DataObserver {
                 TextView skinTmp = (TextView) v.findViewById(R.id.skin_tmp_text);
                 ImageView arrow = (ImageView) v.findViewById(R.id.skin_tmp_img);
                 if (!lastSkinTmp.equals("")) {
-                    if (Integer.parseInt(currentSkinTmp) > Integer.parseInt(lastSkinTmp)) {
+                    if (Float.parseFloat(currentSkinTmp) > Float.parseFloat(lastSkinTmp)) {
                         arrow.setImageResource(R.drawable.up_arrow);
                         skinTmp.setTextColor(Color.RED);
-                    } else if (Integer.parseInt(currentSkinTmp) < Integer.parseInt(lastSkinTmp)) {
+                    } else if (Float.parseFloat(currentSkinTmp) < Float.parseFloat(lastSkinTmp)) {
                         arrow.setImageResource(R.drawable.down_arrow);
                         skinTmp.setTextColor(Color.YELLOW);
                     } else {
