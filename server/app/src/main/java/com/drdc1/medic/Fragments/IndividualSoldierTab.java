@@ -295,7 +295,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
             entries4.add(new Entry(i, coreTemp[arrLength - 1 - i]));
         }
 
-        Resources res = getResources();
+        Resources res = getActivity().getResources();
         WelfareAlgoParams wap = dataManager.get_welfareAlgoParams();
         hrchart.formatUpdateLineChart(res, entries, 0, 200, wap.getHrRangeObj());
         respchart.formatUpdateLineChart(res, entries2, 0, 70, wap.getBrRangeObj());

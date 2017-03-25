@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import sleepS.SleepState;
 import welfareSM.WelfareAlgoParams;
 import welfareSM.WelfareStatus;
 import welfareSM.WelfareTracker;
@@ -252,14 +253,11 @@ public class DataManager {
     }
 
     public Database getSoldierDB(String ID) {
-//        if (soldierInSystem(ID)) {
-//            Database physioDB = openDatabase(ID);
-//            _physioDataDBMap.put(ID, physioDB);
-//            return _physioDataDBMap.get(ID);
-//        }
-//        return null;
-        Database physioDB = openDatabase(ID);
-        _physioDataDBMap.put(ID, physioDB);
+        if (_physioDataDBMap.get(ID) == null){
+            Database physioDB = openDatabase(ID);
+            _physioDataDBMap.put(ID, physioDB);
+
+        }
         return _physioDataDBMap.get(ID);
 
     }
@@ -433,6 +431,25 @@ public class DataManager {
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties = newRevision.getUserProperties();
                     properties.put("state", nextState);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        } catch (Exception e) {
+            //handle this
+        }
+    }
+
+    public void updateSleep(String soldierID, String docID, final SleepState state) {
+        try {
+            Database db = getSoldierDB(soldierID);
+            Document saveStateDoc = db.getDocument(docID);
+
+            saveStateDoc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties = newRevision.getUserProperties();
+                    properties.put("sleep", state);
                     newRevision.setUserProperties(properties);
                     return true;
                 }

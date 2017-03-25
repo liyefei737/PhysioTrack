@@ -24,27 +24,36 @@ public class BullsEyeDrawTask extends AsyncTask<BullsEyeInfo, Integer, List<Rela
 
     @Override
     protected void onPostExecute(List<RelativeLayout> resultDrawables){
-        mLinLayout.removeViewAt(1);
-        mLinLayout.addView(resultDrawables.get(0), 1);    //overall bulls eye goes @ 1
-        LinearLayout smallWrapper =  (LinearLayout) mLinLayout.findViewById(R.id.smallBullsEyeWrapper);
-        smallWrapper.removeAllViews();
-        //add core fatigue skin
-        smallWrapper.addView(resultDrawables.get(1));
-        smallWrapper.addView(resultDrawables.get(2));
-        smallWrapper.addView(resultDrawables.get(3));
-        mLinLayout.invalidate();
+        if (resultDrawables != null) {
+            mLinLayout.removeViewAt(1);
+            mLinLayout.addView(resultDrawables.get(0), 1);    //overall bulls eye goes @ 1
+            LinearLayout smallWrapper = (LinearLayout) mLinLayout.findViewById(R.id.smallBullsEyeWrapper);
+            smallWrapper.removeAllViews();
+            //add core fatigue skin
+            smallWrapper.addView(resultDrawables.get(1));
+            smallWrapper.addView(resultDrawables.get(2));
+            smallWrapper.addView(resultDrawables.get(3));
+            mLinLayout.invalidate();
+        }
     }
 
     @Override
     protected List<RelativeLayout> doInBackground(BullsEyeInfo... bullsEyeInfo) {
         BullsEyeInfo bei = bullsEyeInfo[0];
         mLinLayout = bei.getLinLayout();
-        RelativeLayout relOverall =  BullsEye.drawBullsEye(mRes, mNumSoldiers, bei.getStatusList(), false);
-        RelativeLayout relSkin =  BullsEye.drawBullsEye(mRes, mNumSoldiers, bei.getSkinStatusList(), true);
-        RelativeLayout relCore =  BullsEye.drawBullsEye(mRes, mNumSoldiers, bei.getCoreStatusList(), true);
-        RelativeLayout relFat =  BullsEye.drawBullsEye(mRes, mNumSoldiers, bei.getFatigueStatusList(), true);
+        RelativeLayout relOverall;
+        RelativeLayout relSkin;
+        RelativeLayout relCore;
+        RelativeLayout relFat;
+        if (bei.getStatusList() != null) {
+            relOverall = BullsEye.drawBullsEye(mRes, mNumSoldiers, bei.getStatusList(), false);
+            relSkin = BullsEye.drawBullsEye(mRes, mNumSoldiers, bei.getSkinStatusList(), true);
+            relCore = BullsEye.drawBullsEye(mRes, mNumSoldiers, bei.getCoreStatusList(), true);
+            relFat = BullsEye.drawBullsEye(mRes, mNumSoldiers, bei.getFatigueStatusList(), true);
+            return new ArrayList<RelativeLayout>(Arrays.asList(relOverall, relCore, relFat, relSkin));
+        }
 
-        return new ArrayList<RelativeLayout>(Arrays.asList(relOverall, relCore, relFat, relSkin));
+       else return null;
     }
 
 }

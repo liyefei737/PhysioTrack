@@ -8,14 +8,12 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateUtils;
 
-import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.UnsavedRevision;
 import com.drdc1.medic.AppContext;
 import com.drdc1.medic.DataManagement.DataManager;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -25,6 +23,9 @@ import java.util.TimerTask;
 
 import sleepS.DateStatePair;
 import sleepS.SleepAlgo;
+import sleepS.SleepState;
+
+import static sleepS.SleepAlgo.CalculateSleepStatus;
 
 /**
  * Background algorithm thread
@@ -88,6 +89,22 @@ public class BackgroundSleepAlgo extends Service {
         };
         timer.schedule(doSleepCallback, 0, DateUtils.MINUTE_IN_MILLIS); //execute every minute
 
+
+        TimerTask doSleepRescoreCallback = new TimerTask() {
+            @Override
+            public void run() {
+                mServiceHandler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            run_sleep_rescorer();
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doSleepRescoreCallback, 0, DateUtils.MINUTE_IN_MILLIS * 30); //execute every minute
+
         // Keep service around "sticky"
         return START_STICKY;
     }
@@ -101,34 +118,47 @@ public class BackgroundSleepAlgo extends Service {
     }
 
     private void run_sleep_algo() {
-        int numMinutes = 9;
+        int numMinutes = 7;
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); // hard code for sim data
-        JSONArray last9Minutes;
+        JSONArray last7Minutes;
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
         if (physioDataMap != null) {
             for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
-                Database userDB = entry.getValue();
-                last9Minutes = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
-                final DateStatePair sleepResult = SleepAlgo.CalculateSleepStatus(last9Minutes);
+                last7Minutes = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
+                final DateStatePair sleepResult = CalculateSleepStatus(last7Minutes);
                 if (sleepResult.getDate() != null) {
-                    Document saveStateDoc = userDB.getDocument(sleepResult.getDate());
-                    try {
-                        saveStateDoc.update(new Document.DocumentUpdater() {
-                            @Override
-                            public boolean update(UnsavedRevision newRevision) {
-                                Map<String, Object> properties = newRevision.getUserProperties();
-                                properties.put("sleep", sleepResult.getState());
-                                newRevision.setUserProperties(properties);
-                                return true;
-                            }
-                        });
-                    } catch (CouchbaseLiteException e) {
-                        //handle this
+                    dataManager.updateSleep(entry.getKey(), sleepResult.getDate(), sleepResult.getState());
+                }
+            }
+        }
+
+    }
+
+    private void run_sleep_rescorer() {
+        int numMinutes = 30;
+        Calendar now = new GregorianCalendar();
+        now.set(2017, 02, 25); // hard code for sim data
+        JSONArray last30Minutes;
+        Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+        if (physioDataMap != null) {
+            for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
+                String soldierID = entry.getKey();
+                last30Minutes = dataManager.QueryLastXMinutes(soldierID, now, numMinutes);
+                JSONArray rescored30Minutes = SleepAlgo.RescoreSleep(last30Minutes);
+                if (rescored30Minutes != null) {
+                    for (int i = 0; i < rescored30Minutes.length(); i++) {
+                        try {
+                            JSONObject min = rescored30Minutes.getJSONObject(i);
+                            dataManager.updateSleep(soldierID, min.getString("id"), (SleepState) min.get("sleep"));
+                        } catch (Exception e) {
+
+                        }
                     }
                 }
             }
         }
+
 
     }
 }

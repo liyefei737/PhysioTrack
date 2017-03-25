@@ -127,7 +127,7 @@ public class BackgroundWellnessAlgo extends Service {
         int numMinutes = 1;
 
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
-        int numSoldiers = dataManager.getActiveSoldiers().size();
+        int numSoldiers = dataManager.getNumSoldiers();
         String [] overall = new String[numSoldiers];
         String [] skin = new String[numSoldiers];
         String [] core = new String[numSoldiers];

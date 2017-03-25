@@ -75,7 +75,7 @@ public class SquadStatus extends Fragment implements DataObserver {
     public void update(Map data){
         int numSoldiers = 0;
         if (data.size() == 3) {
-            String[] overall = (String[]) data.get("overall");
+            String[] overall = (String []) data.get("overall");
             String[] skin = (String[]) data.get("skin");
             String[] core = (String[]) data.get("core");
 
@@ -83,10 +83,9 @@ public class SquadStatus extends Fragment implements DataObserver {
                 return;
             }
             for (int i = 0; i < overall.length; i++){
-                if (!overall[i].isEmpty())
+                if ( overall[i] != null && !overall[i].isEmpty())
                     numSoldiers ++;
             }
-
             Resources resources = getActivity().getResources();
             BullsEyeDrawTask bullsEyeTask0 = new BullsEyeDrawTask(resources, numSoldiers);
             LinearLayout wrapper = (LinearLayout) getActivity().findViewById(R.id.layoutwrapper);
