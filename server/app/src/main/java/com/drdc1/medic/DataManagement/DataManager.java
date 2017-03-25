@@ -252,12 +252,16 @@ public class DataManager {
     }
 
     public Database getSoldierDB(String ID) {
-        if (soldierInSystem(ID)) {
-            Database physioDB = openDatabase(ID);
-            _physioDataDBMap.put(ID, physioDB);
-            return _physioDataDBMap.get(ID);
-        }
-        return null;
+//        if (soldierInSystem(ID)) {
+//            Database physioDB = openDatabase(ID);
+//            _physioDataDBMap.put(ID, physioDB);
+//            return _physioDataDBMap.get(ID);
+//        }
+//        return null;
+        Database physioDB = openDatabase(ID);
+        _physioDataDBMap.put(ID, physioDB);
+        return _physioDataDBMap.get(ID);
+
     }
 
     public WelfareTracker getWellnessTracker(String ID) {
