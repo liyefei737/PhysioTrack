@@ -298,9 +298,9 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         Resources res = getResources();
         WelfareAlgoParams wap = dataManager.get_welfareAlgoParams();
         hrchart.formatUpdateLineChart(res, entries, 0, 200, wap.getHrRangeObj());
-        respchart.formatUpdateLineChart(res, entries2, 0, 200, wap.getBrRangeObj());
-        skinchart.formatUpdateLineChart(res, entries3, 25, 200, wap.getStRangeObj());
-        ctchart.formatUpdateLineChart(res, entries4, 25, 200, wap.getCtRangeObj());
+        respchart.formatUpdateLineChart(res, entries2, 0, 70, wap.getBrRangeObj());
+        skinchart.formatUpdateLineChart(res, entries3, 25, 40, wap.getStRangeObj());
+        ctchart.formatUpdateLineChart(res, entries4, 25, 40, wap.getCtRangeObj());
 
     }
 
