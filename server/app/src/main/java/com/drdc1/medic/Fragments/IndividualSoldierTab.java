@@ -15,11 +15,11 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.drdc1.medic.Activities.HomeActivity;
 import com.drdc1.medic.AppContext;
 import com.drdc1.medic.DataManagement.DataManager;
-import com.drdc1.medic.ViewUtils.NameSuggestion;
-import com.drdc1.medic.R;
 import com.drdc1.medic.DataManagement.Soldier;
-import com.drdc1.medic.ViewUtils.LineChartWithBackground;
 import com.drdc1.medic.DataStructUtils.Trie;
+import com.drdc1.medic.R;
+import com.drdc1.medic.ViewUtils.LineChartWithBackground;
+import com.drdc1.medic.ViewUtils.NameSuggestion;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -59,10 +59,12 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         // Required empty public constructor
     }
 
-//    @Override
-//    public void onCreate() {
-//        bottomBarActivity = (capstone.client.Activities.BottomBarActivity) getActivity();
-//    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dataManager = ((AppContext) this.getActivity().getApplication()).getDataManager();
+        setInitialSoldier();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,14 +77,15 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         seachView = (FloatingSearchView) rootView.findViewById(R.id.searchBar);
         setupSearchBar();
 
-        dataManager = ((AppContext) this.getActivity().getApplication()).getDataManager();
-
         super.onCreate(savedInstanceState);
 
         // Setup Button Links to new activity
         NameNonEditable = (TextView) rootView.findViewById(R.id.NameNonEditable);
         AgeNonEditable = (TextView) rootView.findViewById(R.id.AgeNonEditable);
         btLinerRequest = (Button) rootView.findViewById(R.id.btLinerRequest);
+        HashMap hm = dataManager.getStaticInfo(solid);
+        NameNonEditable.setText((CharSequence) hm.get("name"));
+        AgeNonEditable.setText((CharSequence) hm.get("age"));
         btLinerRequest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 ((HomeActivity) getActivity()).onSelectIndividualSoldier(solid);
@@ -311,6 +314,14 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         hr.setText(param);
         hr.refreshDrawableState();
     }
+
+    private void setInitialSoldier() {
+        ArrayList<Soldier> activeSoldiers = dataManager.getActiveSoldiers();
+        if(!activeSoldiers.isEmpty()) {
+            solid = activeSoldiers.get(0).getId();
+        }
+    }
+
 
 }
 
