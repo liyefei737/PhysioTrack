@@ -18,13 +18,16 @@ import com.drdc1.medic.Activities.HomeActivity;
 import com.drdc1.medic.AppContext;
 import com.drdc1.medic.DataManagement.DataManager;
 import com.drdc1.medic.DataManagement.DataObserver;
-import com.drdc1.medic.R;
 import com.drdc1.medic.DataManagement.Soldier;
+import com.drdc1.medic.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -201,16 +204,12 @@ public class NameList extends Fragment implements DataObserver {
                         break;
                 }
             }
-
-            if (soldier.getBodyOrientation() != null && !soldier.getBodyOrientation().isEmpty()) {
+            Set<String> legalBodyPos = new HashSet<String>(Arrays.asList("UPRIGHT", "SUPINE", "PRONE", "SIDE"));
+            if (soldier.getBodyOrientation() != null && legalBodyPos.contains(soldier.getBodyOrientation())) {
                 ImageView bodyPos = (ImageView) v.findViewById(R.id.body_position);
                 bodyPos.setImageResource(R.drawable.body);
-                switch (soldier.getBodyOrientation()) {
-                    case "UP":
-                        break;
-                    default:
-                        bodyPos.setRotation(90);
-                        break;
+                if (!soldier.getBodyOrientation().equals("UPRIGHT")) {
+                    bodyPos.setRotation(90);
                 }
             }
             String currentHR = soldier.getHeartRate();
