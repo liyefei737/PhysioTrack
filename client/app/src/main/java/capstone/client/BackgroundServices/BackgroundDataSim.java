@@ -142,8 +142,7 @@ public class BackgroundDataSim extends Service {
         }
 
         //get one minute worth of data
-        if (phpRequestScriptURL == null || phpRequestScriptURL.equals(""))
-            phpRequestScriptURL = soldierDetails.getPhpURL();
+        phpRequestScriptURL = soldierDetails.getPhpURL();
         responseStr = doRemoteQuery(phpRequestScriptURL, dateID);
         try {
             JSONArray minuteData = new JSONArray(responseStr);
