@@ -17,11 +17,13 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.List;
 
+import static com.drdc1.medic.R.color.black;
+
 /**
  * Created by Grace on 2017-02-18.
  */
 
-public class LineChartWithBackground extends LineChart{
+public class LineChartWithBackground extends LineChart {
 
     protected Paint mRedZone;
     protected Paint mYellowZone;
@@ -50,7 +52,7 @@ public class LineChartWithBackground extends LineChart{
         mRedZone = new Paint();
         mRedZone.setStyle(Paint.Style.FILL);
         mRedZone.setColor(res.getColor(R.color.redGraphTint));
-        mYellowZone= new Paint();
+        mYellowZone = new Paint();
         mYellowZone.setStyle(Paint.Style.FILL);
         mYellowZone.setColor(res.getColor(R.color.yellowGraphTint));
         mGreenZone = new Paint();
@@ -64,10 +66,10 @@ public class LineChartWithBackground extends LineChart{
         setNoDataText("");
         List<LimitLine> limitLines = mAxisLeft.getLimitLines();
         int numLimLines = limitLines.size();
-        if ( numLimLines == 2 || numLimLines == 4) {
+        if (numLimLines == 2 || numLimLines == 4) {
 
-            for (int i = 0; i < numLimLines; i++){
-                pts[2*i+1] = limitLines.get(i).getLimit();
+            for (int i = 0; i < numLimLines; i++) {
+                pts[2 * i + 1] = limitLines.get(i).getLimit();
             }
 
             mLeftAxisTransformer.pointValuesToPixel(pts);
@@ -78,10 +80,9 @@ public class LineChartWithBackground extends LineChart{
 
             canvas.drawRect(left, top, right, bottom, mRedZone);
 
-            if (numLimLines == 2){
+            if (numLimLines == 2) {
                 canvas.drawRect(left, pts[3], right, pts[1], mGreenZone);
-            }
-            else {
+            } else {
                 canvas.drawRect(left, pts[7], right, pts[1], mYellowZone);
                 canvas.drawRect(left, pts[5], right, pts[3], mGreenZone);
             }
@@ -90,20 +91,20 @@ public class LineChartWithBackground extends LineChart{
     }
 
     public LineData formatUpdateLineChart(Resources resources, List<Entry> entries,
-                                             float yMin, float yMax, List<Object> zoneLimits){
+                                          float yMin, float yMax, List<Object> zoneLimits) {
         //get colours
         int white = resources.getColor(R.color.white);
 
         //format dataset
         LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
 
-        dataSet.setCircleColor(R.color.black);
+        dataSet.setCircleColor(black);
         dataSet.setCircleRadius(4f);
         dataSet.setCircleHoleRadius(3f);
         dataSet.setDrawCircleHole(true);
         dataSet.setCircleColorHole(white);
         dataSet.setHighlightEnabled(false);
-        dataSet.setColor(R.color.black, 255);
+        dataSet.setColor(black, 255);
         dataSet.setDrawValues(false);
 
         //format chart
@@ -150,7 +151,7 @@ public class LineChartWithBackground extends LineChart{
         yAxis.getLimitLines().clear();
         int numLimits = zoneLimits.size();
         LimitLine ll;
-        for (int i = 0; i < numLimits; i++){
+        for (int i = 0; i < numLimits; i++) {
 
             try {
                 ll = new LimitLine((float) zoneLimits.get(i));
