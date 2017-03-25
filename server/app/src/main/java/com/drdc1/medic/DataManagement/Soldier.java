@@ -46,8 +46,8 @@ public class Soldier {
 
     public void setPhysioData(Map<String, Object> physioData) {
         lastPhysioData = HelperMethods.deepCopy((Map) cuurentPhysioData);
-
         cuurentPhysioData = HelperMethods.deepCopy((Map) physioData);
+        name = (String) physioData.get("name");
     }
 
     public String getBodyOrientation() {
