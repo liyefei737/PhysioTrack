@@ -20,34 +20,18 @@
 
         <LinearLayout
             android:orientation="horizontal"
-<<<<<<< Updated upstream
             android:layout_width="match_parent"
-            android:layout_height="138dp"
-=======
-            android:layout_width="wrap_content"
-            android:layout_height="64dp"
->>>>>>> Stashed changes
-            android:id="@+id/layoutSearch">
-
+            android:layout_height="138dp"/>
             <LinearLayout
-<<<<<<< Updated upstream
+
                 android:layout_width="760dp"
                 android:layout_height="140dp"
-=======
-                android:layout_width="wrap_content"
-                android:layout_height="53dp"
->>>>>>> Stashed changes
                 android:orientation="vertical">
 
                 <com.arlib.floatingsearchview.FloatingSearchView
                     android:id="@+id/searchBar"
-<<<<<<< Updated upstream
                     android:layout_width="match_parent"
                     android:layout_height="132dp"
-=======
-                    android:layout_width="640dp"
-                    android:layout_height="match_parent"
->>>>>>> Stashed changes
                     app:floatingSearch_close_search_on_keyboard_dismiss="true"
                     app:floatingSearch_leftActionMode="noLeftAction"
                     app:floatingSearch_searchHint="Search by Soldier Name"
@@ -69,7 +53,6 @@
                 app:srcCompat="@drawable/help4" />
 
         </LinearLayout>
-    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
