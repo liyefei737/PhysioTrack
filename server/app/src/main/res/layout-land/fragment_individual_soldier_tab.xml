@@ -19,19 +19,19 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="138dp"
             android:id="@+id/layoutSearch">
 
 
             <LinearLayout
                 android:layout_width="760dp"
-                android:layout_height="53dp"
+                android:layout_height="140dp"
                 android:orientation="vertical">
 
                 <com.arlib.floatingsearchview.FloatingSearchView
                     android:id="@+id/searchBar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="132dp"
                     app:floatingSearch_close_search_on_keyboard_dismiss="true"
                     app:floatingSearch_leftActionMode="noLeftAction"
                     app:floatingSearch_searchHint="Search by Soldier Name"
