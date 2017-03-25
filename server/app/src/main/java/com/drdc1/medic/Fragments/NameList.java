@@ -208,16 +208,8 @@ public class NameList extends Fragment implements DataObserver {
                 switch (soldier.getBodyOrientation()) {
                     case "UP":
                         break;
-                    case "DOWN":
-                        bodyPos.setRotation(180);
-                        break;
-                    case "LEFT":
-                        bodyPos.setRotation(270);
-                        break;
-                    case "RIGHT":
-                        bodyPos.setRotation(90);
-                        break;
                     default:
+                        bodyPos.setRotation(90);
                         break;
                 }
             }
