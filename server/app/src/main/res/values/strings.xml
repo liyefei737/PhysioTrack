@@ -5,6 +5,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_home_fragment">HomeFragment</string>
     <string name="titleText"> </string>
+    <string name="bulls_eye_update">BULLSEYE_UPDATE</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

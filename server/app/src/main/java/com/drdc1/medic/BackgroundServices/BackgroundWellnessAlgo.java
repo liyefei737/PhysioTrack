@@ -1,6 +1,7 @@
 package com.drdc1.medic.BackgroundServices;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -12,6 +13,7 @@ import com.couchbase.lite.Database;
 import com.drdc1.medic.AppContext;
 import com.drdc1.medic.DataManagement.DataManager;
 import com.drdc1.medic.DataStructUtils.HelperMethods;
+import com.drdc1.medic.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -96,7 +98,7 @@ public class BackgroundWellnessAlgo extends Service {
                     public void run() {
                         try {
 
-                            calculateWellness();
+                            calculateWellness(dataManager, getApplicationContext());
                         } catch (Exception e) {
                         }
                     }
@@ -118,37 +120,56 @@ public class BackgroundWellnessAlgo extends Service {
         broadcaster.sendBroadcast(intent);
     }
 
-    public void calculateWellness() {
+    public static void calculateWellness(DataManager dataManager, Context context) {
         JSONArray lastMinute;
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); //hard code for sim data
         int numMinutes = 1;
 
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+        int numSoldiers = dataManager.getActiveSoldiers().size();
+        String [] overall = new String[numSoldiers];
+        String [] skin = new String[numSoldiers];
+        String [] core = new String[numSoldiers];
+
         if (physioDataMap != null) {
+            int i = 0;
             for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
                 String id = entry.getKey();
                 WelfareTracker wt = dataManager.getWellnessTracker(id);
                 lastMinute = dataManager.QueryLastXMinutes(id, now, numMinutes);
 
                 if (wt == null){
-                    wt = new WelfareTracker();;
+                    wt = new WelfareTracker();
                 }
 
                 if (hrRange != null) {
                     wt.setPhysioParamThresholds(hrRange, brRange, stRange, ctRange);
                 }
 
-                Object[] statusResults = wt.calculateWelfareStatus(lastMinute);
-                WelfareStatus nextState = (WelfareStatus) statusResults[1];
-                try {
-                    dataManager.updateState(id, ((JSONObject) lastMinute.get(0)).getString("_id"), nextState);
-                }
-                catch (Exception e){
+                if (lastMinute.length() != 0) {
+                    Object[] statusResults = wt.calculateWelfareStatus(lastMinute);
+                    WelfareStatus nextState = (WelfareStatus) statusResults[1];
+                    try {
+                        dataManager.updateState(id, ((JSONObject) lastMinute.get(0)).getString("_id"), nextState);
+                    } catch (Exception e) {
 
+                    }
+                    dataManager.saveWellnessTracker(id, wt);
+                    overall[i] = nextState.toString();
+                    skin[i] = ((WelfareStatus) ((Map) statusResults[0]).get("SKIN")).toString();
+                    core[i] = ((WelfareStatus) ((Map) statusResults[0]).get("CORE")).toString();
+                    i++;
                 }
-                dataManager.saveWellnessTracker(id, wt);
-
+            }
+            if (i > 0) {
+                String intentStr = context.getResources().getString(R.string.bulls_eye_update);
+                Intent intent = new Intent(intentStr);
+                intent.setAction(intentStr);
+                intent.putExtra("OVERALL", overall);
+                intent.putExtra("SKIN", skin);
+                intent.putExtra("CORE", core);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
         }
     }

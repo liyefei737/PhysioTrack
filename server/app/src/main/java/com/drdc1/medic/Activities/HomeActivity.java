@@ -29,9 +29,9 @@ import com.drdc1.medic.DataManagement.DataObserver;
 import com.drdc1.medic.DataManagement.FragmentDataManager;
 import com.drdc1.medic.Fragments.IndividualSoldierTab;
 import com.drdc1.medic.Fragments.NameList;
-import com.drdc1.medic.R;
 import com.drdc1.medic.Fragments.SquadStatus;
 import com.drdc1.medic.Fragments.TreatmentScreenTab;
+import com.drdc1.medic.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,8 +42,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DataReceiver dataReceiver;
+    private BullsEyeReceiver beReceiver;
     private ArrayList<DataObserver> fragmentlist;
-    static private HashMap data; //one data shared by all fragments
+    private ArrayList<DataObserver> bullsEyeFragmentlist;
     private String solderId;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -67,8 +68,13 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         IntentFilter PDAMESSAGE = new IntentFilter("PDAMessage");
         dataReceiver = new DataReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(dataReceiver, PDAMESSAGE);
-        data = new HashMap();
+
+        IntentFilter BULLSEYE = new IntentFilter(getString(R.string.bulls_eye_update));
+        beReceiver = new BullsEyeReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(beReceiver, BULLSEYE);
+
         fragmentlist = new ArrayList<>();
+        bullsEyeFragmentlist = new ArrayList<>();
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -118,6 +124,19 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         }
     }
 
+    @Override
+    public void registerBullsEyeFragment(DataObserver o) {
+        if (!bullsEyeFragmentlist.contains(o))
+            bullsEyeFragmentlist.add(o);
+    }
+
+    @Override
+    public void unregisterBullsEyeFragment(DataObserver o) {
+        if (bullsEyeFragmentlist.contains(o)) {
+            int observerIndex = bullsEyeFragmentlist.indexOf(o);
+            bullsEyeFragmentlist.remove(observerIndex);
+        }
+    }
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void notifyObserver(Map data) {
@@ -127,19 +146,43 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
 
     }
 
-    class DataReceiver extends BroadcastReceiver {
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void notifyBullsEyeObserver(Map data) {
+        for (DataObserver observer : bullsEyeFragmentlist) {
+            observer.update(data);
+        }
+
+    }
+
+    public class BullsEyeReceiver extends BroadcastReceiver {
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onReceive(Context context, Intent intent) {
+            Map data = new HashMap();
+            data.put("overall", intent.getStringArrayExtra("OVERALL"));
+            data.put("skin", intent.getStringArrayExtra("SKIN"));
+            data.put("core", intent.getStringArrayExtra("CORE"));
+
+            notifyBullsEyeObserver(data);
+        }
+    }
+    public class DataReceiver extends BroadcastReceiver {
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Map data = new HashMap<>();
             data.put("bodypos", intent.getStringExtra("bodypos"));
             data.put("overall", intent.getStringExtra("overall"));
             data.put("coreTemp", intent.getStringExtra("coreTemp"));
             data.put("skinTemp", intent.getStringExtra("skinTemp"));
             data.put("br", intent.getStringExtra("br"));
             data.put("hr", intent.getStringExtra("hr"));
-            data.put("ID",intent.getStringExtra("ID"));
-            data.put("name",intent.getStringExtra("name"));
+            data.put("ID", intent.getStringExtra("ID"));
+            data.put("name", intent.getStringExtra("name"));
+
             notifyObserver(data);
         }
     }

@@ -65,6 +65,7 @@ public class DataManager {
         _context = context;
         _userInfoDB = openDatabase("staticinfo");
         _physioDataDBMap = new HashMap<String, Database>();
+        populatePhysioMap();
         _nineLinerDB = openDatabase("nineliner");
         _wellnessInfoMap = new HashMap<String, WelfareTracker>();
         _welfareAlgoParams = new WelfareAlgoParams();
@@ -73,6 +74,20 @@ public class DataManager {
         }
     }
 
+    private void populatePhysioMap(){
+        try {
+            Query allDocsQuery = _userInfoDB.createAllDocumentsQuery();
+            QueryEnumerator result = allDocsQuery.run();
+            for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                QueryRow row = it.next();
+                Document doc = row.getDocument();
+                Database db = openDatabase(doc.getId());
+                _physioDataDBMap.put(doc.getId(), db);
+            }
+        } catch (Exception e) {
+
+        }
+    }
     public Map<String, Database> getPhysioDataMap() {
         return _physioDataDBMap;
     }
@@ -114,20 +129,6 @@ public class DataManager {
         _wellnessInfoMap.put(ID, iwt);
         return true;
 
-//        try {
-//            Document doc = _userInfoDB.getDocument(ID);
-//            doc.putProperties(staticInfo);
-//
-//            Database physioDB = openDatabase(ID);
-//            _physioDataDBMap.put(ID, physioDB);
-//
-//            IndividualWelfareTracker iwt = new IndividualWelfareTracker();
-//            _wellnessInfoMap.put(ID, iwt);
-//            return true;
-//
-//        } catch (CouchbaseLiteException e) {
-//            return false;
-//        }
 
     }
 
@@ -357,7 +358,6 @@ public class DataManager {
             WelfareTracker wt = (WelfareTracker) pair.getValue();
             squadList.add(wt.getOverallStatus());
 
-            it.remove(); // avoids a ConcurrentModificationException
         }
         return squadList;
     }
@@ -370,7 +370,6 @@ public class DataManager {
             WelfareTracker wt = (WelfareTracker) pair.getValue();
             squadList.add(wt.getSkinStatus());
 
-            it.remove(); // avoids a ConcurrentModificationException
         }
         return squadList;
     }
@@ -383,7 +382,6 @@ public class DataManager {
             WelfareTracker wt = (WelfareTracker) pair.getValue();
             squadList.add(wt.getCoreStatus());
 
-            it.remove(); // avoids a ConcurrentModificationException
         }
         return squadList;
     }

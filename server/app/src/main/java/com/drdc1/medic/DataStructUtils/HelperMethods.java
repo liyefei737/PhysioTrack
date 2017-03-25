@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import welfareSM.WelfareStatus;
+
 /**
  * Helper methods
  */
@@ -41,6 +43,14 @@ public class HelperMethods {
             result[i] = boxed == null ? 0.f : boxed;
         }
         return result;
+    }
+
+    public static List<String> convertStatusToString(List<WelfareStatus> ws){
+        List<String> strList = new ArrayList<>();
+        for (int i = 0; i < ws.size(); i++){
+            strList.add(ws.get(i).toString());
+        }
+        return strList;
     }
 
 }

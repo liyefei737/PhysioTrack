@@ -2,21 +2,17 @@ package com.drdc1.medic.ViewUtils.BullsEyeUtils;
 
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.drdc1.medic.R;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import welfareSM.WelfareStatus;
-
 import static com.drdc1.medic.AppContext.getContext;
-import static welfareSM.WelfareStatus.GREEN;
-import static welfareSM.WelfareStatus.RED;
-import static welfareSM.WelfareStatus.YELLOW;
 
 /**
  * Created by Grace on 2017-02-24.
@@ -24,14 +20,18 @@ import static welfareSM.WelfareStatus.YELLOW;
 
 public class BullsEye {
 
-    public static List<ImageView> drawBullsEye(Resources resources, int numSoldiers, List<WelfareStatus> statusArray, boolean small) {
+    public static RelativeLayout drawBullsEye(Resources resources, int numSoldiers, List<String> statusArray, boolean small) {
 
         int red = resources.getColor(R.color.bullsEyeRed);
         int yellow = resources.getColor(R.color.bullsEyeYellow);
         int green = resources.getColor(R.color.bullsEyeGreen);
         int grey = resources.getColor(R.color.grey);
         int ringID = 0;
-        List<ImageView> finalDrawables = new ArrayList<>();
+
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        RelativeLayout finalLayout = new RelativeLayout(getContext());
+        finalLayout.setLayoutParams(lparams);
+
         RelativeLayout.LayoutParams imageViewParams;
 
         int size;
@@ -53,11 +53,11 @@ public class BullsEye {
             ImageView ringView = new ImageView(getContext());
             ringView.setLayoutParams(imageViewParams);
             GradientDrawable gd = (GradientDrawable) resources.getDrawable(ringID);
-            if (statusArray.get(i) == RED) {
+            if (statusArray.get(i).equals("RED")) {
                 gd.setColor(red);
-            } else if (statusArray.get(i) == YELLOW) {
+            } else if (statusArray.get(i).equals("YELLOW")) {
                 gd.setColor(yellow);
-            } else if (statusArray.get(i) == GREEN) {
+            } else if (statusArray.get(i).equals("GREEN")) {
                 gd.setColor(green);
             } else {
                 gd.setColor(grey);
@@ -65,9 +65,9 @@ public class BullsEye {
             ringView.setLayoutParams(imageViewParams);
             ringView.setImageDrawable(gd);
 
-            finalDrawables.add(ringView);
+            finalLayout.addView(ringView);
             ringID++;
         }
-        return finalDrawables;
+        return finalLayout;
     }
 }
