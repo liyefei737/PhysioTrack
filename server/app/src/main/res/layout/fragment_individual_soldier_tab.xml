@@ -151,14 +151,32 @@
                 android:orientation="vertical"
                 android:weightSum="1">
 
-                <Button
-                    android:id="@+id/btLinerRequest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.20"
-                    android:text="9 Liner Request"
-                    android:textAlignment="center" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv42"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100dp"
+                        android:layout_weight="1"
+                        android:text="Historical Data"
+                        android:textSize="18dp"
+                        android:textColor="@color/white"
+                        android:gravity="left"/>
+
+                    <Button
+                        android:id="@+id/btLinerRequest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="9 Liner Request"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -168,37 +186,177 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.drdc1.medic.ViewUtils.LineChartWithBackground
-                    android:id="@+id/hrrchart"
-                    android:layout_width="140dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="0.5" />
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <com.drdc1.medic.ViewUtils.LineChartWithBackground
-                    android:id="@+id/resprchart"
-                    android:layout_width="140dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="0.5" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.drdc1.medic.ViewUtils.VerticalTextView
+                            android:id="@+id/yAxisLabel1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom|start"
+                            android:maxLines="2"
+                            android:text="Heart Rate (BPM)"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="14dp" />
+
+                        <com.drdc1.medic.ViewUtils.LineChartWithBackground
+                            android:id="@+id/hrrchart"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_weight="0.5" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvLabel1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Minutes"
+                        android:textColor="@color/white"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+
+                        <com.drdc1.medic.ViewUtils.VerticalTextView
+                            android:id="@+id/yAxisLabel2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom|start"
+                            android:maxLines="2"
+                            android:text="Breathing Rate (Per Min)"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="14dp" />
+
+                        <com.drdc1.medic.ViewUtils.LineChartWithBackground
+                            android:id="@+id/resprchart"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_weight="0.5" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvLabel2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Minutes"
+                        android:textColor="@color/white"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layoutGraphsBottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.drdc1.medic.ViewUtils.LineChartWithBackground
-                    android:id="@+id/skinrchart"
-                    android:layout_width="140dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="0.5" />
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <com.drdc1.medic.ViewUtils.LineChartWithBackground
-                    android:id="@+id/ctrchart"
-                    android:layout_width="140dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="0.5" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.drdc1.medic.ViewUtils.VerticalTextView
+                            android:id="@+id/yAxisLabel3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom|start"
+                            android:maxLines="2"
+                            android:text="Skin Temp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="14dp" />
+
+                        <com.drdc1.medic.ViewUtils.LineChartWithBackground
+                            android:id="@+id/skinrchart"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_weight="0.5" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvLabel3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Minutes"
+                        android:textColor="@color/white"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.drdc1.medic.ViewUtils.VerticalTextView
+                            android:id="@+id/yAxisLabel4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom|start"
+                            android:maxLines="2"
+                            android:text="Core Temp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="14dp" />
+
+                        <com.drdc1.medic.ViewUtils.LineChartWithBackground
+                            android:id="@+id/ctrchart"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_weight="0.5" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvLabel4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Minutes"
+                        android:textColor="@color/white"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
         </LinearLayout>
