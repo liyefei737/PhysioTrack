@@ -205,20 +205,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="274dp"
             android:orientation="horizontal"
-            android:gravity="right">
+            android:gravity="right"
+            android:weightSum="1">
 
             <com.arlib.floatingsearchview.FloatingSearchView
                 android:id="@+id/searchBar"
                 android:layout_width="500dp"
-                android:layout_height="66dp"
+                android:layout_height="85dp"
                 android:layout_marginTop="0dp"
                 app:floatingSearch_close_search_on_keyboard_dismiss="true"
                 app:floatingSearch_leftActionMode="noLeftAction"
                 app:floatingSearch_searchHint="Search by Soldier Name"
                 app:floatingSearch_showSearchKey="false"
-                app:floatingSearch_suggestionsListAnimDuration="250"></com.arlib.floatingsearchview.FloatingSearchView>
+                app:floatingSearch_suggestionsListAnimDuration="250"
+                ></com.arlib.floatingsearchview.FloatingSearchView>
 
             <ImageButton
                 android:id="@+id/ibHelp"
