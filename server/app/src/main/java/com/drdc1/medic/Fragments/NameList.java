@@ -147,7 +147,6 @@ public class NameList extends Fragment implements DataObserver {
         public void sort(SortBy x) {
             switch (x) {
                 case NAME:
-
                     this.sort(new OrderByName());
                     sortedBy = "NAME";
                     break;
@@ -183,10 +182,7 @@ public class NameList extends Fragment implements DataObserver {
                         .inflate(R.layout.list_item, parent, false);
             }
             TextView name = (TextView) v.findViewById(R.id.name);
-//            name.setOnClickListener(new setFragmentTransition());
-
             name.setText(soldier.getName());
-
             ImageView overall = (ImageView) v.findViewById(R.id.overal_status);
             String status = soldier.getOverallStatus();
             if (status != null && (!status.isEmpty())){
@@ -231,7 +227,6 @@ public class NameList extends Fragment implements DataObserver {
                 }
                 heartRate.setText(currentHR);
             }
-            //TODO replace image for down_arrow color not right
             String currentBR = soldier.getBreathingRate();
             String lastBR = soldier.getLastBreathingRate();
             if (currentBR != null && !currentBR.equals("")) {
@@ -291,9 +286,6 @@ public class NameList extends Fragment implements DataObserver {
                 }
                 skinTmp.setText(currentSkinTmp);
             }
-            //TextView tvHome = (TextView) v.findViewById(R.id.tvHome);
-            // Populate the data into the template view using the data object
-            // Return the completed view to render on screen
             return v;
         }
     }
