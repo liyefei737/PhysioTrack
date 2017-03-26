@@ -18,7 +18,10 @@ import com.drdc1.medic.Activities.HomeActivity;
 import com.drdc1.medic.AppContext;
 import com.drdc1.medic.DataManagement.DataManager;
 import com.drdc1.medic.DataManagement.DataObserver;
+import com.drdc1.medic.DataManagement.DataSleepObserver;
+import com.drdc1.medic.DataManagement.DataStatusObserver;
 import com.drdc1.medic.DataManagement.Soldier;
+import com.drdc1.medic.DataManagement.SoldierList;
 import com.drdc1.medic.R;
 
 import java.util.ArrayList;
@@ -32,11 +35,11 @@ import java.util.Set;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NameList extends Fragment implements DataObserver {
+public class NameList extends Fragment implements DataObserver, DataStatusObserver, DataSleepObserver {
 
     private SoldierListAdapter adapter;
     private HomeActivity homeActivity;
-    private ArrayList<Soldier> soldiers = new ArrayList<>();
+    private SoldierList soldiers = new SoldierList();
 
     public NameList() {
         // Required empty public constructor
@@ -48,11 +51,13 @@ public class NameList extends Fragment implements DataObserver {
         View rootView = inflater.inflate(R.layout.fragment_name_list, container, false);
         homeActivity = (HomeActivity) getActivity();
         homeActivity.registerFragment(this);
+        homeActivity.registerStatusWithIDFragment(this);
+        homeActivity.registerSleepFragment(this);
         final ListView listView = (ListView) rootView.findViewById(R.id.soldierList);
         addListHeader(listView);
         DataManager dbManager = ((AppContext) getActivity().getApplication()).getDataManager();
-        soldiers = dbManager.getActiveSoldiers();
-        adapter = new SoldierListAdapter(getContext(), soldiers);
+        soldiers.setSoldiers(dbManager.getActiveSoldiers());
+        adapter = new SoldierListAdapter(getContext(), soldiers.getSoldiers());
         listView.setAdapter(adapter);
 
         TextView nameHeader = (TextView) rootView.findViewById(R.id.name_header);
@@ -80,36 +85,66 @@ public class NameList extends Fragment implements DataObserver {
     public void onPause() {
         super.onPause();
         homeActivity.registerFragment(this);
+        homeActivity.registerStatusWithIDFragment(this);
+        homeActivity.registerSleepFragment(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         homeActivity.registerFragment(this);
+        homeActivity.registerStatusWithIDFragment(this);
+        homeActivity.registerSleepFragment(this);
     }
 
     @Override
     public void onDestroyView() {
         homeActivity.unregisterFragment(this);
+        homeActivity.unregisterStatusWithIDFragment(this);
+        homeActivity.unregisterSleepFragment(this);
         super.onDestroyView();
     }
 
     @Override
     public void update(Map data) {
 
-        Boolean soldierInTheList = false;
-        for (Soldier s : soldiers) {
-            if (data.get("ID").equals(s.getId())) {
-                s.setPhysioData(data);
-                soldierInTheList = true;
+        Soldier s = soldiers.getSoldierByID((String)data.get("ID"));
+        if (s != null)
+            s.setPhysioData(data);
+        else {
+            Soldier newSol = new Soldier((String) data.get("name"), (String) data.get("ID"));
+            newSol.setPhysioData(data);
+            soldiers.addSoldier(newSol);
+        }
+        adapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void updateStatus(Map<String, String> data) {
+
+        for (Map.Entry<String, String> entry : data.entrySet()){
+            Soldier s =soldiers.getSoldierByID(entry.getKey());
+            if (s != null){
+                s.setCurrentStatus(entry.getValue());
             }
         }
 
-        if (!soldierInTheList) {
-            Soldier newSol = new Soldier((String) data.get("name"), (String) data.get("ID"));
-            newSol.setPhysioData(data);
-            soldiers.add(newSol);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void updateSleep(Map<String, Integer> data) {
+
+        for (Map.Entry<String, Integer> entry : data.entrySet()){
+            Soldier s =soldiers.getSoldierByID(entry.getKey());
+            if (s != null){
+                int percent = entry.getValue();
+                s.setFatigue(String.format("%d", percent));
+            }
         }
+
         adapter.notifyDataSetChanged();
 
     }
@@ -184,7 +219,7 @@ public class NameList extends Fragment implements DataObserver {
             TextView name = (TextView) v.findViewById(R.id.name);
             name.setText(soldier.getName());
             ImageView overall = (ImageView) v.findViewById(R.id.overal_status);
-            String status = soldier.getOverallStatus();
+            String status = soldier.getCurrentStatus();
             if (status != null && (!status.isEmpty())){
                 switch (status) {
                     case "RED":
@@ -286,6 +321,19 @@ public class NameList extends Fragment implements DataObserver {
                 }
                 skinTmp.setText(currentSkinTmp);
             }
+
+
+            String currentFatigue = soldier.getFatigue();
+            if (currentFatigue != null && !currentFatigue.equals("")) {
+                TextView fatigue = (TextView) v.findViewById(R.id.fatigue_level);
+
+                fatigue.setText(currentFatigue + "%");
+            }
+
+
+            //TextView tvHome = (TextView) v.findViewById(R.id.tvHome);
+            // Populate the data into the template view using the data object
+            // Return the completed view to render on screen
             return v;
         }
     }

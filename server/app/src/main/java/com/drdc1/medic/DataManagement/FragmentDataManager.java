@@ -21,4 +21,16 @@ public interface FragmentDataManager {
 
     public void notifyBullsEyeObserver(Map data);
 
+    public void registerStatusWithIDFragment(DataStatusObserver o);
+
+    public void unregisterStatusWithIDFragment(DataStatusObserver o);
+
+    public void notifyStatusWithIDObserver(Map data);
+
+    public void registerSleepFragment(DataSleepObserver o);
+
+    public void unregisterSleepFragment(DataSleepObserver o);
+
+    public void notifySleepObserver(Map data);
+
 }

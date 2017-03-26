@@ -1,6 +1,7 @@
 package com.drdc1.medic.BackgroundServices;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,6 +35,8 @@ import static sleepS.SleepAlgo.CalculateSleepStatus;
 
 public class BackgroundSleepAlgo extends Service {
 
+    private static int MINUTES_IN_DAY = 60*24;
+    private static double PERCENT_FAT_PER_MINUTE = 100.0/MINUTES_IN_DAY;
     private volatile HandlerThread mHandlerThread;
     private Handler mServiceHandler;
 
@@ -96,14 +100,30 @@ public class BackgroundSleepAlgo extends Service {
                 mServiceHandler.post(new Runnable() {
                     public void run() {
                         try {
-                            run_sleep_rescorer();
+                            run_sleep_rescorer(getApplicationContext());
                         } catch (Exception e) {
                         }
                     }
                 });
             }
         };
-        timer.schedule(doSleepRescoreCallback, 0, DateUtils.MINUTE_IN_MILLIS * 30); //execute every minute
+        timer.schedule(doSleepRescoreCallback, DateUtils.MINUTE_IN_MILLIS , DateUtils.MINUTE_IN_MILLIS ); //execute every minute
+
+        TimerTask doFatigueCalcCallback = new TimerTask() {
+            @Override
+            public void run() {
+                mServiceHandler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            run_fatigue_calc(getApplicationContext());
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doFatigueCalcCallback, DateUtils.MINUTE_IN_MILLIS , DateUtils.MINUTE_IN_MILLIS ); //execute every minute
+
 
         // Keep service around "sticky"
         return START_STICKY;
@@ -118,7 +138,7 @@ public class BackgroundSleepAlgo extends Service {
     }
 
     private void run_sleep_algo() {
-        int numMinutes = 7;
+        int numMinutes = 10;
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); // hard code for sim data
         JSONArray last7Minutes;
@@ -127,7 +147,7 @@ public class BackgroundSleepAlgo extends Service {
             for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
                 last7Minutes = dataManager.QueryLastXMinutes(entry.getKey(), now, numMinutes);
                 final DateStatePair sleepResult = CalculateSleepStatus(last7Minutes);
-                if (sleepResult.getDate() != null) {
+                if (sleepResult.getDate() != null && sleepResult.getState() != null) {
                     dataManager.updateSleep(entry.getKey(), sleepResult.getDate(), sleepResult.getState());
                 }
             }
@@ -135,10 +155,11 @@ public class BackgroundSleepAlgo extends Service {
 
     }
 
-    private void run_sleep_rescorer() {
+    private void run_sleep_rescorer(Context context) {
         int numMinutes = 30;
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); // hard code for sim data
+        now.add(Calendar.MINUTE, -7);
         JSONArray last30Minutes;
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
         if (physioDataMap != null) {
@@ -150,13 +171,43 @@ public class BackgroundSleepAlgo extends Service {
                     for (int i = 0; i < rescored30Minutes.length(); i++) {
                         try {
                             JSONObject min = rescored30Minutes.getJSONObject(i);
-                            dataManager.updateSleep(soldierID, min.getString("id"), (SleepState) min.get("sleep"));
+                            dataManager.updateSleep(soldierID, min.getString("_id"), (SleepState) min.get("sleep"));
                         } catch (Exception e) {
 
                         }
                     }
                 }
+
             }
+
+
+        }
+
+
+    }
+    private void run_fatigue_calc(Context context) {
+        Map<String, Double> idFatigueMap = new HashMap<>();
+        Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
+        if (physioDataMap != null) {
+            for (Map.Entry<String, Database> entry : physioDataMap.entrySet()) {
+                String soldierID = entry.getKey();
+                double minutesAsleep = dataManager.getSleepPercentageOfSoldier(soldierID);
+                double totalMinutes = dataManager.getTotalMinutesActiveOfSoldier(soldierID);
+
+                double fatigue = (totalMinutes - minutesAsleep) * PERCENT_FAT_PER_MINUTE;
+                idFatigueMap.put(entry.getKey(), fatigue);
+
+            }
+            if (idFatigueMap.size() != 0) {
+                String intentStr = "NAMELIST_SLEEP";
+                Intent intent = new Intent(intentStr);
+                intent.setAction(intentStr);
+                for (Map.Entry<String, Double> entry : idFatigueMap.entrySet()) {
+                    intent.putExtra(entry.getKey(), (int) Math.floor(entry.getValue()));
+                }
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            }
+
         }
 
 

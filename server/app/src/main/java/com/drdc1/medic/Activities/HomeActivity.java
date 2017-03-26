@@ -26,6 +26,8 @@ import com.drdc1.medic.BackgroundServices.BackgroundServer;
 import com.drdc1.medic.BackgroundServices.BackgroundSleepAlgo;
 import com.drdc1.medic.BackgroundServices.BackgroundWellnessAlgo;
 import com.drdc1.medic.DataManagement.DataObserver;
+import com.drdc1.medic.DataManagement.DataSleepObserver;
+import com.drdc1.medic.DataManagement.DataStatusObserver;
 import com.drdc1.medic.DataManagement.FragmentDataManager;
 import com.drdc1.medic.Fragments.IndividualSoldierTab;
 import com.drdc1.medic.Fragments.NameList;
@@ -43,8 +45,13 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DataReceiver dataReceiver;
     private BullsEyeReceiver beReceiver;
+    private OverallWithIDReceiver oIDReceiver;
+    private SleepReceiver sleepReceiver;
     private ArrayList<DataObserver> fragmentlist;
     private ArrayList<DataObserver> bullsEyeFragmentlist;
+    private ArrayList<DataStatusObserver> statusFragmentList;
+    private ArrayList<DataSleepObserver> sleepFragmentList;
+
     private String solderId;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -73,8 +80,18 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         beReceiver = new BullsEyeReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(beReceiver, BULLSEYE);
 
+        IntentFilter OID = new IntentFilter("NAMELIST_OVERALL");
+        oIDReceiver = new OverallWithIDReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(oIDReceiver, OID);
+
+        IntentFilter SLEEP = new IntentFilter("NAMELIST_SLEEP");
+        sleepReceiver = new SleepReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(sleepReceiver, SLEEP);
+
         fragmentlist = new ArrayList<>();
         bullsEyeFragmentlist = new ArrayList<>();
+        statusFragmentList = new ArrayList<>();
+        sleepFragmentList = new ArrayList<>();
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -137,6 +154,35 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
             bullsEyeFragmentlist.remove(observerIndex);
         }
     }
+
+    @Override
+    public void  registerStatusWithIDFragment(DataStatusObserver o) {
+        if (!statusFragmentList.contains(o))
+            statusFragmentList.add(o);
+    }
+
+    @Override
+    public void  unregisterStatusWithIDFragment(DataStatusObserver o) {
+        if (statusFragmentList.contains(o)) {
+            int observerIndex = statusFragmentList.indexOf(o);
+            statusFragmentList.remove(observerIndex);
+        }
+    }
+
+    @Override
+    public void  registerSleepFragment(DataSleepObserver o) {
+        if (!sleepFragmentList.contains(o))
+            sleepFragmentList.add(o);
+    }
+
+    @Override
+    public void  unregisterSleepFragment(DataSleepObserver o) {
+        if (sleepFragmentList.contains(o)) {
+            int observerIndex = sleepFragmentList.indexOf(o);
+            sleepFragmentList.remove(observerIndex);
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void notifyObserver(Map data) {
@@ -151,6 +197,24 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     public void notifyBullsEyeObserver(Map data) {
         for (DataObserver observer : bullsEyeFragmentlist) {
             observer.update(data);
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void notifyStatusWithIDObserver(Map data) {
+        for (DataStatusObserver observer : statusFragmentList) {
+            observer.updateStatus(data);
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void notifySleepObserver(Map data) {
+        for (DataSleepObserver observer : sleepFragmentList) {
+            observer.updateSleep(data);
         }
 
     }
@@ -175,7 +239,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         public void onReceive(Context context, Intent intent) {
             Map data = new HashMap<>();
             data.put("bodypos", intent.getStringExtra("bodypos"));
-            data.put("overall", intent.getStringExtra("overall"));
             data.put("coreTemp", intent.getStringExtra("coreTemp"));
             data.put("skinTemp", intent.getStringExtra("skinTemp"));
             data.put("br", intent.getStringExtra("br"));
@@ -184,6 +247,32 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
             data.put("name", intent.getStringExtra("name"));
 
             notifyObserver(data);
+        }
+    }
+    public class OverallWithIDReceiver extends BroadcastReceiver {
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Map data = new HashMap();
+            for (String s:intent.getExtras().keySet()){
+                data.put(s, intent.getStringExtra(s));
+            }
+
+            notifyStatusWithIDObserver(data);
+        }
+    }
+    public class SleepReceiver extends BroadcastReceiver {
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Map data = new HashMap();
+            for (String s:intent.getExtras().keySet()){
+                data.put(s, intent.getIntExtra(s, 0));
+            }
+
+            notifySleepObserver(data);
         }
     }
 

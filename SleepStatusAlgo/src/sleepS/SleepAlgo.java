@@ -94,7 +94,12 @@ public class SleepAlgo {
 		SleepState currBin = WAKE;
 		try{
 			jData = scoredData.getJSONObject(0);
-			currBin = (SleepState)jData.get("sleep");
+			try{
+				currBin = (SleepState)jData.get("sleep");
+			}catch (Exception e){
+				jData.put("sleep", SleepState.SLEEP);
+				currBin = SleepState.SLEEP;
+			}
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -108,7 +113,13 @@ public class SleepAlgo {
 		for (int i = 0; i < dataLen; i++){
 			try {
 				jData = scoredData.getJSONObject(i);
-				SleepState currState = (SleepState)jData.get("sleep");
+				SleepState currState; 
+				try{
+					currState = (SleepState)jData.get("sleep");
+				}catch (Exception e){
+					jData.put("sleep", SleepState.SLEEP);
+					currState = SLEEP;
+				}
 				if (currState == currBin){
 					jDataArray.put(jData);
 				}

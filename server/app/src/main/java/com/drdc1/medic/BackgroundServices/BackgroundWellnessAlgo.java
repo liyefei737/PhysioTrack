@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -128,6 +129,7 @@ public class BackgroundWellnessAlgo extends Service {
 
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
         int numSoldiers = dataManager.getNumSoldiers();
+        Map<String, String> overallWithID = new HashMap<>();
         String [] overall = new String[numSoldiers];
         String [] skin = new String[numSoldiers];
         String [] core = new String[numSoldiers];
@@ -157,6 +159,7 @@ public class BackgroundWellnessAlgo extends Service {
                     }
                     dataManager.saveWellnessTracker(id, wt);
                     overall[i] = nextState.toString();
+                    overallWithID.put(id, nextState.toString());
                     skin[i] = ((WelfareStatus) ((Map) statusResults[0]).get("SKIN")).toString();
                     core[i] = ((WelfareStatus) ((Map) statusResults[0]).get("CORE")).toString();
                     i++;
@@ -170,6 +173,13 @@ public class BackgroundWellnessAlgo extends Service {
                 intent.putExtra("SKIN", skin);
                 intent.putExtra("CORE", core);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+                String intentStr2 = "NAMELIST_OVERALL";
+                Intent intent2 = new Intent(intentStr);
+                intent2.setAction(intentStr2);
+                for (Map.Entry<String, String> entry : overallWithID.entrySet())
+                    intent2.putExtra(entry.getKey(), entry.getValue());
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent2);
             }
         }
     }
