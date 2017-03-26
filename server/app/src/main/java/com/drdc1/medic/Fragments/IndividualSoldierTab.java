@@ -309,7 +309,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 //        UPRIGHT ivStanding drawable/standing_inactive
 //        SUPINE ivSleepFaceUp drawable/inactive_sleepy3
 //        SIDE ivRunActive drawable/run2
-        if (bodyPos == null) {
+        if (bodyPos != null) {
             if (bodyPos.equals("PRONE")) {
                 ((ImageView) rootView.findViewById(R.id.ivSleepFaceDown))
                         .setImageResource(R.drawable.sleepy2);
