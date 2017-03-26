@@ -543,9 +543,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="400dp"
-                    android:background="@color/bg"
                     android:text="Change ranges"
-                    android:textColor="@color/white"
                     android:textSize="18dp"
                     android:visibility="visible" />
             </LinearLayout>

@@ -12,17 +12,22 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/appbar_padding_top"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <TextView
+            android:id="@+id/tvHeader"
             android:layout_width="match_parent"
-            android:background="@drawable/test4"
-            android:layout_height="100dp"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-        </android.support.v7.widget.Toolbar>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="My Health"
+            android:textColor="@color/white"
+            android:textSize="50dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:srcCompat="@drawable/bottomline2" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -30,9 +35,16 @@
             android:layout_height="wrap_content"
             android:background="@color/black"
             app:tabTextAppearance="@style/MineCustomTabText2"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="85dp"
             app:tabMode="scrollable" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
