@@ -284,7 +284,7 @@
                             android:layout_height="match_parent"
                             android:gravity="bottom|start"
                             android:maxLines="2"
-                            android:text="Breathing Rate (Per Min)"
+                            android:text="Breathing Rate"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="14dp" />

@@ -8,39 +8,59 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:paddingLeft="70dp"
         android:paddingRight="70dp"
         android:orientation="horizontal"
+        android:layout_marginBottom="100dp"
         android:weightSum="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/ibHelp"
                 android:layout_width="40dp"
-                android:layout_height="70dp"
+                android:layout_height="40dp"
                 android:layout_above="@+id/soldierList"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
-                android:layout_weight="1"
                 android:onClick="callHelp"
                 app:srcCompat="@drawable/help4" />
 
             <ListView
                 android:id="@+id/soldierList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="300dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/serverip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-100dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:text="IP:"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
     </LinearLayout>
 
 </LinearLayout>

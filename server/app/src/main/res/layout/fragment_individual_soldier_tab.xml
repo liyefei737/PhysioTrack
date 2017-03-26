@@ -244,7 +244,7 @@
                             android:layout_height="match_parent"
                             android:gravity="bottom|start"
                             android:maxLines="2"
-                            android:text="Breathing Rate (Per Min)"
+                            android:text="Breathing Rate"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="14dp" />
@@ -291,7 +291,7 @@
                             android:layout_height="match_parent"
                             android:gravity="bottom|start"
                             android:maxLines="2"
-                            android:text="Skin Temp"
+                            android:text="Skin Temp (C˚)"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="14dp" />
@@ -333,7 +333,7 @@
                             android:layout_height="match_parent"
                             android:gravity="bottom|start"
                             android:maxLines="2"
-                            android:text="Core Temp"
+                            android:text="Core Temp (C˚)"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="14dp" />
