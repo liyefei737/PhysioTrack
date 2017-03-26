@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/black"
-            app:tabTextAppearance="@style/MineCustomTabText"
+            app:tabTextAppearance="@style/MineCustomTabText2"
             android:layout_marginTop="-30dp"
-            android:layout_marginLeft="165dp"
+            android:layout_marginLeft="85dp"
             app:tabMode="scrollable" />
 
     </android.support.design.widget.AppBarLayout>
