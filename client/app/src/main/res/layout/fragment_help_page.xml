@@ -144,7 +144,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_margin="10dp"
                             android:text="@string/help_question_icons_settings"
-                            android:drawableLeft="@drawable/setting_small"
+                            android:drawableLeft="@drawable/setting_large"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"/>
                 </LinearLayout>
@@ -312,12 +312,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="@string/help_question_graph_expl" />
-                
+
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/help_graph" />
 
             </LinearLayout>

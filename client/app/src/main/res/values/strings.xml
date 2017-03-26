@@ -27,7 +27,7 @@
 
     <string name="graph_title">Historical Data</string>
     <string name="graph_xAxis">Minutes</string>
-    <string name="graph_breath_yAxis">Breathing Rate (Per Minute)</string>
+    <string name="graph_breath_yAxis">Breathing Rate</string>
     <string name="graph_core_yAxis">Core Temperature (Celsius)</string>
     <string name="graph_heart_yAxis">Heart Rate (BPM)</string>
     <string name="graph_skin_yAxis">Skin Temp (Celsius)</string>
@@ -57,8 +57,7 @@
     <string name="help_question_menu_example">In the below example, the heart rate has gone into the red zone, and the breathing rate into the yellow zone.</string>
 
     <string name="help_question_graph">4. Graph Interpretation</string>
-    <string name="help_question_graph_expl">The graphs show the past 10 minutes of data, and have 3ets of ranges (green, yellow, and red) that correspond to the normal, intermediate, and critical ranges for that measure.</string>
-    <string name="help_question_graph_example">The graphs show the past 10 minutes of data, and have 3ets of ranges (green, yellow, and red) that correspond to the normal, intermediate, and critical ranges for that measure.</string>
+    <string name="help_question_graph_expl">The graphs show the past 10 minutes of data, and have 3 sets of ranges (green, yellow, and red) that correspond to the normal, intermediate, and critical ranges for that measure.</string>
 
 
     <string name="help_question_change">5. How do I edit my profile?</string>
