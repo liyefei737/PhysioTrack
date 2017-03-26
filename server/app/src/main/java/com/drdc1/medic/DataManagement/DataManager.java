@@ -75,7 +75,7 @@ public class DataManager {
         }
     }
 
-    private void populatePhysioMap(){
+    private void populatePhysioMap() {
         try {
             Query allDocsQuery = _userInfoDB.createAllDocumentsQuery();
             QueryEnumerator result = allDocsQuery.run();
@@ -89,6 +89,7 @@ public class DataManager {
 
         }
     }
+
     public Map<String, Database> getPhysioDataMap() {
         return _physioDataDBMap;
     }
@@ -130,10 +131,11 @@ public class DataManager {
         _wellnessInfoMap.put(ID, iwt);
         return true;
 
-
     }
 
-    /*** query user_info DB for active soldiers
+    /***
+     * query user_info DB for active soldiers
+     *
      * @return ArrayList<Soldier> of Soldiers that are active, with name and id filled from the userinfo db
      */
     public ArrayList<Soldier> getActiveSoldiers() {
@@ -143,8 +145,9 @@ public class DataManager {
             Mapper mapper = new Mapper() {
                 public void map(Map<String, Object> document, Emitter emitter) {
                     String isActive = String.valueOf(document.get("active"));
-                    if ("1".equals(isActive))
+                    if ("1".equals(isActive)) {
                         emitter.emit(document.get("id"), document);
+                    }
                 }
             };
             view.setMap(mapper, "1.0");
@@ -155,7 +158,7 @@ public class DataManager {
                 QueryRow row = it.next();
                 String id = String.valueOf(row.getKey());
                 String name = String.valueOf(row.getDocument().getProperties().get("name"));
-                Soldier soldier = new Soldier(name,id);
+                Soldier soldier = new Soldier(name, id);
                 activeSoldiers.add(soldier);
             }
         } catch (CouchbaseLiteException e) {
@@ -253,7 +256,7 @@ public class DataManager {
     }
 
     public Database getSoldierDB(String ID) {
-        if (_physioDataDBMap.get(ID) == null){
+        if (_physioDataDBMap.get(ID) == null) {
             Database physioDB = openDatabase(ID);
             _physioDataDBMap.put(ID, physioDB);
 
@@ -348,15 +351,15 @@ public class DataManager {
         return lastXseconds;
     }
 
-    public WelfareAlgoParams get_welfareAlgoParams(){
+    public WelfareAlgoParams get_welfareAlgoParams() {
         return _welfareAlgoParams;
     }
 
-    public List<WelfareStatus> getOverallSquadStatusList(){
+    public List<WelfareStatus> getOverallSquadStatusList() {
         List<WelfareStatus> squadList = new ArrayList<>();
         Iterator it = _wellnessInfoMap.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
             WelfareTracker wt = (WelfareTracker) pair.getValue();
             squadList.add(wt.getOverallStatus());
 
@@ -364,11 +367,11 @@ public class DataManager {
         return squadList;
     }
 
-    public List<WelfareStatus> getSquadSkinStatusList(){
+    public List<WelfareStatus> getSquadSkinStatusList() {
         List<WelfareStatus> squadList = new ArrayList<>();
         Iterator it = _wellnessInfoMap.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
             WelfareTracker wt = (WelfareTracker) pair.getValue();
             squadList.add(wt.getSkinStatus());
 
@@ -376,11 +379,11 @@ public class DataManager {
         return squadList;
     }
 
-    public List<WelfareStatus> getSquadCoreStatusList(){
+    public List<WelfareStatus> getSquadCoreStatusList() {
         List<WelfareStatus> squadList = new ArrayList<>();
         Iterator it = _wellnessInfoMap.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
             WelfareTracker wt = (WelfareTracker) pair.getValue();
             squadList.add(wt.getCoreStatus());
 
@@ -388,9 +391,9 @@ public class DataManager {
         return squadList;
     }
 
-
-    public void updateData(String id, String milliTime, final String timeStamp, final String acc, final String skin, final String core, final String hr,
-                           final String br, final String body, final String motion){
+    public void updateData(String id, String milliTime, final String timeStamp, final String acc,
+                           final String skin, final String core, final String hr,
+                           final String br, final String body, final String motion) {
         Database db = getSoldierDB(id);
         Document saveStateDoc =
                 db.getDocument(milliTime);
@@ -421,7 +424,7 @@ public class DataManager {
 
     }
 
-    public void updateState(String soldierID, String docID, final WelfareStatus nextState){
+    public void updateState(String soldierID, String docID, final WelfareStatus nextState) {
         try {
             Database db = getSoldierDB(soldierID);
             Document saveStateDoc = db.getDocument(docID);
@@ -459,11 +462,13 @@ public class DataManager {
         }
     }
 
-
-    public void save9Liner(String sendingid, final int precedence, final int eqreq, final int patienttype, final int securityatpickup, final int pzmarking,
-                           final int patientnatstatus, final int symptoms, final String location, final String callsign_freq, final String number_patient,
-                           final String pzterrain, final String mechanisminjury, final String injurysustained, final String treatmentgiven,
-                           final String terrainobstacles){
+    public void save9Liner(String sendingid, final int precedence, final int eqreq,
+                           final int patienttype, final int securityatpickup, final int pzmarking,
+                           final int patientnatstatus, final int symptoms, final String location,
+                           final String callsign_freq, final String number_patient,
+                           final String pzterrain, final String mechanisminjury,
+                           final String injurysustained, final String treatmentgiven,
+                           final String terrainobstacles) {
 
         Database db = getNinelinerDatabase();
 
@@ -494,7 +499,7 @@ public class DataManager {
                 }
 
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
