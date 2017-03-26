@@ -52,6 +52,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     private ArrayList<DataStatusObserver> statusFragmentList;
     private ArrayList<DataSleepObserver> sleepFragmentList;
 
+    public ArrayList<String> latestFatigueStatuses;
+
     private String solderId;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -92,6 +94,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         bullsEyeFragmentlist = new ArrayList<>();
         statusFragmentList = new ArrayList<>();
         sleepFragmentList = new ArrayList<>();
+
+        latestFatigueStatuses = new ArrayList<>();
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -268,8 +272,16 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         @Override
         public void onReceive(Context context, Intent intent) {
             Map data = new HashMap();
+            latestFatigueStatuses.clear();
             for (String s:intent.getExtras().keySet()){
-                data.put(s, intent.getIntExtra(s, 0));
+                int percent = intent.getIntExtra(s, 0);
+                data.put(s, percent);
+                if (percent < 33)
+                    latestFatigueStatuses.add("GREEN");
+                else if (percent > 67)
+                    latestFatigueStatuses.add("RED");
+                else
+                    latestFatigueStatuses.add("YELLOW");
             }
 
             notifySleepObserver(data);
