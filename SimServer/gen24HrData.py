@@ -3,6 +3,7 @@ from datetime import datetime
 from datetime import timedelta
 from random import randint
 from random import uniform
+import zipfile
 
 bodyPosArr = ['UPRIGHT', 'SUPINE', 'PRONE', 'SIDE']
 motionArr = ['STOPPED', 'MOVINGFAST', 'MOVINGSLOWLY']
@@ -143,13 +144,15 @@ def main():
 	if 'nhr' in options:
 		invalidHR = True
 
-	date = datetime.today()
-	date = date.replace(hour = 0, minute = 0, second = 0, microsecond = 0)
-
+	date = datetime(2017, 02, 25, 0, 0, 0, 0)
 	dateFormatString = '%m/%d/%Y %H:%M:%S.%f'
 
-	f = open(fileName, 'w')
+	j = 0
+	fileNameIter = fileName + '_' + str(j) +'.csv'
+
+	f = open(fileNameIter, 'w')
 	f.write('DateTime,Core_Temp,Skin_Temp,AccX,AccY,AccZ,BodyPosition,Motion,Belt Breathing Rate,ECG Heart Rate\n')
+
 	for i in range(0, 2160000):  #milliseconds in a day
 		acc = getAcceleration()
 		if i%1500 == 0:
@@ -158,6 +161,19 @@ def main():
 			line = date.strftime(dateFormatString)[:-3] + ',' + "{:.1f}".format(lastCT) + ',' + "{:.1f}".format(lastST) + ',' + acc[0] + ',' + acc[1] + ',' + acc[2] + ',' + getBodyPosition() + ',' + getMotion() + ',' + str(lastRR) +','+str(lastHR)
 		f.write(line + '\n')
 		date = date + timedelta(milliseconds = 40)
+		
+		if (i != 0 and i%200000 == 0):
+			j+=1
+			f.close()
+			with zipfile.ZipFile(fileNameIter + '.zip', 'w', zipfile.ZIP_DEFLATED) as myzip:
+				myzip.write(fileNameIter)
+
+			fileNameIter = fileName+"_"+str(j)+".csv"
+			f = open(fileNameIter, 'w')
+
+
+	with zipfile.ZipFile(fileNameIter + '.zip', 'w', zipfile.ZIP_DEFLATED) as myzip:
+		myzip.write(fileNameIter)
 	f.close()
 
 		
