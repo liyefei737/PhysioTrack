@@ -240,7 +240,8 @@
                             android:id="@+id/yAxisLabel1"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:gravity="bottom|start"
+                            android:gravity="bottom|end"
+                            android:layout_marginTop="80dp"
                             android:maxLines="2"
                             android:text="Heart Rate (BPM)"
                             android:textAlignment="center"
@@ -282,6 +283,7 @@
                             android:id="@+id/yAxisLabel2"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:layout_marginTop="80dp"
                             android:gravity="bottom|start"
                             android:maxLines="2"
                             android:text="Breathing Rate"
@@ -335,7 +337,7 @@
                             android:text="Skin Temp (C˚)"
                             android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textSize="18dp" />
+                            android:textSize="14dp" />
 
                         <com.drdc1.medic.ViewUtils.LineChartWithBackground
                             android:id="@+id/skinrchart"
@@ -377,7 +379,7 @@
                             android:text="Core Temp (C˚)"
                             android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textSize="18dp" />
+                            android:textSize="14dp" />
 
                         <com.drdc1.medic.ViewUtils.LineChartWithBackground
                             android:id="@+id/ctrchart"
