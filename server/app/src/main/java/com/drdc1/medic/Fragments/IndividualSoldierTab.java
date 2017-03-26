@@ -309,33 +309,35 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 //        UPRIGHT ivStanding drawable/standing_inactive
 //        SUPINE ivSleepFaceUp drawable/inactive_sleepy3
 //        SIDE ivRunActive drawable/run2
-
-        if (bodyPos.equals("PRONE")) {
-            ((ImageView) rootView.findViewById(R.id.ivSleepFaceDown))
-                    .setImageResource(R.drawable.sleepy2);
-        } else {
-            ((ImageView) rootView.findViewById(R.id.ivSleepFaceDown))
-                    .setImageResource(R.drawable.inactive_sleepy2);
-        }
-        if (bodyPos.equals("UPRIGHT")) {
-            ((ImageView) rootView.findViewById(R.id.ivStanding))
-                    .setImageResource(R.drawable.standing);
-        } else {
-            ((ImageView) rootView.findViewById(R.id.ivStanding))
-                    .setImageResource(R.drawable.standing_inactive);
-        }
-        if (bodyPos.equals("SUPINE")) {
-            ((ImageView) rootView.findViewById(R.id.ivSleepFaceUp))
-                    .setImageResource(R.drawable.sleepy3);
-        } else {
-            ((ImageView) rootView.findViewById(R.id.ivSleepFaceUp))
-                    .setImageResource(R.drawable.inactive_sleepy3);
-        }
-        if (bodyPos.equals("SIDE")) {
-            ((ImageView) rootView.findViewById(R.id.ivRunActive)).setImageResource(R.drawable.run2);
-        } else {
-            ((ImageView) rootView.findViewById(R.id.ivRunActive))
-                    .setImageResource(R.drawable.run_inactive);
+        if (bodyPos == null) {
+            if (bodyPos.equals("PRONE")) {
+                ((ImageView) rootView.findViewById(R.id.ivSleepFaceDown))
+                        .setImageResource(R.drawable.sleepy2);
+            } else {
+                ((ImageView) rootView.findViewById(R.id.ivSleepFaceDown))
+                        .setImageResource(R.drawable.inactive_sleepy2);
+            }
+            if (bodyPos.equals("UPRIGHT")) {
+                ((ImageView) rootView.findViewById(R.id.ivStanding))
+                        .setImageResource(R.drawable.standing);
+            } else {
+                ((ImageView) rootView.findViewById(R.id.ivStanding))
+                        .setImageResource(R.drawable.standing_inactive);
+            }
+            if (bodyPos.equals("SUPINE")) {
+                ((ImageView) rootView.findViewById(R.id.ivSleepFaceUp))
+                        .setImageResource(R.drawable.sleepy3);
+            } else {
+                ((ImageView) rootView.findViewById(R.id.ivSleepFaceUp))
+                        .setImageResource(R.drawable.inactive_sleepy3);
+            }
+            if (bodyPos.equals("SIDE")) {
+                ((ImageView) rootView.findViewById(R.id.ivRunActive))
+                        .setImageResource(R.drawable.run2);
+            } else {
+                ((ImageView) rootView.findViewById(R.id.ivRunActive))
+                        .setImageResource(R.drawable.run_inactive);
+            }
         }
 
     }
