@@ -4,6 +4,7 @@ from datetime import timedelta
 from random import randint
 from random import uniform
 import zipfile
+import os
 
 bodyPosArr = ['UPRIGHT', 'SUPINE', 'PRONE', 'SIDE']
 motionArr = ['STOPPED', 'MOVINGFAST', 'MOVINGSLOWLY']
@@ -95,7 +96,7 @@ def getSkinTemp():
 	if lastST == 0.0:
 		newST = uniform(32.1, 36.0)
 	else:
-		newST = max(min(lastST + getSign()*uniform(0, 0.1), 40), 10)
+		newST = max(min(lastST + getSign()*uniform(0.3, 0.5), 40), 20)
 
 	lastST = newST
 	
@@ -167,15 +168,17 @@ def main():
 			f.close()
 			with zipfile.ZipFile(fileNameIter + '.zip', 'w', zipfile.ZIP_DEFLATED) as myzip:
 				myzip.write(fileNameIter)
-
+			f.close()
+			os.remove(fileNameIter)	
 			fileNameIter = fileName+"_"+str(j)+".csv"
 			f = open(fileNameIter, 'w')
 
 
 	with zipfile.ZipFile(fileNameIter + '.zip', 'w', zipfile.ZIP_DEFLATED) as myzip:
 		myzip.write(fileNameIter)
-	f.close()
 
+	f.close()
+	os.remove(fileNameIter)
 		
 
 if __name__ == "__main__":

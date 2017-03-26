@@ -1,1 +1,1 @@
-python gen24HrData.py out.csv -a
+python gen24HrData.py out -a
