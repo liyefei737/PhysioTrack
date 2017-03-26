@@ -40,15 +40,7 @@ public class BackgroundSleepAlgo extends Service {
     private volatile HandlerThread mHandlerThread;
     private Handler mServiceHandler;
 
-    static final String DB_UPDATE = "DB_UPDATE";
-    static private BackgroundSleepAlgo _backgroundSleepAlgo = null;
     private DataManager dataManager = null;
-    private LocalBroadcastManager broadcaster = null;
-
-    //singleton to to pass an instance of BackgroundSleepAlgo
-    static public BackgroundSleepAlgo get_backgroundSleepAlgo() {
-        return _backgroundSleepAlgo;
-    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -58,8 +50,6 @@ public class BackgroundSleepAlgo extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        _backgroundSleepAlgo = this;
-        broadcaster = LocalBroadcastManager.getInstance(this);
 
         // An Android handler thread internally operates on a looper.
         mHandlerThread = new HandlerThread("MyCustomService.HandlerThread");
@@ -100,14 +90,14 @@ public class BackgroundSleepAlgo extends Service {
                 mServiceHandler.post(new Runnable() {
                     public void run() {
                         try {
-                            run_sleep_rescorer(getApplicationContext());
+                            run_sleep_rescorer();
                         } catch (Exception e) {
                         }
                     }
                 });
             }
         };
-        timer.schedule(doSleepRescoreCallback, DateUtils.MINUTE_IN_MILLIS , DateUtils.MINUTE_IN_MILLIS ); //execute every minute
+        timer.schedule(doSleepRescoreCallback, DateUtils.MINUTE_IN_MILLIS*30 , DateUtils.MINUTE_IN_MILLIS*30 ); //execute every 30 minute
 
         TimerTask doFatigueCalcCallback = new TimerTask() {
             @Override
@@ -122,19 +112,11 @@ public class BackgroundSleepAlgo extends Service {
                 });
             }
         };
-        timer.schedule(doFatigueCalcCallback, DateUtils.MINUTE_IN_MILLIS , DateUtils.MINUTE_IN_MILLIS ); //execute every minute
+        timer.schedule(doFatigueCalcCallback, 0, DateUtils.MINUTE_IN_MILLIS*15 ); //execute every 15 minute
 
 
         // Keep service around "sticky"
         return START_STICKY;
-    }
-
-    public void notifyUI(Map<String, Object> document) {
-        Intent intent = new Intent(DB_UPDATE);
-        for (String key : document.keySet()) {
-            intent.putExtra(key, document.get(key).toString());
-        }
-        broadcaster.sendBroadcast(intent);
     }
 
     private void run_sleep_algo() {
@@ -155,7 +137,7 @@ public class BackgroundSleepAlgo extends Service {
 
     }
 
-    private void run_sleep_rescorer(Context context) {
+    private void run_sleep_rescorer() {
         int numMinutes = 30;
         Calendar now = new GregorianCalendar();
         now.set(2017, 02, 25); // hard code for sim data
@@ -177,14 +159,10 @@ public class BackgroundSleepAlgo extends Service {
                         }
                     }
                 }
-
             }
-
-
         }
-
-
     }
+
     private void run_fatigue_calc(Context context) {
         Map<String, Double> idFatigueMap = new HashMap<>();
         Map<String, Database> physioDataMap = dataManager.getPhysioDataMap();
@@ -207,10 +185,7 @@ public class BackgroundSleepAlgo extends Service {
                 }
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             }
-
         }
-
-
     }
 }
 
