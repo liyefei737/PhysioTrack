@@ -59,7 +59,7 @@ tools:context="com.drdc1.medic.Fragments.TreatmentScreenTab">
                     android:text="Soldier Name  :" />
 
                 <EditText
-                    android:id="@+id/et10"
+                    android:id="@+id/nameblank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -77,7 +77,7 @@ tools:context="com.drdc1.medic.Fragments.TreatmentScreenTab">
                     android:text="Age :" />
 
                 <EditText
-                    android:id="@+id/et11"
+                    android:id="@+id/ageblank"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bottomborder"
@@ -102,7 +102,7 @@ tools:context="com.drdc1.medic.Fragments.TreatmentScreenTab">
                     android:textSize="18dp" />
 
                 <EditText
-                    android:id="@+id/et12"
+                    android:id="@+id/idblank"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/bottomborder"
