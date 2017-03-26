@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -72,7 +73,6 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
         rootView =
                 inflater.inflate(R.layout.fragment_individual_soldier_tab, container, false);
-
 
         seachView = (FloatingSearchView) rootView.findViewById(R.id.searchBar);
         setupSearchBar();
@@ -258,7 +258,7 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         int[] hr = new int[num_data_pts];
         String state = GREY.toString();
         //hardcode for simdata
-
+        String bodyPos = null;
         Calendar date = new GregorianCalendar();
         date.set(2017, 02, 25);
         JSONArray last10Minutes = dataManager.QueryLastXMinutes(solid, date, 10);
@@ -272,6 +272,9 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
                     hr[i] = Integer.valueOf(jsonRow.getString("heartRate"));
                     coreTemp[i] = Float.valueOf(jsonRow.getString("coreTemp"));
                     skinTemp[i] = Float.valueOf(jsonRow.getString("skinTemp"));
+                    if (bodyPos == null) {
+                        bodyPos = jsonRow.getString("bodyPos").trim();
+                    }
                 } catch (Exception e) {
                     com.couchbase.lite.util.Log.e("UIUpdator", String.format(" index %d", i));
                 }
@@ -302,6 +305,39 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
         skinchart.formatUpdateLineChart(res, entries3, 25, 40, wap.getStRangeObj());
         ctchart.formatUpdateLineChart(res, entries4, 25, 40, wap.getCtRangeObj());
 
+//        PRONE ivSleepFaceDown drawable/inactive_sleepy2
+//        UPRIGHT ivStanding drawable/standing_inactive
+//        SUPINE ivSleepFaceUp drawable/inactive_sleepy3
+//        SIDE ivRunActive drawable/run2
+
+        if (bodyPos.equals("PRONE")) {
+            ((ImageView) rootView.findViewById(R.id.ivSleepFaceDown))
+                    .setImageResource(R.drawable.sleepy2);
+        } else {
+            ((ImageView) rootView.findViewById(R.id.ivSleepFaceDown))
+                    .setImageResource(R.drawable.inactive_sleepy2);
+        }
+        if (bodyPos.equals("UPRIGHT")) {
+            ((ImageView) rootView.findViewById(R.id.ivStanding))
+                    .setImageResource(R.drawable.standing);
+        } else {
+            ((ImageView) rootView.findViewById(R.id.ivStanding))
+                    .setImageResource(R.drawable.standing_inactive);
+        }
+        if (bodyPos.equals("SUPINE")) {
+            ((ImageView) rootView.findViewById(R.id.ivSleepFaceUp))
+                    .setImageResource(R.drawable.sleepy3);
+        } else {
+            ((ImageView) rootView.findViewById(R.id.ivSleepFaceUp))
+                    .setImageResource(R.drawable.inactive_sleepy3);
+        }
+        if (bodyPos.equals("SIDE")) {
+            ((ImageView) rootView.findViewById(R.id.ivRunActive)).setImageResource(R.drawable.run2);
+        } else {
+            ((ImageView) rootView.findViewById(R.id.ivRunActive))
+                    .setImageResource(R.drawable.run_inactive);
+        }
+
     }
 
     @Override
@@ -317,11 +353,10 @@ public class IndividualSoldierTab extends Fragment implements OnChartValueSelect
 
     private void setInitialSoldier() {
         ArrayList<Soldier> activeSoldiers = dataManager.getActiveSoldiers();
-        if(!activeSoldiers.isEmpty()) {
+        if (!activeSoldiers.isEmpty()) {
             solid = activeSoldiers.get(0).getId();
         }
     }
-
 
 }
 
