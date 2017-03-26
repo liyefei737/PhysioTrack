@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
@@ -197,12 +198,15 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
                     symptoms = 3;
                 }
 
-
-                dataManager.save9Liner(sendingid, precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus,
-                        symptoms, location.getText().toString(),callsign_freq.getText().toString(), number_patient.getText().toString(),
-                        pzterrain.getText().toString(), mechanisminjury.getText().toString(), injurysustained.getText().toString(),
+                dataManager.save9Liner(sendingid, precedence, eqreq, patienttype, securityatpickup,
+                        pzmarking, patientnatstatus,
+                        symptoms, location.getText().toString(), callsign_freq.getText().toString(),
+                        number_patient.getText().toString(),
+                        pzterrain.getText().toString(), mechanisminjury.getText().toString(),
+                        injurysustained.getText().toString(),
                         treatmentgiven.getText().toString(), terrainobstacles.getText().toString());
-
+                Toast.makeText((HomeActivity) getActivity(), "Submission complete!",
+                        Toast.LENGTH_SHORT).show();
 
             }
         });
