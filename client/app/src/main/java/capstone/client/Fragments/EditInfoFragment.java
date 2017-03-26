@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +75,10 @@ public class EditInfoFragment extends BaseFragment {
     public static void edit_info_cancel(Activity activity, DBManager dbManager){
         Button savebtn = (Button) activity.findViewById(R.id.btSave);
         Button cancelbtn = (Button) activity.findViewById(R.id.btCancel);
+        ImageButton edit_data = (ImageButton) activity.findViewById(R.id.edit_data);
         savebtn.setVisibility(View.INVISIBLE);
         cancelbtn.setVisibility(View.INVISIBLE);
+        edit_data.setVisibility(VISIBLE);
 
         List<EditText> etList = new ArrayList<>();
         etList.add((EditText) activity.findViewById(R.id.etSoldierId));
@@ -95,6 +98,7 @@ public class EditInfoFragment extends BaseFragment {
         List<EditText> etList = new ArrayList<>();
         final Button btnSave = (Button) activity.findViewById(R.id.btSave);
         final Button cancelbtn = (Button) activity.findViewById(R.id.btCancel);
+        ImageButton edit_data = (ImageButton) activity.findViewById(R.id.edit_data);
         Soldier soldier = dbManager.getSoldierDetails();
 
         EditText id = (EditText) activity.findViewById(R.id.etSoldierId);
@@ -148,14 +152,18 @@ public class EditInfoFragment extends BaseFragment {
         }
         btnSave.setVisibility(View.INVISIBLE);
         cancelbtn.setVisibility(View.INVISIBLE);
+        edit_data.setVisibility(VISIBLE);
         return true;
     }
 
     public static void edit_fields(Activity activity){
         Button savebtn = (Button) activity.findViewById(R.id.btSave);
         Button cancelbtn = (Button) activity.findViewById(R.id.btCancel);
+        ImageButton edit_data = (ImageButton) activity.findViewById(R.id.edit_data);
         savebtn.setVisibility(VISIBLE);
         cancelbtn.setVisibility(VISIBLE);
+        edit_data.setVisibility(View.INVISIBLE);
+
 
         List<EditText> etList = new ArrayList<>();
         if (activity.getClass() == SetupActivity.class)

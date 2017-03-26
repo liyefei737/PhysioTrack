@@ -31,7 +31,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btTutor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
@@ -40,6 +40,7 @@
         android:padding="10dp"
         android:text="@string/help_tutorial_restart"
         android:textColor="@color/black"
+        android:onClick="callToast"
         android:textSize="12sp" />
 
     <ScrollView
@@ -311,13 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="@string/help_question_graph_expl" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/help_question_graph_example" />
-
+                
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
