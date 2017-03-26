@@ -27,7 +27,7 @@
             <com.arlib.floatingsearchview.FloatingSearchView
                 android:id="@+id/searchBar"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:layout_weight="1"
                 app:floatingSearch_close_search_on_keyboard_dismiss="true"
@@ -332,7 +332,7 @@
                             android:layout_height="match_parent"
                             android:gravity="bottom|start"
                             android:maxLines="2"
-                            android:text="Skin Temp"
+                            android:text="Skin Temp (C˚)"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="18dp" />
@@ -374,7 +374,7 @@
                             android:layout_height="match_parent"
                             android:gravity="bottom|start"
                             android:maxLines="2"
-                            android:text="Core Temp"
+                            android:text="Core Temp (C˚)"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="18dp" />
