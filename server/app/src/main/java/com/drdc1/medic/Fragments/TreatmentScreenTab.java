@@ -36,7 +36,7 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
             patientnatstatus_noncoalitioncivil, patientnatstatus_opforces, patientnatstatus_child,
             airway, breathing, pulserate, conscious;
     EditText location, callsign_freq, number_patient, terrainobstacles, pzterrain, mechanisminjury,
-            injurysustained, treatmentgiven;
+            injurysustained, treatmentgiven, nameblank, ageblank, idblank;
     Button btSubmit;
     String sendingid;
     int precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus, symptoms;
@@ -50,12 +50,20 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         dataManager = ((AppContext) this.getActivity().getApplication()).getDataManager();
-
         View rootView =
                 inflater.inflate(R.layout.fragment_treatment_screen_tab, container, false);
+        nameblank = (EditText) rootView.findViewById(R.id.nameblank);
+        ageblank = (EditText) rootView.findViewById(R.id.ageblank);
+        idblank = (EditText) rootView.findViewById(R.id.idblank);
+
         String IDpassed = ((HomeActivity) getActivity()).popIndividualSoldierId();
         if (IDpassed != null) {
             sendingid = IDpassed;
+            HashMap hm = dataManager.getStaticInfo(IDpassed);
+            nameblank.setText((CharSequence) hm.get("name"));
+            ageblank.setText((CharSequence) hm.get("age"));
+            idblank.setText(IDpassed);
+
             //TODO: handle code for id from namelist here.
         }
 
