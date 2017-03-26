@@ -14,8 +14,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="70dp"
-        android:paddingRight="70dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:id="@+id/searchbar"
         android:layout_alignParentTop="true">
 
@@ -53,8 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
-        android:paddingLeft="70dp"
-        android:paddingRight="70dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_marginBottom="100dp">
 
         <LinearLayout
@@ -165,14 +165,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/run_inactive" />
+                    app:srcCompat="@drawable/inactive_sleepy2" />
 
                 <ImageView
                     android:id="@+id/ivSleepFaceUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/run_inactive" />
+                    app:srcCompat="@drawable/inactive_sleepy3" />
 
             </LinearLayout>
 
@@ -181,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/line" />
+                app:srcCompat="@drawable/bottomline2" />
 
             <LinearLayout
                 android:id="@+id/layoutButton"
@@ -227,7 +227,7 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -267,9 +267,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="120dp"
+                    android:layout_marginLeft="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -317,7 +317,7 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -358,9 +358,9 @@
 
 
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="120dp"
+                    android:layout_marginLeft="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
