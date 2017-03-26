@@ -13,11 +13,14 @@ import com.drdc1.medic.AppContext;
 import com.drdc1.medic.BackgroundServices.BackgroundWellnessAlgo;
 import com.drdc1.medic.DataManagement.DataManager;
 import com.drdc1.medic.DataManagement.DataObserver;
+import com.drdc1.medic.DataManagement.DataSleepObserver;
+import com.drdc1.medic.DataManagement.DataStatusObserver;
 import com.drdc1.medic.DataStructUtils.HelperMethods;
 import com.drdc1.medic.R;
 import com.drdc1.medic.ViewUtils.BullsEyeUtils.BullsEyeDrawTask;
 import com.drdc1.medic.ViewUtils.BullsEyeUtils.BullsEyeInfo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -46,11 +49,9 @@ public class SquadStatus extends Fragment implements DataObserver {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         BackgroundWellnessAlgo.calculateWellness(dbManager, getContext());
-        int numSoldiers = dbManager.getActiveSoldiers().size();
         homeActivity = (HomeActivity)getActivity();
         homeActivity.registerBullsEyeFragment(this);
         View view = inflater.inflate(R.layout.fragment_squad_status, container, false);
-        LinearLayout wrapper = (LinearLayout) view.findViewById(R.id.layoutwrapper);
         return view;
     }
 
@@ -86,13 +87,19 @@ public class SquadStatus extends Fragment implements DataObserver {
                 if ( overall[i] != null && !overall[i].isEmpty())
                     numSoldiers ++;
             }
-            Resources resources = getActivity().getResources();
+
+            HomeActivity activity = (HomeActivity) getActivity();
+            List<String> fatigue = activity.latestFatigueStatuses;
+            if (fatigue == null || fatigue.isEmpty()){
+                for (int i = 0; i < numSoldiers; i++)
+                    fatigue.add("GREEN");
+            }
+            Resources resources = activity.getResources();
             BullsEyeDrawTask bullsEyeTask0 = new BullsEyeDrawTask(resources, numSoldiers);
             LinearLayout wrapper = (LinearLayout) getActivity().findViewById(R.id.layoutwrapper);
             bullsEyeTask0.execute(new BullsEyeInfo(wrapper, Arrays.asList(overall), Arrays.asList(core), Arrays.asList(skin),
-                    Arrays.asList(overall)));
+                   fatigue));
             wrapper.invalidate();
         }
     }
-
 }

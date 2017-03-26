@@ -88,6 +88,9 @@ public class EditInfoFragment extends BaseFragment {
         etList.add((EditText) activity.findViewById(R.id.etHeight));
         etList.add((EditText) activity.findViewById(R.id.etIP));
 
+        activity.findViewById(R.id.id_edit_hint).setVisibility(View.INVISIBLE);
+        activity.findViewById(R.id.name_edit_hint).setVisibility(View.INVISIBLE);
+        activity.findViewById(R.id.ip_edit_hint).setVisibility(View.INVISIBLE);
         EditTextHandler.disableAndFormat(etList);
         EditTextHandler.setSoldierFields(dbManager.getSoldierDetails(), etList.get(0), etList.get(1), etList.get(2), etList.get(3), etList.get(4), etList.get(5));
     }
@@ -147,6 +150,10 @@ public class EditInfoFragment extends BaseFragment {
                     dbManager.updatePHPURL(newURL);
             }
             EditTextHandler.disableAndFormat(etList);
+
+            activity.findViewById(R.id.id_edit_hint).setVisibility(View.INVISIBLE);
+            activity.findViewById(R.id.name_edit_hint).setVisibility(View.INVISIBLE);
+            activity.findViewById(R.id.ip_edit_hint).setVisibility(View.INVISIBLE);
         } catch (Exception e) {
             return false;
         }
@@ -175,6 +182,10 @@ public class EditInfoFragment extends BaseFragment {
         etList.add((EditText) activity.findViewById(R.id.etIP));
         etList.add((EditText) activity.findViewById(R.id.etSoldierName));
 
+
+        activity.findViewById(R.id.id_edit_hint).setVisibility(VISIBLE);
+        activity.findViewById(R.id.name_edit_hint).setVisibility(VISIBLE);
+        activity.findViewById(R.id.ip_edit_hint).setVisibility(VISIBLE);
         EditTextHandler.enableAndFormat(etList);
     }
 }

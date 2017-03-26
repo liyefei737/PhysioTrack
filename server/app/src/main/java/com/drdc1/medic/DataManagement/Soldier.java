@@ -12,6 +12,36 @@ public class Soldier {
     private String name;
     private String id;
 
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.lastStatus = this.currentStatus;
+        this.currentStatus = currentStatus;
+    }
+
+    public String getLastStatus() {
+        return lastStatus;
+    }
+
+    public void setLastStatus(String lastStatus) {
+        this.lastStatus = lastStatus;
+    }
+
+    private String currentStatus;
+    private String lastStatus;
+
+    public String getFatigue() {
+        return fatigue;
+    }
+
+    public void setFatigue(String fatigue) {
+        this.fatigue = fatigue;
+    }
+
+    private String fatigue;
+
     private Map<String, Object> cuurentPhysioData = null;
     private Map<String, Object> lastPhysioData = null;
 

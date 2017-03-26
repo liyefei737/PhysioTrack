@@ -167,6 +167,42 @@ public class DataManager {
         return activeSoldiers;
     }
 
+    public Double getSleepPercentageOfSoldier(String soldierID) {
+
+        View view = _physioDataDBMap.get(soldierID).getView("sleep");
+        if (view.getMap() == null) {
+            Mapper mapper = new Mapper() {
+                public void map(Map<String, Object> document, Emitter emitter) {
+                    String isSleep = String.valueOf(document.get("sleep"));
+                    if (isSleep.equals("SLEEP")) {
+                        emitter.emit(document.get("_id"), document);
+                    }
+                }
+            };
+            view.setMap(mapper, "1.0");
+        }
+        try {
+            QueryEnumerator result = view.createQuery().run();
+            return Double.valueOf(result.getCount());
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+            return 0.0;
+        }
+    }
+
+    public Double getTotalMinutesActiveOfSoldier(String soldierID){
+        double totalRows = 0;
+        Query query = getSoldierDB(soldierID).createAllDocumentsQuery();
+        try {
+            QueryEnumerator result = query.run();
+            totalRows = result.getCount();
+        } catch (CouchbaseLiteException e) {
+            //handle this
+        }
+
+        return totalRows;
+    }
+
     public boolean removeSoldier(String ID) {
         if (!soldierInSystem(ID))
         //doesn't exist
@@ -321,7 +357,8 @@ public class DataManager {
 
     public JSONArray QueryLastXMinutes(String ID, Calendar now, int minutes) {
 
-        JSONArray lastXseconds = new JSONArray();
+        JSONArray lastXMinutes = new JSONArray();
+
         Calendar nearestMinute = DateUtils.round(now, Calendar.MINUTE);
         try {
             Query query = getSoldierDB(ID).createAllDocumentsQuery();
@@ -338,17 +375,20 @@ public class DataManager {
                     QueryRow row = it.next();
                     Map<String, String> tmpMap = (Map) row.getDocument().getProperties();
                     if (tmpMap.size() > 3) {
-                        lastXseconds.put(new JSONObject(tmpMap));
+                        lastXMinutes.put(new JSONObject(tmpMap));
                     }
                 }
             } catch (CouchbaseLiteException e) {
                 //handle this
             }
-            return lastXseconds;
+            return lastXMinutes;
         } catch (Exception E) {
 
         }
-        return lastXseconds;
+
+
+
+        return lastXMinutes;
     }
 
     public WelfareAlgoParams get_welfareAlgoParams() {
