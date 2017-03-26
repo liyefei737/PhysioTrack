@@ -15,44 +15,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="70dp"
+        android:paddingRight="70dp"
         android:id="@+id/searchbar"
         android:layout_alignParentTop="true">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="138dp"/>
-            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                android:layout_width="760dp"
-                android:layout_height="140dp"
-                android:orientation="vertical">
+            <com.arlib.floatingsearchview.FloatingSearchView
+                android:id="@+id/searchBar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="40dp"
+                android:layout_weight="1"
+                app:floatingSearch_close_search_on_keyboard_dismiss="true"
+                app:floatingSearch_leftActionMode="noLeftAction"
+                app:floatingSearch_searchHint="Search by Soldier Name"
+                app:floatingSearch_showSearchKey="false"
+                app:floatingSearch_suggestionsListAnimDuration="250">
 
-                <com.arlib.floatingsearchview.FloatingSearchView
-                    android:id="@+id/searchBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="132dp"
-                    app:floatingSearch_close_search_on_keyboard_dismiss="true"
-                    app:floatingSearch_leftActionMode="noLeftAction"
-                    app:floatingSearch_searchHint="Search by Soldier Name"
-                    app:floatingSearch_showSearchKey="false"
-                    app:floatingSearch_suggestionsListAnimDuration="250">
-
-                </com.arlib.floatingsearchview.FloatingSearchView>
-
-            </LinearLayout>
+            </com.arlib.floatingsearchview.FloatingSearchView>
 
             <ImageButton
                 android:id="@+id/ibHelp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
                 android:background="@color/black"
                 android:onClick="callHelp"
                 app:srcCompat="@drawable/help4" />
-
         </LinearLayout>
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
