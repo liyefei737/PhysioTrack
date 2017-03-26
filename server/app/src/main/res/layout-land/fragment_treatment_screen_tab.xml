@@ -44,6 +44,74 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll57"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv43"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textColor="@color/inactivetab"
+                    android:text="Soldier Name  :" />
+
+                <EditText
+                    android:id="@+id/et10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bottomborder"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv44"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="18dp"
+                    android:textColor="@color/inactivetab"
+                    android:text="Age :" />
+
+                <EditText
+                    android:id="@+id/et11"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottomborder"
+                    android:textColor="@color/white"
+                    android:inputType="textPersonName"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll58"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Soldier ID        :"
+                    android:textColor="@color/inactivetab"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/et12"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bottomborder"
+                    android:textColor="@color/white"
+                    android:inputType="textPersonName"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -834,7 +902,7 @@
                     android:hint="Notes:"
                     />
                 <Button
-                    android:text="Submit"
+                    android:text="Save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/btnbg"
