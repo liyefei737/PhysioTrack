@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.drdc1.medic.DataStructUtils.StateComparator;
 import com.drdc1.medic.R;
 
 import java.util.ArrayList;
@@ -55,8 +56,8 @@ public class BullsEye {
             }
         }
         if (goodStatusList != null) {
-            Collections.sort(goodStatusList);
-            Collections.reverse(goodStatusList);
+            Collections.sort(goodStatusList, new StateComparator());
+
             for (int i = 0; i < numSoldiers; i++) {
                 ImageView ringView = new ImageView(getContext());
                 ringView.setLayoutParams(imageViewParams);

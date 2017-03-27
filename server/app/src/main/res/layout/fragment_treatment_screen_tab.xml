@@ -121,9 +121,11 @@ tools:context="com.drdc1.medic.Fragments.TreatmentScreenTab">
 
                 <ImageView
                     android:id="@+id/iv22"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/bottomline2" />
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/border_thick" />
             </LinearLayout>
 
             <LinearLayout
