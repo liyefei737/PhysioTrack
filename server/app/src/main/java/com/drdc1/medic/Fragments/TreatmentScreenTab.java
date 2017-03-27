@@ -22,6 +22,8 @@ import com.drdc1.medic.R;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,16 +58,36 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
         ageblank = (EditText) rootView.findViewById(R.id.ageblank);
         idblank = (EditText) rootView.findViewById(R.id.idblank);
 
-        String IDpassed = ((HomeActivity) getActivity()).popIndividualSoldierId();
-        if (IDpassed != null) {
-            sendingid = IDpassed;
-            HashMap hm = dataManager.getStaticInfo(IDpassed);
-            nameblank.setText((CharSequence) hm.get("name"));
-            ageblank.setText((CharSequence) hm.get("age"));
-            idblank.setText(IDpassed);
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-            //TODO: handle code for id from namelist here.
-        }
+                            String IDpassed = ((HomeActivity) getActivity()).getIndivID();
+
+//        String IDpassed = ((HomeActivity) getActivity()).popIndividualSoldierId();
+                            if (IDpassed != null) {
+                                sendingid = IDpassed;
+                                HashMap hm = dataManager.getStaticInfo(IDpassed);
+                                nameblank.setText((CharSequence) hm.get("name"));
+                                ageblank.setText((CharSequence) hm.get("age"));
+                                idblank.setText(IDpassed);
+
+                                //TODO: handle code for id from namelist here.
+                            }
+
+                        }
+                    });
+
+                } else {
+
+                }
+
+            }
+        }, 0, 1000);
 
         precedence_urgent = (CheckBox) rootView.findViewById(R.id.precedence_urgent);
         precedence_priority = (CheckBox) rootView.findViewById(R.id.precedence_priority);
@@ -219,142 +241,169 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
             }
         });
 
-        // Inflate the layout for this fragment
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-        Database db = dataManager.getNinelinerDatabase();
-        if (db.getExistingDocument(sendingid) != null) {
+                            // Inflate the layout for this fragment
 
-            HashMap hm = new HashMap();
-            try {
-                Query allDocsQuery = db.createAllDocumentsQuery();
-                QueryEnumerator result = allDocsQuery.run();
-                for (Iterator<QueryRow> it = result; it.hasNext(); ) {
-                    QueryRow row = it.next();
-                    Document doc = row.getDocument();
-                    if (doc.getProperty("id").equals(sendingid)) {
-                        hm.put("precedence", doc.getProperty("precedence"));
-                        hm.put("eqreq", doc.getProperty("eqreq"));
-                        hm.put("patienttype", doc.getProperty("patienttype"));
-                        hm.put("securityatpickup", doc.getProperty("securityatpickup"));
-                        hm.put("pzmarking", doc.getProperty("pzmarking"));
-                        hm.put("patientnatstatus", doc.getProperty("patientnatstatus"));
-                        hm.put("symptoms", doc.getProperty("symptoms"));
-                        hm.put("location", doc.getProperty("location"));
-                        hm.put("callsign_freq", doc.getProperty("callsign_freq"));
-                        hm.put("number_patient", doc.getProperty("number_patient"));
-                        hm.put("pzterrain", doc.getProperty("pzterrain"));
-                        hm.put("mechanisminjury", doc.getProperty("mechanisminjury"));
-                        hm.put("injurysustained", doc.getProperty("injurysustained"));
-                        hm.put("treatmentgiven", doc.getProperty("treatmentgiven"));
-                        hm.put("terrainobstacles", doc.getProperty("terrainobstacles"));
+                            Database db = dataManager.getNinelinerDatabase();
+                            if (db.getExistingDocument(sendingid) != null) {
 
-                    }
+                                HashMap hm = new HashMap();
+                                try {
+                                    Query allDocsQuery = db.createAllDocumentsQuery();
+                                    QueryEnumerator result = allDocsQuery.run();
+                                    for (Iterator<QueryRow> it = result; it.hasNext(); ) {
+                                        QueryRow row = it.next();
+                                        Document doc = row.getDocument();
+                                        if (doc.getProperty("id").equals(sendingid)) {
+                                            hm.put("precedence", doc.getProperty("precedence"));
+                                            hm.put("eqreq", doc.getProperty("eqreq"));
+                                            hm.put("patienttype", doc.getProperty("patienttype"));
+                                            hm.put("securityatpickup",
+                                                    doc.getProperty("securityatpickup"));
+                                            hm.put("pzmarking", doc.getProperty("pzmarking"));
+                                            hm.put("patientnatstatus",
+                                                    doc.getProperty("patientnatstatus"));
+                                            hm.put("symptoms", doc.getProperty("symptoms"));
+                                            hm.put("location", doc.getProperty("location"));
+                                            hm.put("callsign_freq",
+                                                    doc.getProperty("callsign_freq"));
+                                            hm.put("number_patient",
+                                                    doc.getProperty("number_patient"));
+                                            hm.put("pzterrain", doc.getProperty("pzterrain"));
+                                            hm.put("mechanisminjury",
+                                                    doc.getProperty("mechanisminjury"));
+                                            hm.put("injurysustained",
+                                                    doc.getProperty("injurysustained"));
+                                            hm.put("treatmentgiven",
+                                                    doc.getProperty("treatmentgiven"));
+                                            hm.put("terrainobstacles",
+                                                    doc.getProperty("terrainobstacles"));
+
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                if (hm != null && hm.size() > 2) {
+                                    if ((int) hm.get("precedence") == 0) {
+                                        precedence_urgent.setChecked(true);
+                                    }
+                                    if ((int) hm.get("precedence") == 1) {
+                                        precedence_priority.setChecked(true);
+                                    }
+                                    if ((int) hm.get("precedence") == 2) {
+                                        precedence_routine.setChecked(true);
+                                    }
+                                    if ((int) hm.get("eqreq") == 0) {
+                                        eqreq_none.setChecked(true);
+                                    }
+                                    if ((int) hm.get("eqreq") == 1) {
+                                        eqreq_hoist.setChecked(true);
+                                    }
+                                    if ((int) hm.get("eqreq") == 2) {
+                                        eqreq_extrication.setChecked(true);
+                                    }
+                                    if ((int) hm.get("eqreq") == 3) {
+                                        eqreq_ventilator.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patienttype") == 0) {
+                                        patienttype_litter.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patienttype") == 1) {
+                                        patienttype_walking.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patienttype") == 2) {
+                                        patienttype_escort.setChecked(true);
+                                    }
+                                    if ((int) hm.get("securityatpickup") == 0) {
+                                        securityatpickup_noenem.setChecked(true);
+                                    }
+                                    if ((int) hm.get("securityatpickup") == 1) {
+                                        securityatpickup_possibileenem.setChecked(true);
+                                    }
+                                    if ((int) hm.get("securityatpickup") == 2) {
+                                        securityatpickup_eneminarea.setChecked(true);
+                                    }
+                                    if ((int) hm.get("securityatpickup") == 3) {
+                                        securityatpickup_hotpz.setChecked(true);
+                                    }
+                                    if ((int) hm.get("pzmarking") == 0) {
+                                        pzmarking_panles.setChecked(true);
+                                    }
+                                    if ((int) hm.get("pzmarking") == 1) {
+                                        pzmarking_pyro.setChecked(true);
+                                    }
+                                    if ((int) hm.get("pzmarking") == 2) {
+                                        pzmarking_smoke.setChecked(true);
+                                    }
+                                    if ((int) hm.get("pzmarking") == 3) {
+                                        pzmarking_other.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patientnatstatus") == 0) {
+                                        patientnatstatus_coalitionmil.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patientnatstatus") == 1) {
+                                        patientnatstatus_civiliancf.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patientnatstatus") == 2) {
+                                        patientnatstatus_noncoalitionsf.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patientnatstatus") == 3) {
+                                        patientnatstatus_noncoalitioncivil.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patientnatstatus") == 4) {
+                                        patientnatstatus_opforces.setChecked(true);
+                                    }
+                                    if ((int) hm.get("patientnatstatus") == 5) {
+                                        patientnatstatus_child.setChecked(true);
+                                    }
+                                    if ((int) hm.get("symptoms") == 0) {
+                                        airway.setChecked(true);
+                                    }
+                                    if ((int) hm.get("symptoms") == 1) {
+                                        breathing.setChecked(true);
+                                    }
+                                    if ((int) hm.get("symptoms") == 2) {
+                                        pulserate.setChecked(true);
+                                    }
+                                    if ((int) hm.get("symptoms") == 3) {
+                                        conscious.setChecked(true);
+                                    }
+                                    pzterrain.setText((String) hm.get("pzterrain"));
+
+                                    mechanisminjury.setText((String) hm.get("mechanisminjury"));
+
+                                    injurysustained.setText((String) hm.get("injurysustained"));
+
+                                    treatmentgiven.setText((String) hm.get("treatmentgiven"));
+
+                                    location.setText((String) hm.get("location"));
+
+                                    callsign_freq.setText((String) hm.get("callsign_freq"));
+
+                                    number_patient.setText((String) hm.get("number_patient"));
+
+                                    terrainobstacles.setText((String) hm.get("terrainobstacles"));
+
+                                }
+
+                            }
+                        }
+                    });
+
+                } else {
+
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            if ((int) hm.get("precedence") == 0) {
-                precedence_urgent.setChecked(true);
             }
-            if ((int) hm.get("precedence") == 1) {
-                precedence_priority.setChecked(true);
-            }
-            if ((int) hm.get("precedence") == 2) {
-                precedence_routine.setChecked(true);
-            }
-            if ((int) hm.get("eqreq") == 0) {
-                eqreq_none.setChecked(true);
-            }
-            if ((int) hm.get("eqreq") == 1) {
-                eqreq_hoist.setChecked(true);
-            }
-            if ((int) hm.get("eqreq") == 2) {
-                eqreq_extrication.setChecked(true);
-            }
-            if ((int) hm.get("eqreq") == 3) {
-                eqreq_ventilator.setChecked(true);
-            }
-            if ((int) hm.get("patienttype") == 0) {
-                patienttype_litter.setChecked(true);
-            }
-            if ((int) hm.get("patienttype") == 1) {
-                patienttype_walking.setChecked(true);
-            }
-            if ((int) hm.get("patienttype") == 2) {
-                patienttype_escort.setChecked(true);
-            }
-            if ((int) hm.get("securityatpickup") == 0) {
-                securityatpickup_noenem.setChecked(true);
-            }
-            if ((int) hm.get("securityatpickup") == 1) {
-                securityatpickup_possibileenem.setChecked(true);
-            }
-            if ((int) hm.get("securityatpickup") == 2) {
-                securityatpickup_eneminarea.setChecked(true);
-            }
-            if ((int) hm.get("securityatpickup") == 3) {
-                securityatpickup_hotpz.setChecked(true);
-            }
-            if ((int) hm.get("pzmarking") == 0) {
-                pzmarking_panles.setChecked(true);
-            }
-            if ((int) hm.get("pzmarking") == 1) {
-                pzmarking_pyro.setChecked(true);
-            }
-            if ((int) hm.get("pzmarking") == 2) {
-                pzmarking_smoke.setChecked(true);
-            }
-            if ((int) hm.get("pzmarking") == 3) {
-                pzmarking_other.setChecked(true);
-            }
-            if ((int) hm.get("patientnatstatus") == 0) {
-                patientnatstatus_coalitionmil.setChecked(true);
-            }
-            if ((int) hm.get("patientnatstatus") == 1) {
-                patientnatstatus_civiliancf.setChecked(true);
-            }
-            if ((int) hm.get("patientnatstatus") == 2) {
-                patientnatstatus_noncoalitionsf.setChecked(true);
-            }
-            if ((int) hm.get("patientnatstatus") == 3) {
-                patientnatstatus_noncoalitioncivil.setChecked(true);
-            }
-            if ((int) hm.get("patientnatstatus") == 4) {
-                patientnatstatus_opforces.setChecked(true);
-            }
-            if ((int) hm.get("patientnatstatus") == 5) {
-                patientnatstatus_child.setChecked(true);
-            }
-            if ((int) hm.get("symptoms") == 0) {
-                airway.setChecked(true);
-            }
-            if ((int) hm.get("symptoms") == 1) {
-                breathing.setChecked(true);
-            }
-            if ((int) hm.get("symptoms") == 2) {
-                pulserate.setChecked(true);
-            }
-            if ((int) hm.get("symptoms") == 3) {
-                conscious.setChecked(true);
-            }
-            pzterrain.setText((String) hm.get("pzterrain"));
-
-            mechanisminjury.setText((String) hm.get("mechanisminjury"));
-
-            injurysustained.setText((String) hm.get("injurysustained"));
-
-            treatmentgiven.setText((String) hm.get("treatmentgiven"));
-
-            location.setText((String) hm.get("location"));
-
-            callsign_freq.setText((String) hm.get("callsign_freq"));
-
-            number_patient.setText((String) hm.get("number_patient"));
-
-            terrainobstacles.setText((String) hm.get("terrainobstacles"));
-
-        }
+        }, 0, 1000);
 
         return rootView;
 

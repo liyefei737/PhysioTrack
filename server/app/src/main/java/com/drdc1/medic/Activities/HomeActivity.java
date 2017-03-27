@@ -415,4 +415,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         individualSolderId = null;
         return result;
     }
+    public String getIndivID() {
+        return this.individualSolderId;
+    }
+
 }
