@@ -3,52 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/black"
+    android:orientation="vertical"
     tools:context="com.drdc1.medic.Fragments.NameList">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/ibHelp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_above="@+id/soldierList"
-        android:layout_gravity="right"
-        android:layout_marginRight="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        app:srcCompat="@drawable/help4"
-        android:onClick="callHelp"/>
+        <TextView
+            android:id="@+id/ip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="left"
+            android:inputType="textPersonName"
+            android:text=""
+            android:textColor="@color/grey"
+            android:textSize="18dp" />
+
+        <ImageButton
+            android:id="@+id/ibHelp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_above="@+id/soldierList"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="30dp"
+            android:onClick="callHelp"
+            app:srcCompat="@drawable/help4" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/soldierList"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="-100dp"
-        android:id="@+id/serverip"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="IP:" />
-    </LinearLayout>
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.drdc1.medic.Activities.HomeActivity;
 import com.drdc1.medic.AppContext;
+import com.drdc1.medic.BackgroundServices.Server;
 import com.drdc1.medic.DataManagement.DataManager;
 import com.drdc1.medic.DataManagement.DataObserver;
 import com.drdc1.medic.DataManagement.DataSleepObserver;
@@ -59,7 +60,8 @@ public class NameList extends Fragment implements DataObserver, DataStatusObserv
         soldiers.setSoldiers(dbManager.getActiveSoldiers());
         adapter = new SoldierListAdapter(getContext(), soldiers.getSoldiers());
         listView.setAdapter(adapter);
-
+        TextView ip = (TextView) rootView.findViewById(R.id.ip);
+        ip.setText("IP: " + Server.getLocalIpAddress());
         TextView nameHeader = (TextView) rootView.findViewById(R.id.name_header);
         nameHeader.setOnClickListener(new ClickToSort());
         TextView hrHeader = (TextView) rootView.findViewById(R.id.hr_header);
@@ -108,7 +110,7 @@ public class NameList extends Fragment implements DataObserver, DataStatusObserv
     @Override
     public void update(Map data) {
 
-        Soldier s = soldiers.getSoldierByID((String)data.get("ID"));
+        Soldier s = soldiers.getSoldierByID((String) data.get("ID"));
         if (s != null)
             s.setPhysioData(data);
         else {
@@ -123,9 +125,9 @@ public class NameList extends Fragment implements DataObserver, DataStatusObserv
     @Override
     public void updateStatus(Map<String, String> data) {
 
-        for (Map.Entry<String, String> entry : data.entrySet()){
-            Soldier s =soldiers.getSoldierByID(entry.getKey());
-            if (s != null){
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            Soldier s = soldiers.getSoldierByID(entry.getKey());
+            if (s != null) {
                 s.setCurrentStatus(entry.getValue());
             }
         }
@@ -137,9 +139,9 @@ public class NameList extends Fragment implements DataObserver, DataStatusObserv
     @Override
     public void updateSleep(Map<String, Integer> data) {
 
-        for (Map.Entry<String, Integer> entry : data.entrySet()){
-            Soldier s =soldiers.getSoldierByID(entry.getKey());
-            if (s != null){
+        for (Map.Entry<String, Integer> entry : data.entrySet()) {
+            Soldier s = soldiers.getSoldierByID(entry.getKey());
+            if (s != null) {
                 int percent = entry.getValue();
                 s.setFatigue(String.format("%d", percent));
             }
@@ -220,7 +222,7 @@ public class NameList extends Fragment implements DataObserver, DataStatusObserv
             name.setText(soldier.getName());
             ImageView overall = (ImageView) v.findViewById(R.id.overal_status);
             String status = soldier.getCurrentStatus();
-            if (status != null && (!status.isEmpty())){
+            if (status != null && (!status.isEmpty())) {
                 switch (status) {
                     case "RED":
                         overall.setImageResource(R.drawable.red);
