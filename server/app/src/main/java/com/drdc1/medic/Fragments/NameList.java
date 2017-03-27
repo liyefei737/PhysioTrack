@@ -220,6 +220,11 @@ public class NameList extends Fragment implements DataObserver, DataStatusObserv
             }
             TextView name = (TextView) v.findViewById(R.id.name);
             name.setText(soldier.getName());
+            if(soldier.getPhysioData() == null) {
+                name.setTextColor(Color.parseColor("grey"));
+                return v;
+            }
+            name.setTextColor(Color.parseColor("black"));
             ImageView overall = (ImageView) v.findViewById(R.id.overal_status);
             String status = soldier.getCurrentStatus();
             if (status != null && (!status.isEmpty())) {
