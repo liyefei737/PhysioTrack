@@ -332,10 +332,6 @@ public class NameList extends Fragment implements DataObserver, DataStatusObserv
                 fatigue.setText(currentFatigue + "%");
             }
 
-
-            //TextView tvHome = (TextView) v.findViewById(R.id.tvHome);
-            // Populate the data into the template view using the data object
-            // Return the completed view to render on screen
             return v;
         }
     }
