@@ -71,22 +71,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         startBackgroundServices();
         setContentView(R.layout.activity_home);
 
-//        chk1=(CheckBox)findViewById(R.id.precedence_urgent);
-//        chk2=(CheckBox)findViewById(R.id.precedence_priority);
-//        chk3=(CheckBox)findViewById(R.id.precedence_routine);
-//        if (chk1.isChecked()) {
-//            chk1.setChecked(false);
-//        }
-//        else if(chk2.isChecked()){
-//            chk2.setChecked(false);
-//        }
-//        else {
-//            chk3.setChecked(false);
-//        }
-//        chk1.setOnClickListener(this);
-//        chk2.setOnClickListener(this);
-//        chk3.setOnClickListener(this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -150,25 +134,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         });
 
     }
-//    public void onClick(View view){
-//        switch(view.getId()){
-//            case R.id.precedence_urgent:
-//                chk1.setChecked(true);
-//                chk2.setChecked(false);
-//                chk3.setChecked(false);
-//                break;
-//            case R.id.precedence_priority:
-//                chk2.setChecked(true);
-//                chk3.setChecked(false);
-//                chk1.setChecked(false);
-//                break;
-//            case R.id.precedence_routine:
-//                chk3.setChecked(true);
-//                chk2.setChecked(false);
-//                chk1.setChecked(false);
-//                break;
-//        }
-//    }
     @Override
     public void registerFragment(DataObserver o) {
         if (!fragmentlist.contains(o))

@@ -43,6 +43,8 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
     String sendingid;
     int precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus, symptoms;
     private DataManager dataManager = null;
+    private CheckBox chk1, chk2, chk3,chk4,chk5,chk6,chk7,chk8,chk9,chk10,chk11,chk12,chk13,chk14,chk15,chk16,chk17,chk18,chk19,chk20,chk21,chk22,chk23,chk24,chk25,chk26,chk27,chk28;
+
     public TreatmentScreenTab() {
         // Required empty public constructor
     }
@@ -56,6 +58,152 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
         nameblank = (EditText) rootView.findViewById(R.id.nameblank);
         ageblank = (EditText) rootView.findViewById(R.id.ageblank);
         idblank = (EditText) rootView.findViewById(R.id.idblank);
+
+        chk1 = (CheckBox) rootView.findViewById(R.id.precedence_urgent);
+        chk2 = (CheckBox) rootView.findViewById(R.id.precedence_priority);
+        chk3 = (CheckBox) rootView.findViewById(R.id.precedence_routine);
+        chk4 = (CheckBox) rootView.findViewById(R.id.eqreq_none);
+        chk5 = (CheckBox) rootView.findViewById(R.id.eqreq_hoist);
+        chk6 = (CheckBox) rootView.findViewById(R.id.eqreq_extrication);
+        chk7 = (CheckBox) rootView.findViewById(R.id.eqreq_ventilator);
+        chk8 = (CheckBox) rootView.findViewById(R.id.patienttype_litter);
+        chk9 = (CheckBox) rootView.findViewById(R.id.patienttype_walking);
+        chk10 = (CheckBox) rootView.findViewById(R.id.patienttype_escort);
+        chk11 = (CheckBox) rootView.findViewById(R.id.securityatpickup_noenem);
+        chk12 = (CheckBox) rootView.findViewById(R.id.securityatpickup_possibileenem);
+        chk13 = (CheckBox) rootView.findViewById(R.id.securityatpickup_eneminarea);
+        chk14 = (CheckBox) rootView.findViewById(R.id.securityatpickup_hotpz);
+        chk15 = (CheckBox) rootView.findViewById(R.id.pzmarking_panles);
+        chk16 = (CheckBox) rootView.findViewById(R.id.pzmarking_pyro);
+        chk17 = (CheckBox) rootView.findViewById(R.id.pzmarking_smoke);
+        chk18 = (CheckBox) rootView.findViewById(R.id.pzmarking_other);
+
+        chk19 = (CheckBox) rootView.findViewById(R.id.patientnatstatus_coalitionmil);
+        chk20 = (CheckBox) rootView.findViewById(R.id.patientnatstatus_civiliancf);
+        chk21 = (CheckBox) rootView.findViewById(R.id.patientnatstatus_noncoalitionsf);
+        chk22 = (CheckBox) rootView.findViewById(R.id.patientnatstatus_noncoalitioncivil);
+        chk23 = (CheckBox) rootView.findViewById(R.id.patientnatstatus_opforces);
+        chk24 = (CheckBox) rootView.findViewById(R.id.patientnatstatus_child);
+
+        chk25 = (CheckBox) rootView.findViewById(R.id.airway);
+        chk26 = (CheckBox) rootView.findViewById(R.id.breathing);
+        chk27 = (CheckBox) rootView.findViewById(R.id.pulserate);
+        chk28 = (CheckBox) rootView.findViewById(R.id.conscious);
+
+
+
+        //treatment 3.
+        if (chk1.isChecked()) {
+            chk1.setChecked(false);
+        } else if (chk2.isChecked()) {
+            chk2.setChecked(false);
+        } else {
+            chk3.setChecked(false);
+        }
+        chk1.setOnClickListener(this);
+        chk2.setOnClickListener(this);
+        chk3.setOnClickListener(this);
+        //treatment 4.
+        if(chk4.isChecked()) {
+            chk4.setChecked(false);
+        }else if (chk5.isChecked()){
+            chk5.setChecked(false);
+        }else if(chk6.isChecked()){
+            chk6.setChecked(false);
+        }
+        else {
+            chk7.setChecked(false);
+        }
+        chk4.setOnClickListener(this);
+        chk5.setOnClickListener(this);
+        chk6.setOnClickListener(this);
+        chk7.setOnClickListener(this);
+        //treatment 5.
+        if (chk8.isChecked()) {
+            chk8.setChecked(false);
+        } else if (chk9.isChecked()) {
+            chk9.setChecked(false);
+        } else {
+            chk10.setChecked(false);
+        }
+        chk8.setOnClickListener(this);
+        chk9.setOnClickListener(this);
+        chk10.setOnClickListener(this);
+        //treatment 6.
+        if(chk11.isChecked()) {
+            chk11.setChecked(false);
+        }else if (chk12.isChecked()){
+            chk12.setChecked(false);
+        }else if(chk13.isChecked()){
+            chk13.setChecked(false);
+        }
+        else {
+            chk14.setChecked(false);
+        }
+        chk11.setOnClickListener(this);
+        chk12.setOnClickListener(this);
+        chk13.setOnClickListener(this);
+        chk14.setOnClickListener(this);
+
+        //treatment 7
+        if(chk15.isChecked()) {
+            chk15.setChecked(false);
+        }else if (chk16.isChecked()){
+            chk16.setChecked(false);
+        }else if(chk17.isChecked()){
+            chk17.setChecked(false);
+        }
+        else {
+            chk18.setChecked(false);
+        }
+
+        chk15.setOnClickListener(this);
+        chk16.setOnClickListener(this);
+        chk17.setOnClickListener(this);
+        chk18.setOnClickListener(this);
+
+        //treatment 8
+
+        if(chk19.isChecked()) {
+            chk19.setChecked(false);
+        }else if (chk20.isChecked()){
+            chk20.setChecked(false);
+        }else if(chk21.isChecked()){
+            chk21.setChecked(false);
+        }else if(chk22.isChecked()){
+            chk22.setChecked(false);
+        }else if(chk23.isChecked()){
+            chk23.setChecked(false);
+        }
+        else {
+            chk24.setChecked(false);
+        }
+
+        chk19.setOnClickListener(this);
+        chk20.setOnClickListener(this);
+        chk21.setOnClickListener(this);
+        chk22.setOnClickListener(this);
+        chk23.setOnClickListener(this);
+        chk24.setOnClickListener(this);
+
+        //treatment S.
+        if(chk25.isChecked()) {
+            chk25.setChecked(false);
+        }else if (chk26.isChecked()){
+            chk26.setChecked(false);
+        }else if(chk27.isChecked()){
+            chk27.setChecked(false);
+        }else{
+            chk28.setChecked(false);
+        }
+        chk25.setOnClickListener(this);
+        chk26.setOnClickListener(this);
+        chk27.setOnClickListener(this);
+        chk28.setOnClickListener(this);
+
+
+
+
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -410,5 +558,227 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            //treatment 3
+            case R.id.precedence_urgent:
+                chk1.setChecked(true);
+                chk2.setChecked(false);
+                chk3.setChecked(false);
+                break;
+            case R.id.precedence_priority:
+                chk2.setChecked(true);
+                chk3.setChecked(false);
+                chk1.setChecked(false);
+                break;
+            case R.id.precedence_routine:
+                chk3.setChecked(true);
+                chk2.setChecked(false);
+                chk1.setChecked(false);
+                break;
+            //treatment 4
+            case R.id.eqreq_none:
+                chk4.setChecked(true);
+                chk5.setChecked(false);
+                chk6.setChecked(false);
+                chk7.setChecked(false);
+                break;
+            case R.id.eqreq_hoist:
+                chk4.setChecked(false);
+                chk5.setChecked(true);
+                chk6.setChecked(false);
+                chk7.setChecked(false);
+                break;
+            case R.id.eqreq_extrication:
+                chk4.setChecked(false);
+                chk5.setChecked(false);
+                chk6.setChecked(true);
+                chk7.setChecked(false);
+                break;
+            case R.id.eqreq_ventilator:
+                chk4.setChecked(false);
+                chk5.setChecked(false);
+                chk6.setChecked(false);
+                chk7.setChecked(true);
+                break;
+            //treatment 5
+            case R.id.patienttype_litter:
+                chk8.setChecked(true);
+                chk9.setChecked(false);
+                chk10.setChecked(false);
+                break;
+            case R.id.patienttype_walking:
+                chk8.setChecked(false);
+                chk9.setChecked(true);
+                chk10.setChecked(false);
+                break;
+            case R.id.patienttype_escort:
+                chk8.setChecked(false);
+                chk9.setChecked(false);
+                chk10.setChecked(true);
+                break;
+            case R.id.securityatpickup_noenem:
+                chk11.setChecked(true);
+                chk12.setChecked(false);
+                chk13.setChecked(false);
+                chk14.setChecked(false);
+                break;
+            //treatment 6
+            case R.id.securityatpickup_possibileenem:
+                chk11.setChecked(false);
+                chk12.setChecked(true);
+                chk13.setChecked(false);
+                chk14.setChecked(false);
+                break;
+            case R.id.securityatpickup_eneminarea:
+                chk11.setChecked(false);
+                chk12.setChecked(false);
+                chk13.setChecked(true);
+                chk14.setChecked(false);
+                break;
+            case R.id.securityatpickup_hotpz:
+                chk11.setChecked(false);
+                chk12.setChecked(false);
+                chk13.setChecked(false);
+                chk14.setChecked(true);
+                break;
+            //treatment 7
+            case R.id.pzmarking_panles:
+                chk15.setChecked(true);
+                chk16.setChecked(false);
+                chk17.setChecked(false);
+                chk18.setChecked(false);
+                break;
+            case R.id.pzmarking_pyro:
+                chk15.setChecked(false);
+                chk16.setChecked(true);
+                chk17.setChecked(false);
+                chk18.setChecked(false);
+                break;
+            case R.id.pzmarking_smoke:
+                chk15.setChecked(false);
+                chk16.setChecked(false);
+                chk17.setChecked(true);
+                chk18.setChecked(false);
+                break;
+            case R.id.pzmarking_other:
+                chk15.setChecked(false);
+                chk16.setChecked(false);
+                chk17.setChecked(false);
+                chk18.setChecked(true);
+                break;
+            //treatment 8
+            case R.id.patientnatstatus_coalitionmil:
+                chk19.setChecked(true);
+                chk20.setChecked(false);
+                chk21.setChecked(false);
+                chk22.setChecked(false);
+                chk23.setChecked(false);
+                chk24.setChecked(false);
+                break;
+            case R.id.patientnatstatus_civiliancf:
+                chk19.setChecked(false);
+                chk20.setChecked(true);
+                chk21.setChecked(false);
+                chk22.setChecked(false);
+                chk23.setChecked(false);
+                chk24.setChecked(false);
+                break;
+            case R.id.patientnatstatus_noncoalitionsf:
+                chk19.setChecked(false);
+                chk20.setChecked(false);
+                chk21.setChecked(true);
+                chk22.setChecked(false);
+                chk23.setChecked(false);
+                chk24.setChecked(false);
+                break;
+            case R.id.patientnatstatus_noncoalitioncivil:
+                chk19.setChecked(false);
+                chk20.setChecked(false);
+                chk21.setChecked(false);
+                chk22.setChecked(true);
+                chk23.setChecked(false);
+                chk24.setChecked(false);
+                break;
+            case R.id.patientnatstatus_opforces:
+                chk19.setChecked(false);
+                chk20.setChecked(false);
+                chk21.setChecked(false);
+                chk22.setChecked(false);
+                chk23.setChecked(true);
+                chk24.setChecked(false);
+                break;
+            case R.id.patientnatstatus_child:
+                chk19.setChecked(false);
+                chk20.setChecked(false);
+                chk21.setChecked(false);
+                chk22.setChecked(false);
+                chk23.setChecked(false);
+                chk24.setChecked(true);
+                break;
+
+            case R.id.airway:
+                chk25.setChecked(true);
+                chk26.setChecked(false);
+                chk27.setChecked(false);
+                chk28.setChecked(false);
+                break;
+            case R.id.breathing:
+                chk25.setChecked(false);
+                chk26.setChecked(true);
+                chk27.setChecked(false);
+                chk28.setChecked(false);
+                break;
+            case R.id.pulserate:
+                chk25.setChecked(false);
+                chk26.setChecked(false);
+                chk27.setChecked(true);
+                chk28.setChecked(false);
+                break;
+            case R.id.conscious:
+                chk25.setChecked(false);
+                chk26.setChecked(false);
+                chk27.setChecked(false);
+                chk28.setChecked(true);
+                break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
     }
 }
