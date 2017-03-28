@@ -384,6 +384,36 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
                         treatmentgiven.getText().toString(), terrainobstacles.getText().toString());
                 Toast.makeText((HomeActivity) getActivity(), "Submission complete!",
                         Toast.LENGTH_SHORT).show();
+                //clean form
+                chk1.setChecked(false);
+                chk2.setChecked(false);
+                chk3.setChecked(false);
+                chk4.setChecked(false);
+                chk5.setChecked(false);
+                chk6.setChecked(false);
+                chk7.setChecked(false);
+                chk8.setChecked(false);
+                chk9.setChecked(false);
+                chk10.setChecked(false);
+                chk11.setChecked(false);
+                chk12.setChecked(false);
+                chk13.setChecked(false);
+                chk14.setChecked(false);
+                chk15.setChecked(false);
+                chk16.setChecked(false);
+                chk17.setChecked(false);
+                chk18.setChecked(false);
+                chk19.setChecked(false);
+                chk20.setChecked(false);
+                chk21.setChecked(false);
+                chk22.setChecked(false);
+                chk23.setChecked(false);
+                chk24.setChecked(false);
+                chk25.setChecked(false);
+                chk26.setChecked(false);
+                chk27.setChecked(false);
+                chk28.setChecked(false);
+                terrainobstacles.setText("");
 
             }
         });
@@ -740,44 +770,6 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
                 chk27.setChecked(false);
                 chk28.setChecked(true);
                 break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
     }

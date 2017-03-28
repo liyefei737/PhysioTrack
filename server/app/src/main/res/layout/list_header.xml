@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/name_header"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:clickable="true"
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/overal_status"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/body_position"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -52,7 +52,7 @@
 
     <TextView
         android:id="@+id/hr_header"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -67,7 +67,7 @@
 
     <TextView
         android:id="@+id/br_header"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -82,7 +82,7 @@
 
     <TextView
         android:id="@+id/skin_tmp_header"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -97,7 +97,7 @@
 
     <TextView
         android:id="@+id/core_tmp_header"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -112,7 +112,7 @@
 
     <TextView
         android:id="@+id/fatigue_level"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
