@@ -543,8 +543,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="400dp"
-                    android:text="Change ranges"
-                    android:textSize="18dp"
+                    android:text="Change Ranges"
+                    android:textSize="14dp"
                     android:visibility="visible" />
             </LinearLayout>
 
