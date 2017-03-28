@@ -263,6 +263,7 @@ tools:context="com.drdc1.medic.Fragments.TreatmentScreenTab">
                     android:button="@drawable/check"
                     android:textColor="@color/white"
                     android:textSize="18dp" />
+
             </LinearLayout>
 
             <LinearLayout

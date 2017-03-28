@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:clickable="true"
-        android:text="Name"
         android:gravity="center"
-        android:textSize="20dp"
+        android:text="Name"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <View
@@ -24,10 +24,10 @@
         android:id="@+id/overal_status"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_weight="1"
+        android:gravity="center"
         android:text="Overall"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <View
@@ -40,9 +40,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="BodyPos"
         android:gravity="center"
-        android:textSize="20dp"
+        android:text="BodyPos"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <View
@@ -54,10 +54,10 @@
         android:id="@+id/hr_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_weight="1"
+        android:gravity="center"
         android:text="HR"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <View
@@ -72,7 +72,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="BR"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <View
@@ -87,7 +87,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="SkinTmp"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <View
@@ -100,9 +100,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="CoreTmp"
         android:gravity="center"
-        android:textSize="20dp"
+        android:text="CoreTmp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <View
@@ -115,8 +115,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Fatigue"
         android:gravity="center"
-        android:textSize="20dp"
+        android:text="Fatigue"
+        android:textSize="18dp"
         android:textStyle="bold" />
 </LinearLayout>

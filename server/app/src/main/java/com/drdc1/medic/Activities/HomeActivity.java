@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.drdc1.medic.BackgroundServices.BackgroundServer;
@@ -54,6 +55,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
 
     public ArrayList<String> latestFatigueStatuses;
 
+
     private String solderId;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -61,11 +63,29 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
     private ViewPager mViewPager;
     private String individualSolderId;
 
+//    private CheckBox chk1, chk2, chk3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         startBackgroundServices();
         setContentView(R.layout.activity_home);
+
+//        chk1=(CheckBox)findViewById(R.id.precedence_urgent);
+//        chk2=(CheckBox)findViewById(R.id.precedence_priority);
+//        chk3=(CheckBox)findViewById(R.id.precedence_routine);
+//        if (chk1.isChecked()) {
+//            chk1.setChecked(false);
+//        }
+//        else if(chk2.isChecked()){
+//            chk2.setChecked(false);
+//        }
+//        else {
+//            chk3.setChecked(false);
+//        }
+//        chk1.setOnClickListener(this);
+//        chk2.setOnClickListener(this);
+//        chk3.setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -130,7 +150,25 @@ public class HomeActivity extends AppCompatActivity implements FragmentDataManag
         });
 
     }
-
+//    public void onClick(View view){
+//        switch(view.getId()){
+//            case R.id.precedence_urgent:
+//                chk1.setChecked(true);
+//                chk2.setChecked(false);
+//                chk3.setChecked(false);
+//                break;
+//            case R.id.precedence_priority:
+//                chk2.setChecked(true);
+//                chk3.setChecked(false);
+//                chk1.setChecked(false);
+//                break;
+//            case R.id.precedence_routine:
+//                chk3.setChecked(true);
+//                chk2.setChecked(false);
+//                chk1.setChecked(false);
+//                break;
+//        }
+//    }
     @Override
     public void registerFragment(DataObserver o) {
         if (!fragmentlist.contains(o))

@@ -41,7 +41,6 @@ public class TreatmentScreenTab extends Fragment implements View.OnClickListener
     String sendingid;
     int precedence, eqreq, patienttype, securityatpickup, pzmarking, patientnatstatus, symptoms;
     private DataManager dataManager = null;
-
     public TreatmentScreenTab() {
         // Required empty public constructor
     }
