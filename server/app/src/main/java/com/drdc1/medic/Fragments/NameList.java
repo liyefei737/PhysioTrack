@@ -243,7 +243,7 @@ public class NameList extends Fragment implements DataObserver, DataStatusObserv
                 }
             }
             Set<String> legalBodyPos = new HashSet<String>(Arrays.asList("UPRIGHT", "SUPINE", "PRONE", "SIDE"));
-            if (soldier.getBodyOrientation() != null && legalBodyPos.contains(soldier.getBodyOrientation())) {
+            if (soldier.getBodyOrientation() != null && legalBodyPos.contains(soldier.getBodyOrientation().replaceAll("\\s+",""))) {
                 ImageView bodyPos = (ImageView) v.findViewById(R.id.body_position);
                 bodyPos.setImageResource(R.drawable.body);
                 if (!soldier.getBodyOrientation().equals("UPRIGHT")) {
