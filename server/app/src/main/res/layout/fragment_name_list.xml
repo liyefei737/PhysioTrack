@@ -7,36 +7,17 @@
     android:orientation="vertical"
     tools:context="com.drdc1.medic.Fragments.NameList">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/ip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:gravity="left"
-            android:inputType="textPersonName"
-            android:text=""
-            android:textColor="@color/grey"
-            android:textSize="18dp" />
-
-        <ImageButton
-            android:id="@+id/ibHelp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_above="@+id/soldierList"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:layout_marginRight="30dp"
-            android:onClick="callHelp"
-            app:srcCompat="@drawable/help4" />
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/ibHelp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/soldierList"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:layout_marginRight="30dp"
+        android:onClick="callHelp"
+        app:srcCompat="@drawable/help4" />
 
     <ListView
         android:id="@+id/soldierList"
@@ -48,5 +29,18 @@
         android:layout_marginBottom="100dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textColor="@color/grey"
+        android:textSize="18dp" />
 
 </LinearLayout>
